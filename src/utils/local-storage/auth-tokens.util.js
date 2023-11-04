@@ -1,6 +1,6 @@
-import { storageKeys } from "../../config";
+import { storageKeys } from '../../config';
 
-const saveTokens = (tokens) => {
+const saveTokens = tokens => {
   const tokensJson = JSON.stringify(tokens);
   localStorage.setItem(storageKeys.token, tokensJson);
 };

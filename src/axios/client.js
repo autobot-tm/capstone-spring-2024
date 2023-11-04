@@ -10,15 +10,15 @@ export const apiCaller = axios.create({
 
 export const setUpAxiosInterceptors = (store, instance) => {
   instance.interceptors.response.use(
-    (response) => {
+    response => {
       return response.data;
     },
-    (error) => {
+    error => {
       return Promise.reject(error);
     },
   );
 
-  instance.interceptors.request.use((config) => {
+  instance.interceptors.request.use(config => {
     if (config.headers) {
       if (store.getState().auth) {
         const { accessToken } = store.getState().auth;

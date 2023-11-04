@@ -7,15 +7,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {routePaths.public.map((route) => (
+        {routePaths.public.map(route => (
           <Route key={route.path} path={route.path} element={route.element} />
         ))}
 
         <Route element={<PrivateRoute />}>
-          {routePaths.private.map((route) => {
-            return (
-              <Route key={route.path} path={route.path} element={route.element} />
-            );
+          {routePaths.private.map(route => {
+            return <Route key={route.path} path={route.path} element={route.element} />;
           })}
         </Route>
       </Routes>

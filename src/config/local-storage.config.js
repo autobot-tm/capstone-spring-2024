@@ -1,3 +1,3 @@
 export const storageKeys = {
-    token: "TOKENS"
-}
+  token: 'TOKENS',
+};

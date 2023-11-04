@@ -1,19 +1,16 @@
 import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
 import { authTokensLocalStorageUtils } from '../../utils';
 import { authServices } from '../../services';
-export const signIn = createAsyncThunk(
-  'auth/sign-in',
-  async (input, { rejectWithValue }) => {
-    try {
-      const { dto } = input;
-      const res = await authServices.signIn(dto);
-      authTokensLocalStorageUtils.save(res);
-      return res;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  },
-);
+export const signIn = createAsyncThunk('auth/sign-in', async (input, { rejectWithValue }) => {
+  try {
+    const { dto } = input;
+    const res = await authServices.signIn(dto);
+    authTokensLocalStorageUtils.save(res);
+    return res;
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+});
 
 const signOut = createAction('auth/sign-out', () => {
   authTokensLocalStorageUtils.delete();
@@ -55,7 +52,7 @@ export const authSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(signIn.pending, (state) => ({
+    builder.addCase(signIn.pending, state => ({
       ...state,
       loading: true,
     }));

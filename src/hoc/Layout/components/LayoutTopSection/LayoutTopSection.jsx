@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export const LayoutTopSection = () => {
-  return (
-    <div>LayoutTopSection</div>
-  )
-}
+  return <div>LayoutTopSection</div>;
+};
