@@ -22,9 +22,6 @@ root.render(
             darkItemSelectedBg: COLORS.primary,
             darkItemColor: COLORS.white,
           },
-          Layout: {
-            headerBg: COLORS.secondary,
-          },
         },
       }}>
       <App />

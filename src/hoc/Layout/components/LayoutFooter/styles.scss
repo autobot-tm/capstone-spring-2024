@@ -1,0 +1,23 @@
+@import "../../../../theme/scss/colors.theme.scss";
+
+.footer{
+    padding: 0;
+    &-container{
+        max-width: 1024px;
+        margin: 0 auto;
+        padding: 0 24px;
+    }
+    &-top{
+        background-color: $colors-lightBlue;
+        color: $colors-white;
+    }
+    &-bottom{
+        background-color: $colors-secondary;
+        color: $colors-white;
+    }
+    &-bottom-container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
