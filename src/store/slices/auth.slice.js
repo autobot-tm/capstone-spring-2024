@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, createAction } from '@reduxjs/toolkit';
 import { authTokensLocalStorageUtils } from '../../utils';
 import { authServices } from '../../services';
+
 export const signIn = createAsyncThunk('auth/sign-in', async (input, { rejectWithValue }) => {
   try {
     const { dto } = input;
@@ -75,10 +76,10 @@ export const authReducer = reducer;
 export const authActions = actions;
 
 export const useAuthSlice = () => {
-  const actions = {
+  const exportActions = {
     ...authSlice.actions,
     signIn,
     signOut,
   };
-  return { actions };
+  return { actions: exportActions };
 };

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Layout } from '../../hoc/Layout';
 import { useDispatch, useSelector } from 'react-redux';
+import { Layout } from '../../hoc/Layout';
 import { useAuthSlice } from '../../store/slices';
+
 export const Example = () => {
   const dispatch = useDispatch();
 
@@ -10,6 +11,7 @@ export const Example = () => {
   const handleSignIn = ({ username, password }) => {
     dispatch(authActions.signIn({ username, password }));
   };
+
   return (
     <Layout>
       <h1>Example</h1>

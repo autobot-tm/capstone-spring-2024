@@ -1,8 +1,9 @@
 import React from 'react';
 import { Layout } from '../../hoc/Layout';
 import { TabName } from '../../components/TabName';
-import './styles.scss';
 import { useTranslation } from 'react-i18next';
+import './styles.scss';
+
 export const AboutUs = () => {
   const { t } = useTranslation();
   return (
