@@ -1,2 +1,2 @@
 export * from './i18n.translation';
-export const supportedLocales = require('./locales.translation.json')['locales'];
+export const supportedLocales = require('./locales.translation.json').locales;

@@ -5,6 +5,6 @@ export const apiEndPoints = {
     signUp: '/auth/sign-up',
   },
   user: {
-    base: 'user',
+    base: 'users',
   },
 };
