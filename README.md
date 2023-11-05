@@ -34,5 +34,10 @@ Folder structure
 │   └── theme/
 │       └── scss/
 │           └── colors.theme.scss          # Define Colors Here.
+│   ├── translations/
+|   │   ├── locales/
+|   │       ├── en/                        # Define translation keys here
+|   │       ├── ja/                        # Define translation keys here
+|   │       ├── vi/                        # Define translation keys here
 │   ├── utils/
 │   └── index.js
