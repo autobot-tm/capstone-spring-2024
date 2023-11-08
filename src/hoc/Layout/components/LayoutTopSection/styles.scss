@@ -1,0 +1,31 @@
+#layout-top-section {
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 127px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .ant-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    font-weight: 700;
+    color: #808080;
+  }
+
+  .navbar-brand {
+    display: block;
+    width: 300px;
+    height: 74px;
+    background-image: url('https://www.lotusservice-vn.com/wp-content/themes/lotusvn/assets/images/logo.svg');
+  }
+
+  .contact-layout {
+    display: flex;
+  }
+}

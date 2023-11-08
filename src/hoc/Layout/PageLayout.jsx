@@ -4,8 +4,8 @@ import { LayoutTopSection } from './components/LayoutTopSection';
 import './styles.scss';
 import { LayoutFooter } from './components/LayoutFooter';
 import { LayoutMenu } from './components/LayoutMenu';
-const { Header, Footer, Content } = AntdLayout;
-export const Layout = ({ children }) => {
+const { Header, Content } = AntdLayout;
+export const PageLayout = ({ children }) => {
   return (
     <Space direction="vertical" style={{ width: '100%' }} size={[0, 48]}>
       <AntdLayout>

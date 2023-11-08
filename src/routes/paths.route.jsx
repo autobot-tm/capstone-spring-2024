@@ -1,6 +1,7 @@
 import React from 'react';
 import { Home } from '../pages/Home';
 import { AboutUs } from '../pages/AboutUs';
+import { News } from '../pages/News';
 import { routeNames } from '../config';
 
 export const routePaths = {
@@ -12,6 +13,10 @@ export const routePaths = {
     {
       path: routeNames.About,
       element: <AboutUs />,
+    },
+    {
+      path: routeNames.News,
+      element: <News />,
     },
   ],
   private: [

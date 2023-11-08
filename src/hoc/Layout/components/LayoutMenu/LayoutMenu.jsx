@@ -30,6 +30,7 @@ export const LayoutMenu = () => {
       className="menu">
       <Menu.Item key={routeNames.Home}>{t('home')}</Menu.Item>
       <Menu.Item key={routeNames.About}>{t('about')}</Menu.Item>
+      <Menu.Item key={routeNames.News}>{t('news')}</Menu.Item>
       <Menu.Item key="translation" style={{ marginLeft: 'auto' }}>
         <TranslationSelector />
       </Menu.Item>

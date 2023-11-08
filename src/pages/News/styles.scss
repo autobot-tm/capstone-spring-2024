@@ -1,12 +1,12 @@
-#home {
+#news {
   display: flex;
   flex-direction: column;
   gap: 40px;
   padding-bottom: 50px;
   .carousel-content {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url('https://i0.wp.com/disruptmagazine.com/wp-content/uploads/2021/02/business-people-in-the-office-working-PBHS2SM.jpg?w=1480&ssl=1');
-    height: 500px;
+      url('https://www.digital-adoption.com/wp-content/uploads/2020/10/Digital-adoption-programs-1024x497.jpg');
+    height: 210px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -37,16 +37,14 @@
       }
     }
   }
-
   .container {
-    display: flex;
     max-width: 1200px;
+    padding: 0 24px;
     margin: 0 auto;
-    padding: 20px;
+    display: flex;
     gap: 30px;
-
     .main {
-      .title {
+      .news-title {
         display: flex;
         gap: 15px;
         font-size: 25px;
@@ -54,18 +52,18 @@
         font-weight: bold;
         color: #009aac;
         margin-top: 50px;
-      }
-      .flex {
-        margin-top: 30px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 30px;
+        margin-bottom: 20px;
       }
       hr {
         border-top: 1px solid lightgray;
       }
+      .flex {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
     }
-
     .side {
       h2 {
         color: #009aac;
@@ -82,11 +80,6 @@
           width: 100%;
         }
       }
-    }
-
-    .main,
-    .side {
-      flex: 1; /* Chia tỷ lệ chiều rộng 16:8 */
     }
   }
 }

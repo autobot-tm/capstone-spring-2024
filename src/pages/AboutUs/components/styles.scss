@@ -1,0 +1,149 @@
+#section {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  .image {
+    img {
+      width: 300px;
+      height: 255px;
+      object-fit: cover;
+    }
+    .info {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+    }
+  }
+  .content {
+    h2 {
+      margin: 0;
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+    span {
+      font-size: 18px;
+      line-height: 25px;
+    }
+  }
+}
+
+#colorsection {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  background: #b9e1dc;
+  padding: 40px;
+  .image {
+    img {
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+    }
+    .info {
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+  .content {
+    span {
+      font-size: 18px;
+      line-height: 28px;
+    }
+  }
+}
+
+#staffsection {
+  margin-top: 20px;
+  .title {
+    h2 {
+      font-size: 25px;
+    }
+  }
+  .staff-wrapper {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+    img {
+      width: 216px;
+      height: 230px;
+      object-fit: cover;
+    }
+  }
+}
+
+#overviewsection {
+  margin-top: 20px;
+  .title {
+    h2 {
+      font-size: 25px;
+    }
+  }
+  table {
+    width: 100%;
+    tr {
+      display: flex;
+
+      .col-header {
+        padding: 40px 20px;
+        background: #eee;
+        flex: 1;
+        text-align: start;
+        font-size: 18px;
+      }
+      .col2-header {
+        padding: 40px 20px;
+        background: #eee;
+        flex: 3;
+        text-align: start;
+        font-size: 18px;
+      }
+      .col {
+        padding: 20px;
+        flex: 1;
+        font-size: 18px;
+      }
+      .col2 {
+        padding: 20px;
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+        font-size: 20px;
+        .intro {
+          font-weight: bold;
+        }
+        .item {
+          font-weight: bold;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+        .link {
+          color: red;
+          font-style: italic;
+        }
+      }
+    }
+  }
+}
+
+.phonesection {
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  padding: 30px 0;
+  gap: 10px;
+  span {
+    span {
+      color: #f4979f;
+    }
+  }
+}
