@@ -1,5 +1,9 @@
 import React from 'react';
 import './styles.scss';
+import { Button } from 'antd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
+
 const OverviewSection = () => {
   return (
     <div id="overviewsection">
@@ -99,6 +103,14 @@ const OverviewSection = () => {
         </tr>
         <hr />
       </table>
+
+      <span className="wrapper-btn">
+        <Button className="btn-advise">
+          <span>
+            <FontAwesomeIcon icon={faQuestion} /> 相談する
+          </span>
+        </Button>
+      </span>
     </div>
   );
 };

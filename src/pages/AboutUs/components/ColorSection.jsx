@@ -1,19 +1,23 @@
 import React from 'react';
 import './styles.scss';
+import { Col, Row } from 'antd';
 const ColorSection = () => {
   return (
-    <div id="colorsection">
-      <div className="image">
-        <img
-          src="https://ak-d.tripcdn.com/images/200d1a0000018pbcr11F3_R_640_440_R5_D.webp"
-          alt=""
-        />
-        <div className="info">
-          <span>Lorem, ipsum.</span>
-          <span>Lorem ipsum dolor sit amet consectetur.</span>
+    <Row id="colorsection">
+      <Col xs={24} sm={24} md={24} lg={8} xl={8} className="about-us">
+        <div className="image">
+          <img
+            src="https://ak-d.tripcdn.com/images/200d1a0000018pbcr11F3_R_640_440_R5_D.webp"
+            alt=""
+          />
+          <div className="info">
+            <span>Lorem, ipsum.</span>
+            <span>Lorem ipsum dolor sit amet consectetur.</span>
+          </div>
         </div>
-      </div>
-      <div className="content">
+      </Col>
+
+      <Col xs={24} sm={24} md={24} lg={14} xl={14} className="content">
         <span>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam sit mollitia laborum
           ratione voluptatibus nam odit vel veniam temporibus fugiat praesentium minus impedit
@@ -25,8 +29,8 @@ const ColorSection = () => {
           laboriosam cumque enim molestiae dolor fugiat, ullam facere totam debitis. Tempore totam
           eos expedita mollitia.
         </span>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };
 

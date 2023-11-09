@@ -17,8 +17,7 @@
 .smallcard {
   margin-top: 30px;
   display: flex;
-  align-items: center;
-  gap: 30px;
+
   .img-wrapper {
     img {
       width: 335px;
@@ -27,14 +26,13 @@
     }
   }
   .content-wrapper {
-    padding: 0 20px 10px;
+    padding: 0 10px 10px;
     font-size: 14px;
   }
 
-  @media (max-width: 390px) {
+  @media (max-width: 720px) {
     flex-direction: column;
     align-items: center;
-    text-align: center;
   }
 }
 

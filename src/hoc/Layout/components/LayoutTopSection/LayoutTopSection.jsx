@@ -10,12 +10,18 @@ export const LayoutTopSection = () => {
   return (
     <Layout id="layout-top-section">
       <Content className="container">
-        <Row gutter={24}>
-          <Col className="ant-col" xs={24} sm={24} md={6} lg={6} xl={6}>
+        <Row gutter={30}>
+          <Col className="ant-col" xs={24} sm={24} md={10} lg={10} xl={6}>
             <div className="navbar-brand"></div>
           </Col>
 
-          <Col className="ant-col" xs={0} sm={0} md={5} lg={5} xl={5}>
+          <Col className="ant-col ant-col-xs" xs={24} sm={24} md={6} lg={6} xl={6}>
+            <a className="phone-header-section" href="tel:+842838275068">
+              +84(0)28 3827 5068
+            </a>
+          </Col>
+
+          <Col className="ant-col ant-col-xl" xs={0} sm={0} md={10} lg={6} xl={5}>
             <p>
               会社設立・駐在員事務所設立 <br />
               スタートアップ支援 <br />
@@ -24,7 +30,7 @@ export const LayoutTopSection = () => {
             </p>
           </Col>
 
-          <Col className="ant-col" xs={24} sm={24} md={6} lg={6} xl={8}>
+          <Col className="ant-col ant-col-xl ant-col-lg" xs={24} sm={24} md={6} lg={8} xl={8}>
             <div className="contact-layout">
               <i>
                 {' '}
@@ -52,7 +58,7 @@ export const LayoutTopSection = () => {
             </div>
           </Col>
 
-          <Col className="ant-col" xs={0} sm={0} md={4} lg={4} xl={4}>
+          <Col className="ant-col ant-col-xl ant-col-lg" xs={0} sm={0} md={4} lg={4} xl={4}>
             <div className="contact-layout">
               <Button size="small" style={{ height: 'auto' }} type="primary">
                 <span style={{ display: 'flex', fontWeight: 700, fontSize: '16px' }}>

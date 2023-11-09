@@ -1,19 +1,23 @@
 import React from 'react';
 import './styles.scss';
+import { Col, Row } from 'antd';
 const Section = () => {
   return (
-    <div id="section">
-      <div className="image">
-        <img
-          src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          alt=""
-        />
-        <div className="info">
-          <span>Lorem ipsum.</span>
-          <span>Lorem ipsum dolor sit amet consectetur.</span>
+    <Row id="section">
+      <Col xs={24} sm={24} md={24} lg={8} xl={8} className="about-us">
+        <div className="image">
+          <img
+            src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt=""
+          />
+          <div className="info">
+            <span>Lorem ipsum.</span>
+            <span>Lorem ipsum dolor sit amet consectetur.</span>
+          </div>
         </div>
-      </div>
-      <div className="content">
+      </Col>
+
+      <Col xs={24} sm={24} md={24} lg={14} xl={14} className="content">
         <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
         <span>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda, ducimus. Nisi minima
@@ -34,8 +38,8 @@ const Section = () => {
           molestiae est quam sit accusantium beatae dicta fugit quos ipsa quasi nulla nam nihil
           iure, fuga, ducimus repudiandae!
         </span>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };
 
