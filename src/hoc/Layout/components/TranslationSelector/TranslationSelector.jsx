@@ -14,6 +14,7 @@ export const TranslationSelector = () => {
     <Select
       defaultValue={i18n.language.split('-')[0]}
       options={supportedLocales}
-      onChange={onChange}></Select>
+      onChange={onChange}
+      style={{ width: 120 }}></Select>
   );
 };
