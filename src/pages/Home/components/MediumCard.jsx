@@ -13,7 +13,7 @@ const MediumCard = ({ title, description }) => {
           />
           <div className="content-wrapper">
             <h4>{title}</h4>
-            <p className="content-detail">{description}</p>
+            <p className="content-detail multiline-ellipsis">{description}</p>
           </div>
         </div>
       </Col>

@@ -39,7 +39,7 @@
 
 .mediumcard {
   display: inline-block;
-  height: 500px;
+  height: 400px;
   font-size: 14px;
   .img-wrapper {
     position: relative;
@@ -96,4 +96,12 @@
     font-size: 18px;
     line-height: 30px auto;
   }
+}
+
+.multiline-ellipsis {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; /* start showing ellipsis when 3rd line is reached */
+  white-space: pre-wrap; /* let the text wrap preserving spaces */
 }
