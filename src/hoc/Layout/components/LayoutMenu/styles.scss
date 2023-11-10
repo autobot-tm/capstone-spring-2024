@@ -2,4 +2,9 @@
   max-width: 75%;
   padding: 0 80px !important;
   margin: 0 auto;
+  font-weight: bold;
+
+  @media (max-width: 768px) {
+    width: 1%;
+  }
 }

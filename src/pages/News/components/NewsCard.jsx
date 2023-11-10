@@ -2,28 +2,30 @@ import React from 'react';
 import './styles.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-const NewsCard = () => {
+const NewsCard = ({ title, date, description }) => {
   return (
     <div id="newscard">
       <div className="header">
-        <span className="news-card-title">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas.
+        <span className="news-card-title">{title}</span>
+        <span className="news-time">
+          {' '}
+          <i>{date}</i>
         </span>
-        <span className="news-time">Lorem, ipsum dolor.</span>
       </div>
       <div className="body">
-        <span>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, maiores reprehenderit
-          magni omnis voluptatibus commodi enim soluta numquam ipsum deserunt?
-        </span>
+        <span>{description}</span>
       </div>
-      <div className="button-wrapper">
+      <div
+        onClick={() => {
+          alert('updating..');
+        }}
+        className="button-wrapper">
         <div className="custome-button">
           view the detail
           <FontAwesomeIcon icon={faArrowRight} style={{ color: '#ffffff' }} />
         </div>
+        <hr />
       </div>
-      <hr />
     </div>
   );
 };

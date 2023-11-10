@@ -19,7 +19,7 @@ export const AboutUs = () => {
           <div className="carousel-content">
             <div className="flex">
               <div className="text-wrapper">
-                <h1>{t`about us`}</h1>
+                <h1>{t`about-us`}</h1>
               </div>
             </div>
           </div>

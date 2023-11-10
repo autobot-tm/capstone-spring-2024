@@ -28,6 +28,7 @@
   .content-wrapper {
     padding: 0 10px 10px;
     font-size: 14px;
+    line-height: 1.4em;
   }
 
   @media (max-width: 720px) {
@@ -38,7 +39,8 @@
 
 .mediumcard {
   display: inline-block;
-  height: 440px;
+  height: 500px;
+  font-size: 14px;
   .img-wrapper {
     position: relative;
     img {
@@ -46,15 +48,18 @@
       height: 270px;
       object-fit: cover;
     }
+    img:hover {
+      transform: scale(1.1);
+      transition: transform 0.3s ease-in-out;
+    }
     .content-wrapper {
       position: absolute;
       justify-content: center;
-      height: 190px;
       background: white;
       padding: 20px;
       left: 25px;
       right: 45px;
-      bottom: -130px;
+      top: 200px;
 
       h4 {
         margin: 0;
@@ -62,14 +67,17 @@
         color: #009aac;
         margin-bottom: 10px;
       }
-      span {
-        font-size: 15px;
+
+      .content-detail {
+        overflow-wrap: break-word;
+        line-height: 1.4em;
       }
     }
   }
 }
 
 .textcard {
+  margin-top: 150px;
   background: #f9f8eb;
   border: 1px solid #ffe1b6;
   padding: 30px;
@@ -86,6 +94,6 @@
   }
   .content-wrapper {
     font-size: 18px;
-    line-height: 30px;
+    line-height: 30px auto;
   }
 }

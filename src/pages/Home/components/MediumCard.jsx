@@ -2,7 +2,7 @@ import React from 'react';
 import './styles.scss';
 import { Col, Row } from 'antd';
 
-const MediumCard = () => {
+const MediumCard = ({ title, description }) => {
   return (
     <Row>
       <Col sm={24} md={24} lg={24} xl={24} className="mediumcard">
@@ -12,11 +12,8 @@ const MediumCard = () => {
             alt=""
           />
           <div className="content-wrapper">
-            <h4>Lorem ipsum dolor sit.</h4>
-            <span>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse aperiam ipsum nesciunt
-              itaque, delectus velit laborum quam blanditiis sapiente nobis?
-            </span>
+            <h4>{title}</h4>
+            <p className="content-detail">{description}</p>
           </div>
         </div>
       </Col>

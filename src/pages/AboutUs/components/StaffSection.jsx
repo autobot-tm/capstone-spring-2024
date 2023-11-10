@@ -1,12 +1,16 @@
 import React from 'react';
 import './styles.scss';
 import { Col, Row } from 'antd';
+import { useTranslation } from 'react-i18next';
+
 const StaffSection = () => {
+  const { t } = useTranslation();
+
   return (
     <Row>
       <Col xs={24} sm={24} md={24} lg={24} xl={24} id="staffsection">
         <div className="title">
-          <h2>staff</h2>
+          <h2>{t`about-staff`}</h2>
           <hr />
         </div>
         <div className="staff-wrapper">

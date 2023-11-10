@@ -1,7 +1,10 @@
 import React from 'react';
 import './styles.scss';
 import { Col, Row } from 'antd';
+import { useTranslation } from 'react-i18next';
+
 const ColorSection = () => {
+  const { t } = useTranslation();
   return (
     <Row id="colorsection">
       <Col xs={24} sm={24} md={24} lg={8} xl={8} className="about-us">
@@ -11,24 +14,14 @@ const ColorSection = () => {
             alt=""
           />
           <div className="info">
-            <span>Lorem, ipsum.</span>
-            <span>Lorem ipsum dolor sit amet consectetur.</span>
+            <span>{t`about-imgdes`}</span>
+            <span>{t`about-imgdes3`}</span>
           </div>
         </div>
       </Col>
 
       <Col xs={24} sm={24} md={24} lg={14} xl={14} className="content">
-        <span>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quibusdam sit mollitia laborum
-          ratione voluptatibus nam odit vel veniam temporibus fugiat praesentium minus impedit
-          beatae, soluta iste in doloremque enim aperiam? Enim doloribus, nobis cum quidem sed
-          debitis! Maxime odio enim eos quis, porro adipisci eligendi magni exercitationem
-          praesentium? Aspernatur modi veritatis impedit aperiam perferendis ut nostrum itaque. Amet
-          perspiciatis, totam quis distinctio explicabo qui tempore cum natus at, nulla quas! Velit
-          amet incidunt enim soluta laudantium quam omnis, expedita aut quisquam sint autem! A quasi
-          laboriosam cumque enim molestiae dolor fugiat, ullam facere totam debitis. Tempore totam
-          eos expedita mollitia.
-        </span>
+        <span>{t`about-content2`}</span>
       </Col>
     </Row>
   );

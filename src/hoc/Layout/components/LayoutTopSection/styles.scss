@@ -1,11 +1,16 @@
+@import '../../../../theme/scss/colors.theme.scss';
+
 #layout-top-section {
   .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 127px;
-    width: 100%;
+    padding: 15px 0;
+    height: 127.2px auto;
+    width: 75%;
+    line-height: 1.5em;
     margin: 0 auto;
+  }
+
+  a {
+    color: $colors-primary;
   }
 
   .ant-col {
@@ -14,6 +19,7 @@
     justify-content: center;
     align-items: center;
     margin: 0 5px;
+    max-width: 100%;
     font-weight: 700;
     color: #808080;
 
@@ -36,14 +42,6 @@
     }
   }
 
-  .phone-header-section {
-    display: block;
-    color: #f4979f;
-    border: 1px solid #f4979f;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-
   .navbar-brand {
     display: block;
     width: 300px;
@@ -51,7 +49,31 @@
     background-image: url('https://www.lotusservice-vn.com/wp-content/themes/lotusvn/assets/images/logo.svg');
   }
 
+  .phone-header-section {
+    color: $colors-primary;
+    border: 1px solid $colors-primary;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
   .contact-layout {
     display: flex;
+    width: fit-content;
+
+    .phone-icon {
+      height: 25px;
+      margin-right: 5px;
+      color: $colors-primary;
+      border-left: 1px solid #f2f2f2;
+    }
+  }
+
+  .btn-top-section {
+    height: auto;
+
+    .btn-component-section {
+      display: flex;
+      font-weight: 700;
+    }
   }
 }

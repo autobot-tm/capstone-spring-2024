@@ -1,21 +1,23 @@
 import React from 'react';
 import './styles.scss';
 
-const TextCard = () => {
+const TextCard = ({ title, description1, description2, description3, description4 }) => {
   return (
     <div className="textcard">
       <div className="title-wrapper">
-        <h3>Lorem</h3>
+        <h3>{title}</h3>
         <hr />
       </div>
       <div className="content-wrapper">
-        <span>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veritatis sit distinctio tempore
-          mollitia temporibus voluptates nulla earum quas expedita, beatae, eveniet architecto
-          corporis ipsum ea dolorum soluta. Accusantium fugiat veniam soluta atque exercitationem
-          nisi sapiente ex? Quod quis dolorem quibusdam error! Nisi atque, quas cumque repellat
-          dignissimos impedit magni dolor.
-        </span>
+        <p>
+          {description1} <br />
+          <br />
+          {description2} <br />
+          <br />
+          {description3} <br />
+          <br />
+          {description4}
+        </p>
       </div>
     </div>
   );

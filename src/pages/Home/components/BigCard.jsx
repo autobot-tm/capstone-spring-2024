@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.scss';
 
-const BigCard = () => {
+const BigCard = ({ props }) => {
   return (
     <div className="bigcard">
       <div className="img-wrapper">
@@ -10,10 +10,7 @@ const BigCard = () => {
           alt=""
         />
       </div>
-      <div className="content-wrapper">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Soluta dolor aperiam veniam
-        adipisci totam, doloremque aliquam sed nostrum iusto voluptas!
-      </div>
+      <div className="content-wrapper">{props}</div>
     </div>
   );
 };

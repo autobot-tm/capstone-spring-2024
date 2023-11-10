@@ -1,7 +1,119 @@
 {
+  "top-section-establishment": {
+    "line-1": "Company establishment/representative office establishment",
+    "line-2": "Startup support",
+    "line-3": "License acquisition/change/renewal",
+    "line-4": "Vietnam visa/work permit"
+  },
+  "top-section-contact-1": "From within Vietnam",
+  "top-section-contact-2": "From Japan/Overseas",
+  "top-section-support": "CONSULT ABOUT EACH SUPPORT SERVICE ONLINE",
+
   "home": "Home",
   "about": "About",
   "news": "News",
-  "about us": "About us",
-  "welcome-text": "Welcome hjhj"
+  "about-us": "About us",
+  "welcome-text": "Welcome hjhj",
+
+  "home-carousel-1": {
+    "line-1": "Support for expansion into Ho Chi Minh, Vietnam",
+    "line-2": "Establishment of company/representative office",
+    "line-3": "We not only check with the authorities to establish and obtain licenses, but also advise on the preparations needed to run the company before opening."
+  },
+
+  "home-carousel-2": {
+    "line-1": "Vietnam work permit/Vietnam visa",
+    "line-2": "Seconded employees/exemption procedures",
+    "line-3": "We obtain new Vietnam work permits, apply for exemptions, obtain Vietnam visas, and obtain documents necessary for entry permits."
+  },
+
+  "home-carousel-3": {
+    "line-1": "License assistance",
+    "line-2": "Add/Change/Update",
+    "line-3": "We provide assistance related to licenses, such as obtaining, renewing, and changing business licenses."
+  },
+
+  "home-slogan": "Leave it to us if you need support for expanding into Ho Chi Minh, Vietnam!\nExpansion consultation meetings are currently being held, both online and at the Tokyo Omotesando office. Please feel free to contact us.",
+  "home-introduce-question": "What is Lotus Service?",
+  "home-introduce-company": "Lotus Service is a consulting service operated by PROPOLIFE VIETNAM CO.,LTD. We employ experienced Japanese consultants, lawyers, and qualified accountants, and our main business is consulting on permits and licenses necessary for doing business in Vietnam. We can provide general support before and after entering Vietnam, such as company establishment, licenses, work permits, Vietnam visas, etc.",
+
+  "home-strengths": "Strengths of Lotus Service",
+  "home-strengths-1": "Rich support lineup",
+  "home-strengths-detail-1": "Permits are required when doing business in Vietnam. We can provide support for all aspects of approvals and permits before and after entering Vietnam, including company establishment, work permits, Vietnam visas, etc",
+  "home-strengths-2": "Japanese personnel with a rich track record",
+  "home-strengths-detail-2": "A Japanese consultant with a rich track record of support for a variety of support projects will be in charge. We are able to provide direct and targeted advice based on our practical experience in Vietnam- We provide high-quality support for expanding into Ho Chi Minh, Vietnam, including preparations that need to be made before establishing a company",
+  "home-strengths-3": "Lawyers who are good at law enforcement",
+  "home-strengths-detail-3": "In Vietnam, there are many changes not only in the law, but also in the implementation of the law by authorities. It is very important to confirm changes in the operation of this law. We have been providing support for many years with experienced lawyers",
+  "home-strengths-4": "Qualified accounting staff with extensive practical experience",
+  "home-strengths-detail-4": "Qualified accountants with extensive practical experience provide advice based on the latest handling of human resources, labor, accounting, and taxation that will be involved after establishment",
+  "home-strengths-5": "Hideaki Suzuki",
+  "home-strengths-detail-5": "11 years of experience as a Vietnam expansion consultant. We provide direct and accurate advice backed by our track record, focusing on company establishment, licensing, work permits, visas, and rental real estate. He has been managing a foreign corporation headquartered in Japan in Ho Chi Minh City for many years and has been developing the business, and when supporting expansion, he not only has the knowledge necessary before establishing the company, but also the rules and regulations after establishment. We offer a wide range of advice, including things to watch out for.",
+  "home-strengths-6": "Lawyer tone",
+  "home-strengths-detail-6": "Lawyer with over 20 years of experience. Suzuki is one of the few lawyers in Vietnam who can speak Japanese and has a wealth of practical experience, and has been supporting business expansion and licensing for many years. A characteristic of Vietnam is that it is difficult to change the way the law is applied suddenly. Since we submit applications to the authorities every month, we can provide advice and support based on the latest information.",
+
+  "home-greeting": "Greeting",
+  "home-greeting-description": {
+    "line-1": "Thank you for visiting the Lotus Service homepage.",
+    "line-2": "We employ experienced Japanese consultants, lawyers, and qualified accountants, and our main business is consulting on licenses necessary for doing business in Vietnam, including corporate establishment, work permits, Vietnam visas, etc., we can provide general support for permits and licenses before and after entering Vietnam. We provide direct, targeted, and slightly high-quality consulting backed by our track record.",
+    "line-3": "When expanding into Japan, we provide one-stop support and advice from establishing a corporation and obtaining licenses, finding offices and housing, obtaining visas and work permits, and preparing for company operations after establishment.",
+    "line-4": "I would appreciate it if you could continue to hear from me."
+  },
+
+  "home-side-inf-fb": "Check the latest information on FACEBOOK",
+  "home-side-inf": "INFORMATION",
+
+  "about-title": "We provide better suggestions to our customers.",
+  "about-content": {
+    "line-1": "Thank you very much for visiting.",
+    "line-2": "This is Suzuki, the representative.",
+    "line-3": "Our company mainly provides necessary support during and after expansion into Ho Chi Minh, Vietnam.",
+    "line-4": "Vietnam is a country in Asia that has a lot of room for growth, with many companies expanding into the country even during the coronavirus pandemic.",
+    "line-5": "Vietnam's population is approximately 100 million people, and Ho Chi Minh City is a vibrant city with many young people.",
+    "line-6": "It is a country that has an abundant labor force and is able to secure excellent human resources, including language skills.",
+    "line-7": "Purchasing power is starting to rise in urban areas such as Ho Chi Minh City, and Japanese companies are also starting to seize opportunities in the market, giving you a sense of business opportunities in Asia.",
+    "line-8": "There is news about expansion into Vietnam with an eye on the post-coronavirus era and relocation from other countries to Vietnam, but please contact us if you are planning to expand into Ho Chi Minh City, Vietnam.",
+    "line-9": "We conduct interviews at our Ho Chi Minh office, online, or at our Tokyo Omotesando office.",
+    "line-10": "Our company has experienced Japanese consultants such as lawyers, qualified accountants, architects, and real estate professionals, and our strength lies in our ability to provide reliable support. We have completed over 5,500 transactions, mainly involving permits, visas, residential and office rental brokerage, and office interior",
+    "line-11": "When you start a business, you will have relationships with many government agencies such as licensing agencies, labor bureaus, insurance bureaus, and tax offices.",
+    "line-12": "When we support the establishment of a company or a representative office in Ho Chi Minh, Vietnam, we provide a place where we can not only explain the necessary procedures for expansion, but also provide an overview of what needs to be done to operate the company after establishment. We provide high-quality consulting backed by our track record . In addition, even after using our service, we can provide advice on any issues that may arise during your activities in Vietnam.",
+    "line-13": "I would appreciate it if you could continue to hear from me."
+  },
+  "about-content2": "Our company, situated just off Le Thanh Thong Road in Japanese Town, Ho Chi Minh City, operates at 26 Thi Sach, Ben Nghe Ward, District 1, HCMC, Vietnam. The sales office is located in Prostyle Hotel Ho Chi Minh. Another office on the 19th floor of the CJ Building in Le Thanh Thong is used by our group company Logknot Vietnam Co-, Ltd. We conduct interviews at our HCMC office or online, and for Japanese companies, at our head office in Omotesando, Tokyo. Tokyo office: 3-6-23 Kita-Aoyama, Minato-ku, Tokyo.",
+  "about-imgdes": "Propolife Vietnam",
+  "about-imgdes2": "Representative Director and President Hideaki Suzuki",
+  "about-imgdes3": "Ho Chi Minh City Head Office",
+  "about-staff": "Staff",
+  "about-management": "Management company overview",
+  "about-companyName": "Company Name",
+  "about-representative": "representative",
+  "about-address": "address",
+  "about-business": "Business content",
+  "about-capital": "Capital",
+  "about-employees": "Number of employees",
+  "about-member": "Member organization",
+  "about-website": "Management website",
+  "about-hours": "business hours",
+  "about-companyName2": "PROPOLIFE VIETNAM COMPANY LIMITED (Japanese name: PROPOLIFE VIETNAM)",
+  "about-representative2": "Hideaki Suzuki",
+  "about-address2": "LogProstyle Group Co-, Ltd., located just off Le Thanh Thong Road, Japanese Quarter, Ho Chi Minh City at 26 Thi Sach, Ben Nghe Ward, District 1, HCMC, Vietnam (sales office in Prostyle Hotel HCM), with the 19th floor of CJ Building in Le Thanh Thong occupied by Logknot Vietnam Co-, is conducting expansion interviews at their HCMC office or online; contact them at 3-6-23 Kita-Aoyama, Minato-ku, Tokyo.",
+  "about-business2": "Lotus Service offers consulting for expanding into Vietnam, providing support for corporation and representative office establishment, business licensing, work permits, Vietnam visas/residence cards, re-entry procedures, and new entry procedures. Ao Dai Housing, their rental real estate brokerage business, specializes in rental real estate brokerage and management. Professional Style Hotel Ho Chi Minh, part of the Hotel Business, offers 79 rooms ideal for business and sightseeing.",
+  "about-website2": "Visit our corporate site at https://www-propolifevietnam-com- For Ho Chi Minh rental real estate, explore https://www-aodaihousing-com- Book accommodation at Pro Style Hotel Ho Chi Minh through https://www-prostyle-hotels-com/hcm/ja/-",
+  "about-hours2": "Open from Monday to Friday 9:00 to 17:00, Saturdays 9:00 to 12:00. Closed on Sundays, Vietnam holidays, summer vacation, and Tet vacation.",
+
+  "about-consult": "CONSULT",
+  "about-employees2": "42 people (as of February 28, 2023)",
+  "about-member2": "Regular member of Ho Chi Minh Japanese Chamber of Commerce and Industry",
+  "about-phone": "From within Vietnam:",
+  "about-phone2": "From outside Japan:",
+
+  "top-footer": "Lotus Service is a consulting service operated by PROPOLIFE VIETNAM CO.,LTD. We provide reliable support with a Japanese staff member with a rich track record and a Vietnamese lawyer who is strong in law enforcement and fluent in Japanese, and our expansion support is particularly well received by our staff. Please feel free to contact us if you have any problems when considering or after your expansion.",
+  "bottom-footer-address": {
+    "line-1": "Our company is located just off Le Thanh Thong Road, Japanese Quarter, Ho Chi Minh City",
+    "line-2": "26 Thi Sach, Ben Nghe Ward, District 1, HCMC, Vietnam",
+    "line-3": "(The sales office is located in the Prostyle Hotel Ho Chi Minh, which we operate)",
+    "line-4": " The 19th floor of the CJ Building in Le Thanh Thong is currently occupied by Logknot Vietnam Co., a group company. Ltd office.",
+    "line-5": "We are conducting expansion interviews at our Ho Chi Minh City office or online-\nLogProstyle Group Co., Ltd.",
+    "line-6": "3-6-23 Kita-Aoyama, Minato-ku, Tokyo",
+    "line-7": "Vietnam Copyright © 2012 PROPOLIFE VIETNAM. All Rights Reserved"
+  }
 }

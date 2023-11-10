@@ -1,5 +1,6 @@
 .fbcard {
   margin-bottom: 40px;
+  border: 1px solid #cccccc;
   .image-wrapper {
     position: relative;
     img {
@@ -132,6 +133,8 @@
   height: 500px;
   margin-bottom: 20px;
   background: #f2f2f2;
+  border: 1px solid #cccccc;
+
   .infocard {
     display: flex;
     flex-direction: column;

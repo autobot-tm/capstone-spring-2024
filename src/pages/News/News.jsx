@@ -6,8 +6,11 @@ import NewsCard from './components/NewsCard';
 import FbCard from '../../components/SideSection/FbCard';
 import InfoCards from '../../components/SideSection/InfoCards';
 import { useTranslation } from 'react-i18next';
+import data from '../../store/testNews.json';
+
 export const News = () => {
   const { t } = useTranslation();
+
   return (
     <PageLayout>
       <div id="news">
@@ -28,11 +31,15 @@ export const News = () => {
                 <hr />
 
                 <div className="flex">
-                  <NewsCard />
-                  <NewsCard />
-                  <NewsCard />
-                  <NewsCard />
-                  <NewsCard />
+                  {data.map(item => (
+                    <NewsCard
+                      key={item.id}
+                      title={item.title}
+                      image={item.image}
+                      date={item.date}
+                      description={item.description}
+                    />
+                  ))}
                 </div>
               </div>
             </Col>

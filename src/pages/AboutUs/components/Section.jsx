@@ -1,7 +1,11 @@
 import React from 'react';
 import './styles.scss';
 import { Col, Row } from 'antd';
+import { useTranslation } from 'react-i18next';
+
 const Section = () => {
+  const { t } = useTranslation();
+
   return (
     <Row id="section">
       <Col xs={24} sm={24} md={24} lg={8} xl={8} className="about-us">
@@ -11,33 +15,41 @@ const Section = () => {
             alt=""
           />
           <div className="info">
-            <span>Lorem ipsum.</span>
-            <span>Lorem ipsum dolor sit amet consectetur.</span>
+            <span>{t`about-imgdes`}</span>
+            <span>{t`about-imgdes2`}</span>
           </div>
         </div>
       </Col>
 
       <Col xs={24} sm={24} md={24} lg={14} xl={14} className="content">
-        <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
-        <span>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda, ducimus. Nisi minima
-          debitis laborum fuga voluptatibus neque quod atque eos laboriosam iusto, amet possimus
-          deserunt autem corrupti suscipit ea, est totam sed voluptatem? Commodi harum sed rerum
-          repellat officiis! Illum perferendis suscipit voluptatem laborum et obcaecati provident
-          ipsa unde optio sint nam beatae accusantium nobis ea eveniet, placeat explicabo accusamus
-          aut odit voluptatum inventore. Quas ullam minus nulla at temporibus nisi voluptates,
-          laudantium debitis ipsum fugiat? Illo modi, culpa deleniti ab quisquam molestiae est quam
-          sit accusantium beatae dicta fugit quos ipsa quasi nulla nam nihil iure, fuga, ducimus
-          repudiandae! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda, ducimus.
-          Nisi minima debitis laborum fuga voluptatibus neque quod atque eos laboriosam iusto, amet
-          possimus deserunt autem corrupti suscipit ea, est totam sed voluptatem? Commodi harum sed
-          rerum repellat officiis! Illum perferendis suscipit voluptatem laborum et obcaecati
-          provident ipsa unde optio sint nam beatae accusantium nobis ea eveniet, placeat explicabo
-          accusamus aut odit voluptatum inventore. Quas ullam minus nulla at temporibus nisi
-          voluptates, laudantium debitis ipsum fugiat? Illo modi, culpa deleniti ab quisquam
-          molestiae est quam sit accusantium beatae dicta fugit quos ipsa quasi nulla nam nihil
-          iure, fuga, ducimus repudiandae!
-        </span>
+        <h2>{t`about-title`}</h2>
+        <p>
+          {t`about-content.line-1`}
+          <br />
+          {t`about-content.line-2`}
+          <br />
+          {t`about-content.line-3`}
+          <br /> <br />
+          {t`about-content.line-4`}
+          <br />
+          {t`about-content.line-5`}
+          <br />
+          {t`about-content.line-6`}
+          <br />
+          {t`about-content.line-7`}
+          <br /> <br />
+          {t`about-content.line-8`}
+          <br />
+          {t`about-content.line-9`}
+          <br /> <br />
+          {t`about-content.line-10`}
+          <br /> <br />
+          {t`about-content.line-11`}
+          <br /> <br />
+          {t`about-content.line-12`}
+          <br /> <br />
+          {t`about-content.line-13`}
+        </p>
       </Col>
     </Row>
   );

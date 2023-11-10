@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.scss';
 import { Provider } from 'react-redux';
 import { ConfigProvider } from 'antd';
 import { initTranslations } from './translations';

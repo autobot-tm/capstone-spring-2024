@@ -1,6 +1,119 @@
 {
+  "top-section-establishment": {
+    "line-1": "Thành lập công ty/thành lập văn phòng đại diện",
+    "line-2": "Hỗ trợ khởi nghiệp",
+    "line-3": "Mua/thay đổi/gia hạn giấy phép",
+    "line-4": "Visa/giấy phép lao động Việt Nam"
+  },
+  "top-section-contact-1": "Từ Việt Nam",
+  "top-section-contact-2": "Từ Nhật Bản/ Nước ngoài",
+  "top-section-support": "TƯ VẤN VỀ TỪNG DỊCH VỤ HỖ TRỢ TRỰC TUYẾN",
+
   "home": "Trang chủ",
-  "about": "Về chúng tôi",
+  "about": "Giới thiệu",
   "news": "Tin tức",
-  "about us": "Về chúng tôi"
+  "about-us": "Giới thiệu về chúng tôi",
+  "welcome-text": "Welcome hjhj",
+
+  "home-carousel-1": {
+    "line-1": "Hỗ trợ mở rộng vào Hồ Chí Minh, Việt Nam",
+    "line-2": "Thành lập công ty/văn phòng đại diện",
+    "line-3": "Chúng tôi không chỉ kiểm tra với cơ quan có thẩm quyền để thành lập và xin giấy phép mà còn tư vấn về những chuẩn bị cần thiết để điều hành công ty trước khi khai trương"
+  },
+
+  "home-carousel-2": {
+    "line-1": "Giấy phép lao động Việt Nam/visa Việt Nam",
+    "line-2": "Nhân viên thứ hai/thủ tục miễn trừ",
+    "line-3": "Chúng tôi xin giấy phép lao động mới tại Việt Nam, xin miễn trừ, xin thị thực Việt Nam và lấy các tài liệu cần thiết cho giấy phép nhập cảnh"
+  },
+
+  "home-carousel-3": {
+    "line-1": "Hỗ trợ giấy phép",
+    "line-2": "Thêm/Thay đổi/Cập nhật",
+    "line-3": "Chúng tôi cung cấp hỗ trợ liên quan đến giấy phép, chẳng hạn như xin, gia hạn và thay đổi giấy phép kinh doanh"
+  },
+
+  "home-slogan": "Điểm mạnh của dịch vụ Lotus",
+  "home-introduce-question": "Dịch vụ Lotus là gì?",
+  "home-introduce-company": "Lotus Service là dịch vụ tư vấn được điều hành bởi CÔNG TY TNHH PROPOLIFE VIỆT NAM. Chúng tôi tuyển dụng các chuyên gia tư vấn, luật sư, kế toán viên người Nhật giàu kinh nghiệm và hoạt động kinh doanh chính của chúng tôi là tư vấn các giấy phép và giấy phép cần thiết cho hoạt động kinh doanh tại Việt Nam. Chúng tôi có thể cung cấp hỗ trợ chung trước và sau khi vào Việt Nam, chẳng hạn như thành lập công ty, giấy phép, giấy phép lao động, visa Việt Nam, v.v",
+
+  "home-strengths": "Điểm mạnh của dịch vụ Lotus",
+  "home-strengths-1": "Đội hình hỗ trợ phong phú",
+  "home-strengths-detail-1": "Các giấy phép cần thiết khi kinh doanh tại Việt Nam. Chúng tôi có thể hỗ trợ mọi vấn đề phê duyệt và cấp phép trước và sau khi vào Việt Nam, bao gồm thành lập công ty, giấy phép lao động, visa Việt Nam, v.v.",
+  "home-strengths-2": "Nhân sự Nhật Bản có bề dày thành tích",
+  "home-strengths-detail-2": "Một chuyên gia tư vấn người Nhật với bề dày thành tích hỗ trợ cho nhiều dự án hỗ trợ sẽ phụ trách. Chúng tôi có thể đưa ra lời khuyên trực tiếp và có mục tiêu dựa trên kinh nghiệm thực tế của chúng tôi tại Việt Nam. Chúng tôi cung cấp hỗ trợ chất lượng cao cho việc mở rộng sang Hồ Chí Minh, Việt Nam, bao gồm cả việc chuẩn bị cần thực hiện trước khi thành lập công ty.",
+  "home-strengths-3": "Luật sư giỏi thực thi pháp luật",
+  "home-strengths-detail-3": "Ở Việt Nam có rất nhiều thay đổi không chỉ về pháp luật mà còn về việc thực thi pháp luật của các cơ quan chức năng. Việc khẳng định những thay đổi trong hoạt động của luật này là rất quan trọng. Chúng tôi đã hỗ trợ trong nhiều năm với các luật sư giàu kinh nghiệm.",
+  "home-strengths-4": "Đội ngũ nhân viên kế toán có trình độ, kinh nghiệm thực tế sâu rộng",
+  "home-strengths-detail-4": "Các kế toán viên có trình độ chuyên môn cao, kinh nghiệm thực tế sâu rộng đưa ra lời khuyên dựa trên cách xử lý mới nhất về nhân sự, lao động, kế toán và thuế sẽ liên quan sau khi thành lập.",
+  "home-strengths-5": "Hideaki Suzuki",
+  "home-strengths-detail-5": "11 năm kinh nghiệm làm tư vấn mở rộng tại Việt Nam. Chúng tôi cung cấp lời khuyên trực tiếp và chính xác dựa trên hồ sơ theo dõi của chúng tôi, tập trung vào việc thành lập công ty, cấp phép, giấy phép lao động, thị thực và bất động sản cho thuê- Ông đã quản lý một tập đoàn nước ngoài có trụ sở chính tại Nhật Bản tại Thành phố Hồ Chí Minh trong nhiều năm và đang phát triển hoạt động kinh doanh, đồng thời, khi hỗ trợ mở rộng, ông không chỉ có những kiến thức cần thiết trước khi thành lập công ty mà còn cả những nội quy, quy định sau khi thành lập. Chúng tôi đưa ra nhiều lời khuyên, bao gồm cả những điều cần chú ý.",
+  "home-strengths-6": "Giọng luật sư",
+  "home-strengths-detail-6": "Luật sư với hơn 20 năm kinh nghiệm. Suzuki là một trong số ít luật sư tại Việt Nam nói được tiếng Nhật và có bề dày kinh nghiệm thực tế, đã và đang hỗ trợ mở rộng kinh doanh và cấp giấy phép cho nhiều doanh nghiệp năm- Một đặc điểm của Việt Nam là khó thay đổi cách áp dụng luật một cách đột ngột- Vì chúng tôi nộp hồ sơ lên cơ quan chức năng hàng tháng nên chúng tôi có thể đưa ra lời khuyên và hỗ trợ dựa trên những thông tin mới nhất.",
+
+  "home-greeting": "Chào mừng",
+  "home-greeting-description": {
+    "line-1": "Cảm ơn bạn đã ghé thăm trang chủ của Lotus Service",
+    "line-2": "Chúng tôi tuyển dụng các chuyên gia tư vấn, luật sư và kế toán viên Nhật Bản giàu kinh nghiệm và hoạt động kinh doanh chính của chúng tôi là tư vấn các giấy phép cần thiết để kinh doanh tại Việt Nam, bao gồm thành lập công ty, giấy phép lao động, thị thực Việt Nam, v.v.- , chúng tôi có thể cung cấp hỗ trợ chung về giấy phép và giấy phép trước và sau khi vào Việt Nam- Chúng tôi cung cấp tư vấn trực tiếp, có mục tiêu và chất lượng hơi cao được hỗ trợ bởi hồ sơ theo dõi của chúng tôi",
+    "line-3": "Khi mở rộng sang Nhật Bản, chúng tôi cung cấp hỗ trợ và tư vấn toàn diện từ việc thành lập công ty và xin giấy phép, tìm văn phòng và nhà ở, xin thị thực và giấy phép làm việc cũng như chuẩn bị cho hoạt động của công ty sau khi thành lập",
+    "line-4": "Tôi sẽ đánh giá cao nếu bạn có thể tiếp tục nghe ý kiến của tôi."
+  },
+
+  "home-side-inf-fb": "Kiểm tra thông tin mới nhất trên FACEBOOK",
+  "home-side-inf": "THÔNG TIN",
+
+  "about-title": "Chúng tôi cung cấp những đề xuất tốt hơn cho khách hàng.",
+  "about-content": {
+    "line-1": "Cảm ơn bạn rất nhiều vì đã ghé thăm.",
+    "line-2": "Đây là Suzuki, đại diện.",
+    "line-3": "Công ty chúng tôi chủ yếu cung cấp các hỗ trợ cần thiết trong và sau khi mở rộng sang Hồ Chí Minh, Việt Nam.",
+    "line-4": "Việt Nam là một quốc gia ở Châu Á có rất nhiều dư địa để phát triển, với nhiều công ty mở rộng hoạt động trong nước ngay cả trong thời kỳ đại dịch coronavirus.",
+    "line-5": "Dân số Việt Nam xấp xỉ 100 triệu người và Thành phố Hồ Chí Minh là một thành phố sôi động với nhiều người trẻ.",
+    "line-6": "Đó là một đất nước có lực lượng lao động dồi dào và có khả năng đảm bảo nguồn nhân lực xuất sắc, trong đó có kỹ năng ngôn ngữ.",
+    "line-7": "Sức mua bắt đầu tăng lên ở các khu vực thành thị như Thành phố Hồ Chí Minh, và các công ty Nhật Bản cũng bắt đầu nắm bắt cơ hội trên thị trường, mang lại cho bạn cảm nhận về cơ hội kinh doanh ở Châu Á.",
+    "line-8": "Có tin tức về việc mở rộng sang Việt Nam với tầm nhìn về thời kỳ hậu vi-rút Corona và việc di dời từ các quốc gia khác đến Việt Nam, nhưng vui lòng liên hệ với chúng tôi nếu bạn có ý định mở rộng sang Thành phố Hồ Chí Minh , Việt Nam.",
+    "line-9": "Chúng tôi thực hiện phỏng vấn tại văn phòng Hồ Chí Minh, trực tuyến hoặc tại văn phòng Tokyo Omotesando.",
+    "line-10": "Công ty chúng tôi có các chuyên gia tư vấn Nhật Bản giàu kinh nghiệm như luật sư, kế toán viên, kiến trúc sư và chuyên gia bất động sản có trình độ chuyên môn, và thế mạnh của chúng tôi nằm ở về khả năng cung cấp sự hỗ trợ đáng tin cậy của chúng tôi. Chúng tôi đã hoàn thành hơn 5.500 giao dịch, chủ yếu liên quan đến giấy phép, thị thực, môi giới cho thuê nhà ở và văn phòng cũng như nội thất văn phòng. Ngoài ra, từ năm 2019, chúng tôi đã bắt đầu xây dựng một khách sạn ở Japan Town.",
+    "line-11": "Khi khởi nghiệp, bạn sẽ có mối quan hệ với nhiều cơ quan chính phủ như cơ quan cấp phép, cơ quan lao động, cơ quan bảo hiểm và cơ quan thuế.",
+    "line-12": "Khi hỗ trợ thành lập công ty hoặc văn phòng đại diện tại Hồ Chí Minh, Việt Nam, chúng tôi không chỉ cung cấp giải thích các thủ tục cần thiết để mở rộng mà còn cung cấp cái nhìn tổng quan về những việc cần làm để vận hành công ty sau khi thành lập. Chúng tôi cung cấp tư vấn chất lượng cao được hỗ trợ bởi hồ sơ theo dõi của chúng tôi. Ngoài ra, ngay cả sau khi sử dụng dịch vụ của chúng tôi, chúng tôi vẫn có thể tư vấn về mọi vấn đề có thể phát sinh trong quá trình hoạt động của bạn tại Việt Nam.",
+    "line-13": "Tôi sẽ đánh giá cao nếu bạn có thể tiếp tục lắng nghe ý kiến ​​của tôi."
+  },
+  "about-content2": "Công ty chúng tôi, tọa lạc ngay gần đường Lê Thánh Thông, khu phố Nhật Bản, thành phố Hồ Chí Minh, hoạt động tại 26 Thi Sách, phường Bến Nghé, quận 1, TP.HCM, Việt Nam- Văn phòng kinh doanh tọa lạc tại Prostyle Khách sạn Hồ Chí Minh. Một văn phòng khác trên tầng 19 của Tòa nhà CJ ở Lê Thành Thông được sử dụng bởi công ty thuộc tập đoàn Logknot Việt Nam Co., Ltd. Chúng tôi thực hiện các cuộc phỏng vấn tại văn phòng TP.HCM hoặc trực tuyến và đối với các công ty Nhật Bản, tại trụ sở chính của chúng tôi văn phòng tại Omotesando, Tokyo. Văn phòng Tokyo: 3-6-23 Kita-Aoyama, Minato-ku, Tokyo.",
+  "about-imgdes": "Propolife Việt Nam",
+  "about-imgdes2": "Giám đốc đại diện và Chủ tịch Hideaki Suzuki",
+  "about-imgdes3": "Trụ sở chính tại Thành phố Hồ Chí Minh",
+  "about-staff": "Nhân viên",
+  "about-management": "Tổng quan về công ty quản lý",
+  "about-companyName": "Tên công ty",
+  "about-representative": "đại diện",
+  "about-address": "địa chỉ",
+  "about-business": "Nội dung kinh doanh",
+  "about-capital": "Vốn",
+  "about-employees": "Số lượng nhân viên",
+  "about-member": "Tổ chức thành viên",
+  "about-website": "Trang web quản lý",
+  "about-hours": "giờ làm việc",
+  "about-companyName2": "CÔNG TY TNHH PROPOLIFE VIỆT NAM (tên tiếng Nhật: PROPOLIFE VIỆT NAM)",
+  "about-representative2": "Hideaki Suzuki",
+  "about-address2": "LogProstyle Group Co., Ltd., nằm ngay đường Lê Thánh Thông, Khu phố Nhật Bản, Thành phố Hồ Chí Minh tại 26 Thi Sách, Phường Bến Nghé, Quận 1, TP.HCM, Việt Nam (văn phòng kinh doanh tại Prostyle Khách sạn HCM), với tầng 19 của Tòa nhà CJ ở Lê Thành Thông do Công ty Logknot Việt Nam sở hữu, đang thực hiện các cuộc phỏng vấn mở rộng tại văn phòng TP.HCM hoặc trực tuyến; liên hệ với họ theo số 3-6-23 Kita-Aoyama, Minato-ku, Tokyo .",
+  "about-business2": "Lotus Service tư vấn mở rộng vào Việt Nam, hỗ trợ thành lập công ty và văn phòng đại diện, cấp phép kinh doanh, giấy phép lao động, visa/thẻ cư trú tại Việt Nam, thủ tục tái nhập cảnh và thủ tục nhập cảnh mới. Áo Dài Housing , doanh nghiệp môi giới bất động sản cho thuê của họ, chuyên về môi giới và quản lý bất động sản cho thuê. Khách sạn Phong cách Chuyên nghiệp Hồ Chí Minh, một phần của Kinh doanh Khách sạn, cung cấp 79 phòng lý tưởng để kinh doanh và tham quan.",
+  "about-website2": "Truy cập trang web công ty của chúng tôi tại https://www-propolifevietnam-com- Đối với bất động sản cho thuê tại Hồ Chí Minh, hãy khám phá https://www.aodaihousing.com. Đặt chỗ ở tại Khách sạn Pro Style Hồ Chí Minh thông qua https://www.prostyle-hotels.com/hcm/ja/",
+  "about-hours2": "Open from Monday to Friday 9:00 to 17:00, Saturdays 9:00 to 12:00. Closed on Sundays, Vietnam holidays, summer vacation, and Tet vacation.",
+
+  "about-consult": "TƯ VẤN",
+  "about-employees2": "42 người (tính đến ngày 28 tháng 2 năm 2023)",
+  "about-member2": "Thành viên thường trực của Phòng Thương mại và Công nghiệp Nhật Bản Hồ Chí Minh",
+  "about-phone": "Từ Việt Nam:",
+  "about-phone2": "Từ Nhật Bản:",
+
+  "top-footer": "Lotus Service là dịch vụ tư vấn được điều hành bởi CÔNG TY TNHH PROPOLIFE VIỆT NAM. Chúng tôi cung cấp sự hỗ trợ đáng tin cậy với đội ngũ nhân viên người Nhật có bề dày kinh nghiệm và luật sư Việt Nam giỏi thực thi pháp luật và thông thạo tiếng Nhật và hỗ trợ mở rộng của chúng tôi được nhân viên của chúng tôi đặc biệt đón nhận. Vui lòng liên hệ với chúng tôi nếu bạn gặp bất kỳ vấn đề nào khi xem xét hoặc sau khi mở rộng.",
+  "bottom-footer-address": {
+    "line-1": "Công ty chúng tôi nằm ngay gần đường Lê Thành Thông, Khu phố Nhật Bản, Thành phố Hồ Chí Minh",
+    "line-2": "26 Thi Sách, Phường Bến Nghé, Quận 1, TP.HCM, Việt Nam",
+    "line-3": "(Văn phòng kinh doanh đặt tại Khách sạn Prostyle Hồ Chí Minh, nơi chúng tôi điều hành)",
+    "line-4": "Tầng 19 của Tòa nhà CJ ở Lê Thành Thông hiện đang được sử dụng bởi Công ty TNHH Logknot Việt Nam.",
+    "line-5": "Chúng tôi đang tiến hành các cuộc phỏng vấn mở rộng tại văn phòng Thành phố Hồ Chí Minh hoặc trực tuyến. LogProstyle Group Co., Ltd.",
+    "line-6": "3-6-23 Kita-Aoyama, Minato-ku, Tokyo",
+    "line-7": "Bản quyền Việt Nam © 2012 PROPOLIFE VIỆT NAM. All Rights Reserved."
+  }
 }
