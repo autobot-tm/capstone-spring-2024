@@ -7898,6 +7898,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"i18next-http-middleware@npm:^3.4.1":
+  version: 3.4.1
+  resolution: "i18next-http-middleware@npm:3.4.1"
+  checksum: 7066c94d5e691df1c7fa6da481c6c3406a8db6b0e19492fbbab7c5ba3dd1a0b533c28548f6ddcca6a91398605572ca4e2111a08ce4b80886747b0f773775a131
+  languageName: node
+  linkType: hard
+
 "i18next@npm:23.6.0":
   version: 23.6.0
   resolution: "i18next@npm:23.6.0"
@@ -14742,6 +14749,7 @@ __metadata:
     husky: 8.0.3
     i18next: 23.6.0
     i18next-browser-languagedetector: 7.1.0
+    i18next-http-middleware: ^3.4.1
     postcss: 8.4.31
     postinstall: 0.8.0
     prettier: ^3.0.3

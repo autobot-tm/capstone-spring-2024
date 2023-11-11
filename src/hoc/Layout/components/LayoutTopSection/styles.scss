@@ -3,14 +3,9 @@
 #layout-top-section {
   .container {
     padding: 15px 0;
-    height: 127.2px auto;
-    width: 75%;
+    max-width: 1140px;
     line-height: 1.5em;
     margin: 0 auto;
-  }
-
-  a {
-    color: $colors-primary;
   }
 
   .ant-col {
@@ -18,7 +13,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 5px;
     max-width: 100%;
     font-weight: 700;
     color: #808080;
@@ -48,32 +42,74 @@
     height: 74px;
     background-image: url('https://www.lotusservice-vn.com/wp-content/themes/lotusvn/assets/images/logo.svg');
   }
-
-  .phone-header-section {
-    color: $colors-primary;
-    border: 1px solid $colors-primary;
-    padding: 5px;
-    margin-bottom: 10px;
+  .info{
+    &-text{
+      color: $colors-darkGray;
+      line-height: 21px;
+      font-size: 14px;
+    }
   }
-
-  .contact-layout {
-    display: flex;
-    width: fit-content;
-
-    .phone-icon {
-      height: 25px;
-      margin-right: 5px;
+  .contact{
+    color: $colors-darkGray;
+    display: flex;    
+    flex-direction: row;
+    align-items: flex-start;
+    align-items: center;
+    gap: 10px;
+    &-info-group{
+      margin: 0;
+    }
+    &-link{
       color: $colors-primary;
-      border-left: 1px solid #f2f2f2;
+    }
+    &-phone-icon{
+      color: $colors-primary;
+      font-size: 32px;
+    }
+  
+  }
+ 
+  .contact-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: $colors-primary;
+    padding: 0 16px;
+    border-radius: 4px;
+    &-text{
+      font-size: 16px;
+      color: $colors-white;
+      flex:1,
+    }
+    &-icon{
+      font-size: 28px;
+      color: $colors-white;
+      
     }
   }
-
-  .btn-top-section {
-    height: auto;
-
-    .btn-component-section {
-      display: flex;
-      font-weight: 700;
+  .hide-on-sm{
+    @media (max-width: 767px) {
+      display: none;
     }
   }
+  .hide-upper-sm{
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+.phone-header{
+  padding: 8px;
+  border: 1px solid $colors-primary;
+  color: $colors-primary;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap:10px
+}
 }
