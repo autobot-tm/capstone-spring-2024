@@ -10,6 +10,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    padding: 0 20px;
 
     .flex {
       height: 100%;
@@ -40,9 +41,9 @@
 
   .container {
     display: flex;
-    max-width: 1200px;
+    max-width: 1140px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 24px;
     gap: 30px;
 
     .main {

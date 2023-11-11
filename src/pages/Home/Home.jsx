@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageLayout } from '../../hoc/Layout';
 // import { TabName } from '../../components/TabName';
@@ -8,37 +8,14 @@ import BigCard from './components/BigCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleInfo, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import SmallCard from './components/SmallCard';
-import MediumCard from './components/MediumCard';
+import MediumCard from './components/MediumCard/MediumCard';
 import TextCard from './components/TextCard';
 import FbCard from '../../components/SideSection/FbCard';
 import InfoCards from '../../components/SideSection/InfoCards';
-
+import { truncate } from '../../utils/text';
 export const Home = () => {
   const { t } = useTranslation();
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const truncate = (str, length) => {
-    if (windowWidth <= 1186) {
-      if (str.length <= length) {
-        return str;
-      }
-      return str.slice(0, length - 3) + '...';
-    } else {
-      return str;
-    }
-  };
   return (
     <PageLayout>
       <div id="home">
@@ -96,32 +73,44 @@ export const Home = () => {
             </div>
 
             <hr />
-            <div className="flex">
-              <MediumCard
-                title={t`home-strengths-1`}
-                description={truncate(t('home-strengths-detail-1', 50))}
-              />
-              <MediumCard
-                title={t`home-strengths-2`}
-                description={truncate(t('home-strengths-detail-2', 50))}
-              />
-              <MediumCard
-                title={t`home-strengths-3`}
-                description={truncate(t('home-strengths-detail-3', 50))}
-              />
-              <MediumCard
-                title={t`home-strengths-4`}
-                description={truncate(t('home-strengths-detail-4', 50))}
-              />
-              <MediumCard
-                title={t`home-strengths-5`}
-                description={truncate(t('home-strengths-detail-5', 50))}
-              />
-              <MediumCard
-                title={t`home-strengths-6`}
-                description={truncate(t('home-strengths-detail-6', 50))}
-              />
-            </div>
+            <Row gutter={[24, 24]}>
+              <Col sm={24} md={12} lg={12} xl={12}>
+                <MediumCard
+                  title={t`home-strengths-1`}
+                  description={truncate(t('home-strengths-detail-1'), 70)}
+                />
+              </Col>
+              <Col sm={24} md={12} lg={12} xl={12}>
+                <MediumCard
+                  title={t`home-strengths-2`}
+                  description={truncate(t('home-strengths-detail-2'), 70)}
+                />
+              </Col>
+              <Col sm={24} md={12} lg={12} xl={12}>
+                <MediumCard
+                  title={t`home-strengths-3`}
+                  description={truncate(t('home-strengths-detail-3'), 70)}
+                />
+              </Col>
+              <Col sm={24} md={12} lg={12} xl={12}>
+                <MediumCard
+                  title={t`home-strengths-4`}
+                  description={truncate(t('home-strengths-detail-4'), 70)}
+                />
+              </Col>
+              <Col sm={24} md={12} lg={12} xl={12}>
+                <MediumCard
+                  title={t`home-strengths-5`}
+                  description={truncate(t('home-strengths-detail-5'), 70)}
+                />
+              </Col>
+              <Col sm={24} md={12} lg={12} xl={12}>
+                <MediumCard
+                  title={t`home-strengths-6`}
+                  description={truncate(t('home-strengths-detail-6'), 70)}
+                />
+              </Col>
+            </Row>
 
             <TextCard
               title={t`home-greeting`}

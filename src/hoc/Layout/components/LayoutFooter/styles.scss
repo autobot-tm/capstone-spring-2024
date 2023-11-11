@@ -14,7 +14,7 @@
 
   &-container {
     max-width: 1140px;
-    padding: 30px 0;
+    padding: 30px 0px;
     margin: 0 auto;
     text-align: center;
   }
@@ -26,13 +26,17 @@
     color: $colors-white;
   }
 
-  // &-address-container {
-  //   line-height: 2.em;
-  // }
-
   &-logo-container {
     display: block;
-    width: 300px;
-    height: 74px;
+  }
+  &-logo{
+    max-width: 90%;
+  }
+  .footer-top{
+    padding: 0 24px;
+  }
+  .footer-bottom{
+    padding: 0 24px;
+    
   }
 }

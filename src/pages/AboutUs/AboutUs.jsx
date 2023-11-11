@@ -6,7 +6,7 @@ import './styles.scss';
 import { Carousel } from 'antd';
 import Section from './components/Section';
 import ColorSection from './components/ColorSection';
-import StaffSection from './components/StaffSection';
+import StaffSection from './components/StaffSection/StaffSection';
 import OverviewSection from './components/OverviewSection';
 import PhoneSection from './components/PhoneSection';
 

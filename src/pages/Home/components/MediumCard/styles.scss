@@ -1,0 +1,22 @@
+@import "../../../../theme/scss/colors.theme.scss";
+
+.medium-card{
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    &-img{
+        width: 100%;
+        &-container{
+            width: 100%;
+        }
+    }
+    &-content-wrapper{
+        background-color: $colors-white;
+        padding: 12px 24px;
+    }
+    &-title{
+        font-size: 16px;
+        margin: 0;
+        color: $colors-secondary;
+    }
+}

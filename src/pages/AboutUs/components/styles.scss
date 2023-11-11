@@ -112,6 +112,7 @@
       display: flex;
 
       .col-header {
+        text-transform: capitalize;
         padding: 40px 20px;
         background: #eee;
         flex: 1;
@@ -167,10 +168,6 @@
       width: 338px;
       height: 78px;
       background-color: #f4979f;
-
-      :hover {
-        background-color: #009aac;
-      }
     }
   }
 }

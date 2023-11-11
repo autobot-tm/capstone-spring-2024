@@ -69,7 +69,7 @@ const OverviewSection = () => {
       </table>
 
       <span className="wrapper-btn">
-        <Button className="btn-advise">
+        <Button className="btn-advise" type="primary">
           <span>
             <FontAwesomeIcon icon={faQuestion} /> {t`about-consult`}
           </span>

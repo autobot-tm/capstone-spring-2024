@@ -19,7 +19,7 @@ export const LayoutFooter = () => {
 
       <Row className="footer-bottom footer-container">
         <Col className="footer-logo-container" xs={24} sm={24} md={6} lg={6} xl={5}>
-          <img src={logo} alt="logo" />
+          <img src={logo} alt="logo" className="footer-logo" />
         </Col>
 
         <Col className="footer-address-container" xs={24} sm={24} md={12} lg={12} xl={14}>
