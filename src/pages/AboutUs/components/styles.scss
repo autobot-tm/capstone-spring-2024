@@ -110,6 +110,7 @@
     width: 100%;
     tr {
       display: flex;
+      flex-wrap: nowrap;
 
       .col-header {
         text-transform: capitalize;
@@ -121,19 +122,22 @@
       }
       .col2-header {
         padding: 40px 20px;
+
         background: #eee;
         flex: 3;
         text-align: start;
         font-size: 18px;
       }
       .col {
-        padding: 20px;
+        padding: 5px;
+        margin: 0;
         flex: 1;
         font-size: 16px;
         color: #3a3a3a;
       }
       .col2 {
-        padding: 20px;
+        padding: 5px;
+        margin: 0;
         flex: 3;
         line-height: 1.6em;
         display: flex;
