@@ -4,7 +4,7 @@ import { supportedLocales } from '../../../../translations';
 import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-export const TranslationSelector = () => {
+export const TranslationSelector = ({ classNames }) => {
   const { i18n } = useTranslation();
   const onChange = value => {
     i18n.changeLanguage(value);
@@ -15,6 +15,7 @@ export const TranslationSelector = () => {
       defaultValue={i18n.language.split('-')[0]}
       options={supportedLocales}
       onChange={onChange}
-      style={{ width: 120 }}></Select>
+      className={`selector-container ${classNames}`}
+    />
   );
 };
