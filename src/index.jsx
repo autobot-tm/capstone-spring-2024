@@ -5,11 +5,9 @@ import { Provider } from 'react-redux';
 import { ConfigProvider } from 'antd';
 import { initTranslations } from './translations';
 import App from './App';
-import { apiCaller, setUpAxiosInterceptors } from './axios';
 import { store } from './store';
 import { COLORS } from './theme/colors.theme';
 
-setUpAxiosInterceptors(store, apiCaller);
 initTranslations();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

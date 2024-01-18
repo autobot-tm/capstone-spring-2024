@@ -1,32 +1,57 @@
-import axios from 'axios';
-import { appConfig } from '../config';
+import axios, { HttpStatusCode } from 'axios';
+import { APP_CONFIG } from '../config/app.config';
+import { refreshToken } from '../store/slices';
+import { REQUEST_TIME_OUT } from '../constants/api.constant';
+import { apiErrorMapper } from '../services/helper/api-error-mapper.helper';
+import { store } from '../store';
 
 export const apiCaller = axios.create({
-  baseURL: appConfig.baseUrl,
+  baseURL: APP_CONFIG.BACKEND_ENDPOINT,
+  timeout: REQUEST_TIME_OUT,
   headers: {
     'Content-Type': 'application/json',
   },
 });
-
-export const setUpAxiosInterceptors = (store, instance) => {
-  instance.interceptors.response.use(
-    response => {
-      return response.data;
-    },
-    error => {
-      return Promise.reject(error);
-    },
-  );
-
-  instance.interceptors.request.use(config => {
-    if (config.headers) {
-      if (store.getState().auth) {
-        const { accessToken } = store.getState().auth;
-        if (accessToken) {
-          config.headers.authorization = `Bearer ${accessToken}`;
-        }
-      }
+apiCaller.interceptors.response.use(
+  response => {
+    return response?.data;
+  },
+  async error => {
+    const originalRequest = error.config;
+    const errorCode = error?.response?.data?.error_code;
+    const statusCode = error.response?.status;
+    const isRetried = originalRequest?._retry;
+    const errorTranslationKey = apiErrorMapper(errorCode, statusCode);
+    console.log('error', {
+      errorCode,
+      statusCode,
+      errorTranslationKey,
+    });
+    if (isRetried) {
+      return Promise.reject(errorTranslationKey);
     }
-    return config;
-  });
-};
+
+    if (statusCode === HttpStatusCode.Forbidden) {
+      originalRequest._retry = true;
+
+      const dispatch = store.dispatch;
+      const payload = await dispatch(refreshToken()).unwrap();
+      const { access_token: newAccessToken } = payload;
+      apiCaller.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+
+      if (originalRequest.headers) {
+        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+      }
+      return apiCaller(originalRequest);
+    }
+    return Promise.reject(errorTranslationKey);
+  },
+);
+
+apiCaller.interceptors.request.use(async config => {
+  const { access_token } = store.getState().auth;
+  if (access_token) {
+    config.headers['Authorization'] = `Bearer ${access_token}`;
+  }
+  return config;
+});
