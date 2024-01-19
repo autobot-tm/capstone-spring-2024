@@ -1,0 +1,23 @@
+.supportSignInContainer {
+  display: flex;
+  justify-content: space-between;
+  a {
+    color: black;
+  }
+  margin-bottom: 20px;
+}
+
+.askMemberContainer {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.loginByGoogleContainer {
+  display: flex;
+  justify-content: center;
+  img {
+    width: 30px;
+    height: 30px;
+  }
+}
