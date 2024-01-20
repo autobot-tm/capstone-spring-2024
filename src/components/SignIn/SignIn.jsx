@@ -4,7 +4,11 @@ import styles from './SignIn.module.scss';
 import icon from '../../assets/images/GoogleIcon.svg';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeLoginModal, openRegisterModal } from '../../store/slices/modalSlice';
+import {
+  closeLoginModal,
+  openRegisterModal,
+  openRequestResetPasswordModal,
+} from '../../store/slices/modalSlice';
 const SignIn = () => {
   const loginModal = useSelector(state => state.modal.loginModal);
   const dispatch = useDispatch();
@@ -58,7 +62,13 @@ const SignIn = () => {
               <Form.Item name="remember" noStyle>
                 <Checkbox>Remember me</Checkbox>
               </Form.Item>
-              <a href="">Lost your password?</a>
+              <span
+                onClick={() => {
+                  dispatch(closeLoginModal());
+                  dispatch(openRequestResetPasswordModal());
+                }}>
+                Lost your password?
+              </span>
             </div>
 
             <Form.Item>

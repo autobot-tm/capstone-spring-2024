@@ -5,6 +5,9 @@
     color: black;
   }
   margin-bottom: 20px;
+  span {
+    cursor: pointer;
+  }
 }
 
 .askMemberContainer {
@@ -12,7 +15,9 @@
   justify-content: center;
   gap: 5px;
   span {
-    cursor: pointer;
+    b {
+      cursor: pointer;
+    }
   }
 }
 
