@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '../../hoc/Layout';
 import { TabName } from '../../components/TabName';
@@ -6,34 +6,33 @@ import { Button } from 'antd';
 
 import './styles.scss';
 import SignIn from '../../components/SignIn/SignIn';
+import { useDispatch } from 'react-redux';
+import { openLoginModal } from '../../store/slices/modalSlice';
+import Register from '../../components/Register/Register';
 export const ModalContext = createContext();
 
-export const Home = ({ contextHolder }) => {
+export const Home = () => {
   const { t } = useTranslation();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <Layout>
-      {contextHolder}
       <TabName>{t('home')}</TabName>
       <div className="home-container">
         <h1>{t('home')}</h1>
         <h2>{t('welcome-text')}</h2>
-        <Button type="primary" onClick={showModal}>
+        <Button
+          type="primary"
+          onClick={() => {
+            dispatch(openLoginModal());
+          }}>
           Open Modal
         </Button>
-        <SignIn open={isModalOpen} handleOk={handleOk} handleCancel={handleCancel} />
+        <SignIn />
+        <Register />
       </div>
     </Layout>
   );

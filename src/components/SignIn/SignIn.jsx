@@ -3,7 +3,11 @@ import { Checkbox, Form, Input, Modal, notification } from 'antd';
 import styles from './SignIn.module.scss';
 import icon from '../../assets/images/GoogleIcon.svg';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
-const SignIn = ({ open, handleOk, handleCancel }) => {
+import { useDispatch, useSelector } from 'react-redux';
+import { closeLoginModal, openRegisterModal } from '../../store/slices/modalSlice';
+const SignIn = () => {
+  const loginModal = useSelector(state => state.modal.loginModal);
+  const dispatch = useDispatch();
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = type => {
     api[type]({
@@ -12,7 +16,7 @@ const SignIn = ({ open, handleOk, handleCancel }) => {
   };
   const handleFinish = () => {
     openNotificationWithIcon('success');
-    handleOk();
+    dispatch(closeLoginModal());
   };
 
   return (
@@ -33,9 +37,11 @@ const SignIn = ({ open, handleOk, handleCancel }) => {
               Login
             </div>
           }
-          open={open}
-          onOk={handleOk}
-          onCancel={handleCancel}
+          open={loginModal}
+          onOk={() => {
+            dispatch(closeLoginModal());
+          }}
+          onCancel={() => dispatch(closeLoginModal())}
           footer={null}>
           <Form onFinish={handleFinish}>
             <Form.Item
@@ -63,7 +69,11 @@ const SignIn = ({ open, handleOk, handleCancel }) => {
             <Form.Item>
               <div className={styles.askMemberContainer}>
                 <span>Not a member?</span>
-                <span>
+                <span
+                  onClick={() => {
+                    dispatch(closeLoginModal());
+                    dispatch(openRegisterModal());
+                  }}>
                   <b>Register here</b>
                 </span>
               </div>
