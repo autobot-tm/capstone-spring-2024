@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, Form, Input, Modal, notification } from 'antd';
+import { Checkbox, Form, Input, notification } from 'antd';
 import styles from './SignIn.module.scss';
 import icon from '../../assets/images/GoogleIcon.svg';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
@@ -9,6 +9,7 @@ import {
   openRegisterModal,
   openRequestResetPasswordModal,
 } from '../../store/slices/modalSlice';
+import CustomModal from '../Modal/CustomModal';
 const SignIn = () => {
   const loginModal = useSelector(state => state.modal.loginModal);
   const dispatch = useDispatch();
@@ -27,26 +28,7 @@ const SignIn = () => {
     <>
       {contextHolder}
       <div>
-        <Modal
-          width={400}
-          centered
-          title={
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginBottom: '40px',
-                fontSize: 25,
-              }}>
-              Login
-            </div>
-          }
-          open={loginModal}
-          onOk={() => {
-            dispatch(closeLoginModal());
-          }}
-          onCancel={() => dispatch(closeLoginModal())}
-          footer={null}>
+        <CustomModal nameOfModal={loginModal} title="Login" action={closeLoginModal}>
           <Form onFinish={handleFinish}>
             <Form.Item
               name="username"
@@ -94,7 +76,7 @@ const SignIn = () => {
               </div>
             </Form.Item>
           </Form>
-        </Modal>
+        </CustomModal>
       </div>
     </>
   );

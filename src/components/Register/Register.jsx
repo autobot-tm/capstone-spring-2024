@@ -1,53 +1,28 @@
-import { Form, Input, Modal, Select, notification } from 'antd';
+import { Form, Input } from 'antd';
 import React from 'react';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeRegisterModal, openLoginModal } from '../../store/slices/modalSlice';
+import {
+  closeRegisterModal,
+  openAuthenticationCodeModal,
+  openLoginModal,
+} from '../../store/slices/modalSlice';
 import styles from './Register.module.scss';
+import CustomModal from '../Modal/CustomModal';
 
 const Register = () => {
   const registerModal = useSelector(state => state.modal.registerModal);
   const dispatch = useDispatch();
 
-  const [api, contextHolder] = notification.useNotification();
-  const openNotificationWithIcon = type => {
-    api[type]({
-      message: 'Register Successfully',
-    });
-  };
-
   const handleFinish = () => {
     dispatch(closeRegisterModal());
-    openNotificationWithIcon('success');
 
-    dispatch(openLoginModal());
+    dispatch(openAuthenticationCodeModal(true));
   };
   return (
     <>
-      {contextHolder}
       <div>
-        <Modal
-          width={400}
-          centered
-          title={
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginBottom: '40px',
-                fontSize: 25,
-              }}>
-              Register
-            </div>
-          }
-          open={registerModal}
-          onOk={() => {
-            dispatch(closeRegisterModal());
-          }}
-          onCancel={() => {
-            dispatch(closeRegisterModal());
-          }}
-          footer={null}>
+        <CustomModal nameOfModal={registerModal} title="Register" action={closeRegisterModal}>
           <Form onFinish={handleFinish}>
             <Form.Item
               hasFeedback
@@ -89,15 +64,7 @@ const Register = () => {
               ]}>
               <Input.Password placeholder="Repeat password" />
             </Form.Item>
-            <Form.Item
-              hasFeedback
-              name="role"
-              rules={[{ required: true, message: 'Role is required' }]}>
-              <Select
-                placeholder="Select your role"
-                options={[{ value: 'renter', label: 'Renter' }]}
-              />
-            </Form.Item>
+
             <p className={styles.message}>
               Your personal data will be used to support your experience throughout this website, to
               manage access to your account, and for other purposes described in our privacy policy.
@@ -118,7 +85,7 @@ const Register = () => {
               </span>
             </div>
           </Form>
-        </Modal>
+        </CustomModal>
       </div>
     </>
   );

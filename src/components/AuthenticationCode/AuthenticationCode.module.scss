@@ -1,0 +1,22 @@
+.askMemberContainer {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  span {
+    b {
+      cursor: pointer;
+    }
+  }
+}
+.askLoginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  span {
+    b {
+      cursor: pointer;
+    }
+  }
+}

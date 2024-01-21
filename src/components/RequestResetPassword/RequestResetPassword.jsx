@@ -1,42 +1,32 @@
-import { Form, Input, Modal } from 'antd';
+import { Form, Input } from 'antd';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   closeRequestResetPasswordModal,
+  openAuthenticationCodeModal,
   openLoginModal,
   openRegisterModal,
 } from '../../store/slices/modalSlice';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import styles from './RequestResetPassword.module.scss';
+import CustomModal from '../Modal/CustomModal';
 const RequestResetPassword = () => {
   const requestResetPasswordModal = useSelector(state => state.modal.requestResetPasswordModal);
   const dispatch = useDispatch();
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    dispatch(closeRequestResetPasswordModal());
+    dispatch(openAuthenticationCodeModal(false));
+  };
   return (
     <div>
-      <Modal
-        width={400}
-        centered
-        title={
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              marginBottom: '40px',
-              fontSize: 25,
-            }}>
-            Forgot Password
-          </div>
-        }
-        open={requestResetPasswordModal}
-        onOk={() => {
-          dispatch(closeRequestResetPasswordModal());
-        }}
-        onCancel={() => dispatch(closeRequestResetPasswordModal())}
-        footer={null}>
+      <CustomModal
+        nameOfModal={requestResetPasswordModal}
+        title="Forgot Password"
+        action={closeRequestResetPasswordModal}>
         <Form onFinish={handleSubmit}>
           <Form.Item
+            hasFeedback
             name="email"
             rules={[
               { required: true, message: 'Email is required' },
@@ -49,18 +39,17 @@ const RequestResetPassword = () => {
               Continue
             </BaseButton>
           </Form.Item>
-          <div className={styles.askMemberContainer}>
-            <span>Not a member?</span>
-            <span
-              onClick={() => {
-                dispatch(closeRequestResetPasswordModal());
-                dispatch(openRegisterModal());
-              }}>
-              <b>Register here</b>
-            </span>
-          </div>
         </Form>
-
+        <div className={styles.askMemberContainer}>
+          <span>Not a member?</span>
+          <span
+            onClick={() => {
+              dispatch(closeRequestResetPasswordModal());
+              dispatch(openRegisterModal());
+            }}>
+            <b>Register here</b>
+          </span>
+        </div>
         <div className={styles.askLoginContainer}>
           <span>Have an account?</span>
           <span
@@ -71,7 +60,7 @@ const RequestResetPassword = () => {
             <b>Log in</b>
           </span>
         </div>
-      </Modal>
+      </CustomModal>
     </div>
   );
 };

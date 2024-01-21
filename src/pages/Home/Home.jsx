@@ -10,6 +10,8 @@ import { useDispatch } from 'react-redux';
 import { openLoginModal } from '../../store/slices/modalSlice';
 import Register from '../../components/Register/Register';
 import RequestResetPassword from '../../components/RequestResetPassword/RequestResetPassword';
+import AuthenticationCode from '../../components/AuthenticationCode/AuthenticationCode';
+import ResetPassword from '../../components/ResetPassword/ResetPassword';
 export const ModalContext = createContext();
 
 export const Home = () => {
@@ -35,6 +37,8 @@ export const Home = () => {
         <SignIn />
         <Register />
         <RequestResetPassword />
+        <AuthenticationCode />
+        <ResetPassword />
       </div>
     </Layout>
   );
