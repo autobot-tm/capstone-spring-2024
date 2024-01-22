@@ -1,0 +1,95 @@
+service: lotus-rents-webapp
+
+plugins:
+  - serverless-s3-sync
+  - serverless-cloudfront-invalidate
+provider:
+  name: aws
+  runtime: nodejs18.x
+  custom: ${file(./cicd/serverless-provider.json)}
+  stage: ${self:provider.custom.stage}
+  profile: ${self:provider.custom.profile}
+  region: ${self:provider.custom.region}
+
+custom:
+  s3DeploymentBucket: ${self:service}-deployment-bucket-${self:provider.custom.stage}
+  cloudfrontOriginId: ${self:custom.s3DeploymentBucket}-cloud-front
+  cloudfrontInvalidate:
+    - distributionIdKey: 'cloudFrontDistributionId'
+      items:
+        - '/index.html'
+  s3Sync:
+    - bucketName: ${self:custom.s3DeploymentBucket}
+      localDir: ./build
+resources:
+  Resources:
+    DeploymentBucket:
+      Type: AWS::S3::Bucket
+      DeletionPolicy: Retain
+      Properties:
+        BucketName: ${self:custom.s3DeploymentBucket}
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+    DeploymentBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: DeploymentBucket
+        PolicyDocument:
+          Statement:
+            - Sid: PublicReadGetObject
+              Action:
+                - s3:GetObject
+              Effect: Allow
+              Principal: '*'
+              Resource:
+                Fn::Join:
+                  - ''
+                  - - 'arn:aws:s3:::'
+                    - !Ref DeploymentBucket
+                    - '/*'
+
+    CloudfrontDistribution:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          # Aliases:
+          # - ${self:custom.domainComponents.withWWW}
+          # - ${self:custom.domainComponents.withoutWWW}
+          CustomErrorResponses:
+            - ErrorCode: 404
+              ResponseCode: 200
+              ResponsePagePath: /index.html
+            - ErrorCode: 403
+              ResponseCode: 200
+              ResponsePagePath: /index.html
+          DefaultCacheBehavior:
+            AllowedMethods:
+              - DELETE
+              - GET
+              - HEAD
+              - OPTIONS
+              - PATCH
+              - POST
+              - PUT
+            TargetOriginId: ${self:custom.cloudfrontOriginId}
+            ForwardedValues:
+              QueryString: 'false'
+              Cookies:
+                Forward: none
+            ViewerProtocolPolicy: redirect-to-https
+          DefaultRootObject: index.html
+          Enabled: 'true'
+          HttpVersion: 'http2'
+          Origins:
+            - DomainName: ${self:custom.s3DeploymentBucket}.s3.${self:provider.custom.region}.amazonaws.com
+              CustomOriginConfig:
+                HTTPPort: 80
+                HTTPSPort: 443
+                OriginProtocolPolicy: https-only
+              Id: ${self:custom.cloudfrontOriginId}
+  Outputs:
+    cloudFrontDistributionId:
+      Value:
+        Ref: CloudfrontDistribution
