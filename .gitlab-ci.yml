@@ -43,8 +43,6 @@ deploy:
     - echo "Deploying to $ENV ⚪️"
     - npm install -g serverless
     - serverless config credentials --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY} --profile ${AWS_PROFILE}
-    - yarn
-    - yarn build-$ENV
     - yarn deploy-$ENV
     - echo "Deployed to $ENV 🚀"
   environment:
