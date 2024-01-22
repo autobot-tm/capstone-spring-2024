@@ -30,3 +30,8 @@ yarn-error.log*
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# SERVERLESS STUFF
+**/.serverless
+**/.webpack
+**/*.pem
