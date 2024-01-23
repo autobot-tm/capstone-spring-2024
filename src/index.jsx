@@ -7,8 +7,10 @@ import { initTranslations } from './translations';
 import App from './App';
 import { store } from './store';
 import { COLORS } from './theme/colors.theme';
+import { configureSentry } from './services/sentry/sentry.service';
 
 initTranslations();
+configureSentry();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
