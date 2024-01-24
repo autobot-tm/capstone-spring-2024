@@ -1,5 +1,21 @@
 {
   "home": "Home",
   "about": "About",
-  "welcome-text": "Welcome hjhj"
+  "welcome-text": "Welcome hjhj",
+  "error": "Oops something went wrong",
+  "ok": "Ok",
+  "cancel": "Cancel",
+  "modal.login": "Sign In",
+  "button.login": "Login",
+  "checkbox.rememberme": "Remember me",
+  "forgetpassword": "Forgot your password?",
+  "placeholder.password": "Password",
+  "validationRules.required.email": "Email is required",
+  "validationRules.required.password": "Password is required",
+  "validationRules.invalid.email": "Email is invalid",
+  "validationRules.min.password": "Password must be at least 8 characters",
+  "notamember": "Not a member?",
+  "registerhere": "Register here",
+  "api.error.invalidAccountCredentials": "Email or password is incorrect",
+  "api.error.unknown": "Email or password is incorrect"
 }

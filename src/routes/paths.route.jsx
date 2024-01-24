@@ -14,7 +14,5 @@ export const routePaths = {
       element: <AboutUs />,
     },
   ],
-  private: [
-    // TODO: add private routes here
-  ],
+  private: [],
 };

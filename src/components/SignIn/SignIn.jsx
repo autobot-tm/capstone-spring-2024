@@ -1,5 +1,5 @@
-import React from 'react';
-import { Checkbox, Form, Input, notification } from 'antd';
+import React, { useEffect } from 'react';
+import { Alert, Checkbox, Form, Input } from 'antd';
 import styles from './SignIn.module.scss';
 import icon from '../../assets/images/GoogleIcon.svg';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
@@ -10,75 +10,90 @@ import {
   openRequestResetPasswordModal,
 } from '../../store/slices/modalSlice';
 import CustomModal from '../Modal/CustomModal';
+import { useAuthSlice } from '../../store/slices';
+import { t } from 'i18next';
 const SignIn = () => {
   const loginModal = useSelector(state => state.modal.loginModal);
   const dispatch = useDispatch();
-  const [api, contextHolder] = notification.useNotification();
-  const openNotificationWithIcon = type => {
-    api[type]({
-      message: 'Login Successfully',
-    });
-  };
-  const handleFinish = () => {
-    openNotificationWithIcon('success');
-    dispatch(closeLoginModal());
+
+  const { actions: authActions } = useAuthSlice();
+  const { actionSucceeded, loading, errorTranslationKey } = useSelector(state => state.auth);
+
+  const handleFinish = values => {
+    const { email, password } = values;
+    dispatch(authActions.signIn({ email, password }));
   };
 
+  useEffect(() => {
+    if (actionSucceeded === 'signIn') {
+      dispatch(closeLoginModal());
+      dispatch(authActions.clearActionSucceeded());
+    }
+  }, [actionSucceeded]);
+
   return (
-    <>
-      {contextHolder}
-      <div>
-        <CustomModal nameOfModal={loginModal} title="Login" action={closeLoginModal}>
-          <Form onFinish={handleFinish}>
-            <Form.Item
-              name="username"
-              rules={[{ required: true, message: 'Please input your username!' }]}>
-              <Input placeholder="Username" />
+    <div>
+      <CustomModal nameOfModal={loginModal} title={t('modal.login')} action={closeLoginModal}>
+        <Form onFinish={handleFinish}>
+          <Form.Item
+            name="email"
+            rules={[
+              { required: true, message: t('validationRules.required.email') },
+              { type: 'email', message: t('validationRules.invalid.email') },
+            ]}>
+            <Input placeholder="Email" disabled={loading} />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[
+              { required: true, message: t('validationRules.required.password') },
+              { min: 8, message: t('validationRules.min.password') },
+            ]}>
+            <Input.Password placeholder={t('placeholder.password')} disabled={loading} />
+          </Form.Item>
+          <div className={styles.supportSignInContainer}>
+            <Form.Item name="remember" noStyle>
+              <Checkbox>{t('checkbox.rememberme')}</Checkbox>
             </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[{ required: true, message: 'Please input your password!' }]}>
-              <Input.Password placeholder="Password" />
+            <span
+              onClick={() => {
+                dispatch(closeLoginModal());
+                dispatch(openRequestResetPasswordModal());
+              }}>
+              {t('forgetpassword')}
+            </span>
+          </div>
+          {errorTranslationKey && (
+            <Form.Item>
+              <Alert message={t(errorTranslationKey)} type="error" />
             </Form.Item>
-            <div className={styles.supportSignInContainer}>
-              <Form.Item name="remember" noStyle>
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
+          )}
+
+          <Form.Item>
+            <BaseButton type="primary" htmlType="submit" disabled={loading} loading={loading}>
+              {t('button.login')}
+            </BaseButton>
+          </Form.Item>
+          <Form.Item>
+            <div className={styles.askMemberContainer}>
+              <span>{t('notamember')}</span>
               <span
                 onClick={() => {
                   dispatch(closeLoginModal());
-                  dispatch(openRequestResetPasswordModal());
+                  dispatch(openRegisterModal());
                 }}>
-                Lost your password?
+                <b>{t('registerhere')}</b>
               </span>
             </div>
-
-            <Form.Item>
-              <BaseButton type="primary" htmlType="subbmit">
-                Login
-              </BaseButton>
-            </Form.Item>
-            <Form.Item>
-              <div className={styles.askMemberContainer}>
-                <span>Not a member?</span>
-                <span
-                  onClick={() => {
-                    dispatch(closeLoginModal());
-                    dispatch(openRegisterModal());
-                  }}>
-                  <b>Register here</b>
-                </span>
-              </div>
-            </Form.Item>
-            <Form.Item>
-              <div className={styles.loginByGoogleContainer}>
-                <img src={icon} alt="" />
-              </div>
-            </Form.Item>
-          </Form>
-        </CustomModal>
-      </div>
-    </>
+          </Form.Item>
+          <Form.Item>
+            <div className={styles.loginByGoogleContainer}>
+              <img src={icon} alt="" />
+            </div>
+          </Form.Item>
+        </Form>
+      </CustomModal>
+    </div>
   );
 };
 

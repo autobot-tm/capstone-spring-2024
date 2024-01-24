@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 const CustomModal = ({ children, nameOfModal, title, action }) => {
   const dispatch = useDispatch();
+
   return (
     <Modal
       width={400}
@@ -21,9 +22,12 @@ const CustomModal = ({ children, nameOfModal, title, action }) => {
       }
       open={nameOfModal}
       onOk={() => {
+        // navigate('/' + previousPathname);
         dispatch(action());
       }}
       onCancel={() => {
+        // navigate('/' + previousPathname);
+
         dispatch(action());
       }}
       footer={null}>
