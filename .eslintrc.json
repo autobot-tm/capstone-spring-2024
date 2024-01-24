@@ -26,6 +26,7 @@
   "ignorePatterns": ["build", "node_modules", "postcss.config.js"],
   "rules": {
     "react/react-in-jsx-scope": "error",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react-hooks/exhaustive-deps":"warn"
   }
 }
