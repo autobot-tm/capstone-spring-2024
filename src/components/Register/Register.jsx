@@ -26,12 +26,6 @@ const Register = () => {
           <Form onFinish={handleFinish}>
             <Form.Item
               hasFeedback
-              name="username"
-              rules={[{ required: true, message: 'Please input your username!' }]}>
-              <Input placeholder="Username" />
-            </Form.Item>
-            <Form.Item
-              hasFeedback
               name="email"
               rules={[
                 { required: true, message: 'Please input your email!' },
