@@ -8,10 +8,13 @@ import {
   resetPasswordService,
   signInService,
   signOutService,
+  signInWithGoogleService,
   signUpService,
 } from '../../services/apis/auth.service';
 import { load, remove, save } from '../../utils/local-storage';
 import { AUTH_ACTIONS } from '../constants/action-name.constant';
+import { googleLogout } from '@react-oauth/google';
+
 const createInitialState = () => {
   const initialState = {
     access_token: '',
@@ -29,13 +32,29 @@ export const initialState = createInitialState();
 export const signIn = createAsyncThunk('auth/signIn', async (input, { rejectWithValue }) => {
   try {
     const response = await signInService(input);
-    await save(STORAGE_KEYS.AUTH, response);
+    save(STORAGE_KEYS.AUTH, response);
     return { ...response, actionSucceeded: AUTH_ACTIONS.SIGN_IN };
   } catch (error) {
     console.warn('🚀 ~ file: auth.slice.ts:11 ~ error:', error);
     return rejectWithValue(error);
   }
 });
+
+export const signInWithGoogle = createAsyncThunk(
+  'auth/signInWithGoogle',
+  async ({ idToken }, { rejectWithValue }) => {
+    try {
+      console.log('🚀 ~ idToken:', idToken);
+      const response = await signInWithGoogleService({ id_token: idToken ?? '' });
+      save(STORAGE_KEYS.AUTH, response);
+      return { ...response, actionSucceeded: AUTH_ACTIONS.ACTIVATE_ACCOUNT };
+    } catch (error) {
+      console.warn('🚀 ~ file: auth.slice.ts:11 ~ error:', error);
+      return rejectWithValue(error);
+    }
+  },
+);
+
 export const signUp = createAsyncThunk('auth/signUp', async (input, { rejectWithValue }) => {
   try {
     const response = await signUpService(input);
@@ -54,7 +73,6 @@ export const refreshToken = createAsyncThunk(
       const { auth } = state;
       const { refresh_token } = auth;
       const response = await refreshTokenService(refresh_token);
-      console.log('🚀 ~ tokens:', JSON.stringify(response, null, 2));
       save(STORAGE_KEYS.AUTH, response);
       return { ...response, actionSucceeded: AUTH_ACTIONS.REFRESH_TOKEN };
     } catch (error) {
@@ -72,6 +90,7 @@ export const signOut = createAsyncThunk(
       const { refresh_token } = auth;
       remove(STORAGE_KEYS.AUTH);
       try {
+        googleLogout();
         await signOutService(refresh_token);
       } catch (error) {
         console.warn('🚀 ~ remove refreshToken error: :', error);
@@ -198,6 +217,28 @@ export const authSlice = createSlice({
       actionSucceeded: payload.actionSucceeded,
       loading: false,
       errorTranslationKey: '',
+    }));
+    builder.addCase(signInWithGoogle.pending, state => ({
+      ...state,
+      actionSucceeded: undefined,
+      loading: true,
+    }));
+    builder.addCase(signInWithGoogle.fulfilled, (state, { payload }) => ({
+      ...state,
+      access_token: payload.access_token,
+      refresh_token: payload.refresh_token,
+      id_token: payload.id_token,
+      access_token_expires_at: payload.access_token_expires_at,
+      refresh_token_expires_at: payload.refresh_token_expires_at,
+      actionSucceeded: payload.actionSucceeded,
+      loading: false,
+      errorTranslationKey: '',
+    }));
+    builder.addCase(signInWithGoogle.rejected, (state, { payload }) => ({
+      ...state,
+      loading: false,
+      actionSucceeded: undefined,
+      errorTranslationKey: payload,
     }));
     builder.addCase(signUp.rejected, (state, { payload }) => ({
       ...state,
@@ -344,6 +385,7 @@ export const useAuthSlice = () => {
     activateAccount,
     requestActivateAccount,
     requestResetPassword,
+    signInWithGoogle,
   };
   return { actions };
 };

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Alert, Checkbox, Form, Input } from 'antd';
 import styles from './SignIn.module.scss';
-import icon from '../../assets/images/GoogleIcon.svg';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -12,6 +11,7 @@ import {
 import CustomModal from '../Modal/CustomModal';
 import { useAuthSlice } from '../../store/slices';
 import { t } from 'i18next';
+import GoogleSignInButton from '../GoogleSignInButton/GoogleSignInButton';
 const SignIn = () => {
   const loginModal = useSelector(state => state.modal.loginModal);
   const dispatch = useDispatch();
@@ -86,12 +86,10 @@ const SignIn = () => {
               </span>
             </div>
           </Form.Item>
-          <Form.Item>
-            <div className={styles.loginByGoogleContainer}>
-              <img src={icon} alt="" />
-            </div>
-          </Form.Item>
         </Form>
+        <div className={styles.loginByGoogleContainer}>
+          <GoogleSignInButton />
+        </div>
       </CustomModal>
     </div>
   );
