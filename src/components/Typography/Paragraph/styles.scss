@@ -1,0 +1,10 @@
+@import "../../../theme/scss/colors.theme.scss";
+
+.paragraph {
+  color: $colors-text;
+  display: block;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 26px;
+}
