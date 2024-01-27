@@ -8,4 +8,5 @@ export const AUTH_ACTIONS = {
   REQUEST_ACTIVATE_ACCOUNT: 'requestActivateAccount',
   REQUEST_RESET_PASSWORD: 'requestResetPassword',
   RESET_PASSWORD: 'resetPassword',
+  SIGN_IN_WITH_GOOGLE: 'signInWithGoogle',
 };

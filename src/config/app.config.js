@@ -3,4 +3,5 @@ export const APP_CONFIG = {
   IS_DEV: process.env.NODE_ENV === 'development',
   SENTRY_DSN: process.env.REACT_APP_SENTRY_DSN || '',
   ENV: process.env.REACT_APP_ENV || '',
+  GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID || '',
 };

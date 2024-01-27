@@ -80,3 +80,7 @@ export const resetPasswordService = ({ token, password }) => {
 export const requestResetPasswordService = ({ email }) => {
   return apiCaller.post(ENDPOINTS.auth.requestResetPassword, { email });
 };
+
+export const signInWithGoogleService = async ({ id_token }) => {
+  return apiCaller.post(ENDPOINTS.auth.google, { id_token });
+};

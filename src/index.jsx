@@ -15,6 +15,8 @@ import Register from './components/Register/Register';
 import RequestResetPassword from './components/RequestResetPassword/RequestResetPassword';
 import AuthenticationCode from './components/AuthenticationCode/AuthenticationCode';
 import ResetPassword from './components/ResetPassword/ResetPassword';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { APP_CONFIG } from './config';
 
 initTranslations();
 configureApiCaller(store);
@@ -23,27 +25,29 @@ configureSentry();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: COLORS.primary,
-        },
-        components: {
-          Menu: {
-            darkItemBg: COLORS.secondary,
-            darkItemSelectedBg: COLORS.primary,
-            darkItemColor: COLORS.white,
+    <GoogleOAuthProvider clientId={APP_CONFIG.GOOGLE_CLIENT_ID}>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: COLORS.primary,
           },
-        },
-      }}>
-      <BrowserRouter>
-        <App />
-        <SignIn />
-        <Register />
-        <RequestResetPassword />
-        <AuthenticationCode />
-        <ResetPassword />
-      </BrowserRouter>
-    </ConfigProvider>
+          components: {
+            Menu: {
+              darkItemBg: COLORS.secondary,
+              darkItemSelectedBg: COLORS.primary,
+              darkItemColor: COLORS.white,
+            },
+          },
+        }}>
+        <BrowserRouter>
+          <App />
+          <SignIn />
+          <Register />
+          <RequestResetPassword />
+          <AuthenticationCode />
+          <ResetPassword />
+        </BrowserRouter>
+      </ConfigProvider>
+    </GoogleOAuthProvider>
   </Provider>,
 );

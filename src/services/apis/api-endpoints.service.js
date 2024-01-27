@@ -7,5 +7,6 @@ export const ENDPOINTS = {
     requestActivate: '/auth/users/activate/request',
     resetPassword: '/auth/users/reset-password',
     requestResetPassword: '/auth/users/reset-password/request',
+    google: '/auth/tokens/google',
   },
 };
