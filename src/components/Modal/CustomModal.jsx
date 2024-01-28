@@ -1,33 +1,27 @@
 import { Modal } from 'antd';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-
+import { SubHeading } from '../Typography';
+import styles from './CustomModal.module.scss';
 const CustomModal = ({ children, nameOfModal, title, action }) => {
   const dispatch = useDispatch();
 
   return (
     <Modal
       width={400}
+      destroyOnClose
       centered
+      className={styles.modal}
       title={
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            marginBottom: '40px',
-            fontSize: 25,
-          }}>
+        <SubHeading size={230} strong classNames={styles.title}>
           {title}
-        </div>
+        </SubHeading>
       }
       open={nameOfModal}
       onOk={() => {
-        // navigate('/' + previousPathname);
         dispatch(action());
       }}
       onCancel={() => {
-        // navigate('/' + previousPathname);
-
         dispatch(action());
       }}
       footer={null}>

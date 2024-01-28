@@ -37,6 +37,10 @@ root.render(
               darkItemSelectedBg: COLORS.primary,
               darkItemColor: COLORS.white,
             },
+            Input: {
+              hoverBorderColor: COLORS.black,
+              activeBorderColor: COLORS.black,
+            },
           },
         }}>
         <BrowserRouter>

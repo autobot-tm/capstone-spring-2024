@@ -46,8 +46,8 @@ export const signOutService = refreshToken => {
  * @param {string} input.token - The token.
  * @returns {Promise} - The promise of the API call.
  */
-export const activateAccountService = ({ token }) => {
-  return apiCaller.post(ENDPOINTS.auth.activate, { token });
+export const activateAccountService = ({ email, otp_code }) => {
+  return apiCaller.post(ENDPOINTS.auth.activate, { email, otp_code });
 };
 
 /**

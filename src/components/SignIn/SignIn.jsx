@@ -18,6 +18,7 @@ const SignIn = () => {
 
   const { actions: authActions } = useAuthSlice();
   const { actionSucceeded, loading, errorTranslationKey } = useSelector(state => state.auth);
+  const [form] = Form.useForm();
 
   const handleFinish = values => {
     const { email, password } = values;
@@ -28,15 +29,19 @@ const SignIn = () => {
     if (actionSucceeded === 'signIn') {
       dispatch(closeLoginModal());
       dispatch(authActions.clearActionSucceeded());
+      form.setFieldsValue({
+        email: '',
+        password: '',
+      });
     }
   }, [actionSucceeded]);
 
   return (
     <div>
       <CustomModal nameOfModal={loginModal} title={t('modal.login')} action={closeLoginModal}>
-        <Form onFinish={handleFinish}>
+        <Form onFinish={handleFinish} form={form}>
           <Form.Item
-            name="email"
+            name={'email'}
             rules={[
               { required: true, message: t('validationRules.required.email') },
               { type: 'email', message: t('validationRules.invalid.email') },
@@ -44,7 +49,7 @@ const SignIn = () => {
             <Input placeholder="Email" disabled={loading} />
           </Form.Item>
           <Form.Item
-            name="password"
+            name={'password'}
             rules={[
               { required: true, message: t('validationRules.required.password') },
               { min: 8, message: t('validationRules.min.password') },
@@ -63,7 +68,7 @@ const SignIn = () => {
               {t('forgetpassword')}
             </span>
           </div>
-          {errorTranslationKey && (
+          {errorTranslationKey === 'api.error.invalidAccountCredentials' && (
             <Form.Item>
               <Alert message={t(errorTranslationKey)} type="error" />
             </Form.Item>
