@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomModal from '../Modal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -7,70 +7,161 @@ import {
   openRegisterModal,
   openResetPasswordModal,
 } from '../../store/slices/modalSlice';
-import { Form, Input, notification } from 'antd';
+import { Form, Input } from 'antd';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import styles from './AuthenticationCode.module.scss';
+import { useAuthSlice } from '../../store/slices';
+import { t } from 'i18next';
+import { AUTH_ACTIONS } from '../../store/constants/action-name.constant';
+import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
+import { Paragraph } from '../Typography';
+import { Trans } from 'react-i18next';
+const DEBOUNCE_TIME = 60; //seconds
+
 const AuthenticationCode = () => {
-  const authenticationCodeModal = useSelector(state => state.modal.authenticationCodeModal);
-  const isFinish = useSelector(state => state.modal.isFinish);
+  const { email, isFinish, authenticationCodeModal } = useSelector(state => state.modal);
+  const { actionSucceeded, loading, errorTranslationKey } = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
-  const [api, contextHolder] = notification.useNotification();
-  const openNotificationWithIcon = type => {
-    api[type]({
-      message: 'Create account successfully',
-    });
-  };
-  const handleSubmit = () => {
-    dispatch(closeAuthenticationCodeModal());
+
+  const { actions: authActions } = useAuthSlice();
+  const [debounceTime, setDebounceTime] = useState(0);
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (errorTranslationKey === ERROR_TRANS_KEYS.INVALID_OTP_CODE) {
+      form.setFields([
+        {
+          name: 'code',
+          errors: [`${t(errorTranslationKey)}`],
+        },
+      ]);
+      dispatch(authActions.clearError());
+    }
+  }, [errorTranslationKey]);
+
+  const handleSubmit = async values => {
+    const otp_code = Number(values.code);
     if (isFinish) {
-      dispatch(openLoginModal());
-      openNotificationWithIcon('success');
+      dispatch(authActions.activateAccount({ email, otp_code }));
     } else {
       dispatch(openResetPasswordModal());
     }
   };
+
+  useEffect(() => {
+    if (debounceTime > 0) {
+      const interval = setInterval(() => {
+        setDebounceTime(time => time - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+    return undefined;
+  }, [debounceTime]);
+
+  const handleResendCode = () => {
+    if (!debounceTime) {
+      setDebounceTime(DEBOUNCE_TIME);
+      dispatch(authActions.requestActivateAccount({ email }));
+    }
+  };
+
+  useEffect(() => {
+    if (actionSucceeded === AUTH_ACTIONS.ACTIVATE_ACCOUNT) {
+      dispatch(authActions.clearActionSucceeded());
+      dispatch(closeAuthenticationCodeModal());
+
+      dispatch(openLoginModal());
+    }
+  }, [actionSucceeded]);
+  useEffect(() => {
+    if (!authenticationCodeModal) {
+      form.resetFields();
+    }
+  }, [authenticationCodeModal]);
   return (
     <div>
-      {contextHolder}
       <CustomModal
         nameOfModal={authenticationCodeModal}
-        title="Check your Email"
+        title={t('modal.authenticationCode')}
         action={closeAuthenticationCodeModal}>
-        <Form onFinish={handleSubmit}>
+        <Form onFinish={handleSubmit} form={form}>
           <Form.Item
-            name="code"
-            rules={[{ required: true, message: 'Please input your authentication code' }]}>
-            <Input placeholder="Your code" />
+            name={'code'}
+            rules={[{ required: true, message: t('validationRules.required.authenticationCode') }]}>
+            <Input placeholder={t('placeholder.authenticationCode')} disabled={loading} />
           </Form.Item>
+
           <Form.Item>
-            <BaseButton type="primary" htmlType="submit">
-              Confirm
+            <BaseButton type="primary" htmlType="submit" disabled={loading} loading={loading}>
+              {t('button.confirm')}
             </BaseButton>
           </Form.Item>
         </Form>
+        <div className={styles.resendBtnContainer}>
+          <Paragraph classNames={styles.actionText}>
+            <Trans
+              i18nKey="activateAccount.resendCode"
+              components={{
+                resend: (
+                  <Paragraph
+                    strong
+                    classNames={`${styles.actionText} ${styles.actionTextPointer} ${
+                      debounceTime && styles.actionTextDisabled
+                    }`}
+                    onClick={handleResendCode}
+                  />
+                ),
+                in: (
+                  <Paragraph
+                    strong
+                    classNames={`${styles.actionText} ${
+                      debounceTime ? styles.actionTextDisabled : styles.actionTextHidden
+                    }`}
+                  />
+                ),
+              }}
+            />
+            {debounceTime > 0 && (
+              <Paragraph
+                strong
+                classNames={`${styles.actionText} ${debounceTime && styles.actionTextDisabled}`}>
+                {debounceTime}s
+              </Paragraph>
+            )}
+          </Paragraph>
+        </div>
         {!isFinish && (
           <div className={styles.askMemberContainer}>
-            <span>Not a member?</span>
+            <span>{t('notamember')}</span>
             <span
               onClick={() => {
                 dispatch(closeAuthenticationCodeModal());
                 dispatch(openRegisterModal());
               }}>
-              <b>Register here</b>
+              <b>{t('registerhere')}</b>
             </span>
           </div>
         )}
 
         <div className={styles.askLoginContainer}>
-          <span>Have an account?</span>
-          <span
-            onClick={() => {
-              dispatch(closeAuthenticationCodeModal());
-              dispatch(openLoginModal());
-            }}>
-            <b>Log in</b>
-          </span>
+          <Paragraph>
+            <Trans
+              i18nKey="auth.haveAccount"
+              components={{
+                signIn: (
+                  <Paragraph
+                    strong
+                    classNames={`${styles.actionText} ${styles.actionTextPointer}`}
+                    onClick={() => {
+                      dispatch(closeAuthenticationCodeModal());
+                      dispatch(openLoginModal());
+                    }}
+                  />
+                ),
+              }}
+            />
+          </Paragraph>
         </div>
       </CustomModal>
     </div>

@@ -1,8 +1,15 @@
+@import "../../theme/scss/colors.theme.scss";
+
+.resendBtnContainer {
+  margin-top: 8px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
 .askMemberContainer {
   display: flex;
   justify-content: center;
   gap: 5px;
-  margin-bottom: 10px;
   span {
     b {
       cursor: pointer;
@@ -18,5 +25,19 @@
     b {
       cursor: pointer;
     }
+  }
+}
+
+.actionText{
+  display: inline-block;
+  .actionTextPointer{
+    cursor: pointer;
+  }
+  .actionTextHidden{
+    display: none;
+  }
+  .actionTextDisabled{
+    color: $colors-error;
+    cursor: initial;
   }
 }

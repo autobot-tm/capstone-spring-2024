@@ -251,6 +251,7 @@ export const authSlice = createSlice({
       actionSucceeded: undefined,
       loading: true,
     }));
+
     builder.addCase(signUp.fulfilled, (state, { payload }) => ({
       ...state,
       actionSucceeded: payload.actionSucceeded,
