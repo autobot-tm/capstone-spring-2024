@@ -12,6 +12,7 @@ import CustomModal from '../Modal/CustomModal';
 import { useAuthSlice } from '../../store/slices';
 import { t } from 'i18next';
 import GoogleSignInButton from '../GoogleSignInButton/GoogleSignInButton';
+import { AUTH_ACTIONS } from '../../store/constants/action-name.constant';
 const SignIn = () => {
   const loginModal = useSelector(state => state.modal.loginModal);
   const dispatch = useDispatch();
@@ -26,7 +27,10 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (actionSucceeded === 'signIn') {
+    if (
+      actionSucceeded === AUTH_ACTIONS.SIGN_IN ||
+      actionSucceeded === AUTH_ACTIONS.SIGN_IN_WITH_GOOGLE
+    ) {
       dispatch(closeLoginModal());
       dispatch(authActions.clearActionSucceeded());
       form.setFieldsValue({

@@ -47,7 +47,7 @@ export const signInWithGoogle = createAsyncThunk(
       console.log('🚀 ~ idToken:', idToken);
       const response = await signInWithGoogleService({ id_token: idToken ?? '' });
       save(STORAGE_KEYS.AUTH, response);
-      return { ...response, actionSucceeded: AUTH_ACTIONS.ACTIVATE_ACCOUNT };
+      return { ...response, actionSucceeded: AUTH_ACTIONS.SIGN_IN_WITH_GOOGLE };
     } catch (error) {
       console.warn('🚀 ~ file: auth.slice.ts:11 ~ error:', error);
       return rejectWithValue(error);
