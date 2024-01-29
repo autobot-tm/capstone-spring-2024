@@ -46,13 +46,14 @@ const Register = () => {
       dispatch(authActions.clearActionSucceeded());
       dispatch(closeRegisterModal());
       form.resetFields();
-      dispatch(openAuthenticationCodeModal({ isFinish: true, email: email }));
+      dispatch(openAuthenticationCodeModal({ email: email }));
     }
   }, [actionSucceeded]);
   useEffect(() => {
     if (!registerModal) {
       form.resetFields();
     }
+    dispatch(authActions.clearError());
   }, [form, registerModal]);
   return (
     <CustomModal

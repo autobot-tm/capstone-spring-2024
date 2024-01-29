@@ -15,11 +15,6 @@
   display: flex;
   justify-content: center;
   gap: 5px;
-  span {
-    b {
-      cursor: pointer;
-    }
-  }
 }
 
 .loginByGoogleContainer {
@@ -29,4 +24,9 @@
     width: 30px;
     height: 30px;
   }
+}
+
+.actionText {
+  cursor: pointer;
+  display: inline-block;
 }

@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CustomModal from '../Modal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  closeAuthenticationCodeModal,
-  openLoginModal,
-  openRegisterModal,
-  openResetPasswordModal,
-} from '../../store/slices/modalSlice';
+import { closeAuthenticationCodeModal, openLoginModal } from '../../store/slices/modalSlice';
 import { Form, Input } from 'antd';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import styles from './AuthenticationCode.module.scss';
@@ -19,7 +14,7 @@ import { Trans } from 'react-i18next';
 const DEBOUNCE_TIME = 60; //seconds
 
 const AuthenticationCode = () => {
-  const { email, isFinish, authenticationCodeModal } = useSelector(state => state.modal);
+  const { email, authenticationCodeModal } = useSelector(state => state.modal);
   const { actionSucceeded, loading, errorTranslationKey } = useSelector(state => state.auth);
 
   const dispatch = useDispatch();
@@ -42,11 +37,7 @@ const AuthenticationCode = () => {
 
   const handleSubmit = async values => {
     const otp_code = Number(values.code);
-    if (isFinish) {
-      dispatch(authActions.activateAccount({ email, otp_code }));
-    } else {
-      dispatch(openResetPasswordModal());
-    }
+    dispatch(authActions.activateAccount({ email, otp_code }));
   };
 
   useEffect(() => {
@@ -77,6 +68,7 @@ const AuthenticationCode = () => {
   useEffect(() => {
     if (!authenticationCodeModal) {
       form.resetFields();
+      dispatch(authActions.clearError());
     }
   }, [authenticationCodeModal]);
   return (
@@ -131,18 +123,6 @@ const AuthenticationCode = () => {
             )}
           </Paragraph>
         </div>
-        {!isFinish && (
-          <div className={styles.askMemberContainer}>
-            <span>{t('notamember')}</span>
-            <span
-              onClick={() => {
-                dispatch(closeAuthenticationCodeModal());
-                dispatch(openRegisterModal());
-              }}>
-              <b>{t('registerhere')}</b>
-            </span>
-          </div>
-        )}
 
         <div className={styles.askLoginContainer}>
           <Paragraph>
