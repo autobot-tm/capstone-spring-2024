@@ -67,8 +67,8 @@ export const requestActivateAccountService = ({ email }) => {
  * @param {string} input.password - The new password.
  * @returns {Promise} - The promise of the API call.
  */
-export const resetPasswordService = ({ token, password }) => {
-  return apiCaller.post(ENDPOINTS.auth.resetPassword, { token, password });
+export const resetPasswordService = ({ email, otp_code, new_password }) => {
+  return apiCaller.post(ENDPOINTS.auth.resetPassword, { email, otp_code, new_password });
 };
 
 /**

@@ -1,64 +1,122 @@
 import { Form, Input } from 'antd';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   closeRequestResetPasswordModal,
-  openAuthenticationCodeModal,
   openLoginModal,
   openRegisterModal,
+  openResetPasswordModal,
 } from '../../store/slices/modalSlice';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import styles from './RequestResetPassword.module.scss';
 import CustomModal from '../Modal/CustomModal';
+import { t } from 'i18next';
+import { Paragraph } from '../Typography';
+import { Trans } from 'react-i18next';
+import { useAuthSlice } from '../../store/slices';
+import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
+import { AUTH_ACTIONS } from '../../store/constants/action-name.constant';
 const RequestResetPassword = () => {
   const requestResetPasswordModal = useSelector(state => state.modal.requestResetPasswordModal);
-  const dispatch = useDispatch();
+  const { loading, errorTranslationKey, actionSucceeded } = useSelector(state => state.auth);
 
-  const handleSubmit = () => {
-    dispatch(closeRequestResetPasswordModal());
-    dispatch(openAuthenticationCodeModal(false));
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const { actions: authActions } = useAuthSlice();
+  const [form] = Form.useForm();
+
+  const handleFinish = values => {
+    const { email } = values;
+    setEmail(email);
+    dispatch(authActions.requestResetPassword({ email }));
   };
+
+  useEffect(() => {
+    if (actionSucceeded === AUTH_ACTIONS.REQUEST_RESET_PASSWORD) {
+      dispatch(authActions.clearActionSucceeded());
+      dispatch(closeRequestResetPasswordModal());
+      dispatch(openResetPasswordModal({ email: email }));
+    }
+  }, [actionSucceeded]);
+
+  useEffect(() => {
+    if (errorTranslationKey === ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS) {
+      form.setFields([
+        {
+          name: 'email',
+          errors: [`${t(errorTranslationKey)}`],
+        },
+      ]);
+      dispatch(authActions.clearError());
+    }
+  }, [errorTranslationKey]);
+
+  useEffect(() => {
+    if (!requestResetPasswordModal) {
+      form.resetFields();
+      dispatch(authActions.clearError());
+    }
+  }, [form, requestResetPasswordModal]);
   return (
     <div>
       <CustomModal
         nameOfModal={requestResetPasswordModal}
-        title="Forgot Password"
+        title={t('modal.forgotPassword')}
         action={closeRequestResetPasswordModal}>
-        <Form onFinish={handleSubmit}>
+        <Form onFinish={handleFinish} form={form}>
           <Form.Item
             hasFeedback
-            name="email"
+            name={'email'}
+            disabled={loading}
             rules={[
-              { required: true, message: 'Email is required' },
-              { type: 'email', message: 'Please type a valid email' },
+              { required: true, message: t('validationRules.required.email') },
+              { type: 'email', message: t('validationRules.invalid.email') },
             ]}>
             <Input placeholder="Email" />
           </Form.Item>
           <Form.Item>
-            <BaseButton type="primary" htmlType="submit">
-              Continue
+            <BaseButton type="primary" htmlType="submit" disabled={loading} loading={loading}>
+              {t('button.continue')}
             </BaseButton>
           </Form.Item>
         </Form>
         <div className={styles.askMemberContainer}>
-          <span>Not a member?</span>
-          <span
-            onClick={() => {
-              dispatch(closeRequestResetPasswordModal());
-              dispatch(openRegisterModal());
-            }}>
-            <b>Register here</b>
-          </span>
+          <Paragraph>
+            <Trans
+              i18nKey="auth.dontHaveAccount"
+              components={{
+                register: (
+                  <Paragraph
+                    strong
+                    classNames={styles.actionText}
+                    onClick={() => {
+                      dispatch(closeRequestResetPasswordModal());
+                      dispatch(openRegisterModal());
+                    }}
+                  />
+                ),
+              }}
+            />
+          </Paragraph>
         </div>
         <div className={styles.askLoginContainer}>
-          <span>Have an account?</span>
-          <span
-            onClick={() => {
-              dispatch(closeRequestResetPasswordModal());
-              dispatch(openLoginModal());
-            }}>
-            <b>Log in</b>
-          </span>
+          <Paragraph>
+            <Trans
+              i18nKey="auth.haveAccount"
+              components={{
+                signIn: (
+                  <Paragraph
+                    strong
+                    classNames={styles.actionText}
+                    onClick={() => {
+                      dispatch(closeRequestResetPasswordModal());
+                      dispatch(openLoginModal());
+                    }}
+                  />
+                ),
+              }}
+            />
+          </Paragraph>
         </div>
       </CustomModal>
     </div>

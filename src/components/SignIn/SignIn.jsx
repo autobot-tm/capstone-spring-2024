@@ -13,6 +13,9 @@ import { useAuthSlice } from '../../store/slices';
 import { t } from 'i18next';
 import GoogleSignInButton from '../GoogleSignInButton/GoogleSignInButton';
 import { AUTH_ACTIONS } from '../../store/constants/action-name.constant';
+import { Paragraph } from '../Typography';
+import { Trans } from 'react-i18next';
+import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
 const SignIn = () => {
   const loginModal = useSelector(state => state.modal.loginModal);
   const dispatch = useDispatch();
@@ -33,12 +36,16 @@ const SignIn = () => {
     ) {
       dispatch(closeLoginModal());
       dispatch(authActions.clearActionSucceeded());
-      form.setFieldsValue({
-        email: '',
-        password: '',
-      });
+      dispatch(closeLoginModal());
     }
   }, [actionSucceeded]);
+
+  useEffect(() => {
+    if (!loginModal) {
+      form.resetFields();
+      dispatch(authActions.clearError());
+    }
+  }, [form, loginModal]);
 
   return (
     <div>
@@ -72,7 +79,7 @@ const SignIn = () => {
               {t('forgetpassword')}
             </span>
           </div>
-          {errorTranslationKey === 'api.error.invalidAccountCredentials' && (
+          {errorTranslationKey === ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS && (
             <Form.Item>
               <Alert message={t(errorTranslationKey)} type="error" />
             </Form.Item>
@@ -85,14 +92,23 @@ const SignIn = () => {
           </Form.Item>
           <Form.Item>
             <div className={styles.askMemberContainer}>
-              <span>{t('notamember')}</span>
-              <span
-                onClick={() => {
-                  dispatch(closeLoginModal());
-                  dispatch(openRegisterModal());
-                }}>
-                <b>{t('registerhere')}</b>
-              </span>
+              <Paragraph>
+                <Trans
+                  i18nKey="auth.dontHaveAccount"
+                  components={{
+                    register: (
+                      <Paragraph
+                        strong
+                        classNames={styles.actionText}
+                        onClick={() => {
+                          dispatch(closeLoginModal());
+                          dispatch(openRegisterModal());
+                        }}
+                      />
+                    ),
+                  }}
+                />
+              </Paragraph>
             </div>
           </Form.Item>
         </Form>

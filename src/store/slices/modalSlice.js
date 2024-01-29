@@ -6,7 +6,6 @@ const initialState = {
   requestResetPasswordModal: false,
   authenticationCodeModal: false,
   resetPasswordModal: false,
-  isFinish: false,
   email: '',
 };
 
@@ -25,11 +24,11 @@ const modalSlice = createSlice({
     },
     openAuthenticationCodeModal: (state, action) => {
       state.authenticationCodeModal = true;
-      state.isFinish = action.payload.isFinish;
       state.email = action.payload.email;
     },
-    openResetPasswordModal: state => {
+    openResetPasswordModal: (state, action) => {
       state.resetPasswordModal = true;
+      state.email = action.payload.email;
     },
 
     closeLoginModal: state => {
