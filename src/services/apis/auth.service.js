@@ -84,3 +84,7 @@ export const requestResetPasswordService = ({ email }) => {
 export const signInWithGoogleService = async ({ id_token }) => {
   return apiCaller.post(ENDPOINTS.auth.google, { id_token });
 };
+
+export const getPresignedURL = async input => {
+  return apiCaller.post(ENDPOINTS.auth.presignedURL, input);
+};
