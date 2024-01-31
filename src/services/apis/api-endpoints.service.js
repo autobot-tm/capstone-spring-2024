@@ -8,5 +8,6 @@ export const ENDPOINTS = {
     resetPassword: '/auth/users/reset-password',
     requestResetPassword: '/auth/users/reset-password/request',
     google: '/auth/tokens/google',
+    presignedURL: '/auth/presigned-urls/post',
   },
 };
