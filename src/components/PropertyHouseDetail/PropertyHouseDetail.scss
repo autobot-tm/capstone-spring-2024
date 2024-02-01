@@ -1,0 +1,17 @@
+.property-detail {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  padding: 5px;
+}
+
+.property-detail-group-1 {
+  display: flex;
+  text-wrap: nowrap;
+  align-items: center;
+  gap: 30px;
+}
+
+.property-detail-group-2 {
+  text-wrap: nowrap;
+  margin-left: auto;
+}
