@@ -1,0 +1,39 @@
+.card {
+  cursor: pointer;
+  .locationContainer {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    .houseTypeContainer {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      text-transform: uppercase;
+      img {
+        width: 10px;
+      }
+    }
+  }
+  .houseInfo {
+    display: flex;
+    justify-content: space-around;
+    .detail {
+      display: flex;
+      gap: 8px;
+      .itemContainer {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        .imageContainer {
+          width: 24px;
+          height: 24px;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
+}
