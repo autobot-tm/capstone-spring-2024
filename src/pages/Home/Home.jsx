@@ -5,6 +5,7 @@ import { TabName } from '../../components/TabName';
 import { Caption, Headline, Paragraph, SubHeading } from '../../components/Typography';
 import './styles.scss';
 import UploadFile from '../../components/UploadFile/UploadFile';
+import Houses from '../../components/Houses/Houses';
 
 export const ModalContext = createContext();
 
@@ -18,6 +19,7 @@ export const Home = () => {
         <h1>{t('home')}</h1>
         <h2>{t('welcome-text')}</h2>
         <UploadFile />
+        <Houses />
       </div>
       <div>
         <Headline size={600}>Headline 600</Headline>
