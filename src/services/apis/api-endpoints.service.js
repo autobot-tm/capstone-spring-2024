@@ -10,4 +10,7 @@ export const ENDPOINTS = {
     google: '/auth/tokens/google',
     presignedURL: '/auth/presigned-urls/post',
   },
+  payments: {
+    demo: '/payments/demo-checkout-url',
+  },
 };
