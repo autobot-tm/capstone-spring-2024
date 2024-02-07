@@ -1,69 +1,50 @@
-import { Col, Row } from 'antd';
-import React from 'react';
+import { Col, Pagination, Row } from 'antd';
+import React, { useState } from 'react';
 import HouseItem from '../HouseItem/HouseItem';
+import { getHousesService } from '../../services/apis/houses.service';
+import styles from './Houses.module.scss';
+import CardSkeleton from '../CardSkeleton/CardSkeleton';
+import useSWR from 'swr';
 const Houses = () => {
-  const houses = [
-    {
-      id: '1',
-      houseType: 'House Type',
-      locationName: 'Location Name',
-      title: 'Lorem ipsum dolor sit amet.',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis omnis, eveniet veritatis doloremque ut natus sed molestias qui nesciunt earum.',
-      price: '6.000.000',
-      area: '290',
-      bedrooms: '4',
-      bathrooms: '3',
-    },
-    {
-      id: '2',
-      houseType: 'House Type',
-      locationName: 'Location Name',
-      title: 'Lorem ipsum dolor sit amet.',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis omnis, eveniet veritatis doloremque ut natus sed molestias qui nesciunt earum.',
-      price: '6.000.000',
-      area: '290',
-      bedrooms: '4',
-      bathrooms: '3',
-    },
-    {
-      id: '3',
-      houseType: 'House Type',
-      locationName: 'Location Name',
-      title: 'Lorem ipsum dolor sit amet.',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis omnis, eveniet veritatis doloremque ut natus sed molestias qui nesciunt earum.',
-      price: '6.000.000',
-      area: '290',
-      bedrooms: '4',
-      bathrooms: '3',
-    },
-    {
-      id: '4',
-      houseType: 'House Type',
-      locationName: 'Location Name',
-      title: 'Lorem ipsum dolor sit amet.',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis omnis, eveniet veritatis doloremque ut natus sed molestias qui nesciunt earum.',
-      price: '6.000.000',
-      area: '290',
-      bedrooms: '4',
-      bathrooms: '3',
-    },
-  ];
+  const [page, setPage] = useState(1);
+  const LIMIT = 4;
+
+  const { data, isLoading } = useSWR(`getHousesService/page=${page}`, async () => {
+    return await getHousesService({ offset: LIMIT * (page - 1), limit: LIMIT });
+  });
+
   return (
     <div>
       <Row>
         <Col lg={12}>
           <Row gutter={[16, 16]}>
-            {houses.map(house => {
-              return (
-                <Col lg={12} key={house.id}>
-                  <HouseItem house={house} />
-                </Col>
-              );
-            })}
+            {isLoading
+              ? Array.from({ length: LIMIT }).map((_, index) => (
+                  <Col lg={12} key={index}>
+                    <CardSkeleton />
+                  </Col>
+                ))
+              : data?.houses.map(house => {
+                  return (
+                    <Col lg={12} key={house.id}>
+                      {<HouseItem house={house} />}
+                    </Col>
+                  );
+                })}
+          </Row>
+
+          <Row>
+            <div className={styles.paginationContainer}>
+              <Pagination
+                showSizeChanger={false}
+                total={data?.total_rows}
+                pageSize={LIMIT}
+                current={page}
+                onChange={page => {
+                  setPage(page);
+                }}
+              />
+            </div>
           </Row>
         </Col>
         <Col lg={12}>Map</Col>

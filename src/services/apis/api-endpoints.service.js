@@ -10,6 +10,9 @@ export const ENDPOINTS = {
     google: '/auth/tokens/google',
     presignedURL: '/auth/presigned-urls/post',
   },
+  houses: {
+    houses: '/houses/filter',
+  },
   payments: {
     demo: '/payments/demo-checkout-url',
   },

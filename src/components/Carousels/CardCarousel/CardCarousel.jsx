@@ -2,13 +2,13 @@ import { Carousel } from 'antd';
 import React from 'react';
 import styles from './CardCarousel.module.scss';
 
-const CardCarousel = ({ images }) => {
+const CardCarousel = ({ images, limit }) => {
   return (
     <Carousel>
-      {images.map(image => {
+      {images.slice(0, limit).map((image, index) => {
         return (
-          <div key={image.key}>
-            <img className={styles.cardImage} src={image.image} />
+          <div key={index}>
+            <img className={styles.cardImage} src={image} />
           </div>
         );
       })}
