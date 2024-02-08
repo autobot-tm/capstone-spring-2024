@@ -4,11 +4,21 @@ import { Layout } from '../../hoc/Layout';
 import { TabName } from '../../components/TabName';
 import { Caption, Headline, Paragraph, SubHeading } from '../../components/Typography';
 import './styles.scss';
+import { getDemoCheckoutURL } from '../../services/apis/payments.service';
+import { Button } from 'antd';
+import UploadFile from '../../components/UploadFile/UploadFile';
+import { HOUSE_ID } from '../../constants/vnpay.constant';
+import Houses from '../../components/Houses/Houses';
 
 export const ModalContext = createContext();
 
 export const Home = () => {
   const { t } = useTranslation();
+
+  const handlePayments = async () => {
+    const url = await getDemoCheckoutURL(HOUSE_ID);
+    window.location.href = url;
+  };
 
   return (
     <Layout>
@@ -16,8 +26,9 @@ export const Home = () => {
       <div className="home-container">
         <h1>{t('home')}</h1>
         <h2>{t('welcome-text')}</h2>
-      </div>
-      <div>
+        <UploadFile />
+        <Button onClick={handlePayments}>Reserve house</Button>
+        <Houses />
         <Headline size={600}>Headline 600</Headline>
         <Headline size={450}>Headline 450</Headline>
         <SubHeading size={260} strong>
