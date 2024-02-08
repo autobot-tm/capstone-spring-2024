@@ -3,6 +3,7 @@ import { Home } from '../pages/Home';
 import { AboutUs } from '../pages/AboutUs';
 import { routeNames } from '../config';
 import Payment from '../pages/Payment/Payment';
+import HousesPage from '../pages/Houses/HousesPage';
 
 export const routePaths = {
   public: [
@@ -17,6 +18,10 @@ export const routePaths = {
     {
       path: routeNames.Payment,
       element: <Payment />,
+    },
+    {
+      path: routeNames.Houses,
+      element: <HousesPage />,
     },
   ],
   private: [],
