@@ -9,7 +9,8 @@ const Selection = () => {
       <Select
         defaultValue="1 month"
         style={{
-          width: '100%',
+          width: '160px',
+          textAlign: 'left',
         }}
         onChange={handleChange}
         options={[

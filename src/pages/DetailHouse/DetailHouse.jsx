@@ -1,78 +1,123 @@
-import React from 'react';
-import { Layout } from '../../hoc/Layout';
 import './styles.scss';
+import React, { useEffect, useState } from 'react';
+import { Layout } from '../../hoc/Layout';
 import { Headline } from '../../components/Typography/Headline/Headline';
 import { Paragraph } from '../../components/Typography/Paragraph/Paragraph';
 import { EyeOutlined, StarOutlined } from '@ant-design/icons';
 import { StarFilled } from '@ant-design/icons';
 import { Caption, SubHeading } from '../../components/Typography';
-import PropertyHouseDetail from '../../components/PropertyHouseDetail/PropertyHouseDetail';
-import SizeIcon from '../../assets/images/SizeIcon.svg';
-import { Button, Row, Col, Avatar } from 'antd';
-import ReviewForm from '../../components/ReviewForm/ReviewForm';
-import CarouselHeader from '../../components/CarouselHeader/CarouselHeader';
+import { Button, Row, Col } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import { getHouseById } from '../../services/apis/houses.service';
+import { getDemoCheckoutURL } from '../../services/apis/payments.service';
+// import { formatCustomCurrency } from '../../utils/number-seperator';
+import HouseUtility from './components/HouseUtility/HouseUtility';
+import axios from 'axios';
+import FeedBackCustomer from '../../components/FeedBackCustomer/FeedBackCustomer';
+import HouseAmenities from './components/HouseAmenities/HouseAmenities';
+import useSWR from 'swr';
 import Selection from '../../components/Selection/Selection';
 import DatePickerAnt from '../../components/DatePickerComponent/DatePickerAnt';
+import ReviewForm from '../../components/ReviewForm/ReviewForm';
+import CarouselHeader from '../../components/CarouselHeader/CarouselHeader';
 
 const DetailHouse = () => {
   const { t } = useTranslation();
+  const { house_id: house_id } = useParams();
+  const [houseAmenities, setHouseAmenities] = useState([]);
+  const [houseUtilities, setHouseUtilities] = useState([]);
+  const [imgHouse, setImgHouse] = useState([]);
+  const [comment, setComment] = useState([]);
+  const [isClickedWishlist, setIsClickedWishlist] = useState(false);
+
+  const handleClick = () => {
+    setIsClickedWishlist(!isClickedWishlist);
+  };
+
+  const { data: house } = useSWR(
+    `getHouseById/${house_id}`,
+    async () => await getHouseById({ house_id }),
+  );
+
+  const { data: reviews } = useSWR(
+    ['getHouseReview', house_id],
+    async () => await axios.get(`https://dev.lotus.ttq186.dev/houses/${house_id}/reviews`),
+  );
+  const lastFourCharacters = house?.id.slice(-6).toUpperCase();
+  console.log(reviews);
+  console.log(house);
+  useEffect(() => {
+    const fetchHouseAmenities = async () => {
+      try {
+        if (house) {
+          setHouseAmenities(house.amenities);
+          setHouseUtilities(house.utilities);
+          setImgHouse(house?.image_urls);
+          setComment(reviews?.data.reviews);
+        }
+      } catch (error) {
+        console.error('Error fetching house amenities:', error);
+      }
+    };
+
+    fetchHouseAmenities();
+  }, [house]);
+
+  const handlePayments = async () => {
+    const url = await getDemoCheckoutURL(house_id);
+    window.location.href = url;
+  };
+
   return (
     <Layout>
       <header>
-        <CarouselHeader />
+        {' '}
+        <CarouselHeader img={imgHouse} />
       </header>
-      <div className="container">
+      <div id="dh-container">
         <Row className="main-container">
           <Col style={{ marginRight: 30 }} className="main" xs={24} lg={16}>
             <Row>
               <Headline classNames="main-title" size={450} strong>
-                South Sunlight Apartment
+                {house?.name}
               </Headline>
             </Row>
             <Row className="main-frame-info">
-              <Caption className="caption" size={140}>
-                APARTMENT
+              <Caption style={{ color: 'black' }} classNames="caption-hr" size={140}>
+                {house?.category}
               </Caption>
-              <Caption className="caption" size={140}>
-                PROPERTY ID: 55W886
+              <Caption style={{ color: 'black' }} classNames="caption-hr" size={140}>
+                {t('detail-house.property-id')}: {lastFourCharacters}
               </Caption>
-              <Caption className="caption" size={140}>
+              <Caption style={{ color: 'black' }} classNames="caption-hr" size={140}>
                 <EyeOutlined /> 1839
               </Caption>
-              <div className="main-frame-info-ratting">
+              <Caption
+                style={{ color: 'black' }}
+                classNames="caption-hr"
+                size={140}
+                className="main-frame-info-ratting">
                 <StarFilled />
-                <StarFilled />
-                <StarFilled />
-                <StarFilled />
-                <StarFilled />
-              </div>
+                &nbsp;{reviews?.data?.average_rating}/5
+              </Caption>
+              <Caption style={{ color: 'black' }} size={140}>
+                {house?.size_in_m2}m²
+              </Caption>
             </Row>
-
             <Row className="main-frame-description">
               <SubHeading size={260} classNames="main-title" strong>
                 {t('detail-house.description-title')}
               </SubHeading>
               {/* dynamic */}
-              <Paragraph>
-                Lorem ipsum dolor sit amet, wisi nemore fastidii at vis, eos equidem admodum
-                disputando ea. An duis dolor appellantur mea, est id zril nobis appellantur. Ei sea
-                duis senserit qualisque, te facilisis appellantur pri. Id aperiri aliquam interesset
-                mel. Contentiones vituperatoribus id est, per prima nihil scripta no. No semper
-                forensibus adipiscing quo. Amet deleniti lobortis et eam. In oporteat pertinacia
-                quo, cu qui antiopam intellegebat, ei alii paulo has. In alia eros ornatus pri,
-                graeci accusata pericula an vix. His ne homero dignissim, aliquam dolores scriptorem
-                vis ut. Sit ad suas adhuc interesset, neu essent iuvaret adipiscing everti.
-              </Paragraph>
+              <Paragraph>{house?.description}</Paragraph>
             </Row>
-
             <Row className="main-property-features">
               <SubHeading size={260} classNames="main-title" strong>
                 {t('detail-house.property-feature-title')}
               </SubHeading>
               <Paragraph>{t('detail-house.property-feature-des')}</Paragraph>
             </Row>
-
             <Row>
               <SubHeading classNames="main-property-features-title" size={230} strong>
                 {t('detail-house.property-detail-title')}
@@ -82,34 +127,12 @@ const DetailHouse = () => {
               <Col
                 style={{ marginRight: 40 }}
                 className="main-property-features-detail-card"
-                xs={24}
-                md={10}>
-                <PropertyHouseDetail icon={SizeIcon} name={'Size'} description={'123m2'} />
-                <PropertyHouseDetail icon={SizeIcon} name={'Bedrooms'} description={'4'} />
-                <PropertyHouseDetail icon={SizeIcon} name={'Bathrooms'} description={'3'} />
-                <PropertyHouseDetail icon={SizeIcon} name={'Floor'} description={'Ground'} />
-                <PropertyHouseDetail
-                  icon={SizeIcon}
-                  name={'Additional space'}
-                  description={'Attic'}
-                />
-              </Col>
-              <Col className="main-property-features-detail-card" xs={24} md={10}>
-                <PropertyHouseDetail
-                  icon={SizeIcon}
-                  name={'Furnishing'}
-                  description={'Furnished'}
-                />
-                <PropertyHouseDetail icon={SizeIcon} name={'Ceiling Height'} description={'3m'} />
-                <PropertyHouseDetail
-                  icon={SizeIcon}
-                  name={'Construction Year'}
-                  description={'2007'}
-                />
-                <PropertyHouseDetail icon={SizeIcon} name={'Renovation'} description={'2017'} />
+                xs={24}>
+                {houseAmenities && houseAmenities.length > 0 && (
+                  <HouseAmenities amenities={houseAmenities} />
+                )}
               </Col>
             </Row>
-
             <Row>
               <SubHeading classNames="main-property-features-title" size={230} strong>
                 {t('detail-house.property-utility-title')}
@@ -119,35 +142,19 @@ const DetailHouse = () => {
               <Col
                 style={{ marginRight: 40 }}
                 className="main-property-features-utility-card"
-                xs={24}
-                md={10}>
-                <PropertyHouseDetail icon={SizeIcon} name={'Heating'} description={'Natural gas'} />
-                <PropertyHouseDetail icon={SizeIcon} name={'Air Condition'} description={'Yes'} />
-                <PropertyHouseDetail icon={SizeIcon} name={'Fireplace'} description={'-'} />
-                <PropertyHouseDetail icon={SizeIcon} name={'Elevator'} description={'-'} />
-                <PropertyHouseDetail icon={SizeIcon} name={'Ventilation'} description={'Yes'} />
-              </Col>
-              <Col className="main-property-features-utility-card" xs={24} md={10}>
-                <PropertyHouseDetail icon={SizeIcon} name={'Intercom'} description={'Yes'} />
-                <PropertyHouseDetail
-                  icon={SizeIcon}
-                  name={'Window Type'}
-                  description={'Aluminum frame'}
-                />
-                <PropertyHouseDetail icon={SizeIcon} name={'Cable TV'} description={'Yes'} />
-                <PropertyHouseDetail icon={SizeIcon} name={'Wifi'} description={'Yes'} />
+                xs={24}>
+                {houseUtilities && houseUtilities.length > 0 && (
+                  <HouseUtility utilities={houseUtilities} />
+                )}
               </Col>
             </Row>
-
             <Row align="middle" className="main-frame-location" gutter={[0, 14]}>
               <Col xs={24} md={14}>
                 <SubHeading size={260} classNames="main-title" strong>
                   {t('detail-house.location-title')}
                 </SubHeading>
-                {/* dynamic */}
-                <Paragraph>26, Thi Sach street, Ben Nghe ward, 1 district, HCM City</Paragraph>
+                <Paragraph>{house?.address}</Paragraph>
               </Col>
-
               <Col style={{ textAlign: 'right' }} xs={24} md={10}>
                 {/* change -> component */}
                 <Button className="main-frame-location-inner-btn">
@@ -155,17 +162,17 @@ const DetailHouse = () => {
                 </Button>
               </Col>
             </Row>
-
-            <Row className="main-frame-nearby">
+            {/* <Row className="main-frame-nearby">
               <SubHeading size={260} classNames="main-title" strong>
                 {t('detail-house.nearby-title')}
               </SubHeading>
               <Paragraph>{t('detail-house.nearby-des')}</Paragraph>
-            </Row>
-            <Row>
+            </Row> */}
+            {/* <Row>
               <Col className="main-frame-nearby-info" xs={12}>
                 <Row>
-                  <Paragraph>School: </Paragraph>&nbsp;<Paragraph strong>0.7km</Paragraph>
+                  <Paragraph>School: </Paragraph>&nbsp;
+                  <Paragraph strong>0.7km</Paragraph>
                 </Row>
                 <Row>
                   <Paragraph>University:</Paragraph>&nbsp;<Paragraph strong>1.7km</Paragraph>
@@ -191,30 +198,14 @@ const DetailHouse = () => {
                   <Paragraph>River:</Paragraph>&nbsp;<Paragraph strong>2.2km</Paragraph>
                 </Row>
               </Col>
-            </Row>
+            </Row> */}
             <Row className="main-frame-review">
-              {/* dynamic */}
-              <SubHeading strong>1 {t('detail-house.comment-dynamic')}</SubHeading>
-
-              <Row style={{ paddingTop: 20 }} align="middle">
-                <Col xs={6} md={4}>
-                  <Avatar
-                    src="https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/agent3-profile-img-new-409x409.jpg"
-                    shape="square"
-                    size={100}
-                  />
-                </Col>
-                <Col xs={18} md={20}>
-                  <SubHeading classNames="main-title" strong>
-                    Anne Reid
-                  </SubHeading>
-                  <Paragraph>
-                    Lorem ipsum dolor sit amet, id duo epicuri vulputate. Ex eum eius ludus has cu
-                    nobis insolens omittantur. Ex nostrum repudiare abhorreant cum velit.
-                  </Paragraph>
-                </Col>
+              <SubHeading strong>
+                {comment.length} {t('detail-house.comment-dynamic')}
+              </SubHeading>
+              <Row>
+                <FeedBackCustomer comment={comment} />
               </Row>
-
               <Row>
                 <Col className="main-frame-review-form" xs={24}>
                   <SubHeading size={260} strong>
@@ -229,7 +220,6 @@ const DetailHouse = () => {
                     <StarFilled />
                     <StarFilled />
                   </span>
-
                   <ReviewForm />
                 </Col>
               </Row>
@@ -238,59 +228,56 @@ const DetailHouse = () => {
           <Col className="side" xs={24} lg={7}>
             <div className="side-form">
               <Row className="side-form-price-section">
-                <Col xs={12}>
+                <Col xs={10}>
                   <SubHeading size={230} strong>
-                    Price:
+                    {t('detail-house.price')}:
                   </SubHeading>
                 </Col>
-                {/* dynamic */}
-                <Col style={{ textAlign: 'right' }} className="price-group" xs={12}>
+                <Col style={{ textAlign: 'right' }} className="price-group" xs={14}>
                   {' '}
                   <SubHeading size={230} strong>
-                    500$
+                    {house?.pricing_policies[0].reservation_fee}
                   </SubHeading>
-                  <SubHeading size={230}>/month</SubHeading>
+                  <SubHeading size={230}>/{t('detail-house.month')}</SubHeading>
                 </Col>
               </Row>
               <Row className="side-form-wishlist-section">
-                <Button className="btn">
-                  <StarOutlined /> <b>Add to wishlist</b>
+                <Button
+                  style={{ backgroundColor: isClickedWishlist ? '#f8a11e' : 'inherit' }}
+                  onClick={handleClick}>
+                  <StarOutlined /> <b> {t('detail-house.add-to-wishlist')}</b>
                 </Button>
               </Row>
               <Row className="side-form-estimated-section">
-                {/* <Row className="side-form-estimated-section-inner"> */}
                 <Col xs={24}>
                   <SubHeading size={230} strong>
-                    Estimated
+                    {t('detail-house.estimated')}
                   </SubHeading>
                 </Col>
-
                 <Col style={{ paddingLeft: 25 }} xs={12}>
-                  <Paragraph>rental period:</Paragraph>
+                  <Paragraph> {t('detail-house.rental-period')}:</Paragraph>
                 </Col>
                 <Col xs={12} style={{ textAlign: 'right' }}>
                   <Selection />
                 </Col>
-
                 <Col style={{ paddingLeft: 25 }} xs={12}>
-                  <Paragraph>time to move in:</Paragraph>
+                  <Paragraph> {t('detail-house.time-to-move-in')}:</Paragraph>
                 </Col>
                 <Col xs={12} style={{ textAlign: 'right' }}>
                   <DatePickerAnt />
                 </Col>
                 <Col xs={24} md={24} lg={24}>
-                  <Button className="book-btn">
-                    <b>Book Now</b>
+                  <Button className="book-btn" onClick={handlePayments}>
+                    <b> {t('detail-house.book-now-btn')}</b>
                   </Button>
                 </Col>
-                {/* </Row> */}
               </Row>
             </div>
             <div className="side-related-house">
               <Row gutter={[16, 16]}>
                 <Col xs={24}>
                   <SubHeading size={260} strong>
-                    Related properties
+                    {t('detail-house.related-property')}
                   </SubHeading>
                 </Col>
                 <Col xs={24}>
@@ -299,7 +286,9 @@ const DetailHouse = () => {
                   </Paragraph>
                 </Col>
               </Row>
-              <Row style={{ justifyContent: 'center' }}>wait fill components</Row>
+              <Row style={{ justifyContent: 'center' }}>
+                <h3>updating..</h3>
+              </Row>
             </div>
           </Col>
         </Row>

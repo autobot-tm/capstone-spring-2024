@@ -8,6 +8,10 @@ import DetailHouse from '../pages/DetailHouse/DetailHouse';
 export const routePaths = {
   public: [
     {
+      path: routeNames.DetailHouse,
+      element: <DetailHouse />,
+    },
+    {
       path: routeNames.Home,
       element: <Home />,
     },
@@ -18,10 +22,6 @@ export const routePaths = {
     {
       path: routeNames.Payment,
       element: <Payment />,
-    },
-    {
-      path: routeNames.DetailHouse,
-      element: <DetailHouse />,
     },
   ],
   private: [],

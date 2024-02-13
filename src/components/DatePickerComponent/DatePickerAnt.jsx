@@ -9,7 +9,7 @@ const DatePickerAnt = () => {
     <Space direction="vertical">
       <DatePicker
         style={{
-          width: '100%',
+          width: '160px',
         }}
         onChange={onChange}
       />
