@@ -12,6 +12,7 @@ export const ENDPOINTS = {
   },
   houses: {
     houses: '/houses/filter',
+    metadata: '/houses/metadata',
   },
   payments: {
     demo: '/payments/demo-checkout-url',

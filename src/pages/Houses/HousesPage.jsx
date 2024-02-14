@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout } from '../../hoc/Layout';
 import './styles.scss';
-import Houses from '../../components/Houses/Houses';
+import Houses from './components/Houses/Houses';
 
 const HousesPage = () => {
   return (

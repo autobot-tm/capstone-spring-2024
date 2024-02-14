@@ -1,10 +1,11 @@
 import { Col, Pagination, Row } from 'antd';
 import React, { useState } from 'react';
-import HouseItem from '../HouseItem/HouseItem';
-import { getHousesService } from '../../services/apis/houses.service';
 import styles from './Houses.module.scss';
-import CardSkeleton from '../CardSkeleton/CardSkeleton';
 import useSWR from 'swr';
+import { getHousesService } from '../../../../services/apis/houses.service';
+import CardSkeleton from '../../../../components/CardSkeleton/CardSkeleton';
+import HouseItem from '../../../../components/HouseItem/HouseItem';
+
 const Houses = () => {
   const [page, setPage] = useState(1);
   const LIMIT = 4;
