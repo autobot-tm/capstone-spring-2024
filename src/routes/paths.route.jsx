@@ -2,8 +2,9 @@ import React from 'react';
 import { Home } from '../pages/Home';
 import { AboutUs } from '../pages/AboutUs';
 import { routeNames } from '../config';
-import { Payment } from '../pages/Payment/Payment';
-import DetailHouse from '../pages/DetailHouse/DetailHouse';
+import Payment from '../pages/Payment/Payment';
+import HousesPage from '../pages/Houses/HousesPage';
+import ReservationPage from '../pages/Reservation/ReservationPage';
 
 import HousesPage from '../pages/Houses/HousesPage';
 

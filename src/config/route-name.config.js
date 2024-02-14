@@ -4,6 +4,7 @@ export const routeNames = {
   NotFound: '/not-found',
   SignIn: '/auth/sign-in',
   Payment: '/payments',
-  DetailHouse: '/houses/:house_id',
   Houses: '/houses',
+  Reservation: '/reservation',
+  DetailHouse: '/houses/:house_id',
 };
