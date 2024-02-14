@@ -49,7 +49,11 @@ const SignIn = () => {
 
   return (
     <div>
-      <CustomModal nameOfModal={loginModal} title={t('modal.login')} action={closeLoginModal}>
+      <CustomModal
+        width={400}
+        nameOfModal={loginModal}
+        title={t('modal.login')}
+        action={closeLoginModal}>
         <Form onFinish={handleFinish} form={form}>
           <Form.Item
             name={'email'}

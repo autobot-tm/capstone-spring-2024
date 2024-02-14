@@ -82,6 +82,7 @@ const ResetPassword = () => {
   return (
     <div>
       <CustomModal
+        width={400}
         nameOfModal={resetPasswordModal}
         title={t('modal.resetpassword')}
         action={closeResetPasswordModal}>

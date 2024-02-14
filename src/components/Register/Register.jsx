@@ -57,6 +57,7 @@ const Register = () => {
   }, [form, registerModal]);
   return (
     <CustomModal
+      width={400}
       nameOfModal={registerModal}
       title={t('modal.register')}
       action={closeRegisterModal}>

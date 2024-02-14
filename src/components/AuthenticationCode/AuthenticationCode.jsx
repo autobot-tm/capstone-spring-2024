@@ -74,6 +74,7 @@ const AuthenticationCode = () => {
   return (
     <div>
       <CustomModal
+        width={400}
         nameOfModal={authenticationCodeModal}
         title={t('modal.authenticationCode')}
         action={closeAuthenticationCodeModal}>

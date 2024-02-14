@@ -60,6 +60,7 @@ const RequestResetPassword = () => {
   return (
     <div>
       <CustomModal
+        width={400}
         nameOfModal={requestResetPasswordModal}
         title={t('modal.forgotPassword')}
         action={closeRequestResetPasswordModal}>

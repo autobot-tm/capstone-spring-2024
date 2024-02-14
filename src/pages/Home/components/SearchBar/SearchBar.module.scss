@@ -1,0 +1,18 @@
+.searchBar {
+  background: white;
+  width: 1400px;
+  margin: 0 auto;
+  padding: 30px;
+  margin-bottom: 60px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  z-index: -1;
+  .formContainer {
+    display: flex;
+    gap: 4px;
+    .formItem {
+      flex: 1;
+    }
+  }
+}

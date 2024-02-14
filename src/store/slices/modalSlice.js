@@ -6,6 +6,7 @@ const initialState = {
   requestResetPasswordModal: false,
   authenticationCodeModal: false,
   resetPasswordModal: false,
+  advanceSearchModal: false,
   email: '',
 };
 
@@ -30,6 +31,9 @@ const modalSlice = createSlice({
       state.resetPasswordModal = true;
       state.email = action.payload.email;
     },
+    openAdvanceSearchModal: state => {
+      state.advanceSearchModal = true;
+    },
 
     closeLoginModal: state => {
       state.loginModal = false;
@@ -46,6 +50,9 @@ const modalSlice = createSlice({
     closeResetPasswordModal: state => {
       state.resetPasswordModal = false;
     },
+    closeAdvanceSearchModal: state => {
+      state.advanceSearchModal = false;
+    },
   },
 });
 
@@ -56,9 +63,11 @@ export const {
   openRequestResetPasswordModal,
   openAuthenticationCodeModal,
   openResetPasswordModal,
+  openAdvanceSearchModal,
   closeLoginModal,
   closeRegisterModal,
   closeRequestResetPasswordModal,
   closeAuthenticationCodeModal,
   closeResetPasswordModal,
+  closeAdvanceSearchModal,
 } = modalSlice.actions;

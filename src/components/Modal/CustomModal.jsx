@@ -3,12 +3,12 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { SubHeading } from '../Typography';
 import styles from './CustomModal.module.scss';
-const CustomModal = ({ children, nameOfModal, title, action }) => {
+const CustomModal = ({ children, nameOfModal, title, action, width }) => {
   const dispatch = useDispatch();
 
   return (
     <Modal
-      width={400}
+      width={width}
       destroyOnClose
       centered
       className={styles.modal}
