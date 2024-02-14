@@ -1,8 +1,8 @@
-@import "../../../theme/scss/colors.theme.scss";
+@import '../../../theme/scss/colors.theme.scss';
 
 .paragraph {
   color: $colors-text;
-  display: block;
+  font-weight: 300;
   margin: 0;
   padding: 0;
   font-size: 16px;

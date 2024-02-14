@@ -53,5 +53,23 @@
   "network.disconnected.message": "Please check your internet connection and try again.",
   "api.error.resetPasswordOnlyForNormalAccount": "Reset password only accepted normal sign up account.",
   "api.error.userAlreadyActivated": "User already activated.",
-  "api.error.invalidOtpCode": "Invalid OTP code."
+  "api.error.invalidOtpCode": "Invalid OTP code.",
+
+  "reservation": {
+    "reservation-required": "Reservation required",
+    "estimated": "Estimated",
+    "rental-period": "rental period",
+    "time-to-move-in": "time to move in",
+    "payment": "Payment",
+    "cancellation-policy": "Cancellation Policy",
+    "des-policy": "Free cancellation within 48 hours. You will receive a partial refund if you cancel after 48 hours. Find out more",
+    "general-standards": "General standards",
+    "description-field-time": "Your reservation/reservation will not be confirmed until the host/organizer accepts your request (within 24 hours). You will not be charged until then.",
+    "reservation-btn": "Reservation Required",
+    "month": "month",
+    "reservation-fee": "Reservation fee",
+    "the-deposit": "The deposit",
+    "exception-fee": "Exception fee",
+    "total": "Total"
+  }
 }
