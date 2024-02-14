@@ -23,6 +23,14 @@ export const routePaths = {
       path: routeNames.Payment,
       element: <Payment />,
     },
+    {
+      path: routeNames.Houses,
+      element: <HousesPage />,
+    },
+    {
+      path: routeNames.Reservation,
+      element: <ReservationPage />,
+    },
   ],
   private: [],
 };

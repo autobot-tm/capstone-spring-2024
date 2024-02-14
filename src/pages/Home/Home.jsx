@@ -8,7 +8,6 @@ import { getDemoCheckoutURL } from '../../services/apis/payments.service';
 import { Button } from 'antd';
 import UploadFile from '../../components/UploadFile/UploadFile';
 import { HOUSE_ID } from '../../constants/vnpay.constant';
-import Houses from '../../components/Houses/Houses';
 
 export const ModalContext = createContext();
 
@@ -28,7 +27,6 @@ export const Home = () => {
         <h2>{t('welcome-text')}</h2>
         <UploadFile />
         <Button onClick={handlePayments}>Reserve house</Button>
-        <Houses />
         <Headline size={600}>Headline 600</Headline>
         <Headline size={450}>Headline 450</Headline>
         <SubHeading size={260} strong>
