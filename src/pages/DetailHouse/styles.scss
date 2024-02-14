@@ -1,0 +1,190 @@
+@import '../../theme/scss/colors.theme.scss';
+
+:root {
+  --default-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu,
+    'Helvetica Neue', Helvetica, Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei UI',
+    'Microsoft Yahei', 'Source Han Sans CN', sans-serif;
+}
+
+* {
+  font-family: 'Hiragino Kaku Gothic Pro', var(--default-font-family) !important;
+}
+
+#dh-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1400px;
+  margin: auto;
+  padding: 50px 0;
+
+  .main {
+    width: 70%;
+
+    &-title {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    &-frame-info {
+      display: flex;
+      color: #000 !important;
+
+      .caption {
+        padding: 0 20px;
+
+        &-hr {
+          border-right: 0.8px solid #ccc;
+        }
+      }
+
+      &-ratting {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+
+    &-frame-description {
+      margin-top: 50px;
+      width: 100%;
+      text-wrap: wrap;
+    }
+
+    &-property-features {
+      margin-top: 40px;
+      border-top: 0.8px solid #ccc;
+      padding: 40px 0 40px 0;
+
+      &-title {
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+
+      &-detail {
+        display: flex;
+        margin-bottom: 20px;
+        &-card {
+          margin-top: 12px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+      }
+
+      &-utility {
+        &-card {
+          margin-top: 12px;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+        }
+      }
+    }
+
+    &-frame-location {
+      // display: flex;
+      // flex-direction: column;
+      margin: 40px 0;
+      border-top: 0.8px solid #ccc;
+      padding: 40px 0 40px 0;
+
+      &-inner {
+        display: flex;
+
+        &-btn {
+          // margin-left: auto;
+          justify-content: flex-end;
+          background-color: #f8a11e;
+        }
+      }
+    }
+
+    &-frame-nearby {
+      margin-top: 40px;
+      border-top: 0.8px solid #ccc;
+      padding: 40px 0 40px 0;
+      &-info {
+        display: flex;
+        flex-direction: column;
+        margin-top: 6px;
+        gap: 4px;
+      }
+    }
+
+    &-frame-review {
+      margin: 40px 0;
+      border-top: 0.8px solid #ccc;
+      padding: 40px 0 40px 0;
+
+      &-form {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 36px;
+      }
+    }
+  }
+
+  .side {
+    width: 30%;
+
+    &-form {
+      border: 0.8px solid #ccc;
+      border-radius: 5px;
+      padding: 4px 15px;
+      &-price-section {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 60px;
+        border-bottom: 0.8px solid #ccc;
+      }
+      &-wishlist-section {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 60px;
+        border-bottom: 0.8px solid #ccc;
+        .btn {
+          border: none;
+        }
+      }
+      &-estimated-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 200px;
+        padding: 5px 0;
+        .book-btn {
+          width: 100%;
+          background-color: #f8a11e;
+        }
+        &-inner {
+          width: 100%;
+          &-item {
+            display: flex;
+            margin-top: 10px;
+            align-items: center;
+          }
+        }
+      }
+    }
+
+    &-related-house {
+      margin-top: 20px;
+      padding: 20px 15px;
+      border-radius: 5px;
+      border: 0.8px solid #ccc;
+      height: 500px;
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .dh-container {
+    padding: 50px 20px;
+  }
+}
