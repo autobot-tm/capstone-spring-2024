@@ -20,7 +20,8 @@ export const filterHousesService = ({
   maxPrice,
   amenities,
   utilities,
-  LIMIT,
+  offset,
+  limit,
 }) => {
   return apiCaller.post(ENDPOINTS.houses.houses, {
     name,
@@ -34,7 +35,8 @@ export const filterHousesService = ({
     max_price: maxPrice,
     amenities,
     utilities,
-    limit: LIMIT,
+    offset,
+    limit,
   });
 };
 
