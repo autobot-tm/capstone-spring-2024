@@ -4,9 +4,10 @@ import { Form, Select } from 'antd';
 import { SearchOutlined, SelectOutlined } from '@ant-design/icons';
 import { t } from 'i18next';
 import { useDispatch } from 'react-redux';
-import { filterHousesService, getMetaData } from '../../../../services/apis/houses.service';
+import { getMetaData } from '../../../../services/apis/houses.service';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { openAdvanceSearchModal } from '../../../../store/slices/modalSlice';
+import { setFilter } from '../../../../store/slices/houseSlice';
 
 const SearchBar = () => {
   const [categories, setCategories] = useState([]);
@@ -16,8 +17,9 @@ const SearchBar = () => {
   const [provinceId, setProvinceId] = useState(0);
   const [districtId, setDistrictId] = useState(0);
   const [loading, setLoading] = useState(false);
-  const LIMIT = 200;
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
+
   useEffect(() => {
     getMetaData().then(response => {
       setCategories(response.categories);
@@ -40,20 +42,20 @@ const SearchBar = () => {
 
     const { categories, provinces, districts, wards } = values;
 
-    filterHousesService({
-      categories,
-      provinces,
-      districts,
-      wards,
-      LIMIT,
-    }).then(response => {
-      console.log(response.houses);
-      setLoading(false);
-    });
+    dispatch(
+      setFilter({
+        categories,
+        provinces,
+        districts,
+        wards,
+      }),
+    );
+    setLoading(false);
+    form.resetFields();
   };
   return (
     <div className={styles.searchBar}>
-      <Form onFinish={handleFinish}>
+      <Form onFinish={handleFinish} form={form}>
         <div className={styles.formContainer}>
           <div className={styles.formItem}>
             <Form.Item name="categories" style={{ margin: 0 }}>

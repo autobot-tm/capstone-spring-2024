@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CustomModal from '../Modal/CustomModal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeAdvanceSearchModal } from '../../store/slices/modalSlice';
 import {
   Button,
@@ -16,10 +16,11 @@ import {
   Space,
 } from 'antd';
 import { Caption } from '../Typography';
-import { filterHousesService, getMetaData } from '../../services/apis/houses.service';
+import { getMetaData } from '../../services/apis/houses.service';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import styles from './AdvanceSearch.module.scss';
 import { t } from 'i18next';
+import { setFilter } from '../../store/slices/houseSlice';
 const AdvanceSearch = () => {
   const advanceSearchModal = useSelector(state => state.modal.advanceSearchModal);
 
@@ -37,8 +38,7 @@ const AdvanceSearch = () => {
   const [provinceId, setProvinceId] = useState(0);
   const [districtId, setDistrictId] = useState(0);
   const [form] = Form.useForm();
-
-  const LIMIT = 200;
+  const dispatch = useDispatch();
 
   const handleSliderChange = newValue => {
     setSliderValue(newValue);
@@ -73,24 +73,23 @@ const AdvanceSearch = () => {
     } = values;
     const minPrice = sliderValue[0];
     const maxPrice = sliderValue[1];
-
-    filterHousesService({
-      name,
-      categories,
-      provinces,
-      districts,
-      wards,
-      minArea,
-      maxArea,
-      minPrice,
-      maxPrice,
-      amenities,
-      utilities,
-      LIMIT,
-    }).then(response => {
-      console.log(response.houses);
-      setLoading(false);
-    });
+    dispatch(
+      setFilter({
+        name,
+        categories,
+        provinces,
+        districts,
+        wards,
+        minArea,
+        maxArea,
+        minPrice,
+        maxPrice,
+        amenities,
+        utilities,
+      }),
+    );
+    setLoading(false);
+    dispatch(closeAdvanceSearchModal());
   };
 
   useEffect(() => {
