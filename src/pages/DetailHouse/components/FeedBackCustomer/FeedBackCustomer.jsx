@@ -1,20 +1,28 @@
-import { Avatar, Col, Row } from 'antd';
-import React from 'react';
-import { SubHeading, Paragraph, Caption } from '../Typography';
+import { Avatar, Button, Col, Row } from 'antd';
+import React, { useState } from 'react';
+import { SubHeading, Paragraph, Caption } from '../../../../components/Typography';
 import './FeedBackCustomer.scss';
 import { StarFilled } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 const FeedBackCustomer = ({ comment }) => {
+  const [showAll, setShowAll] = useState(false);
+  const visibleComments = showAll ? comment : comment?.slice(0, 4);
+  const { t } = useTranslation();
+  const handleSeeMore = () => {
+    setShowAll(true);
+  };
+
   return (
     <>
-      {comment.map((item, index) => (
+      {visibleComments?.map((item, index) => (
         <Row key={index} align="stretch" className="cmt-border">
           <Col xs={6} md={4} className="frame-1">
             <Avatar src={item.reviewer?.avatar_url} shape="square" size={100} />
           </Col>
           <Col xs={18} md={20} className="frame-2">
-            <Row>
-              <SubHeading style={{ marginRight: 10 }} strong>
+            <Row align="middle">
+              <SubHeading style={{ marginRight: 14 }} strong>
                 {item.reviewer?.first_name}
               </SubHeading>
               <StarFilled />
@@ -28,6 +36,13 @@ const FeedBackCustomer = ({ comment }) => {
           </Col>
         </Row>
       ))}
+      {!showAll && comment?.length > 4 && (
+        <Row>
+          <Col className="see-more-btn" xs={24}>
+            <Button onClick={handleSeeMore}>{t('detail-house.see-more-btn')}</Button>
+          </Col>
+        </Row>
+      )}
     </>
   );
 };

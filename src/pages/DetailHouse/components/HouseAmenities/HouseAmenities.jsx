@@ -2,6 +2,8 @@ import React from 'react';
 import './HouseAmenities.scss';
 import { Col, Row } from 'antd';
 import { Paragraph } from '../../../../components/Typography';
+import { imagesAmenities } from '../../../../assets/images';
+
 const HouseAmenities = ({ amenities }) => {
   const halfLength = Math.ceil(amenities.length / 2);
 
@@ -13,7 +15,14 @@ const HouseAmenities = ({ amenities }) => {
         <Col xs={24} md={10} style={{ marginRight: 40 }}>
           {firstColumn.map((amenity, index) => (
             <div key={index} className="property-detail-item">
-              <Paragraph className="property-detail-group-1">{amenity.name}: </Paragraph>
+              <span className="property-detail-group-1">
+                <img
+                  src={imagesAmenities[amenity.name.replace(/\s/g, '')]}
+                  alt={amenity.name}
+                  className="icon"
+                />
+                <Paragraph>{amenity.name}: </Paragraph>
+              </span>
               <Paragraph
                 strong
                 className="property-detail-group-2 color-black"
@@ -26,7 +35,14 @@ const HouseAmenities = ({ amenities }) => {
         <Col xs={24} md={10}>
           {secondColumn.map((amenity, index) => (
             <div key={index} className="property-detail-item">
-              <Paragraph className="property-detail-group-1">{amenity.name}: </Paragraph>
+              <span className="property-detail-group-1">
+                <img
+                  src={imagesAmenities[amenity.name.replace(/\s/g, '')]}
+                  alt={amenity.name}
+                  className="icon"
+                />
+                <Paragraph>{amenity.name}: </Paragraph>
+              </span>
               <Paragraph strong className="property-detail-group-2" classNames="color-black">
                 {amenity.amount}
               </Paragraph>

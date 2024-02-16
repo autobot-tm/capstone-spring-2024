@@ -49,5 +49,6 @@ export const getHouseById = ({ house_id }) => {
 };
 
 export const getHouseReview = ({ house_id }) => {
-  return apiCaller.get(`${ENDPOINTS.houses.reviews.replace('{house_id}', house_id)}`);
+  const endpoint = ENDPOINTS.houses.reviews(house_id);
+  return apiCaller.get(endpoint);
 };

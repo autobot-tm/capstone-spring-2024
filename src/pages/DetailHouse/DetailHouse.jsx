@@ -3,37 +3,36 @@ import React, { useEffect, useState } from 'react';
 import { Layout } from '../../hoc/Layout';
 import { Headline } from '../../components/Typography/Headline/Headline';
 import { Paragraph } from '../../components/Typography/Paragraph/Paragraph';
-import { EyeOutlined, StarOutlined } from '@ant-design/icons';
+import { StarOutlined } from '@ant-design/icons';
 import { StarFilled } from '@ant-design/icons';
 import { Caption, SubHeading } from '../../components/Typography';
 import { Button, Row, Col } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import { getHouseById } from '../../services/apis/houses.service';
-import { getDemoCheckoutURL } from '../../services/apis/payments.service';
-// import { formatCustomCurrency } from '../../utils/number-seperator';
+import { useSelector } from 'react-redux';
+import { message } from 'antd';
+import { getHouseById, getHouseReview } from '../../services/apis/houses.service';
+import { useNavigate, useParams } from 'react-router-dom';
+import { formatCustomCurrency } from '../../utils/number-seperator';
 import HouseUtility from './components/HouseUtility/HouseUtility';
-import axios from 'axios';
-import FeedBackCustomer from '../../components/FeedBackCustomer/FeedBackCustomer';
+import FeedBackCustomer from './components/FeedBackCustomer/FeedBackCustomer';
 import HouseAmenities from './components/HouseAmenities/HouseAmenities';
 import useSWR from 'swr';
 import Selection from '../../components/Selection/Selection';
 import DatePickerAnt from '../../components/DatePickerComponent/DatePickerAnt';
-import ReviewForm from '../../components/ReviewForm/ReviewForm';
+import ReviewForm from './components/ReviewForm/ReviewForm';
 import CarouselHeader from '../../components/CarouselHeader/CarouselHeader';
+import SizeImg from '../../assets/images/SizeIcon.svg';
 
 const DetailHouse = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { house_id: house_id } = useParams();
   const [houseAmenities, setHouseAmenities] = useState([]);
   const [houseUtilities, setHouseUtilities] = useState([]);
   const [imgHouse, setImgHouse] = useState([]);
   const [comment, setComment] = useState([]);
   const [isClickedWishlist, setIsClickedWishlist] = useState(false);
-
-  const handleClick = () => {
-    setIsClickedWishlist(!isClickedWishlist);
-  };
+  const { access_token } = useSelector(state => state.auth);
 
   const { data: house } = useSWR(
     `getHouseById/${house_id}`,
@@ -42,19 +41,17 @@ const DetailHouse = () => {
 
   const { data: reviews } = useSWR(
     ['getHouseReview', house_id],
-    async () => await axios.get(`https://dev.lotus.ttq186.dev/houses/${house_id}/reviews`),
+    async () => await getHouseReview({ house_id }),
   );
-  const lastFourCharacters = house?.id.slice(-6).toUpperCase();
-  console.log(reviews);
-  console.log(house);
+
   useEffect(() => {
     const fetchHouseAmenities = async () => {
       try {
         if (house) {
-          setHouseAmenities(house.amenities);
-          setHouseUtilities(house.utilities);
+          setHouseAmenities(house?.amenities);
+          setHouseUtilities(house?.utilities);
           setImgHouse(house?.image_urls);
-          setComment(reviews?.data.reviews);
+          setComment(reviews?.reviews);
         }
       } catch (error) {
         console.error('Error fetching house amenities:', error);
@@ -62,17 +59,25 @@ const DetailHouse = () => {
     };
 
     fetchHouseAmenities();
-  }, [house]);
+  }, [house, reviews]);
 
   const handlePayments = async () => {
-    const url = await getDemoCheckoutURL(house_id);
-    window.location.href = url;
+    navigate('/reservation', house);
+    //continue
+  };
+
+  const handleAddWishlist = () => {
+    if (access_token) {
+      setIsClickedWishlist(!isClickedWishlist);
+      //continue
+    } else {
+      message.error('Please sign in to add house to wishlist.');
+    }
   };
 
   return (
     <Layout>
       <header>
-        {' '}
         <CarouselHeader img={imgHouse} />
       </header>
       <div id="dh-container">
@@ -87,21 +92,17 @@ const DetailHouse = () => {
               <Caption style={{ color: 'black' }} classNames="caption-hr" size={140}>
                 {house?.category}
               </Caption>
-              <Caption style={{ color: 'black' }} classNames="caption-hr" size={140}>
-                {t('detail-house.property-id')}: {lastFourCharacters}
-              </Caption>
-              <Caption style={{ color: 'black' }} classNames="caption-hr" size={140}>
-                <EyeOutlined /> 1839
-              </Caption>
               <Caption
                 style={{ color: 'black' }}
                 classNames="caption-hr"
                 size={140}
                 className="main-frame-info-ratting">
                 <StarFilled />
-                &nbsp;{reviews?.data?.average_rating}/5
+                &nbsp;{reviews?.average_rating}/5
               </Caption>
-              <Caption style={{ color: 'black' }} size={140}>
+              <Caption classNames="size-caption" size={140}>
+                <img src={SizeImg} />
+                &nbsp;
                 {house?.size_in_m2}m²
               </Caption>
             </Row>
@@ -109,8 +110,7 @@ const DetailHouse = () => {
               <SubHeading size={260} classNames="main-title" strong>
                 {t('detail-house.description-title')}
               </SubHeading>
-              {/* dynamic */}
-              <Paragraph>{house?.description}</Paragraph>
+              <Paragraph>{house?.description.replace(/<br\s*\/?>/gi, '')}</Paragraph>
             </Row>
             <Row className="main-property-features">
               <SubHeading size={260} classNames="main-title" strong>
@@ -162,47 +162,12 @@ const DetailHouse = () => {
                 </Button>
               </Col>
             </Row>
-            {/* <Row className="main-frame-nearby">
-              <SubHeading size={260} classNames="main-title" strong>
-                {t('detail-house.nearby-title')}
-              </SubHeading>
-              <Paragraph>{t('detail-house.nearby-des')}</Paragraph>
-            </Row> */}
-            {/* <Row>
-              <Col className="main-frame-nearby-info" xs={12}>
-                <Row>
-                  <Paragraph>School: </Paragraph>&nbsp;
-                  <Paragraph strong>0.7km</Paragraph>
-                </Row>
-                <Row>
-                  <Paragraph>University:</Paragraph>&nbsp;<Paragraph strong>1.7km</Paragraph>
-                </Row>
-                <Row>
-                  <Paragraph>Grocery center:</Paragraph>&nbsp;<Paragraph strong>0.7km</Paragraph>
-                </Row>
-                <Row>
-                  <Paragraph>Market:</Paragraph>&nbsp;<Paragraph strong>0.8km</Paragraph>
-                </Row>
-              </Col>
-              <Col className="main-frame-nearby-info" xs={12}>
-                <Row>
-                  <Paragraph>Hospital, medical:</Paragraph>&nbsp;<Paragraph strong>1km</Paragraph>
-                </Row>
-                <Row>
-                  <Paragraph>Metro station:</Paragraph>&nbsp;<Paragraph strong>0.1km</Paragraph>
-                </Row>
-                <Row>
-                  <Paragraph>Gym, wellness:</Paragraph>&nbsp;<Paragraph strong>0.5km</Paragraph>
-                </Row>
-                <Row>
-                  <Paragraph>River:</Paragraph>&nbsp;<Paragraph strong>2.2km</Paragraph>
-                </Row>
-              </Col>
-            </Row> */}
             <Row className="main-frame-review">
-              <SubHeading strong>
-                {comment.length} {t('detail-house.comment-dynamic')}
-              </SubHeading>
+              {comment?.length > 0 && (
+                <SubHeading strong>
+                  {comment?.length} {t('detail-house.comment-dynamic')}
+                </SubHeading>
+              )}
               <Row>
                 <FeedBackCustomer comment={comment} />
               </Row>
@@ -225,18 +190,17 @@ const DetailHouse = () => {
               </Row>
             </Row>
           </Col>
-          <Col className="side" xs={24} lg={7}>
+          <Col className="side" xs={16} lg={7}>
             <div className="side-form">
               <Row className="side-form-price-section">
-                <Col xs={10}>
+                <Col xs={6}>
                   <SubHeading size={230} strong>
                     {t('detail-house.price')}:
                   </SubHeading>
                 </Col>
-                <Col style={{ textAlign: 'right' }} className="price-group" xs={14}>
-                  {' '}
+                <Col style={{ textAlign: 'right' }} className="price-group" xs={18}>
                   <SubHeading size={230} strong>
-                    {house?.pricing_policies[0].reservation_fee}
+                    {house && formatCustomCurrency(house?.pricing_policies[0]?.price_per_month)}
                   </SubHeading>
                   <SubHeading size={230}>/{t('detail-house.month')}</SubHeading>
                 </Col>
@@ -244,7 +208,7 @@ const DetailHouse = () => {
               <Row className="side-form-wishlist-section">
                 <Button
                   style={{ backgroundColor: isClickedWishlist ? '#f8a11e' : 'inherit' }}
-                  onClick={handleClick}>
+                  onClick={handleAddWishlist}>
                   <StarOutlined /> <b> {t('detail-house.add-to-wishlist')}</b>
                 </Button>
               </Row>
@@ -267,9 +231,16 @@ const DetailHouse = () => {
                   <DatePickerAnt />
                 </Col>
                 <Col xs={24} md={24} lg={24}>
-                  <Button className="book-btn" onClick={handlePayments}>
-                    <b> {t('detail-house.book-now-btn')}</b>
-                  </Button>
+                  {house?.status !== 'AVAILABLE' && (
+                    <Button className="book-btn" disabled>
+                      <b>{t('detail-house.reserved-btn')}</b>
+                    </Button>
+                  )}
+                  {house?.status === 'AVAILABLE' && (
+                    <Button className="book-btn" onClick={handlePayments}>
+                      <b>{t('detail-house.reserve-now-btn')}</b>
+                    </Button>
+                  )}
                 </Col>
               </Row>
             </div>
@@ -281,9 +252,7 @@ const DetailHouse = () => {
                   </SubHeading>
                 </Col>
                 <Col xs={24}>
-                  <Paragraph>
-                    Tantas signiferumque eum at, vix an dicant fierent homero dignissim.
-                  </Paragraph>
+                  <Paragraph>{t('detail-house.related-property-des')}</Paragraph>
                 </Col>
               </Row>
               <Row style={{ justifyContent: 'center' }}>
