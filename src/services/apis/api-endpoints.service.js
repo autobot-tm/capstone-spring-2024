@@ -11,7 +11,9 @@ export const ENDPOINTS = {
     presignedURL: '/auth/presigned-urls/post',
   },
   houses: {
+    base: '/houses',
     houses: '/houses/filter',
+    reviews: house_id => `/houses/${house_id}/reviews`,
     metadata: '/houses/metadata',
   },
   payments: {

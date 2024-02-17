@@ -1,3 +1,7 @@
 export const formatCustomCurrency = number => {
-  return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  if (typeof number === 'number') {
+    return number.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+  } else {
+    return 'Loading...';
+  }
 };
