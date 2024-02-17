@@ -1,15 +1,18 @@
 import React from 'react';
 import { Select, Space } from 'antd';
-const handleChange = value => {
-  console.log(`selected ${value}`);
-};
-const Selection = () => {
+
+const Selection = ({ onChange }) => {
+  const handleChange = value => {
+    console.log(`selected ${value}`);
+    onChange(value);
+  };
   return (
     <Space wrap>
       <Select
         defaultValue="1 month"
         style={{
           width: '160px',
+          color: '#ccc',
           textAlign: 'left',
         }}
         onChange={handleChange}

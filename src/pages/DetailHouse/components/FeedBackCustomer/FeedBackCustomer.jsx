@@ -15,6 +15,13 @@ const FeedBackCustomer = ({ comment }) => {
 
   return (
     <>
+      {comment?.length > 0 ? (
+        <SubHeading strong>
+          {comment?.length} {t('detail-house.comment-dynamic')}
+        </SubHeading>
+      ) : (
+        <SubHeading strong>No comment</SubHeading>
+      )}
       {visibleComments?.map((item, index) => (
         <Row key={index} align="stretch" className="cmt-border">
           <Col xs={6} md={4} className="frame-1">
