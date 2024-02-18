@@ -35,8 +35,8 @@ const SearchBar = () => {
 
   const handleChangeDistrict = value => {
     setDistrictId(value);
+    form.resetFields(['wards']);
   };
-
   const handleFinish = values => {
     setLoading(true);
 
@@ -51,7 +51,6 @@ const SearchBar = () => {
       }),
     );
     setLoading(false);
-    form.resetFields();
   };
   return (
     <div className={styles.searchBar}>
@@ -60,6 +59,7 @@ const SearchBar = () => {
           <div className={styles.formItem}>
             <Form.Item name="categories" style={{ margin: 0 }}>
               <Select
+                maxTagCount={1}
                 mode="multiple"
                 allowClear
                 placeholder={t('placeholder.categories')}
