@@ -27,7 +27,9 @@ const CustomModal = ({ children, nameOfModal, title, action, width }) => {
       footer={null}
       style={{ maxHeight: '80vh' }} // Set a maximum height for the modal
     >
-      <div style={{ overflowY: 'auto', maxHeight: 'calc(80vh - 56px)' }}>{children}</div>
+      <div style={{ overflowY: 'auto', maxHeight: 'calc(80vh - 56px)', overflowX: 'hidden' }}>
+        {children}
+      </div>
     </Modal>
   );
 };
