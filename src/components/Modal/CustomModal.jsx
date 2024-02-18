@@ -24,8 +24,10 @@ const CustomModal = ({ children, nameOfModal, title, action, width }) => {
       onCancel={() => {
         dispatch(action());
       }}
-      footer={null}>
-      {children}
+      footer={null}
+      style={{ maxHeight: '80vh' }} // Set a maximum height for the modal
+    >
+      <div style={{ overflowY: 'auto', maxHeight: 'calc(80vh - 56px)' }}>{children}</div>
     </Modal>
   );
 };

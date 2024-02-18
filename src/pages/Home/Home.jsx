@@ -33,7 +33,6 @@ export const Home = () => {
 
         <UploadFile />
         <Button onClick={handlePayments}>Reserve house</Button>
-
         <Headline size={600}>Headline 600</Headline>
         <Headline size={450}>Headline 450</Headline>
         <SubHeading size={260} strong>
