@@ -1,48 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Headline } from '../../../../components/Typography';
 import styles from './Houses.module.scss';
-import { Col, Pagination, Row } from 'antd';
+import { Col, Row } from 'antd';
 import useSWR from 'swr';
-import { filterHousesService } from '../../../../services/apis/houses.service';
+import { getHousesService } from '../../../../services/apis/houses.service';
 import CardSkeleton from '../../../../components/CardSkeleton/CardSkeleton';
 import HouseItem from '../../../../components/HouseItem/HouseItem';
-import { useSelector } from 'react-redux';
+import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setFilter } from '../../../../store/slices/houseSlice';
 const Houses = () => {
-  const [page, setPage] = useState(1);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const LIMIT = 6;
 
-  const name = useSelector(state => state.house.name);
-  const categories = useSelector(state => state.house.categories);
-  const provinces = useSelector(state => state.house.provinces);
-  const districts = useSelector(state => state.house.districts);
-  const wards = useSelector(state => state.house.wards);
-  const minArea = useSelector(state => state.house.minArea);
-  const maxArea = useSelector(state => state.house.maxArea);
-  const minPrice = useSelector(state => state.house.minPrice);
-  const maxPrice = useSelector(state => state.house.maxPrice);
-  const amenities = useSelector(state => state.house.amenities);
-  const utilities = useSelector(state => state.house.utilities);
-
-  const { data, isLoading } = useSWR(
-    `getHousesService/${page}${name}${categories}${provinces}${districts}${wards}${minArea}${maxArea}${minPrice}${maxPrice}${amenities}${utilities}`,
-    async () => {
-      return await filterHousesService({
-        offset: LIMIT * (page - 1),
-        limit: LIMIT,
-        name,
-        categories,
-        provinces,
-        districts,
-        wards,
-        minArea,
-        maxArea,
-        minPrice,
-        maxPrice,
-        amenities,
-        utilities,
-      });
-    },
-  );
+  const { data, isLoading } = useSWR(`getHousesService`, async () => {
+    return await getHousesService({
+      offset: 0,
+      limit: LIMIT,
+    });
+  });
   return (
     <div className={styles.houses}>
       <Headline size={450}>Our choice of popular real estate</Headline>
@@ -50,29 +28,32 @@ const Houses = () => {
         <Row gutter={[16, 16]}>
           {isLoading
             ? Array.from({ length: LIMIT }).map((_, index) => (
-                <Col lg={8} key={index}>
-                  <CardSkeleton />
+                <Col lg={8} sm={12} key={index}>
+                  <CardSkeleton type="home" />
                 </Col>
               ))
             : data?.houses.map(house => {
                 return (
-                  <Col lg={8} key={house.id}>
-                    {<HouseItem house={house} />}
+                  <Col lg={8} sm={12} key={house.id}>
+                    {<HouseItem house={house} type="home" />}
                   </Col>
                 );
               })}
         </Row>
+
         <Row>
-          <div className={styles.paginationContainer}>
-            <Pagination
-              showSizeChanger={false}
-              total={data?.total_rows}
-              pageSize={LIMIT}
-              current={page}
-              onChange={page => {
-                setPage(page);
-              }}
-            />
+          <div className={styles.rowContainer}>
+            <div>
+              <BaseButton
+                size="large"
+                type="primary"
+                onClick={() => {
+                  dispatch(setFilter({}));
+                  navigate('/houses');
+                }}>
+                Browse More Properties
+              </BaseButton>
+            </div>
           </div>
         </Row>
       </div>

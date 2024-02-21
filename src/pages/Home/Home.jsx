@@ -30,7 +30,6 @@ export const Home = () => {
       <HomeCarousel images={demoImages} />
       <div className="home-container">
         <Houses />
-
         <UploadFile />
         <Button onClick={handlePayments}>Reserve house</Button>
         <Headline size={600}>Headline 600</Headline>

@@ -3,7 +3,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { SubHeading } from '../Typography';
 import styles from './CustomModal.module.scss';
-const CustomModal = ({ children, nameOfModal, title, action, width }) => {
+const CustomModal = ({ children, nameOfModal, title, action, width, footer }) => {
   const dispatch = useDispatch();
 
   return (
@@ -24,7 +24,7 @@ const CustomModal = ({ children, nameOfModal, title, action, width }) => {
       onCancel={() => {
         dispatch(action());
       }}
-      footer={null}
+      footer={footer}
       style={{ maxHeight: '80vh' }} // Set a maximum height for the modal
     >
       <div style={{ overflowY: 'auto', maxHeight: 'calc(80vh - 56px)', overflowX: 'hidden' }}>

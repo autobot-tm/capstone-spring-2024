@@ -60,7 +60,8 @@ const Register = () => {
       width={400}
       nameOfModal={registerModal}
       title={t('modal.register')}
-      action={closeRegisterModal}>
+      action={closeRegisterModal}
+      footer={null}>
       <Form onFinish={handleFinish} form={form}>
         <Form.Item
           hasFeedback
