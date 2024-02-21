@@ -85,7 +85,8 @@ const ResetPassword = () => {
         width={400}
         nameOfModal={resetPasswordModal}
         title={t('modal.resetpassword')}
-        action={closeResetPasswordModal}>
+        action={closeResetPasswordModal}
+        footer={null}>
         <Form onFinish={handleFinish} form={form}>
           <Form.Item
             name="newpassword"

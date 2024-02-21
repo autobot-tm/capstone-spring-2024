@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { HousePropertyName } from '../../constants/house.constant';
 import { housePropertiesIconMapper } from '../../utils/house';
 
-const HouseItem = ({ house }) => {
+const HouseItem = ({ house, type }) => {
   const LIMIT_IMAGES = 5;
   const AMENITIES_NAME = [HousePropertyName.BEDROOMS, HousePropertyName.BATHROOMS];
 
@@ -25,9 +25,15 @@ const HouseItem = ({ house }) => {
         actions={[
           <div key="houseInfo" className={styles.houseInfo}>
             <div className={styles.price}>
-              <SubHeading key="price" size={230} strong>
-                {formatCustomCurrency(house.pricing_policies[0].price_per_month)}
-              </SubHeading>
+              {type === 'home' ? (
+                <SubHeading key="price" size={230} strong>
+                  {formatCustomCurrency(house.pricing_policies[0].price_per_month)}
+                </SubHeading>
+              ) : (
+                <Caption size={140} strong>
+                  {formatCustomCurrency(house.pricing_policies[0].price_per_month)}
+                </Caption>
+              )}
             </div>
             <div className={styles.detail}>
               <div className={styles.itemContainer}>
@@ -57,9 +63,15 @@ const HouseItem = ({ house }) => {
                   <Caption size={110}>{house.address}</Caption>
                 </div>
               </div>
-              <SubHeading size={230} strong ellipsis>
-                {house.name}
-              </SubHeading>
+              {type === 'home' ? (
+                <SubHeading size={230} strong ellipsis>
+                  {house.name}
+                </SubHeading>
+              ) : (
+                <Caption size={140} strong ellipsis>
+                  {house.name}
+                </Caption>
+              )}
             </>
           }
           description={

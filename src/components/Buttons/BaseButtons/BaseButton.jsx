@@ -11,6 +11,7 @@ const BaseButton = ({ children, type, htmlType, disabled, ...props }) => {
       disabled={disabled}
       loading={disabled}
       size="medium"
+      block
       {...props}>
       {children}
     </Button>

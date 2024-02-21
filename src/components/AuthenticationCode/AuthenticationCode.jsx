@@ -77,7 +77,8 @@ const AuthenticationCode = () => {
         width={400}
         nameOfModal={authenticationCodeModal}
         title={t('modal.authenticationCode')}
-        action={closeAuthenticationCodeModal}>
+        action={closeAuthenticationCodeModal}
+        footer={null}>
         <Form onFinish={handleSubmit} form={form}>
           <Form.Item
             name={'code'}

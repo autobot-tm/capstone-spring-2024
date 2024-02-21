@@ -3,7 +3,7 @@
 
   div {
     .homeImage {
-      height: 100vh;
+      height: 60vh;
       width: 100%;
       object-fit: cover;
     }
@@ -18,7 +18,7 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
     div {
-      width: 1400px;
+      max-width: 1400px;
       margin: 0 auto;
     }
   }
@@ -27,5 +27,11 @@
     width: 100%;
     position: absolute;
     bottom: 0;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .carouselContainer .typographyContainer div {
+    display: none;
   }
 }
