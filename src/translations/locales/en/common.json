@@ -116,6 +116,7 @@
   "district.Binh Chanh District": " Binh Chanh District",
   "district.Nha Be District": " Nha Be District",
   "district.Can Gio District": " Can Gio District",
+  "link.viewdetail": "View detail",
 
   "api.error.invalidAccountCredentials": "Email or password is incorrect",
   "api.error.emailAlreadyExists": "Email already exists",

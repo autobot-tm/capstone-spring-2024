@@ -63,6 +63,7 @@ const SearchBar = () => {
           <Col lg={8} sm={24} xs={24}>
             <Form.Item name="categories" style={{ margin: 0 }}>
               <Select
+                size="large"
                 maxTagCount={2}
                 mode="multiple"
                 allowClear
@@ -78,6 +79,7 @@ const SearchBar = () => {
           <Col lg={3} sm={8} xs={24}>
             <Form.Item name="provinces" style={{ margin: 0 }}>
               <Select
+                size="large"
                 placeholder={t('placeholder.provinces')}
                 style={{ width: '100%' }}
                 onChange={handleChangeProvince}
@@ -94,6 +96,7 @@ const SearchBar = () => {
           <Col lg={4} sm={8} xs={24}>
             <Form.Item name="districts" style={{ margin: 0 }}>
               <Select
+                size="large"
                 placeholder={t('placeholder.districts')}
                 style={{ width: '100%' }}
                 onChange={handleChangeDistrict}
@@ -110,6 +113,7 @@ const SearchBar = () => {
           <Col lg={4} sm={8} xs={24}>
             <Form.Item name="wards" style={{ margin: 0 }}>
               <Select
+                size="large"
                 placeholder={t('placeholder.wards')}
                 style={{ width: '100%' }}
                 options={wards
@@ -124,6 +128,7 @@ const SearchBar = () => {
           </Col>
           <Col lg={3} xs={12}>
             <BaseButton
+              size="large"
               type="primary"
               icon={<SearchOutlined />}
               htmlType="submit"
@@ -134,6 +139,7 @@ const SearchBar = () => {
           </Col>
           <Col lg={2} xs={12}>
             <BaseButton
+              size="large"
               type="text"
               icon={<SelectOutlined />}
               onClick={() => dispatch(openAdvanceSearchModal())}>

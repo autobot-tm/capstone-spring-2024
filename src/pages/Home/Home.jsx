@@ -1,21 +1,21 @@
 import React, { createContext } from 'react';
 import { Layout } from '../../hoc/Layout';
-import { Caption, Headline, Paragraph, SubHeading } from '../../components/Typography';
+// import { Caption, Headline, Paragraph, SubHeading } from '../../components/Typography';
 import './styles.scss';
-import { getDemoCheckoutURL } from '../../services/apis/payments.service';
-import { Button } from 'antd';
-import UploadFile from '../../components/UploadFile/UploadFile';
-import { HOUSE_ID } from '../../constants/vnpay.constant';
+// import { getDemoCheckoutURL } from '../../services/apis/payments.service';
+// import { Button } from 'antd';
+// import UploadFile from '../../components/UploadFile/UploadFile';
+// import { HOUSE_ID } from '../../constants/vnpay.constant';
 import HomeCarousel from './components/HomeCarousel/HomeCarousel';
 import Houses from './components/Houses/Houses';
 
 export const ModalContext = createContext();
 
 export const Home = () => {
-  const handlePayments = async () => {
-    const url = await getDemoCheckoutURL(HOUSE_ID);
-    window.location.href = url;
-  };
+  // const handlePayments = async () => {
+  //   const url = await getDemoCheckoutURL(HOUSE_ID);
+  //   window.location.href = url;
+  // };
 
   const demoImages = [
     'https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -30,7 +30,7 @@ export const Home = () => {
       <HomeCarousel images={demoImages} />
       <div className="home-container">
         <Houses />
-        <UploadFile />
+        {/* <UploadFile />
         <Button onClick={handlePayments}>Reserve house</Button>
         <Headline size={600}>Headline 600</Headline>
         <Headline size={450}>Headline 450</Headline>
@@ -48,7 +48,7 @@ export const Home = () => {
           Caption 140 Bold
         </Caption>
         <Caption size={140}>Caption 140</Caption>
-        <Caption size={110}>Caption 110</Caption>
+        <Caption size={110}>Caption 110</Caption> */}
       </div>
     </Layout>
   );
