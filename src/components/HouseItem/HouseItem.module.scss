@@ -17,7 +17,8 @@
   }
   .houseInfo {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    padding: 0 24px;
     .detail {
       display: flex;
       gap: 8px;

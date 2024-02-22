@@ -1,5 +1,5 @@
 import { Col, Pagination, Row } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Houses.module.scss';
 import useSWR from 'swr';
 import { filterHousesService } from '../../../../services/apis/houses.service';
@@ -8,8 +8,9 @@ import HouseItem from '../../../../components/HouseItem/HouseItem';
 import HousesMap from '../../../../components/HousesMap/HousesMap';
 import { useSelector } from 'react-redux';
 import Filter from '../Filter/Filter';
-
 const Houses = () => {
+  const [locationArr, setLocationArr] = useState([]);
+
   const [page, setPage] = useState(1);
   const LIMIT = 4;
 
@@ -45,46 +46,65 @@ const Houses = () => {
       });
     },
   );
+  useEffect(() => {
+    if (data) {
+      const newLocations = data.houses.map(house => ({
+        position: {
+          lat: house.latitude,
+          lng: house.longitude,
+        },
+        id: house.id,
+        name: house.name,
+        price: house.pricing_policies[0].price_per_month,
+        image: house.image_urls[0],
+      }));
+      setLocationArr(newLocations);
+    }
+  }, [data]);
 
   return (
     <div className={styles.houseContainer}>
       <Row gutter={[16, 16]}>
         <Col xl={12} xs={24}>
-          <Row>
-            <Filter />
-          </Row>
-          <Row gutter={[16, 16]}>
-            {isLoading
-              ? Array.from({ length: LIMIT }).map((_, index) => (
-                  <Col md={12} key={index}>
-                    <CardSkeleton />
-                  </Col>
-                ))
-              : data?.houses.map(house => {
-                  return (
-                    <Col md={12} key={house.id}>
-                      {<HouseItem house={house} />}
+          <div style={{ marginTop: '40px' }}>
+            <Row>
+              <Filter />
+            </Row>
+            <Row gutter={[16, 16]}>
+              {isLoading
+                ? Array.from({ length: LIMIT }).map((_, index) => (
+                    <Col md={12} key={index}>
+                      <CardSkeleton />
                     </Col>
-                  );
-                })}
-          </Row>
+                  ))
+                : data?.houses.map(house => {
+                    return (
+                      <Col md={12} key={house.id}>
+                        {<HouseItem house={house} />}
+                      </Col>
+                    );
+                  })}
+            </Row>
+            <Row>
+              <div className={styles.paginationContainer}>
+                <Pagination
+                  showSizeChanger={false}
+                  total={data?.total_rows}
+                  pageSize={LIMIT}
+                  current={page}
+                  onChange={page => {
+                    setPage(page);
+                  }}
+                />
+              </div>
+            </Row>
+          </div>
         </Col>
         <Col xl={12} xs={24}>
-          <HousesMap />
+          <div className={styles.mapContainer}>
+            <HousesMap locations={locationArr} />
+          </div>
         </Col>
-      </Row>
-      <Row>
-        <div className={styles.paginationContainer}>
-          <Pagination
-            showSizeChanger={false}
-            total={data?.total_rows}
-            pageSize={LIMIT}
-            current={page}
-            onChange={page => {
-              setPage(page);
-            }}
-          />
-        </div>
       </Row>
     </div>
   );
