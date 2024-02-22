@@ -1,6 +1,6 @@
 import { Carousel } from 'antd';
 import React from 'react';
-import './CarouselHeader.scss';
+import './style.scss';
 
 const CarouselHeader = ({ img }) => {
   return (

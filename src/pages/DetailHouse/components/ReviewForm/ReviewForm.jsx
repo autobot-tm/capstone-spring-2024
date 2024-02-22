@@ -1,6 +1,7 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Checkbox } from 'antd';
 import { useTranslation } from 'react-i18next';
+import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 
 const ReviewForm = () => {
   const { t } = useTranslation();
@@ -33,9 +34,9 @@ const ReviewForm = () => {
       </Form.Item>
 
       <Form.Item wrapperCol={{ span: 12 }}>
-        <Button type="primary" htmlType="submit">
+        <BaseButton style={{ width: '60%' }} htmlType="submit">
           <b>{t('detail-house.post-btn')}</b>
-        </Button>
+        </BaseButton>
       </Form.Item>
     </Form>
   );

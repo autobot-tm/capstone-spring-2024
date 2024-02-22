@@ -79,7 +79,22 @@
   "api.error.invalidOtpCode": "Invalid OTP code.",
 
   "detail-house": {
-    "property-id": "PROPERTY ID",
+    "Bedroom": "Bedroom",
+    "Bed": "Bed",
+    "WashingMachine": "Washing Machine",
+    "Bathroom": "Bathroom",
+    "SharedPool": "Shared Pool",
+    "AirConditioner": "Air Conditioner",
+    "Dryer": "Dryer",
+    "Refrigerator": "Refrigerator",
+    "TV": "TV",
+    "HotWater": "Hot Water",
+    "Laundry": "Laundry",
+    "Water": "Water",
+    "Electricity": "Electricity",
+    "Wifi": "Wifi",
+    "CarParking": "Car Parking",
+    "MotorbikeParking": "Motorbike Parking",
     "description-title": "Description",
     "property-feature-title": "Property features",
     "property-feature-des": "Explore the essential details of this property, offering a balanced blend of bedrooms, bathrooms, and living space, designed to accommodate modern lifestyles.",
@@ -87,9 +102,8 @@
     "property-utility-title": "Property utility",
     "location-title": "Location",
     "map-btn": "Show on map",
-    "nearby-title": "What's nearby?",
-    "nearby-des": "Vidisse oportere suscipiantur ut ius, at ius magna postea. Te essent maiestatis mnesarchum mel, error numquam meliore cu usu, in quo persius aliquid omittam.",
-    "comment-dynamic": "Comments",
+    "comment-dynamic": "Comment(s)",
+    "no-comment": "No Comment",
     "leave-title": "Leave a Reply",
     "leave-des-1": "Your email address will not be published. Required fields are marked *",
     "leave-des-2": "Your Rating *",
@@ -109,6 +123,36 @@
     "reserved-btn": "Reserved",
     "related-property": "Related properties",
     "related-property-des": "Discover related houses offering you excellent choices tailored to your needs.",
-    "see-more-btn": "See more"
+    "see-more-btn": "See more",
+    "more-comment-btn": "more",
+    "error": "Error",
+    "error-date": "Please select move-in date.",
+    "error-login": "Please log in to perform this function."
+  },
+
+  "reservation": {
+    "reservation-required": "Reservation required",
+    "your-intentions": "Your intentions",
+    "rental-period": "Estimated rental period",
+    "time-to-move-in": "Estimated time to move in",
+    "edit": "Edit",
+    "payment": "Payment",
+    "cancellation-policy": "Cancellation Policy",
+    "des-policy": "Free cancellation within 48 hours. You will receive a partial refund if you cancel after 48 hours. Find out more",
+    "general-standards": "General standards",
+    "description-field-time": "Your reservation/reservation will not be confirmed until the host/organizer accepts your request (within 24 hours). You will not be charged until then.",
+    "reservation-btn": "Reservation Required",
+    "month": "month",
+    "total-fee": "Total fee",
+    "reservation-fee": "Reservation fee",
+    "exception-fee": "Exception fee",
+    "total": "Total"
+  },
+
+  "PAYMENT": {
+    "view-your-reservation": "View your reservation",
+    "back-to-home": "Back to home",
+    "fail": "Your reservation has failed.",
+    "success": "Your reservation has been successfully created."
   }
 }

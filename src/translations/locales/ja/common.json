@@ -1,5 +1,22 @@
 {
   "home": "ホーム",
   "about": "運営会社について",
-  "welcome-text": "ようこそ！"
+  "welcome-text": "ようこそ！",
+
+  "detail-house": {
+    "Bedroom": "Bedroom",
+    "Bed": "Bed",
+    "WashingMachine": "Washing Machine",
+    "Bathroom": "Bathroom",
+    "SharedPool": "Shared Pool",
+    "AirConditioner": "Air Conditioner",
+    "Dryer": "Dryer",
+    "Refrigerator": "Refrigerator",
+    "TV": "TV",
+    "HotWater": "Hot Water",
+    "Laundry": "Laundry",
+    "Water": "Water",
+    "Electricity": "Electricity",
+    "Wifi": "OOOO"
+  }
 }

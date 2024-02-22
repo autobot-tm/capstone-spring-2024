@@ -3,16 +3,17 @@ import './HouseAmenities.scss';
 import { Col, Row } from 'antd';
 import { Paragraph } from '../../../../components/Typography';
 import { imagesAmenities } from '../../../../assets/images';
+import { useTranslation } from 'react-i18next';
 
 const HouseAmenities = ({ amenities }) => {
+  const { t } = useTranslation();
   const halfLength = Math.ceil(amenities.length / 2);
-
   const firstColumn = amenities.slice(0, halfLength);
   const secondColumn = amenities.slice(halfLength);
   return (
-    <div>
+    <>
       <Row>
-        <Col xs={24} md={10} style={{ marginRight: 40 }}>
+        <Col xs={24} md={10} style={{ marginRight: 60 }}>
           {firstColumn.map((amenity, index) => (
             <div key={index} className="property-detail-item">
               <span className="property-detail-group-1">
@@ -21,12 +22,9 @@ const HouseAmenities = ({ amenities }) => {
                   alt={amenity.name}
                   className="icon"
                 />
-                <Paragraph>{amenity.name}: </Paragraph>
+                <Paragraph>{t(`detail-house.${amenity.name.replace(/\s/g, '')}`)}: </Paragraph>
               </span>
-              <Paragraph
-                strong
-                className="property-detail-group-2 color-black"
-                classNames="color-black">
+              <Paragraph strong className="property-detail-group-2" classNames="color-black">
                 {amenity.amount}
               </Paragraph>
             </div>
@@ -41,7 +39,7 @@ const HouseAmenities = ({ amenities }) => {
                   alt={amenity.name}
                   className="icon"
                 />
-                <Paragraph>{amenity.name}: </Paragraph>
+                <Paragraph>{t(`detail-house.${amenity.name.replace(/\s/g, '')}`)}: </Paragraph>
               </span>
               <Paragraph strong className="property-detail-group-2" classNames="color-black">
                 {amenity.amount}
@@ -50,7 +48,7 @@ const HouseAmenities = ({ amenities }) => {
           ))}
         </Col>
       </Row>
-    </div>
+    </>
   );
 };
 

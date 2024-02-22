@@ -4,16 +4,17 @@ import { Col, Row } from 'antd';
 import { Paragraph } from '../../../../components/Typography';
 import { formatCustomCurrency } from '../../../../utils/number-seperator';
 import { imagesUtility } from '../../../../assets/images';
+import { useTranslation } from 'react-i18next';
 
 const HouseUtility = ({ utilities }) => {
+  const { t } = useTranslation();
   const halfLength = Math.ceil(utilities.length / 2);
-
   const firstColumn = utilities.slice(0, halfLength);
   const secondColumn = utilities.slice(halfLength);
   return (
-    <div>
+    <>
       <Row>
-        <Col xs={24} md={10} style={{ marginRight: 40 }}>
+        <Col xs={24} md={10} style={{ marginRight: 60 }}>
           {firstColumn.map((utility, index) => (
             <div key={index} className="property-detail-item">
               <span className="property-detail-group-1">
@@ -22,7 +23,7 @@ const HouseUtility = ({ utilities }) => {
                   alt={utility.name}
                   className="icon"
                 />
-                <Paragraph>{utility.name}: </Paragraph>
+                <Paragraph>{t(`detail-house.${utility.name.replace(/\s/g, '')}`)}: </Paragraph>
               </span>
               <Paragraph className="property-detail-group-2" classNames="color-black" strong>
                 {formatCustomCurrency(utility.price_per_unit)}/{utility.unit}
@@ -39,7 +40,7 @@ const HouseUtility = ({ utilities }) => {
                   alt={utility.name}
                   className="icon"
                 />
-                <Paragraph>{utility.name}: </Paragraph>
+                <Paragraph>{t(`detail-house.${utility.name.replace(/\s/g, '')}`)}: </Paragraph>
               </span>
               <Paragraph className="property-detail-group-2" classNames="color-black" strong>
                 {formatCustomCurrency(utility.price_per_unit)}
@@ -48,7 +49,7 @@ const HouseUtility = ({ utilities }) => {
           ))}
         </Col>
       </Row>
-    </div>
+    </>
   );
 };
 

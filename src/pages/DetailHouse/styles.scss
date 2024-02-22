@@ -18,7 +18,6 @@
   margin: auto;
   padding: 50px 0;
   .main {
-    width: 70%;
     &-title {
       display: block;
       margin-bottom: 10px;
@@ -34,12 +33,6 @@
       }
       .size-caption {
         display: flex;
-      }
-      &-ratting {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 4px;
       }
     }
     &-frame-description {
@@ -79,10 +72,9 @@
       border-top: 0.8px solid #ccc;
       padding: 40px 0 40px 0;
       &-inner {
-        display: flex;
         &-btn {
+          display: flex;
           justify-content: flex-end;
-          background-color: #f8a11e;
         }
       }
     }
@@ -102,27 +94,29 @@
   }
 
   .side {
-    width: 30%;
     &-form {
       border: 0.8px solid #ccc;
       border-radius: 5px;
-      padding: 4px 15px;
+      padding: 4px 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
       &-price-section {
         display: flex;
         align-items: center;
         width: 100%;
         height: 60px;
         border-bottom: 0.8px solid #ccc;
+
+        .price-group {
+          display: block;
+          text-align: end;
+        }
       }
       &-wishlist-section {
         display: flex;
         align-items: center;
-        width: 100%;
-        height: 60px;
-        border-bottom: 0.8px solid #ccc;
-        .btn {
-          border: none;
-        }
+        justify-content: flex-end;
+        margin-bottom: 4px;
       }
       &-estimated-section {
         display: flex;
@@ -130,10 +124,22 @@
         justify-content: center;
         width: 100%;
         height: 200px;
-        padding: 5px 0;
+        padding: 10px 0;
+
+        .center {
+          display: flex;
+          justify-content: center;
+        }
         .book-btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: $colors-black;
+          background-color: $colors-primary;
           width: 100%;
-          background-color: #f8a11e;
+          font-weight: 600;
+          font-size: 16px;
+          padding: 20px;
         }
         &-inner {
           width: 100%;
@@ -155,7 +161,7 @@
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1200px) {
   #dh-container {
     padding: 50px 20px;
   }

@@ -6,12 +6,38 @@ import { StarFilled } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 
 const FeedBackCustomer = ({ comment }) => {
-  const [showAll, setShowAll] = useState(false);
-  const visibleComments = showAll ? comment : comment?.slice(0, 4);
+  const [showAllUsers, setShowAllUsers] = useState(false);
+  const [expandedComments, setExpandedComments] = useState([]);
   const { t } = useTranslation();
-  const handleSeeMore = () => {
-    setShowAll(true);
+
+  const handleSeeMoreUsers = () => {
+    setShowAllUsers(true);
   };
+
+  const handleSeeMoreComments = index => {
+    setExpandedComments(prev => [...prev, index]);
+  };
+
+  const renderCommentContent = (comment, index) => {
+    if (expandedComments.includes(index)) {
+      return <Paragraph>{comment}</Paragraph>;
+    } else if (comment.length > 150) {
+      return (
+        <>
+          <Paragraph>
+            {comment.substring(0, 150)}...
+            <a onClick={() => handleSeeMoreComments(index)} style={{ color: '#f8a11e' }}>
+              {t('detail-house.more-comment-btn')}
+            </a>
+          </Paragraph>
+        </>
+      );
+    } else {
+      return <Paragraph>{comment}</Paragraph>;
+    }
+  };
+
+  const visibleUsers = showAllUsers ? comment : comment?.slice(0, 4);
 
   return (
     <>
@@ -20,33 +46,33 @@ const FeedBackCustomer = ({ comment }) => {
           {comment?.length} {t('detail-house.comment-dynamic')}
         </SubHeading>
       ) : (
-        <SubHeading strong>No comment</SubHeading>
+        <SubHeading strong>{t('detail-house.no-comment')}</SubHeading>
       )}
-      {visibleComments?.map((item, index) => (
-        <Row key={index} align="stretch" className="cmt-border">
-          <Col xs={6} md={4} className="frame-1">
-            <Avatar src={item.reviewer?.avatar_url} shape="square" size={100} />
-          </Col>
-          <Col xs={18} md={20} className="frame-2">
-            <Row align="middle">
-              <SubHeading style={{ marginRight: 14 }} strong>
-                {item.reviewer?.first_name}
-              </SubHeading>
-              <StarFilled />
-              <Caption style={{ color: 'black' }} size={140}>
-                &nbsp;{item.rating}
-              </Caption>
-            </Row>
-            <Row className="comment">
-              <Paragraph>{item.comment}</Paragraph>
-            </Row>
-          </Col>
-        </Row>
-      ))}
-      {!showAll && comment?.length > 4 && (
+      <div className="comment-list">
+        {visibleUsers?.map((item, index) => (
+          <Row key={index} className="cmt-border">
+            <Col xs={6} md={4} className="frame-1">
+              <Avatar src={item.reviewer?.avatar_url} shape="square" size={100} />
+            </Col>
+            <Col xs={18} md={20} className="frame-2">
+              <Row align="middle">
+                <SubHeading style={{ marginRight: 14 }} strong>
+                  {item.reviewer?.first_name}
+                </SubHeading>
+                <StarFilled />
+                <Caption style={{ color: 'black' }} size={140}>
+                  &nbsp;{item.rating}
+                </Caption>
+              </Row>
+              <Row className="comment">{renderCommentContent(item.comment, index)}</Row>
+            </Col>
+          </Row>
+        ))}
+      </div>
+      {!showAllUsers && comment?.length > 4 && (
         <Row>
           <Col className="see-more-btn" xs={24}>
-            <Button onClick={handleSeeMore}>{t('detail-house.see-more-btn')}</Button>
+            <Button onClick={handleSeeMoreUsers}>{t('detail-house.see-more-btn')}</Button>
           </Col>
         </Row>
       )}

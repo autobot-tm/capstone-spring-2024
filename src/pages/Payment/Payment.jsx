@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './styles.scss';
 import { useNavigate } from 'react-router-dom';
 import { routeNames } from '../../config';
-import { Headline } from '../../components/Typography';
-import { Button } from 'antd';
-import Loading from '../../components/Loading/Loading';
+import { Headline, SubHeading } from '../../components/Typography';
+import { Col, Row } from 'antd';
 import { VNPayTransactionStatus } from '../../constants/vnpay.constant';
+import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
+import SpinLoading from '../../components/SpinLoading/SpinLoading';
+import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
+import { useTranslation } from 'react-i18next';
 
 const PaymentView = ({ handleUrlChange }) => {
   useEffect(() => {
@@ -14,30 +17,57 @@ const PaymentView = ({ handleUrlChange }) => {
 
   return (
     <div className="container">
-      <Loading />
+      <SpinLoading />
     </div>
   );
 };
 
-const PaymentSuccess = ({ onNavigate }) => {
+const PaymentSuccess = ({ t, onNavigate }) => {
   return (
-    <div className="container">
-      <Headline size={600}>Payment Success</Headline>
-      <Button onClick={onNavigate}>View your reservation</Button>
-    </div>
+    <Row className="container" gutter={[16, 16]}>
+      <Col xs={24}>
+        <Headline classNames="text-color-success" size={600}>
+          <CheckCircleFilled />
+        </Headline>
+      </Col>
+      <Col xs={24}>
+        <SubHeading size={230} strong>
+          {t('PAYMENT.sucess')}
+        </SubHeading>
+      </Col>
+      <Col xs={24} className="reservation-btn">
+        <BaseButton style={{ width: '10%' }} onClick={onNavigate}>
+          {t('PAYMENT.view-your-reservation')}
+        </BaseButton>
+      </Col>
+    </Row>
   );
 };
 
-const PaymentError = ({ onNavigate }) => {
+const PaymentError = ({ t, onNavigate }) => {
   return (
-    <div className="container">
-      <Headline size={600}>Payment Error</Headline>
-      <Button onClick={onNavigate}>Back to home</Button>
-    </div>
+    <Row className="container" gutter={[16, 16]}>
+      <Col xs={24}>
+        <Headline classNames="text-color-fail" size={600}>
+          <CloseCircleFilled />
+        </Headline>
+      </Col>
+      <Col xs={24}>
+        <SubHeading size={230} strong>
+          {t('PAYMENT.fail')}
+        </SubHeading>
+      </Col>
+      <Col xs={24} className="reservation-btn">
+        <BaseButton style={{ width: '7%' }} onClick={onNavigate}>
+          {t('PAYMENT.back-to-home')}
+        </BaseButton>
+      </Col>
+    </Row>
   );
 };
 
 export const Payment = () => {
+  const { t } = useTranslation();
   const [step, setStep] = useState('payment');
   const navigate = useNavigate();
 
@@ -58,7 +88,7 @@ export const Payment = () => {
   };
 
   const onSuccess = () => {
-    navigate(routeNames.About);
+    navigate(routeNames.OrderSuccess);
   };
 
   const onError = () => {
@@ -70,9 +100,9 @@ export const Payment = () => {
       case 'payment':
         return <PaymentView handleUrlChange={handleUrlChange} />;
       case 'success':
-        return <PaymentSuccess onNavigate={onSuccess} />;
+        return <PaymentSuccess t={t} onNavigate={onSuccess} />;
       case 'error':
-        return <PaymentError onNavigate={onError} />;
+        return <PaymentError t={t} onNavigate={onError} />;
       default:
         return null;
     }

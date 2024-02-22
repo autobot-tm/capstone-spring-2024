@@ -3,31 +3,34 @@ import React, { useEffect, useState } from 'react';
 import { Layout } from '../../hoc/Layout';
 import { Headline } from '../../components/Typography/Headline/Headline';
 import { Paragraph } from '../../components/Typography/Paragraph/Paragraph';
-import { StarOutlined } from '@ant-design/icons';
-import { StarFilled } from '@ant-design/icons';
+import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { Caption, SubHeading } from '../../components/Typography';
-import { Button, Row, Col } from 'antd';
+import { Button, Row, Col, Form, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { message } from 'antd';
+import { notification } from 'antd';
 import { getHouseById, getHouseReview } from '../../services/apis/houses.service';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import HouseUtility from './components/HouseUtility/HouseUtility';
 import FeedBackCustomer from './components/FeedBackCustomer/FeedBackCustomer';
 import HouseAmenities from './components/HouseAmenities/HouseAmenities';
 import useSWR from 'swr';
-import Selection from '../../components/Selection/Selection';
-import DatePickerAnt from '../../components/DatePickerComponent/DatePickerAnt';
+import Selection from './components/Selection/Selection';
+import DatePickerAnt from './components/DatePickerComponent/DatePickerAnt';
 import ReviewForm from './components/ReviewForm/ReviewForm';
 import CarouselHeader from '../../components/CarouselHeader/CarouselHeader';
 import SizeImg from '../../assets/images/SizeIcon.svg';
+import { HousePropertyUnit } from '../../constants/house.constant';
+import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
+import SpinLoading from '../../components/SpinLoading/SpinLoading';
 
 const DetailHouse = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { house_id: house_id } = useParams();
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [houseAmenities, setHouseAmenities] = useState([]);
   const [houseUtilities, setHouseUtilities] = useState([]);
   const [imgHouse, setImgHouse] = useState([]);
@@ -54,6 +57,9 @@ const DetailHouse = () => {
           setImgHouse(house?.image_urls);
           setComment(reviews?.reviews);
         }
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
       } catch (error) {
         console.error('Error fetching house amenities:', error);
       }
@@ -67,9 +73,25 @@ const DetailHouse = () => {
       setIsClickedWishlist(!isClickedWishlist);
       //continue
     } else {
-      message.error('Please sign in to add house to wishlist.');
+      errorLoginNotification();
     }
   };
+
+  function errorDateNotification() {
+    return notification.error({
+      message: t('detail-house.error'),
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      description: t('detail-house.error-date'),
+    });
+  }
+
+  function errorLoginNotification() {
+    return notification.error({
+      message: t('detail-house.error'),
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      description: t('detail-house.error-login'),
+    });
+  }
 
   const TitleHeadingComponent = () => {
     return (
@@ -80,22 +102,18 @@ const DetailHouse = () => {
           </Headline>
         </Row>
         <Row className="main-frame-info">
-          <Caption style={{ color: 'black' }} classNames="caption-hr" size={140}>
+          <Caption classNames="caption-hr color-black" size={140}>
             {house?.category}
           </Caption>
-          <Caption
-            style={{ color: 'black' }}
-            classNames="caption-hr"
-            size={140}
-            className="main-frame-info-ratting">
+          <Caption classNames="caption-hr color-black" size={140}>
             <StarFilled />
             &nbsp;{reviews?.average_rating > 0 ? `${reviews?.average_rating}/5` : 'No rating'}
           </Caption>
-
-          <Caption classNames="size-caption" size={140}>
+          <Caption classNames="size-caption color-black" size={140}>
             <img src={SizeImg} />
             &nbsp;
-            {house?.size_in_m2}m²
+            {house?.size_in_m2}
+            {HousePropertyUnit.METER_SQUARE}
           </Caption>
         </Row>
       </>
@@ -106,16 +124,14 @@ const DetailHouse = () => {
     return (
       <>
         <Row className="main-frame-description">
-          <SubHeading size={260} classNames="main-title" strong>
-            {t('detail-house.description-title')}
-          </SubHeading>
-          <Paragraph>{house?.description.replace(/<br\s*\/?>/gi, '')}</Paragraph>
-        </Row>
-        <Row className="main-property-features">
-          <SubHeading size={260} classNames="main-title" strong>
-            {t('detail-house.property-feature-title')}
-          </SubHeading>
-          <Paragraph>{t('detail-house.property-feature-des')}</Paragraph>
+          <Col xs={24}>
+            <SubHeading size={260} classNames="main-title" strong>
+              {t('detail-house.description-title')}
+            </SubHeading>
+          </Col>
+          <Col xs={24}>
+            <Paragraph>{house?.description.replace(/<br\s*\/?>/gi, '')}</Paragraph>
+          </Col>
         </Row>
       </>
     );
@@ -124,8 +140,19 @@ const DetailHouse = () => {
   const PropertyFeatureComponent = () => {
     return (
       <>
+        <Row className="main-property-features">
+          <SubHeading size={260} classNames="main-title" strong>
+            {t('detail-house.property-feature-title')}
+          </SubHeading>
+          <Paragraph>{t('detail-house.property-feature-des')}</Paragraph>
+        </Row>
+        <Row>
+          <SubHeading classNames="main-property-features-title" size={230} strong>
+            {t('detail-house.property-detail-title')}
+          </SubHeading>
+        </Row>
         <Row className="main-property-features-detail">
-          <Col style={{ marginRight: 40 }} className="main-property-features-detail-card" xs={24}>
+          <Col className="main-property-features-detail-card" xs={24}>
             {houseAmenities && houseAmenities.length > 0 && (
               <HouseAmenities amenities={houseAmenities} />
             )}
@@ -137,7 +164,7 @@ const DetailHouse = () => {
           </SubHeading>
         </Row>
         <Row className="main-property-features-utility">
-          <Col style={{ marginRight: 40 }} className="main-property-features-utility-card" xs={24}>
+          <Col className="main-property-features-utility-card" xs={24}>
             {houseUtilities && houseUtilities.length > 0 && (
               <HouseUtility utilities={houseUtilities} />
             )}
@@ -146,7 +173,7 @@ const DetailHouse = () => {
       </>
     );
   };
-
+  //continue
   const LocationComponent = () => {
     return (
       <>
@@ -157,17 +184,14 @@ const DetailHouse = () => {
             </SubHeading>
             <Paragraph>{house?.address}</Paragraph>
           </Col>
-          <Col style={{ textAlign: 'right' }} xs={24} md={10}>
-            {/* change -> component */}
-            <Button className="main-frame-location-inner-btn">
-              <b> {t('detail-house.map-btn')}</b>
-            </Button>
+          <Col xs={24} md={10} className="main-frame-location-inner-btn">
+            <BaseButton style={{ width: '40%' }}>{t('detail-house.map-btn')}</BaseButton>
           </Col>
         </Row>
       </>
     );
   };
-
+  //continue
   const ReviewFormComponent = () => {
     return (
       <>
@@ -192,75 +216,110 @@ const DetailHouse = () => {
 
   const ReserveFormComponent = () => {
     const [selectedMonths, setSelectedMonths] = useState(1);
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [form] = Form.useForm();
+
+    const onFinish = () => {
+      if (!access_token) {
+        errorLoginNotification();
+        return;
+      }
+      if (!selectedMonths || !selectedDate) {
+        errorDateNotification();
+        return;
+      }
+      navigate(`/reservation/${house.id}`, {
+        state: { house, selectedDate, selectedMonths, reviews },
+      });
+    };
 
     const handleMonthChange = value => {
       setSelectedMonths(value);
     };
 
-    const renderPrice = () => {
-      const selectedPrice = house?.pricing_policies?.find(
-        policy => parseInt(policy.total_months) === parseInt(selectedMonths),
-      )?.price_per_month;
-      return formatCustomCurrency(selectedPrice);
+    const handleDateChange = dateString => {
+      setSelectedDate(dateString);
     };
 
-    const handlePayments = async () => {
-      await navigate('/reservation', house);
-      //continue
+    const renderPrice = () => {
+      const promotionPackageMonths = [3, 6, 12];
+      const selectedMonthsInt = parseInt(selectedMonths);
+
+      const pricePerMonth = house?.pricing_policies?.find(
+        policy => parseInt(policy.total_months) === 1,
+      )?.price_per_month;
+
+      if (promotionPackageMonths.includes(selectedMonthsInt)) {
+        const selectedPrice = house?.pricing_policies?.find(
+          policy => parseInt(policy.total_months) === selectedMonthsInt,
+        )?.price_per_month;
+        return (
+          <Row>
+            <Col xs={24}>
+              <SubHeading size={230} style={{ color: '#f8a11e' }} strong>
+                {formatCustomCurrency(selectedPrice)}
+              </SubHeading>
+              &nbsp;
+              <Caption size={140}>/{t('detail-house.month')}</Caption>
+            </Col>
+            <Col xs={24}>
+              <Paragraph size={160}>
+                <del>{formatCustomCurrency(pricePerMonth)}</del>
+              </Paragraph>
+              &nbsp;
+              <Caption size={140}>/{t('detail-house.month')}</Caption>
+            </Col>
+          </Row>
+        );
+      } else {
+        return (
+          <>
+            <SubHeading size={230} strong>
+              {formatCustomCurrency(pricePerMonth)}
+            </SubHeading>
+            &nbsp;
+            <Caption size={140}>/{t('detail-house.month')}</Caption>
+          </>
+        );
+      }
     };
+
     return (
       <>
-        <Row className="side-form-price-section">
-          <Col xs={6}>
-            <SubHeading size={230} strong>
-              {t('detail-house.price')}:
-            </SubHeading>
-          </Col>
-          <Col style={{ textAlign: 'right' }} className="price-group" xs={18}>
-            <SubHeading size={230} strong>
+        <Form form={form} onFinish={onFinish} layout="vertical">
+          <Row className="side-form-price-section">
+            <Col xs={6}>
+              <SubHeading size={230} strong>
+                {t('detail-house.price')}:
+              </SubHeading>
+            </Col>
+            <Col className="price-group" xs={18}>
               {renderPrice()}
-            </SubHeading>
-            <SubHeading size={230}>/{t('detail-house.month')}</SubHeading>
-          </Col>
-        </Row>
-        <Row className="side-form-wishlist-section">
-          <Button
-            style={{ backgroundColor: isClickedWishlist ? '#f8a11e' : 'inherit' }}
-            onClick={handleAddWishlist}>
-            <StarOutlined /> <b> {t('detail-house.add-to-wishlist')}</b>
-          </Button>
-        </Row>
-        <Row className="side-form-estimated-section">
-          <Col xs={24}>
-            <SubHeading size={230} strong>
-              {t('detail-house.estimated')}
-            </SubHeading>
-          </Col>
-          <Col style={{ paddingLeft: 25 }} xs={12}>
-            <Paragraph> {t('detail-house.rental-period')}:</Paragraph>
-          </Col>
-          <Col xs={12} style={{ textAlign: 'right' }}>
-            <Selection onChange={handleMonthChange} />
-          </Col>
-          <Col style={{ paddingLeft: 25 }} xs={12}>
-            <Paragraph> {t('detail-house.time-to-move-in')}:</Paragraph>
-          </Col>
-          <Col xs={12} style={{ textAlign: 'right' }}>
-            <DatePickerAnt />
-          </Col>
-          <Col xs={24} md={24} lg={24}>
-            {house?.status !== 'AVAILABLE' && (
-              <Button className="book-btn" disabled>
-                <b>{t('detail-house.reserved-btn')}</b>
-              </Button>
-            )}
-            {house?.status === 'AVAILABLE' && (
-              <Button className="book-btn" onClick={handlePayments}>
-                <b>{t('detail-house.reserve-now-btn')}</b>
-              </Button>
-            )}
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+          <Row className="side-form-estimated-section">
+            <Col xs={24}>
+              <SubHeading size={230} strong>
+                {t('detail-house.estimated')}
+              </SubHeading>
+            </Col>
+            <Col xs={12} className="center">
+              <Form.Item name="selectedMonths" label={t('detail-house.rental-period')} required>
+                <Selection onChange={handleMonthChange} />
+              </Form.Item>
+            </Col>
+            <Col xs={12} className="center">
+              <Form.Item name="selectedDate" label={t('detail-house.time-to-move-in')} required>
+                <DatePickerAnt onDateChange={handleDateChange} />
+              </Form.Item>
+            </Col>
+            <Col xs={24}>
+              <BaseButton htmlType="submit" style={{ width: '100%', justifyContent: 'center' }}>
+                {t('detail-house.reserve-now-btn')}
+              </BaseButton>
+            </Col>
+          </Row>
+        </Form>
       </>
     );
   };
@@ -287,32 +346,50 @@ const DetailHouse = () => {
 
   return (
     <Layout>
-      <header>
-        <CarouselHeader img={imgHouse} />
-      </header>
-      <div id="dh-container">
-        <Row className="main-container">
-          <Col style={{ marginRight: 30 }} className="main" xs={24} lg={16}>
-            <TitleHeadingComponent />
-            <DescriptionComponent />
-            <PropertyFeatureComponent />
-            <LocationComponent />
-            <Row align="top" className="main-frame-review">
-              <FeedBackCustomer comment={comment} />
-              <ReviewFormComponent />
+      {isLoading ? (
+        <SpinLoading />
+      ) : (
+        <>
+          <header>
+            <CarouselHeader img={imgHouse} />
+          </header>
+          <main id="dh-container">
+            <Row align="stretch">
+              <Col style={{ marginRight: 30 }} className="main" xs={24} lg={16}>
+                <TitleHeadingComponent />
+                <DescriptionComponent />
+                <PropertyFeatureComponent />
+                <LocationComponent />
+                <Row align="top" className="main-frame-review">
+                  <FeedBackCustomer comment={comment} />
+                  <ReviewFormComponent />
+                </Row>
+              </Col>
+              <Col className="side" xs={24} lg={7}>
+                <Row className="side-form-wishlist-section">
+                  <Tooltip placement="right" title={t('detail-house.add-to-wishlist')}>
+                    <Button
+                      style={{ backgroundColor: isClickedWishlist ? '#f8a11e' : 'inherit' }}
+                      onClick={handleAddWishlist}>
+                      <StarOutlined />
+                    </Button>
+                  </Tooltip>
+                </Row>
+                <Row className="side-form">
+                  <Col xs={24}>
+                    <ReserveFormComponent />
+                  </Col>
+                </Row>
+                <Row className="side-related-house">
+                  <Col xs={24}>
+                    <RelatedPropertiesComponent />
+                  </Col>
+                </Row>
+              </Col>
             </Row>
-          </Col>
-
-          <Col className="side" xs={16} lg={7}>
-            <div className="side-form">
-              <ReserveFormComponent />
-            </div>
-            <div className="side-related-house">
-              <RelatedPropertiesComponent />
-            </div>
-          </Col>
-        </Row>
-      </div>
+          </main>
+        </>
+      )}
     </Layout>
   );
 };
