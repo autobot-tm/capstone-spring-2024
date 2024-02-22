@@ -25,7 +25,7 @@ import SizeImg from '../../assets/images/SizeIcon.svg';
 import { HousePropertyUnit } from '../../constants/house.constant';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
-
+//rwar
 const DetailHouse = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
