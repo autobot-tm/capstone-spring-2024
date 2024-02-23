@@ -60,7 +60,7 @@ const SearchBar = () => {
     <div className={styles.searchBar}>
       <Form onFinish={handleFinish} form={form}>
         <Row gutter={[4, 4]}>
-          <Col lg={8} sm={24} xs={24}>
+          <Col lg={7} sm={24} xs={24}>
             <Form.Item name="categories" style={{ margin: 0 }}>
               <Select
                 size="large"
@@ -137,7 +137,7 @@ const SearchBar = () => {
               {t('button.search')}
             </BaseButton>
           </Col>
-          <Col lg={2} xs={12}>
+          <Col lg={3} xs={12}>
             <BaseButton
               size="large"
               type="text"

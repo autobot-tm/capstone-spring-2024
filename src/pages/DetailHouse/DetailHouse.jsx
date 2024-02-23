@@ -185,7 +185,9 @@ const DetailHouse = () => {
             <Paragraph>{house?.address}</Paragraph>
           </Col>
           <Col xs={24} md={10} className="main-frame-location-inner-btn">
-            <BaseButton style={{ width: '40%' }}>{t('detail-house.map-btn')}</BaseButton>
+            <BaseButton type="primary" style={{ width: '40%' }}>
+              {t('detail-house.map-btn')}
+            </BaseButton>
           </Col>
         </Row>
       </>
@@ -314,7 +316,10 @@ const DetailHouse = () => {
               </Form.Item>
             </Col>
             <Col xs={24}>
-              <BaseButton htmlType="submit" style={{ width: '100%', justifyContent: 'center' }}>
+              <BaseButton
+                htmlType="submit"
+                type="primary"
+                style={{ width: '100%', justifyContent: 'center' }}>
                 {t('detail-house.reserve-now-btn')}
               </BaseButton>
             </Col>

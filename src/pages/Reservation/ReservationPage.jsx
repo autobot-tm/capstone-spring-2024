@@ -266,7 +266,7 @@ const ReservationPage = () => {
               <b> {t('reservation.reservation-btn')} </b>
             </Button> */}
                 <span className="reservation-btn">
-                  <BaseButton onClick={handlePayments}>
+                  <BaseButton type="primary" onClick={handlePayments}>
                     {t('reservation.reservation-btn')}
                   </BaseButton>
                 </span>
