@@ -25,7 +25,8 @@ import SizeImg from '../../assets/images/SizeIcon.svg';
 import { HousePropertyUnit } from '../../constants/house.constant';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
-//rwar
+import HousesMap from '../../components/HousesMap/HousesMap';
+
 const DetailHouse = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -56,10 +57,9 @@ const DetailHouse = () => {
           setHouseUtilities(house?.utilities);
           setImgHouse(house?.image_urls);
           setComment(reviews?.reviews);
-        }
-        setTimeout(() => {
+
           setIsLoading(false);
-        }, 2000);
+        }
       } catch (error) {
         console.error('Error fetching house amenities:', error);
       }
@@ -103,7 +103,7 @@ const DetailHouse = () => {
         </Row>
         <Row className="main-frame-info">
           <Caption classNames="caption-hr color-black" size={140}>
-            {house?.category}
+            {t(`detail-house.${house?.category.replace(/\s/g, '')}`)}
           </Caption>
           <Caption classNames="caption-hr color-black" size={140}>
             <StarFilled />
@@ -146,24 +146,23 @@ const DetailHouse = () => {
           </SubHeading>
           <Paragraph>{t('detail-house.property-feature-des')}</Paragraph>
         </Row>
-        <Row>
+
+        <Row className="main-property-features-detail">
+          {' '}
           <SubHeading classNames="main-property-features-title" size={230} strong>
             {t('detail-house.property-detail-title')}
           </SubHeading>
-        </Row>
-        <Row className="main-property-features-detail">
           <Col className="main-property-features-detail-card" xs={24}>
             {houseAmenities && houseAmenities.length > 0 && (
               <HouseAmenities amenities={houseAmenities} />
             )}
           </Col>
         </Row>
-        <Row>
+
+        <Row className="main-property-features-utility">
           <SubHeading classNames="main-property-features-title" size={230} strong>
             {t('detail-house.property-utility-title')}
           </SubHeading>
-        </Row>
-        <Row className="main-property-features-utility">
           <Col className="main-property-features-utility-card" xs={24}>
             {houseUtilities && houseUtilities.length > 0 && (
               <HouseUtility utilities={houseUtilities} />
@@ -173,21 +172,34 @@ const DetailHouse = () => {
       </>
     );
   };
-  //continue
+
   const LocationComponent = () => {
     return (
       <>
-        <Row align="middle" className="main-frame-location" gutter={[0, 14]}>
-          <Col xs={24} md={14}>
+        <Row align="middle" className="main-frame-location" gutter={[0, 24]}>
+          <Col xs={24}>
             <SubHeading size={260} classNames="main-title" strong>
               {t('detail-house.location-title')}
             </SubHeading>
-            <Paragraph>{house?.address}</Paragraph>
           </Col>
-          <Col xs={24} md={10} className="main-frame-location-inner-btn">
-            <BaseButton type="primary" style={{ width: '40%' }}>
-              {t('detail-house.map-btn')}
-            </BaseButton>
+          <Col xs={24} className="main-frame-location-inner-btn container-map">
+            <HousesMap
+              locations={[
+                {
+                  position: {
+                    lat: house.latitude,
+                    lng: house.longitude,
+                  },
+                  id: house.id,
+                  name: house.name,
+                  price: house.pricing_policies[0].price_per_month,
+                  image: house.image_urls[0],
+                },
+              ]}
+            />
+          </Col>
+          <Col xs={24}>
+            <Paragraph>{house?.address}</Paragraph>
           </Col>
         </Row>
       </>
@@ -360,7 +372,7 @@ const DetailHouse = () => {
           </header>
           <main id="dh-container">
             <Row align="stretch">
-              <Col style={{ marginRight: 30 }} className="main" xs={24} lg={16}>
+              <Col style={{ paddingRight: 30 }} className="main" xs={24} lg={16}>
                 <TitleHeadingComponent />
                 <DescriptionComponent />
                 <PropertyFeatureComponent />

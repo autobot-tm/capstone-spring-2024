@@ -4,28 +4,34 @@ import './style.scss';
 import React from 'react';
 import { Headline, Paragraph } from '../../../../components/Typography';
 import { HomeOutlined } from '@ant-design/icons';
+import { useTranslation } from 'react-i18next';
 
 const OrderSuccessView = () => {
+  const { t } = useTranslation();
   return (
     <Layout>
-      <Row id="header-checkout" gutter={[12, 12]}>
-        <Col xs={24} sm={12}>
-          <Headline size={450}>Checkout</Headline>
-        </Col>
-        <Col xs={24} sm={12} className="breadcrumb">
-          <Breadcrumb
-            items={[
-              {
-                href: '/',
-                title: <HomeOutlined />,
-              },
-              {
-                title: 'Checkout',
-              },
-            ]}
-          />
-        </Col>
-      </Row>
+      <header id="header-checkout">
+        <Row className="header-row" align="middle">
+          <Col xs={24} sm={12}>
+            <Headline size={450} strong>
+              {t('reservation.checkout')}
+            </Headline>
+          </Col>
+          <Col xs={24} sm={12} className="breadcrumb">
+            <Breadcrumb
+              items={[
+                {
+                  href: '/',
+                  title: <HomeOutlined style={{ color: 'black' }} />,
+                },
+                {
+                  title: `${t('reservation.checkout')}`,
+                },
+              ]}
+            />
+          </Col>
+        </Row>
+      </header>
       <Row id="order-container">
         <Col xs={24}>
           <Headline size={450} strong>

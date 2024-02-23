@@ -1,3 +1,4 @@
+import './ReviewForm.scss';
 import React from 'react';
 import { Form, Input, Checkbox } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -34,7 +35,7 @@ const ReviewForm = () => {
       </Form.Item>
 
       <Form.Item wrapperCol={{ span: 12 }}>
-        <BaseButton style={{ width: '60%' }} htmlType="submit">
+        <BaseButton type="primary" style={{ width: '60%' }} htmlType="submit">
           <b>{t('detail-house.post-btn')}</b>
         </BaseButton>
       </Form.Item>

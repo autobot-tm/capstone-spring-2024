@@ -12,8 +12,8 @@ const HouseAmenities = ({ amenities }) => {
   const secondColumn = amenities.slice(halfLength);
   return (
     <>
-      <Row>
-        <Col xs={24} md={10} style={{ marginRight: 60 }}>
+      <Row gutter={[48, 16]}>
+        <Col xs={24} md={12}>
           {firstColumn.map((amenity, index) => (
             <div key={index} className="property-detail-item">
               <span className="property-detail-group-1">
@@ -30,7 +30,7 @@ const HouseAmenities = ({ amenities }) => {
             </div>
           ))}
         </Col>
-        <Col xs={24} md={10}>
+        <Col xs={24} md={12}>
           {secondColumn.map((amenity, index) => (
             <div key={index} className="property-detail-item">
               <span className="property-detail-group-1">

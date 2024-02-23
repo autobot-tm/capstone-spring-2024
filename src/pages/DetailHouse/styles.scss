@@ -78,6 +78,10 @@
         }
       }
     }
+    .container-map {
+      height: 400px;
+      width: 100%;
+    }
     &-frame-review {
       display: flex;
       flex-direction: column;
@@ -165,4 +169,9 @@
   #dh-container {
     padding: 50px 20px;
   }
+}
+
+.container-map {
+  height: 150px;
+  width: 100%;
 }

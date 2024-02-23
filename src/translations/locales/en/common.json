@@ -2,6 +2,8 @@
   "home": "Home",
   "about": "About",
   "welcome-text": "Welcome hjhj",
+  "contact": "Contact",
+  "join-us": "Join us",
   "error": "Oops something went wrong",
   "ok": "Ok",
   "cancel": "Cancel",
@@ -129,6 +131,14 @@
   "api.error.invalidOtpCode": "Invalid OTP code.",
 
   "detail-house": {
+    "STUDIO": "STUDIO",
+    "DUPLEX": "DUPLEX",
+    "TRIPLEX": "TRIPLEX",
+    "ONE_BEDROOM": "ONE BEDROOM",
+    "TWO_BEDROOM": "TWO BEDROOM",
+    "TOWNHOUSE": "TOWNHOUSE",
+    "CONDO": "CONDO",
+    "OTHER": "OTHER",
     "Bedroom": "Bedroom",
     "Bed": "Bed",
     "WashingMachine": "Washing Machine",
@@ -165,6 +175,8 @@
     "post-btn": "Post Comment",
     "price": "Price",
     "month": "month",
+    "months": "months",
+    "select-date": "Select date",
     "add-to-wishlist": "Add to wishlist",
     "estimated": "Estimated",
     "rental-period": "rental period",
@@ -181,6 +193,7 @@
   },
 
   "reservation": {
+    "checkout": "Checkout",
     "reservation-required": "Reservation required",
     "your-intentions": "Your intentions",
     "rental-period": "Estimated rental period",

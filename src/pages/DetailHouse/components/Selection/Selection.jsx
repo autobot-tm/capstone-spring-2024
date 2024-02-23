@@ -1,10 +1,11 @@
 import './style.scss';
 import React, { useState } from 'react';
 import { Select, Space } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 const Selection = ({ defaultValue, onChange }) => {
-  const [editedValue, setEditedValue] = useState(defaultValue); // Sử dụng state mới để lưu giá trị đã chỉnh sửa
-
+  const [editedValue, setEditedValue] = useState(defaultValue);
+  const { t } = useTranslation();
   const handleChange = value => {
     setEditedValue(value);
     onChange(value);
@@ -12,7 +13,7 @@ const Selection = ({ defaultValue, onChange }) => {
   return (
     <Space wrap>
       <Select
-        defaultValue="1 month"
+        defaultValue={`1 ${t('detail-house.month')}`}
         value={editedValue}
         style={{
           width: '100%',
@@ -23,51 +24,51 @@ const Selection = ({ defaultValue, onChange }) => {
         options={[
           {
             value: '1',
-            label: '1 month*',
+            label: `1 ${t('detail-house.month')}`,
           },
           {
             value: '2',
-            label: '2 months',
+            label: `2 ${t('detail-house.months')}`,
           },
           {
             value: '3',
-            label: '3 months*',
+            label: `3 ${t('detail-house.months')}`,
           },
           {
             value: '4',
-            label: '4 months',
+            label: `4 ${t('detail-house.months')}`,
           },
           {
             value: '5',
-            label: '5 months',
+            label: `5 ${t('detail-house.months')}`,
           },
           {
             value: '6',
-            label: '6 months*',
+            label: `6 ${t('detail-house.months')}`,
           },
           {
             value: '7',
-            label: '7 months',
+            label: `7 ${t('detail-house.months')}`,
           },
           {
             value: '8',
-            label: '8 months',
+            label: `8 ${t('detail-house.months')}`,
           },
           {
             value: '9',
-            label: '9 months',
+            label: `9 ${t('detail-house.months')}`,
           },
           {
             value: '10',
-            label: '10 months',
+            label: `10 ${t('detail-house.months')}`,
           },
           {
             value: '11',
-            label: '11 months',
+            label: `11 ${t('detail-house.months')}`,
           },
           {
             value: '12',
-            label: '12 months*',
+            label: `12 ${t('detail-house.months')}`,
           },
         ]}
       />

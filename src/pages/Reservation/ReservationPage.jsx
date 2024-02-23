@@ -123,41 +123,43 @@ const ReservationPage = () => {
         <SpinLoading />
       ) : (
         <>
-          <Row id="header-checkout">
-            <Col xs={24} sm={12}>
-              <Headline size={450} strong>
-                Checkout
-              </Headline>
-            </Col>
-            <Col xs={24} sm={12} className="breadcrumb">
-              <Breadcrumb
-                items={[
-                  {
-                    href: '/',
-                    title: <HomeOutlined style={{ color: 'black' }} />,
-                  },
-                  {
-                    title: 'Checkout',
-                  },
-                ]}
-              />
-            </Col>
-          </Row>
+          <header id="header-checkout">
+            <Row className="header-row" align="middle">
+              <Col xs={24} sm={12}>
+                <Headline size={450} strong>
+                  {t('RESERVATION.checkout')}
+                </Headline>
+              </Col>
+              <Col xs={24} sm={12} className="breadcrumb">
+                <Breadcrumb
+                  items={[
+                    {
+                      href: '/',
+                      title: <HomeOutlined style={{ color: 'black' }} />,
+                    },
+                    {
+                      title: `${t('RESERVATION.checkout')}`,
+                    },
+                  ]}
+                />
+              </Col>
+            </Row>
+          </header>
           <Row id="reservation-container">
             <Col className="reservation-title" xs={24}>
               <LeftOutlined className="icon-left" onClick={handleBack} />
-              <Headline strong>{t('reservation.reservation-required')}</Headline>
+              <Headline strong>{t('RESERVATION.reservation-required')}</Headline>
             </Col>
             <Col className="main" xs={24} lg={14}>
               <Row className="main-estimated section">
                 <Col style={{ marginBottom: 20 }} xs={24}>
                   <SubHeading size={260} strong>
-                    {t('reservation.your-intentions')}
+                    {t('RESERVATION.your-intentions')}
                   </SubHeading>
                 </Col>
                 <Col style={{ marginBottom: 14 }} xs={12}>
                   <Paragraph classNames="color-black" strong>
-                    {t('reservation.rental-period')}
+                    {t('RESERVATION.rental-period')}
                   </Paragraph>
                 </Col>
                 <Col xs={12} style={{ textAlign: 'right' }}>
@@ -165,19 +167,21 @@ const ReservationPage = () => {
                     <Selection defaultValue={selectedMonths} onChange={handleMonthChange} />
                   ) : (
                     <>
-                      <span>{selectedNewMonths} month(s)</span>
+                      <span>
+                        {selectedNewMonths} {t('RESERVATION.month')}
+                      </span>
                       <Button
                         className="edit-date"
                         type="link"
                         onClick={() => setIsEditingMonths(!isEditingMonths)}>
-                        {t('reservation.edit')}
+                        {t('RESERVATION.edit')}
                       </Button>
                     </>
                   )}
                 </Col>
                 <Col xs={12}>
                   <Paragraph classNames="color-black" strong>
-                    {t('reservation.time-to-move-in')}
+                    {t('RESERVATION.time-to-move-in')}
                   </Paragraph>
                 </Col>
                 <Col xs={12} style={{ textAlign: 'right' }}>
@@ -190,7 +194,7 @@ const ReservationPage = () => {
                         className="edit-date"
                         type="link"
                         onClick={() => setIsEditingDate(!isEditingDate)}>
-                        {t('reservation.edit')}
+                        {t('RESERVATION.edit')}
                       </Button>
                     </>
                   )}
@@ -200,7 +204,7 @@ const ReservationPage = () => {
                 <Col xs={24}>
                   {' '}
                   <SubHeading size={230} strong>
-                    {t('reservation.payment')}
+                    {t('RESERVATION.payment')}
                   </SubHeading>
                 </Col>
                 <Col className="banner-payment-vnpay" xs={24}>
@@ -214,13 +218,13 @@ const ReservationPage = () => {
               </Row>
               <Row className="section">
                 <SubHeading size={230} strong>
-                  {t('reservation.cancellation-policy')}
+                  {t('RESERVATION.cancellation-policy')}
                 </SubHeading>
-                <Paragraph>{t('reservation.des-policy')}</Paragraph>
+                <Paragraph>{t('RESERVATION.des-policy')}</Paragraph>
               </Row>
               <Row className="section">
                 <SubHeading size={230} strong>
-                  {t('reservation.general-standards')}
+                  {t('RESERVATION.general-standards')}
                 </SubHeading>
                 <Paragraph>
                   All guests are urged to adhere to the following simple rules to ensure the best
@@ -244,30 +248,26 @@ const ReservationPage = () => {
                 </Paragraph>
               </Row>
               <Row className="section">
-                <Col xs={3}>
+                <Col xs={24} xl={3}>
                   {' '}
                   <FieldTimeOutlined className="field-time-icon" />
                 </Col>
-                <Col xs={21}>
+                <Col xs={24} xl={21}>
                   <Paragraph style={{ color: 'black' }} strong>
-                    {t('reservation.description-field-time')}
+                    {t('RESERVATION.description-field-time')}
                   </Paragraph>
                 </Col>
               </Row>
               <Row className="main-reservation-required">
                 <Caption size={120}>
-                  {/* {t('detail-house.estimated')} */}nibh praesent tristique magna sit amet purus
-                  gravida quis blandit turpis cursus in hac habitasse platea dictumst quisque
-                  sagittis purus sit amet volutpat consequat mauris nunc congue nisi vitae suscipit
-                  tellus mauris a diam maecenas sed enim ut sem viverra aliquet eget sit amet tellus
-                  cras adipiscing enim eu turpis
+                  nibh praesent tristique magna sit amet purus gravida quis blandit turpis cursus in
+                  hac habitasse platea dictumst quisque sagittis purus sit amet volutpat consequat
+                  mauris nunc congue nisi vitae suscipit tellus mauris a diam maecenas sed enim ut
+                  sem viverra aliquet eget sit amet tellus cras adipiscing enim eu turpis
                 </Caption>
-                {/* <Button onClick={handlePayments} className="reservation-btn">
-              <b> {t('reservation.reservation-btn')} </b>
-            </Button> */}
                 <span className="reservation-btn">
                   <BaseButton type="primary" onClick={handlePayments}>
-                    {t('reservation.reservation-btn')}
+                    {t('RESERVATION.reservation-btn')}
                   </BaseButton>
                 </span>
               </Row>
@@ -277,12 +277,15 @@ const ReservationPage = () => {
                 <div className="fee-table-section-1">
                   <img src={house?.image_urls?.[0]} className="img-fee" alt={house.name} />
                   <div className="fee-table-section-1-description">
-                    <Caption size={120}>{house.category}</Caption>
+                    <Caption size={120}>
+                      {' '}
+                      {t(`detail-house.${house?.category.replace(/\s/g, '')}`)}
+                    </Caption>
                     <Row align="middle">
                       <SubHeading size={230} strong>
                         {formatCustomCurrency(priceOfMonths)}
                       </SubHeading>
-                      <Caption size={140}>&nbsp;/{t('reservation.month')}</Caption>
+                      <Caption size={140}>&nbsp;/{t('RESERVATION.month')}</Caption>
                     </Row>
                     <Caption size={120}>
                       <StarFilled />
@@ -293,22 +296,22 @@ const ReservationPage = () => {
                 </div>
                 <div className="fee-table-section-2">
                   <SubHeading size={230} strong>
-                    {t('reservation.total-fee')}
+                    {t('RESERVATION.total-fee')}
                   </SubHeading>
                   <Paragraph classNames="fee-table-section-2-description">
                     <span>
-                      {t('reservation.reservation-fee')} ({t('reservation.month')}):
+                      {t('RESERVATION.reservation-fee')} ({t('reservation.month')}):
                     </span>
                     <span>{formatCustomCurrency(house?.reservation_fee)}</span>
                   </Paragraph>
                   <Paragraph classNames="fee-table-section-2-description">
-                    <span>{t('reservation.exception-fee')}:</span>
+                    <span>{t('RESERVATION.exception-fee')}:</span>
                     <span>0</span>
                   </Paragraph>
                 </div>
                 <div className="fee-table-section-3">
                   <Paragraph classNames="fee-table-section-3-description">
-                    <b>{t('reservation.total')} (VND):</b>
+                    <b>{t('RESERVATION.total')} (VND):</b>
                     <b>{formatCustomCurrency(house?.reservation_fee)}</b>
                   </Paragraph>
                 </div>

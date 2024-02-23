@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { UserOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { openLoginModal } from '../../../../store/slices/modalSlice';
+import { Paragraph } from '../../../../components/Typography';
 export const LayoutMenu = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,22 +34,37 @@ export const LayoutMenu = () => {
       style={{
         padding: 0,
       }}>
-      <Menu.Item style={{ marginRight: 'auto', padding: 0 }}>
+      <Menu.Item onClick={() => navigate('/')} style={{ marginRight: 'auto', padding: 0 }}>
         <h1>Logo</h1>
       </Menu.Item>
       <Menu.Item key={routeNames.Home} className="menuItem" onClick={onItemClick}>
-        {t('home')}
+        <Paragraph classNames="color-black" strong>
+          {' '}
+          {t('home').toUpperCase()}
+        </Paragraph>
       </Menu.Item>
       <Menu.Item key={routeNames.About} className="menuItem" onClick={onItemClick}>
-        {t('about')}
+        <Paragraph classNames="color-black" strong>
+          {' '}
+          {t('about').toUpperCase()}
+        </Paragraph>
       </Menu.Item>
       <Menu.Item key={routeNames.Contact} className="menuItem" onClick={onItemClick}>
-        Contact
+        <Paragraph classNames="color-black" strong>
+          {' '}
+          {t('contact').toUpperCase()}{' '}
+        </Paragraph>
       </Menu.Item>
 
       <Menu.Item style={{ marginLeft: 'auto', padding: 0 }}>
-        <Button type="text" icon={<UserOutlined />} onClick={() => dispatch(openLoginModal())}>
-          JOIN US
+        <Button
+          type="text"
+          style={{ margin: 0 }}
+          icon={<UserOutlined style={{ fontSize: 16 }} />}
+          onClick={() => dispatch(openLoginModal())}>
+          <Paragraph classNames="color-black" strong>
+            {t('join-us').toUpperCase()}
+          </Paragraph>
         </Button>
       </Menu.Item>
 

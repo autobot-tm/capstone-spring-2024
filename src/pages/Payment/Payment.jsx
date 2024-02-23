@@ -32,7 +32,7 @@ const PaymentSuccess = ({ t, onNavigate }) => {
       </Col>
       <Col xs={24}>
         <SubHeading size={230} strong>
-          {t('PAYMENT.sucess')}
+          {t('PAYMENT.success')}
         </SubHeading>
       </Col>
       <Col xs={24} className="reservation-btn">
