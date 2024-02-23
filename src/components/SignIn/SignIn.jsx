@@ -53,7 +53,8 @@ const SignIn = () => {
         width={400}
         nameOfModal={loginModal}
         title={t('modal.login')}
-        action={closeLoginModal}>
+        action={closeLoginModal}
+        footer={null}>
         <Form onFinish={handleFinish} form={form}>
           <Form.Item
             name={'email'}

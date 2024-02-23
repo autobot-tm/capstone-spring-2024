@@ -63,7 +63,8 @@ const RequestResetPassword = () => {
         width={400}
         nameOfModal={requestResetPasswordModal}
         title={t('modal.forgotPassword')}
-        action={closeRequestResetPasswordModal}>
+        action={closeRequestResetPasswordModal}
+        footer={null}>
         <Form onFinish={handleFinish} form={form}>
           <Form.Item
             hasFeedback

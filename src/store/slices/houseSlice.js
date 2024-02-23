@@ -30,8 +30,21 @@ const houseSlice = createSlice({
       state.amenities = action.payload.amenities;
       state.utilities = action.payload.utilities;
     },
+    setInitialState: state => {
+      state.name = undefined;
+      state.categories = undefined;
+      state.provinces = undefined;
+      state.districts = undefined;
+      state.wards = undefined;
+      state.minArea = undefined;
+      state.maxArea = undefined;
+      state.minPrice = undefined;
+      state.maxPrice = undefined;
+      state.amenities = undefined;
+      state.utilities = undefined;
+    },
   },
 });
 
 export default houseSlice.reducer;
-export const { setFilter } = houseSlice.actions;
+export const { setFilter, setInitialState } = houseSlice.actions;
