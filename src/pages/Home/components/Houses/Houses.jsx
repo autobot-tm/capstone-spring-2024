@@ -10,7 +10,10 @@ import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setFilter } from '../../../../store/slices/houseSlice';
+import { useTranslation } from 'react-i18next';
 const Houses = () => {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const LIMIT = 6;
@@ -23,7 +26,7 @@ const Houses = () => {
   });
   return (
     <div className={styles.houses}>
-      <Headline size={450}>Our choice of popular real estate</Headline>
+      <Headline size={450}>{t('home.disclaimer')}</Headline>
       <div className={styles.housesContainer}>
         <Row gutter={[16, 16]}>
           {isLoading
@@ -51,7 +54,7 @@ const Houses = () => {
                   dispatch(setFilter({}));
                   navigate('/houses');
                 }}>
-                Browse More Properties
+                {t('button.browseMore')}
               </BaseButton>
             </div>
           </div>

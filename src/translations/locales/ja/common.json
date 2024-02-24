@@ -21,6 +21,8 @@
   "button.advanced": "上級",
   "button.explore": "エクスペリエンス",
   "button.reset": "リセット",
+  "button.browseMore": "さらに物件を閲覧する",
+
   "checkbox.rememberme": "リメンバー・ミー",
   "forgetpassword": "パスワードをお忘れですか？",
   "label.searchHouse": "住宅検索",
@@ -61,6 +63,8 @@
   "validationRules.password.contain.special": "パスワードには,少なくとも1つの特殊文字を含める必要があります。",
   "validationRules.size": "最大面積以下",
   "registration.disclaimer": "お客様の個人情報は,当ウェブサイトでのお客様のご利用をサポートするため,お客様のアカウントへのアクセスを管理するため,および当社のプライバシーポリシーに記載されているその他の目的のために使用されます。",
+  "home.disclaimer": "人気の不動産を厳選",
+
   "carousel.disclaimer": "手数料無料で物件を購入または賃貸",
   "activateAccount.resendCode": "コードを受け取っていませんか？<resend>再送してください</resend> <in>別のものを</in>",
   "notamember": "メンバーではありませんか？",

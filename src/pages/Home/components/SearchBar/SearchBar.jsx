@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import styles from './SearchBar.module.scss';
 import { Col, Form, Row, Select } from 'antd';
 import { SearchOutlined, SelectOutlined } from '@ant-design/icons';
-import { t } from 'i18next';
 import { useDispatch } from 'react-redux';
 import { getMetaData } from '../../../../services/apis/houses.service';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { openAdvanceSearchModal } from '../../../../store/slices/modalSlice';
 import { setFilter } from '../../../../store/slices/houseSlice';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ const SearchBar = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   useEffect(() => {
     getMetaData().then(response => {
