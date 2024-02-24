@@ -6,13 +6,10 @@ import { Payment } from '../pages/Payment/Payment';
 import DetailHouse from '../pages/DetailHouse/DetailHouse';
 import HousesPage from '../pages/Houses/HousesPage';
 import ReservationPage from '../pages/Reservation/ReservationPage';
+import OrderSuccessView from '../pages/Payment/components/OrderSuccessView/OrderSuccessView';
 
 export const routePaths = {
   public: [
-    {
-      path: routeNames.DetailHouse,
-      element: <DetailHouse />,
-    },
     {
       path: routeNames.Home,
       element: <Home />,
@@ -36,6 +33,10 @@ export const routePaths = {
     {
       path: routeNames.Reservation,
       element: <ReservationPage />,
+    },
+    {
+      path: routeNames.OrderSuccess,
+      element: <OrderSuccessView />,
     },
   ],
   private: [],

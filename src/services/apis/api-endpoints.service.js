@@ -18,5 +18,6 @@ export const ENDPOINTS = {
   },
   payments: {
     demo: '/payments/demo-checkout-url',
+    reserve: house_id => `/houses/${house_id}/reserve`,
   },
 };

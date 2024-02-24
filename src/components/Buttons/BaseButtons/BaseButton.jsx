@@ -10,8 +10,7 @@ const BaseButton = ({ children, type, htmlType, disabled, ...props }) => {
       htmlType={htmlType}
       disabled={disabled}
       loading={disabled}
-      size="medium"
-      block
+      size="large"
       {...props}>
       {children}
     </Button>
