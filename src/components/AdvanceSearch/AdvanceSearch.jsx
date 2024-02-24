@@ -87,8 +87,8 @@ const AdvanceSearch = () => {
         maxArea,
         minPrice,
         maxPrice,
-        amenities,
-        utilities,
+        amenities: amenities?.map(str => ({ id: str })),
+        utilities: utilities?.map(str => ({ id: str })),
       }),
     );
     setLoading(false);
@@ -261,7 +261,7 @@ const AdvanceSearch = () => {
               {amenities.map(amenity => {
                 return (
                   <Col sm={8} xs={12} key={amenity.id}>
-                    <Checkbox value={{ id: amenity.id }} disabled={loading}>
+                    <Checkbox value={amenity.id} disabled={loading}>
                       {t('amenity.' + amenity.name)}
                     </Checkbox>
                   </Col>
@@ -276,7 +276,7 @@ const AdvanceSearch = () => {
               {utilities.map(utility => {
                 return (
                   <Col sm={8} xs={12} key={utility.id}>
-                    <Checkbox value={{ id: utility.id }} disabled={loading}>
+                    <Checkbox value={utility.id} disabled={loading}>
                       {t('utility.' + utility.name)}
                     </Checkbox>
                   </Col>

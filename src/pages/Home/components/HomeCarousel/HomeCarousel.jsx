@@ -1,10 +1,12 @@
 import { Carousel } from 'antd';
 import React from 'react';
 import styles from './HomeCarousel.module.scss';
-import { t } from 'i18next';
 import { Headline } from '../../../../components/Typography';
 import SearchBar from '../SearchBar/SearchBar';
+import { useTranslation } from 'react-i18next';
 const HomeCarousel = ({ images, limit }) => {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.carouselContainer}>
       <Carousel autoplay>

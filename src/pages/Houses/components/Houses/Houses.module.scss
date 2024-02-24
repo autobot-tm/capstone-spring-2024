@@ -12,4 +12,15 @@
     top: 0;
     position: sticky;
   }
+  .notFoundTextContainer {
+    margin-top: 40px;
+    width: 100%;
+    text-align: center;
+  }
+  .imageContainer {
+    width: 100%;
+    img {
+      width: 100%;
+    }
+  }
 }

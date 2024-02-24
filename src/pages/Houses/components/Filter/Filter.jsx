@@ -1,5 +1,4 @@
 import { Checkbox, Col, Form, Input, InputNumber, Row, Select, Slider, Space } from 'antd';
-import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import styles from './Filter.module.scss';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
@@ -9,6 +8,7 @@ import { Caption } from '../../../../components/Typography';
 import { formatCustomCurrency } from '../../../../utils/number-seperator';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter, setInitialState } from '../../../../store/slices/houseSlice';
+import { useTranslation } from 'react-i18next';
 
 const Filter = () => {
   const nameValue = useSelector(state => state.house.name);
@@ -20,9 +20,8 @@ const Filter = () => {
   const maxAreaValue = useSelector(state => state.house.maxArea);
   const minPriceValue = useSelector(state => state.house.minPrice);
   const maxPriceValue = useSelector(state => state.house.maxPrice);
-  // const amenitiesValue = useSelector(state => state.house.amenities);
-  // const utilitiesValue = useSelector(state => state.house.utilities);
-
+  const amenitiesValue = useSelector(state => state.house.amenities);
+  const utilitiesValue = useSelector(state => state.house.utilities);
   const [isShow, setIsShow] = useState(false);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
@@ -39,6 +38,8 @@ const Filter = () => {
 
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,6 +56,11 @@ const Filter = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (amenitiesValue || utilitiesValue) {
+      setIsShow(true);
+    }
+  }, [amenitiesValue, utilitiesValue]);
   const handleChangeProvince = value => {
     setProvinceId(value);
   };
@@ -62,6 +68,9 @@ const Filter = () => {
   const handleChangeDistrict = value => {
     setDistrictId(value);
     form.resetFields(['wards']);
+    form.setFieldsValue({
+      wards: undefined,
+    });
   };
   const handleSliderChange = newValue => {
     setSliderValue(newValue);
@@ -109,15 +118,23 @@ const Filter = () => {
         maxArea,
         minPrice,
         maxPrice,
-        amenities,
-        utilities,
+        amenities: amenities?.map(str => ({ id: str })),
+        utilities: utilities?.map(str => ({ id: str })),
       }),
     );
     setLoading(false);
   };
+
   return (
     <div className={styles.filterContainer}>
-      <Form form={form} layout="vertical" onFinish={handleFinish}>
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={handleFinish}
+        initialValues={{
+          amenities: amenitiesValue?.map(obj => obj.id),
+          utilities: utilitiesValue?.map(obj => obj.id),
+        }}>
         <Row gutter={[10, 4]}>
           <Col lg={12} sm={24} xs={24}>
             <Form.Item
@@ -293,7 +310,7 @@ const Filter = () => {
                       {amenities.map(amenity => {
                         return (
                           <Col sm={8} xs={12} key={amenity.id}>
-                            <Checkbox value={{ id: amenity.id }} disabled={loading}>
+                            <Checkbox value={amenity.id} disabled={loading}>
                               {t('amenity.' + amenity.name)}
                             </Checkbox>
                           </Col>
@@ -310,7 +327,7 @@ const Filter = () => {
                       {utilities.map(utility => {
                         return (
                           <Col sm={8} xs={12} key={utility.id}>
-                            <Checkbox value={{ id: utility.id }} disabled={loading}>
+                            <Checkbox value={utility.id} disabled={loading}>
                               {t('utility.' + utility.name)}
                             </Checkbox>
                           </Col>

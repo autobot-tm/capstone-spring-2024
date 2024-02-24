@@ -8,6 +8,10 @@ import HouseItem from '../../../../components/HouseItem/HouseItem';
 import HousesMap from '../../../../components/HousesMap/HousesMap';
 import { useSelector } from 'react-redux';
 import Filter from '../Filter/Filter';
+import notFound from '../../../../assets/images/notfound.webp';
+import { SubHeading } from '../../../../components/Typography';
+import { t } from 'i18next';
+
 const Houses = () => {
   const [locationArr, setLocationArr] = useState([]);
 
@@ -71,19 +75,28 @@ const Houses = () => {
               <Filter />
             </Row>
             <Row gutter={[16, 16]}>
-              {isLoading
-                ? Array.from({ length: LIMIT }).map((_, index) => (
-                    <Col md={12} key={index}>
-                      <CardSkeleton />
-                    </Col>
-                  ))
-                : data?.houses.map(house => {
-                    return (
-                      <Col md={12} key={house.id}>
-                        {<HouseItem house={house} />}
-                      </Col>
-                    );
-                  })}
+              {isLoading ? (
+                Array.from({ length: LIMIT }).map((_, index) => (
+                  <Col md={12} key={index}>
+                    <CardSkeleton />
+                  </Col>
+                ))
+              ) : data.houses.length !== 0 ? (
+                data.houses.map(house => (
+                  <Col md={12} key={house.id}>
+                    <HouseItem house={house} />
+                  </Col>
+                ))
+              ) : (
+                <Col xs={24}>
+                  <div className={styles.notFoundTextContainer}>
+                    <SubHeading size="230">{t('noresult')}</SubHeading>
+                  </div>
+                  <div className={styles.imageContainer}>
+                    <img src={notFound} alt="" />
+                  </div>
+                </Col>
+              )}
             </Row>
             <Row>
               <div className={styles.paginationContainer}>
