@@ -32,7 +32,7 @@ const Selection = ({ defaultValue, onChange }) => {
           },
           {
             value: '3',
-            label: `3 ${t('detail-house.months')}`,
+            label: `3 ${t('detail-house.months')}*`,
           },
           {
             value: '4',
@@ -44,7 +44,7 @@ const Selection = ({ defaultValue, onChange }) => {
           },
           {
             value: '6',
-            label: `6 ${t('detail-house.months')}`,
+            label: `6 ${t('detail-house.months')}*`,
           },
           {
             value: '7',
@@ -68,7 +68,7 @@ const Selection = ({ defaultValue, onChange }) => {
           },
           {
             value: '12',
-            label: `12 ${t('detail-house.months')}`,
+            label: `12 ${t('detail-house.months')}*`,
           },
         ]}
       />

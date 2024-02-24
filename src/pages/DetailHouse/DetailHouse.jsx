@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Layout } from '../../hoc/Layout';
 import { Headline } from '../../components/Typography/Headline/Headline';
 import { Paragraph } from '../../components/Typography/Paragraph/Paragraph';
-import { StarFilled, StarOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
 import { Caption, SubHeading } from '../../components/Typography';
 import { Button, Row, Col, Form, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -273,14 +273,12 @@ const DetailHouse = () => {
               <SubHeading size={230} style={{ color: '#f8a11e' }} strong>
                 {formatCustomCurrency(selectedPrice)}
               </SubHeading>
-              &nbsp;
               <Caption size={140}>/{t('detail-house.month')}</Caption>
             </Col>
             <Col xs={24}>
               <Paragraph size={160}>
                 <del>{formatCustomCurrency(pricePerMonth)}</del>
               </Paragraph>
-              &nbsp;
               <Caption size={140}>/{t('detail-house.month')}</Caption>
             </Col>
           </Row>
@@ -291,7 +289,6 @@ const DetailHouse = () => {
             <SubHeading size={230} strong>
               {formatCustomCurrency(pricePerMonth)}
             </SubHeading>
-            &nbsp;
             <Caption size={140}>/{t('detail-house.month')}</Caption>
           </>
         );
@@ -312,9 +309,16 @@ const DetailHouse = () => {
             </Col>
           </Row>
           <Row className="side-form-estimated-section">
-            <Col xs={24}>
+            <Col xs={12}>
               <SubHeading size={230} strong>
                 {t('detail-house.estimated')}
+              </SubHeading>
+            </Col>
+            <Col xs={12} style={{ textAlign: 'right' }}>
+              <SubHeading size={230} strong>
+                <Tooltip placement="left" title={t('detail-house.hint-price')}>
+                  <InfoCircleOutlined />
+                </Tooltip>
               </SubHeading>
             </Col>
             <Col xs={12} className="center">
