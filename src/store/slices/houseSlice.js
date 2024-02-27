@@ -12,6 +12,7 @@ const initialState = {
   maxPrice: undefined,
   amenities: undefined,
   utilities: undefined,
+  metadata: undefined,
 };
 const houseSlice = createSlice({
   name: 'house',
@@ -43,8 +44,11 @@ const houseSlice = createSlice({
       state.amenities = undefined;
       state.utilities = undefined;
     },
+    setMetaData: (state, action) => {
+      state.metadata = action.payload.metadata;
+    },
   },
 });
 
 export default houseSlice.reducer;
-export const { setFilter, setInitialState } = houseSlice.actions;
+export const { setFilter, setInitialState, setMetaData } = houseSlice.actions;

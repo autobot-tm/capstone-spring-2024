@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import styles from './Filter.module.scss';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { CaretDownOutlined, CaretUpOutlined, SearchOutlined } from '@ant-design/icons';
-import { getMetaData } from '../../../../services/apis/houses.service';
 import { Caption } from '../../../../components/Typography';
 import { formatCustomCurrency } from '../../../../utils/number-seperator';
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,20 +40,21 @@ const Filter = () => {
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
+  const metadata = useSelector(state => state.house.metadata);
 
   useEffect(() => {
-    getMetaData().then(response => {
-      setCategories(response.categories);
-      setProvinces(response.location.provinces);
-      setDistricts(response.location.districts);
-      setWards(response.location.wards);
-      setMinPrice(response.min_price);
-      setMaxPrice(response.max_price);
-      setAmenities(response.amenities);
-      setUtilities(response.utilities);
-      !minPriceValue && setSliderValue([response.min_price, response.max_price]);
-    });
-  }, []);
+    if (metadata) {
+      setCategories(metadata.categories);
+      setProvinces(metadata.location.provinces);
+      setDistricts(metadata.location.districts);
+      setWards(metadata.location.wards);
+      setMinPrice(metadata.min_price);
+      setMaxPrice(metadata.max_price);
+      setAmenities(metadata.amenities);
+      setUtilities(metadata.utilities);
+      !minPriceValue && setSliderValue([metadata.min_price, metadata.max_price]);
+    }
+  }, [metadata]);
 
   useEffect(() => {
     if (amenitiesValue || utilitiesValue) {
@@ -190,7 +190,7 @@ const Filter = () => {
                       style={{ width: '100%' }}
                       onChange={handleChangeDistrict}
                       options={districts
-                        .filter(district => district.province.id === provinceId)
+                        .filter(district => district.province_id === provinceId)
                         .map(district => ({
                           value: district.id,
                           label: t('district.' + district.name),
@@ -205,7 +205,7 @@ const Filter = () => {
                       placeholder={t('placeholder.wards')}
                       style={{ width: '100%' }}
                       options={wards
-                        .filter(ward => ward.district.id === districtId)
+                        .filter(ward => ward.district_id === districtId)
                         .map(ward => ({
                           value: ward.id,
                           label: ward.name,

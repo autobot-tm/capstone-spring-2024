@@ -16,7 +16,6 @@ import {
   Space,
 } from 'antd';
 import { Caption } from '../Typography';
-import { getMetaData } from '../../services/apis/houses.service';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import styles from './AdvanceSearch.module.scss';
 import { t } from 'i18next';
@@ -41,6 +40,8 @@ const AdvanceSearch = () => {
   const [districtId, setDistrictId] = useState(0);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+
+  const metadata = useSelector(state => state.house.metadata);
 
   const handleSliderChange = newValue => {
     setSliderValue(newValue);
@@ -97,18 +98,18 @@ const AdvanceSearch = () => {
   };
 
   useEffect(() => {
-    getMetaData().then(response => {
-      setCategories(response.categories);
-      setProvinces(response.location.provinces);
-      setDistricts(response.location.districts);
-      setWards(response.location.wards);
-      setSliderValue([response.min_price, response.max_price]);
-      setMinPrice(response.min_price);
-      setMaxPrice(response.max_price);
-      setAmenities(response.amenities);
-      setUtilities(response.utilities);
-    });
-  }, []);
+    if (metadata) {
+      setCategories(metadata.categories);
+      setProvinces(metadata.location.provinces);
+      setDistricts(metadata.location.districts);
+      setWards(metadata.location.wards);
+      setSliderValue([metadata.min_price, metadata.max_price]);
+      setMinPrice(metadata.min_price);
+      setMaxPrice(metadata.max_price);
+      setAmenities(metadata.amenities);
+      setUtilities(metadata.utilities);
+    }
+  }, [metadata]);
 
   useEffect(() => {
     if (!advanceSearchModal) {
@@ -179,7 +180,7 @@ const AdvanceSearch = () => {
                   placeholder={t('placeholder.districts')}
                   onChange={handleChangeDistrict}
                   options={districts
-                    .filter(district => district.province.id === provinceId)
+                    .filter(district => district.province_id === provinceId)
                     .map(district => ({
                       value: district.id,
                       label: t('district.' + district.name),
@@ -193,7 +194,7 @@ const AdvanceSearch = () => {
                 <Select
                   placeholder={t('placeholder.wards')}
                   options={wards
-                    .filter(ward => ward.district.id === districtId)
+                    .filter(ward => ward.district_id === districtId)
                     .map(ward => ({
                       value: ward.id,
                       label: ward.name,

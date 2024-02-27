@@ -24,6 +24,7 @@ configureApiCaller(store);
 
 configureSentry();
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <Provider store={store}>
     <GoogleOAuthProvider clientId={APP_CONFIG.GOOGLE_CLIENT_ID}>
