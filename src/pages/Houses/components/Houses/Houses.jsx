@@ -81,8 +81,8 @@ const Houses = () => {
                     <CardSkeleton />
                   </Col>
                 ))
-              ) : data.houses.length !== 0 ? (
-                data.houses.map(house => (
+              ) : data?.houses.length !== 0 ? (
+                data?.houses.map(house => (
                   <Col md={12} key={house.id}>
                     <HouseItem house={house} />
                   </Col>

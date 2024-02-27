@@ -7,13 +7,15 @@ import { useAuthSlice } from './store/slices';
 import { isTimeExpired } from './utils/time';
 import { REQUEST_TIME_OUT } from './constants/api.constant';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop'; // Import ScrollToTop
+import { getMetaData } from './services/apis/houses.service';
+import { setMetaData } from './store/slices/houseSlice';
 
 function App() {
   const dispatch = useDispatch();
   const { actions: authActions } = useAuthSlice();
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
   const { access_token, access_token_expires_at } = useSelector(state => state.auth);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (!access_token) {
       dispatch(authActions.initState());
@@ -28,21 +30,31 @@ function App() {
     }
   }, [access_token]);
 
-  return (
-    <>
-      <ScrollToTop />
-      <Routes>
-        {routePaths.public.map(route => (
-          <Route key={route.path} path={route.path} element={route.element} />
-        ))}
+  useEffect(() => {
+    getMetaData()
+      .then(response => {
+        dispatch(setMetaData({ metadata: response }));
+      })
+      .then(setLoading(false));
+  }, []);
 
-        <Route element={<PrivateRoute />}>
-          {routePaths.private.map(route => (
+  return (
+    !loading && (
+      <>
+        <ScrollToTop />
+        <Routes>
+          {routePaths.public.map(route => (
             <Route key={route.path} path={route.path} element={route.element} />
           ))}
-        </Route>
-      </Routes>
-    </>
+
+          <Route element={<PrivateRoute />}>
+            {routePaths.private.map(route => (
+              <Route key={route.path} path={route.path} element={route.element} />
+            ))}
+          </Route>
+        </Routes>
+      </>
+    )
   );
 }
 

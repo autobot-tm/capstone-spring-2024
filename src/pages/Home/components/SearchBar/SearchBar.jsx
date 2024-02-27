@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './SearchBar.module.scss';
 import { Col, Form, Row, Select } from 'antd';
 import { SearchOutlined, SelectOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
-import { getMetaData } from '../../../../services/apis/houses.service';
+import { useDispatch, useSelector } from 'react-redux';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { openAdvanceSearchModal } from '../../../../store/slices/modalSlice';
 import { setFilter } from '../../../../store/slices/houseSlice';
@@ -23,14 +22,15 @@ const SearchBar = () => {
   const [form] = Form.useForm();
   const { t } = useTranslation();
 
+  const metadata = useSelector(state => state.house.metadata);
   useEffect(() => {
-    getMetaData().then(response => {
-      setCategories(response.categories);
-      setProvinces(response.location.provinces);
-      setDistricts(response.location.districts);
-      setWards(response.location.wards);
-    });
-  }, []);
+    if (metadata) {
+      setCategories(metadata.categories);
+      setProvinces(metadata.location.provinces);
+      setDistricts(metadata.location.districts);
+      setWards(metadata.location.wards);
+    }
+  }, [metadata]);
 
   const handleChangeProvince = value => {
     setProvinceId(value);
@@ -102,7 +102,7 @@ const SearchBar = () => {
                 style={{ width: '100%' }}
                 onChange={handleChangeDistrict}
                 options={districts
-                  .filter(district => district.province.id === provinceId)
+                  .filter(district => district.province_id === provinceId)
                   .map(district => ({
                     value: district.id,
                     label: t('district.' + district.name),
@@ -118,7 +118,7 @@ const SearchBar = () => {
                 placeholder={t('placeholder.wards')}
                 style={{ width: '100%' }}
                 options={wards
-                  .filter(ward => ward.district.id === districtId)
+                  .filter(ward => ward.district_id === districtId)
                   .map(ward => ({
                     value: ward.id,
                     label: ward.name,
