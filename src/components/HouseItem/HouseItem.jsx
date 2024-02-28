@@ -3,9 +3,9 @@ import Meta from 'antd/es/card/Meta';
 import React from 'react';
 import styles from './HouseItem.module.scss';
 import locationIcon from '../../assets/images/location.svg';
-import areaIcon from '../../assets/images/area.svg';
+import areaIcon from '../../assets/images/SizeIcon.svg';
 
-import { Caption, SubHeading } from '../Typography';
+import { Caption, Paragraph } from '../Typography';
 import CardCarousel from '../Carousels/CardCarousel/CardCarousel';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { Link } from 'react-router-dom';
@@ -15,7 +15,6 @@ import { housePropertiesIconMapper } from '../../utils/house';
 const HouseItem = ({ house, type }) => {
   const LIMIT_IMAGES = 5;
   const AMENITIES_NAME = [HousePropertyName.BEDROOMS, HousePropertyName.BATHROOMS];
-
   return (
     <Link to={'/houses/' + house.id}>
       <Card
@@ -26,9 +25,9 @@ const HouseItem = ({ house, type }) => {
           <div key="houseInfo" className={styles.houseInfo}>
             <div className={styles.price}>
               {type === 'home' ? (
-                <SubHeading key="price" size={230} strong>
+                <Paragraph key="price" size={160} strong>
                   {formatCustomCurrency(house.pricing_policies[0].price_per_month)}
-                </SubHeading>
+                </Paragraph>
               ) : (
                 <Caption size={140} strong>
                   {formatCustomCurrency(house.pricing_policies[0].price_per_month)}
@@ -40,7 +39,7 @@ const HouseItem = ({ house, type }) => {
                 <div className={styles.imageContainer}>
                   <img src={areaIcon} alt="" />
                 </div>
-                <Caption size={140}>
+                <Caption size={110}>
                   {house.size_in_m2} m<sup>2</sup>
                 </Caption>
               </div>
@@ -55,18 +54,15 @@ const HouseItem = ({ house, type }) => {
           title={
             <>
               <div className={styles.locationContainer}>
-                <div className={styles.houseTypeContainer}>
-                  <img src={locationIcon} alt="" />
-                  <Caption size={110}>{house.category} - </Caption>
-                </div>
                 <div className={styles.houseLocationContainer}>
+                  <img src={locationIcon} alt="" />
                   <Caption size={110}>{house.address}</Caption>
                 </div>
               </div>
               {type === 'home' ? (
-                <SubHeading size={230} strong ellipsis>
+                <Paragraph size={160} strong ellipsis>
                   {house.name}
-                </SubHeading>
+                </Paragraph>
               ) : (
                 <Caption size={140} strong ellipsis>
                   {house.name}
@@ -91,7 +87,7 @@ const PropertyItem = ({ name, amount }) => {
       <div className={styles.imageContainer}>
         <img src={icon} />
       </div>
-      <Caption size={140}>{amount}</Caption>
+      <Caption size={110}>{amount}</Caption>
     </div>
   );
 };
