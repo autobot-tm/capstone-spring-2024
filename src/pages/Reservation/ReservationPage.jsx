@@ -19,6 +19,7 @@ import DatePickerAnt from '../DetailHouse/components/DatePickerComponent/DatePic
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import { PAYMENT_METHOD } from '../../constants/payment.constant';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
+import { PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
 
 const ReservationPage = () => {
   const { t } = useTranslation();
@@ -34,13 +35,11 @@ const ReservationPage = () => {
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [isEditingMonths, setIsEditingMonths] = useState(false);
 
-  const promotionPackageMonths = [1, 3, 6, 12];
-
   const getPriceAndIdFromHouse = months => {
     if (house && months) {
       const selectedMonthsInt = parseInt(months);
 
-      if (promotionPackageMonths.includes(selectedMonthsInt)) {
+      if (PROMOTION_PACKAGE_MONTHS.includes(selectedMonthsInt)) {
         const selectedPolicy = house?.pricing_policies.find(
           policy => parseInt(policy.total_months) === selectedMonthsInt,
         );
@@ -83,19 +82,10 @@ const ReservationPage = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, [house, reviews]);
-
-  useEffect(() => {
     const { id, price_per_month } = getPriceAndIdFromHouse(selectedNewMonths);
     setPriceOfMonths(price_per_month);
     setIdPricingPolicy(id);
-    console.log('priceOfMonths', priceOfMonths);
-    console.log('idPricingPolicy', idPricingPolicy);
-    console.log('selectedNewMonths', selectedNewMonths);
-    console.log('selectedNewDate', selectedNewDate);
+    setIsLoading(false);
   }, [selectedNewMonths, idPricingPolicy, selectedNewDate]);
 
   const handleBack = () => {
@@ -299,9 +289,7 @@ const ReservationPage = () => {
                     {t('RESERVATION.total-fee')}
                   </SubHeading>
                   <Paragraph classNames="fee-table-section-2-description">
-                    <span>
-                      {t('RESERVATION.reservation-fee')} ({t('reservation.month')}):
-                    </span>
+                    <span>{t('RESERVATION.reservation-fee')}:</span>
                     <span>{formatCustomCurrency(house?.reservation_fee)}</span>
                   </Paragraph>
                   <Paragraph classNames="fee-table-section-2-description">

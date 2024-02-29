@@ -7,6 +7,7 @@ import DetailHouse from '../pages/DetailHouse/DetailHouse';
 import HousesPage from '../pages/Houses/HousesPage';
 import ReservationPage from '../pages/Reservation/ReservationPage';
 import OrderSuccessView from '../pages/Payment/components/OrderSuccessView/OrderSuccessView';
+import UserDashboard from '../pages/UserDashboard/UserDashboard';
 
 export const routePaths = {
   public: [
@@ -37,6 +38,10 @@ export const routePaths = {
     {
       path: routeNames.OrderSuccess,
       element: <OrderSuccessView />,
+    },
+    {
+      path: routeNames.UserDashboard,
+      element: <UserDashboard />,
     },
   ],
   private: [],

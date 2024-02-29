@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 const DatePickerAnt = ({ onDateChange }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const { t } = useTranslation();
+
   const handleChange = (date, dateString) => {
     setSelectedDate(dateString);
     onDateChange(dateString);
@@ -13,13 +14,16 @@ const DatePickerAnt = ({ onDateChange }) => {
   };
 
   const disabledDate = current => {
-    return current && current < moment().endOf('day');
+    const minDate = moment().endOf('day');
+    const maxDate = moment().add(2, 'years').endOf('day');
+    return current && (current < minDate || current > maxDate);
   };
 
   return (
-    <Space direction="vertical">
+    <Space direction="vertical" style={{ width: '100%' }}>
       <DatePicker
         style={{ width: '100%' }}
+        size="large"
         placeholder={t('detail-house.select-date')}
         onChange={handleChange}
         disabledDate={disabledDate}

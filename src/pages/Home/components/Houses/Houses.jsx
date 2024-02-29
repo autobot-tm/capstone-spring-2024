@@ -11,9 +11,10 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setFilter } from '../../../../store/slices/houseSlice';
 import { useTranslation } from 'react-i18next';
+import SpinLoading from '../../../../components/SpinLoading/SpinLoading';
+
 const Houses = () => {
   const { t } = useTranslation();
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const LIMIT = 6;
@@ -25,42 +26,48 @@ const Houses = () => {
     });
   });
   return (
-    <div className={styles.houses}>
-      <Headline size={450}>{t('home.disclaimer')}</Headline>
-      <div className={styles.housesContainer}>
-        <Row gutter={[16, 16]}>
-          {isLoading
-            ? Array.from({ length: LIMIT }).map((_, index) => (
-                <Col lg={8} sm={12} key={index}>
-                  <CardSkeleton type="home" />
-                </Col>
-              ))
-            : data?.houses.map(house => {
-                return (
-                  <Col lg={8} sm={12} key={house.id}>
-                    {<HouseItem house={house} type="home" />}
-                  </Col>
-                );
-              })}
-        </Row>
+    <>
+      {isLoading ? (
+        <SpinLoading />
+      ) : (
+        <div className={styles.houses}>
+          <Headline size={450}>{t('home.disclaimer')}</Headline>
+          <div className={styles.housesContainer}>
+            <Row gutter={[16, 16]}>
+              {isLoading
+                ? Array.from({ length: LIMIT }).map((_, index) => (
+                    <Col lg={8} sm={12} key={index}>
+                      <CardSkeleton type="home" />
+                    </Col>
+                  ))
+                : data?.houses.map(house => {
+                    return (
+                      <Col lg={8} sm={12} key={house.id}>
+                        {<HouseItem house={house} type="home" />}
+                      </Col>
+                    );
+                  })}
+            </Row>
 
-        <Row>
-          <div className={styles.rowContainer}>
-            <div>
-              <BaseButton
-                size="large"
-                type="primary"
-                onClick={() => {
-                  dispatch(setFilter({}));
-                  navigate('/houses');
-                }}>
-                {t('button.browseMore')}
-              </BaseButton>
-            </div>
+            <Row>
+              <div className={styles.rowContainer}>
+                <div>
+                  <BaseButton
+                    size="large"
+                    type="primary"
+                    onClick={() => {
+                      dispatch(setFilter({}));
+                      navigate('/houses');
+                    }}>
+                    {t('button.browseMore')}
+                  </BaseButton>
+                </div>
+              </div>
+            </Row>
           </div>
-        </Row>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -23,7 +23,7 @@ const HouseUtility = ({ utilities }) => {
                   alt={utility.name}
                   className="icon"
                 />
-                <Paragraph>{t(`detail-house.${utility.name.replace(/\s/g, '')}`)}: </Paragraph>
+                <Paragraph>{t(`detail-house.${utility.name.replace(/\s/g, '')}`)} </Paragraph>
               </span>
               <Paragraph className="property-detail-group-2" classNames="color-black" strong>
                 {formatCustomCurrency(utility.price_per_unit)}/{utility.unit}
@@ -40,7 +40,7 @@ const HouseUtility = ({ utilities }) => {
                   alt={utility.name}
                   className="icon"
                 />
-                <Paragraph>{t(`detail-house.${utility.name.replace(/\s/g, '')}`)}: </Paragraph>
+                <Paragraph>{t(`detail-house.${utility.name.replace(/\s/g, '')}`)} </Paragraph>
               </span>
               <Paragraph className="property-detail-group-2" classNames="color-black" strong>
                 {formatCustomCurrency(utility.price_per_unit)}

@@ -193,10 +193,18 @@
     "more-comment-btn": "more",
     "error": "Error",
     "error-date": "Please select move-in date.",
-    "error-login": "Please log in to perform this function."
+    "error-login": "Please log in to perform this function.",
+    "RESERVE": "RESERVE",
+    "RESERVED": "RESERVED",
+    "OCCUPIED": "OCCUPIED",
+    "DEPOSITED": "DEPOSITED",
+    "UNDER_MAINTENANCE": "UNDER MAINTENANCE",
+    "PENDING_APPROVAL": "PENDING APPROVAL",
+    "HOMEOWNER_CONTRACT_EXPIRED": "HOMEOWNER CONTRACT EXPIRED",
+    "book": "Book"
   },
 
-  "reservation": {
+  "RESERVATION": {
     "checkout": "Checkout",
     "reservation-required": "Reservation required",
     "your-intentions": "Your intentions",
@@ -221,5 +229,9 @@
     "back-to-home": "Back to home",
     "fail": "Your reservation has failed.",
     "success": "Your reservation has been successfully created."
+  },
+
+  "USER-DASHBOARD": {
+    "user-dashboard": "User Dashboard"
   }
 }

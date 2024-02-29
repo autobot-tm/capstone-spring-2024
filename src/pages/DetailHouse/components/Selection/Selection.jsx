@@ -11,12 +11,13 @@ const Selection = ({ defaultValue, onChange }) => {
     onChange(value);
   };
   return (
-    <Space wrap>
+    <Space direction="vertical" style={{ width: '100%' }} wrap>
       <Select
         defaultValue={`1 ${t('detail-house.month')}`}
         value={editedValue}
+        size="large"
         style={{
-          width: '100%',
+          flex: '1',
           color: '#ccc',
           textAlign: 'left',
         }}

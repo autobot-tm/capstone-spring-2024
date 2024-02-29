@@ -5,16 +5,23 @@ import React from 'react';
 import { Headline, Paragraph } from '../../../../components/Typography';
 import { HomeOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { routeNames } from '../../../../config';
 
 const OrderSuccessView = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleNavigateUserDashboard = () => {
+    navigate(routeNames.UserDashboard);
+  };
   return (
     <Layout>
       <header id="header-checkout">
         <Row className="header-row" align="middle">
           <Col xs={24} sm={12}>
             <Headline size={450} strong>
-              {t('reservation.checkout')}
+              {t('RESERVATION.checkout')}
             </Headline>
           </Col>
           <Col xs={24} sm={12} className="breadcrumb">
@@ -25,7 +32,7 @@ const OrderSuccessView = () => {
                   title: <HomeOutlined style={{ color: 'black' }} />,
                 },
                 {
-                  title: `${t('reservation.checkout')}`,
+                  title: `${t('RESERVATION.checkout')}`,
                 },
               ]}
             />
@@ -59,7 +66,7 @@ const OrderSuccessView = () => {
           <Paragraph strong> Direct bank transfer </Paragraph>
         </Col>
         <Col xs={24}>
-          <Button className="return-btn">
+          <Button onClick={handleNavigateUserDashboard} className="return-btn">
             {' '}
             <Paragraph classNames="color-black" strong>
               Return to User Dashboard

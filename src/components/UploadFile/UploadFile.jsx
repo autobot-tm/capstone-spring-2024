@@ -2,6 +2,7 @@ import { Button, Upload } from 'antd';
 import React, { useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
 import { getPresignedURLs, mediaUploadService } from '../../services/media';
+import './style.scss';
 
 const UploadFile = ({ acceptTypes }) => {
   const [fileList, setFileList] = useState([]);
@@ -31,7 +32,7 @@ const UploadFile = ({ acceptTypes }) => {
     listType: 'picture',
   };
   return (
-    <div>
+    <div id="upload-file-container">
       <Upload {...props}>
         <Button icon={<UploadOutlined />}>Select File</Button>
       </Upload>

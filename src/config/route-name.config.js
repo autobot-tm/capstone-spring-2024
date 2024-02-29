@@ -8,4 +8,5 @@ export const routeNames = {
   Reservation: '/reservation/:house_id',
   DetailHouse: '/houses/:house_id',
   OrderSuccess: '/payments/order',
+  UserDashboard: '/user-dashboard/:user_id',
 };

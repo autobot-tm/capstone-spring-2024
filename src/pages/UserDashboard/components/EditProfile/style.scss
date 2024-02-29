@@ -1,0 +1,25 @@
+@import '../../../../theme/scss/colors.theme.scss';
+
+#edit-profile {
+  padding: 50px 0;
+  .icon {
+    color: $colors-primary;
+  }
+  .flex-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .upload-file {
+    display: flex;
+    align-items: center;
+  }
+  .avatar-user {
+    height: 100px;
+    width: 100px;
+  }
+  .line {
+    border-bottom: 0.8px solid #ccc;
+    padding-bottom: 6px;
+  }
+}

@@ -51,15 +51,15 @@ const FeedBackCustomer = ({ comment }) => {
       <div className="comment-list">
         {visibleUsers?.map((item, index) => (
           <Row key={index} className="cmt-border" gutter={[0, 24]}>
-            <Col xs={24} xl={6} md={4} className="frame-1">
+            <Col xs={24} xl={4} className="frame-1">
               <Avatar src={item.reviewer?.avatar_url} shape="square" size={100} />
             </Col>
-            <Col xs={24} xl={18} md={20} className="frame-2">
+            <Col xs={24} xl={20} className="frame-2">
               <Row align="middle">
                 <SubHeading style={{ marginRight: 14 }} strong>
                   {item.reviewer?.first_name}
                 </SubHeading>
-                <StarFilled />
+                <StarFilled className="star-icon" />
                 <Caption style={{ color: 'black' }} size={140}>
                   &nbsp;{item.rating}
                 </Caption>
