@@ -17,7 +17,7 @@ const Houses = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const LIMIT = 6;
+  const LIMIT = 8;
 
   const { data, isLoading } = useSWR(`getHousesService`, async () => {
     return await getHousesService({
@@ -36,13 +36,13 @@ const Houses = () => {
             <Row gutter={[16, 16]}>
               {isLoading
                 ? Array.from({ length: LIMIT }).map((_, index) => (
-                    <Col lg={8} sm={12} key={index}>
+                    <Col xl={6} lg={8} sm={12} key={index}>
                       <CardSkeleton type="home" />
                     </Col>
                   ))
                 : data?.houses.map(house => {
                     return (
-                      <Col lg={8} sm={12} key={house.id}>
+                      <Col xl={6} lg={8} sm={12} key={house.id}>
                         {<HouseItem house={house} type="home" />}
                       </Col>
                     );

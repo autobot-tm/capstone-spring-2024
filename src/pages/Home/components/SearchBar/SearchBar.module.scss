@@ -9,3 +9,11 @@
   backdrop-filter: blur(10px);
   z-index: -1;
 }
+
+@media screen and (max-width: 1401px) {
+  .searchBar {
+    max-width: 100%;
+    margin: 0 16px;
+    margin-bottom: 60px;
+  }
+}
