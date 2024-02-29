@@ -1,6 +1,9 @@
 {
   "home": "Home",
   "about": "About",
+  "account": "Account",
+  "reportlivingissue": "Report living issues",
+  "logout": "Logout",
   "welcome-text": "Welcome hjhj",
   "contact": "Contact",
   "join-us": "Join us",
