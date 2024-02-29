@@ -4,10 +4,10 @@ import { routeNames } from '../config/route-name.config';
 import { useSelector } from 'react-redux';
 
 export function PrivateRoute() {
-  const accessToken = useSelector(state => state.auth.accessToken);
+  const { access_token } = useSelector(state => state.auth);
   const { pathname } = useLocation();
 
-  return accessToken ? (
+  return access_token ? (
     <Outlet />
   ) : (
     <Navigate to={routeNames.SignIn} replace state={{ redirect: pathname }} />

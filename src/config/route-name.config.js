@@ -1,6 +1,7 @@
 export const routeNames = {
   Home: '/',
   About: '/about',
+  Contact: '/contact',
   NotFound: '/not-found',
   SignIn: '/auth/sign-in',
   Payment: '/payments',
@@ -8,4 +9,5 @@ export const routeNames = {
   Reservation: '/reservation/:house_id',
   DetailHouse: '/houses/:house_id',
   OrderSuccess: '/payments/order',
+  ReportLivingIssues: '/reportlivingissues',
 };
