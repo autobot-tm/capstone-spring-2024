@@ -18,6 +18,7 @@ import ResetPassword from './components/ResetPassword/ResetPassword';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { APP_CONFIG } from './config';
 import AdvanceSearch from './components/AdvanceSearch/AdvanceSearch';
+import ConfirmLogout from './components/ConfirmLogout/ConfirmLogout';
 
 initTranslations();
 configureApiCaller(store);
@@ -53,6 +54,7 @@ root.render(
           <AuthenticationCode />
           <ResetPassword />
           <AdvanceSearch />
+          <ConfirmLogout />
         </BrowserRouter>
       </ConfigProvider>
     </GoogleOAuthProvider>

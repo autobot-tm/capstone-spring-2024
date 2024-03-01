@@ -9,5 +9,5 @@ export const routeNames = {
   Reservation: '/reservation/:house_id',
   DetailHouse: '/houses/:house_id',
   OrderSuccess: '/payments/order',
-  ReportLivingIssues: '/reportlivingissues',
+  ReportLivingIssues: '/living-issues',
 };
