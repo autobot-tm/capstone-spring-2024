@@ -190,8 +190,8 @@
     "select-date": "Select date",
     "add-to-wishlist": "Add to wishlist",
     "estimated": "Estimated",
-    "rental-period": "rental period",
-    "time-to-move-in": "time to move in",
+    "rental-period": "Rental period",
+    "time-to-move-in": "Time to move in",
     "reserve-now-btn": "Reserve Now",
     "reserved-btn": "Reserved",
     "related-property": "Related properties",
@@ -200,7 +200,6 @@
     "more-comment-btn": "more",
     "error": "Error",
     "error-date": "Please select move-in date.",
-    "error-login": "Please log in to perform this function.",
     "RESERVE": "RESERVE",
     "RESERVED": "RESERVED",
     "OCCUPIED": "OCCUPIED",
@@ -228,7 +227,9 @@
     "total-fee": "Total fee",
     "reservation-fee": "Reservation fee",
     "exception-fee": "Exception fee",
-    "total": "Total"
+    "total": "Total",
+    "error": "Error",
+    "error-option-payment": "Please choose a payment method."
   },
 
   "PAYMENT": {

@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './style.scss';
 import { useTranslation } from 'react-i18next';
 import { Headline } from '../../components/Typography/Headline/Headline';
-import { FieldTimeOutlined, HomeOutlined, LeftOutlined, StarFilled } from '@ant-design/icons';
-import { Breadcrumb, Button, Col, Radio, Row } from 'antd';
+import {
+  ExclamationCircleOutlined,
+  FieldTimeOutlined,
+  HomeOutlined,
+  LeftOutlined,
+  StarFilled,
+} from '@ant-design/icons';
+import { Breadcrumb, Button, Col, Radio, Row, notification } from 'antd';
 import { SubHeading } from '../../components/Typography/SubHeading/SubHeading';
 import { Paragraph } from '../../components/Typography/Paragraph/Paragraph';
 import { Caption } from '../../components/Typography/Caption/Caption';
@@ -93,11 +99,22 @@ const ReservationPage = () => {
   const handleBack = () => {
     navigate(`/houses/${house_id}`);
   };
+
   const handleOptionPayment = e => {
     console.log('radio checked', e.target.value);
     setOpPayment(e.target.value);
   };
+
+  function errorPaymentNotification() {
+    return notification.error({
+      message: t('RESERVATION.error'),
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      description: t('RESERVATION.error-option-payment'),
+    });
+  }
+
   const handlePayments = async () => {
+    if (!opPayment) return errorPaymentNotification();
     try {
       const response_url = await requestReserveHouse({
         house_id: house_id,
@@ -293,7 +310,7 @@ const ReservationPage = () => {
                       <Caption size={140}>&nbsp;/{t('RESERVATION.month')}</Caption>
                     </Row>
                     <Caption size={120}>
-                      <StarFilled />
+                      <StarFilled style={{ color: '#f8a11e' }} />
                       &nbsp;
                       {reviews?.average_rating > 0 ? `${reviews?.average_rating}/5` : 'No rating'}
                     </Caption>

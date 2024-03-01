@@ -27,6 +27,7 @@ import SizeImg from '../../assets/images/SizeIcon.svg';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import HousesMap from '../../components/HousesMap/HousesMap';
+import { openLoginModal } from '../../store/slices/modalSlice';
 
 const DetailHouse = () => {
   const { t } = useTranslation();
@@ -72,8 +73,7 @@ const DetailHouse = () => {
 
   const handleAddWishlist = () => {
     if (!access_token) {
-      errorLoginNotification();
-      return;
+      return dispatch(openLoginModal());
     }
     const isHouseInWishlist = wishlist.some(item => item.id === house.id);
     if (!isHouseInWishlist) {
@@ -90,15 +90,6 @@ const DetailHouse = () => {
       description: t('detail-house.error-date'),
     });
   }
-
-  function errorLoginNotification() {
-    return notification.error({
-      message: t('detail-house.error'),
-      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-      description: t('detail-house.error-login'),
-    });
-  }
-
   const TitleHeadingComponent = () => {
     return (
       <>
@@ -241,8 +232,7 @@ const DetailHouse = () => {
 
     const onFinish = () => {
       if (!access_token) {
-        errorLoginNotification();
-        return;
+        return dispatch(openLoginModal());
       }
       if (!selectedMonths || !selectedDate) {
         errorDateNotification();
