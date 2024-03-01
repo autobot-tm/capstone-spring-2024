@@ -7,10 +7,9 @@ import { TranslationSelector } from '../TranslationSelector';
 import { useTranslation } from 'react-i18next';
 import { IssuesCloseOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { openLoginModal } from '../../../../store/slices/modalSlice';
+import { openConfirmLogoutModal, openLoginModal } from '../../../../store/slices/modalSlice';
 import { Paragraph } from '../../../../components/Typography';
 import Avatar from '../../../../assets/images/avatar.svg';
-import { signOut } from '../../../../store/slices';
 export const LayoutMenu = ({ isInline = false }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,8 +24,7 @@ export const LayoutMenu = ({ isInline = false }) => {
       return;
     }
     if (key === 'logout') {
-      dispatch(signOut());
-      navigate('/');
+      dispatch(openConfirmLogoutModal());
       return;
     }
     navigate(key);
