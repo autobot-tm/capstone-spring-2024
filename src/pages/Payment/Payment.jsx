@@ -36,9 +36,11 @@ const PaymentSuccess = ({ t, onNavigate }) => {
         </SubHeading>
       </Col>
       <Col xs={24} className="reservation-btn">
-        <BaseButton type="primary" style={{ width: 220 }} onClick={onNavigate}>
-          {t('PAYMENT.view-your-reservation')}
-        </BaseButton>
+        <span>
+          <BaseButton type="primary" onClick={onNavigate}>
+            {t('PAYMENT.view-your-reservation')}
+          </BaseButton>
+        </span>
       </Col>
     </Row>
   );
@@ -58,9 +60,11 @@ const PaymentError = ({ t, onNavigate }) => {
         </SubHeading>
       </Col>
       <Col xs={24} className="reservation-btn">
-        <BaseButton type="primary" style={{ width: 170 }} onClick={onNavigate}>
-          {t('PAYMENT.back-to-home')}
-        </BaseButton>
+        <span>
+          <BaseButton type="primary" onClick={onNavigate}>
+            {t('PAYMENT.back-to-home')}
+          </BaseButton>
+        </span>
       </Col>
     </Row>
   );

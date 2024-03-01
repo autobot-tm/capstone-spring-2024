@@ -1,5 +1,7 @@
-.modal{
-  .title{
+.modal {
+  .title {
+    display: flex;
+    justify-content: center;
     text-align: center;
     margin: 25px 0;
   }

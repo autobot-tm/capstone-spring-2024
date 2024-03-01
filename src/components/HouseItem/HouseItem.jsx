@@ -4,12 +4,11 @@ import React from 'react';
 import styles from './HouseItem.module.scss';
 import locationIcon from '../../assets/images/location.svg';
 import areaIcon from '../../assets/images/SizeIcon.svg';
-
 import { Caption, Paragraph } from '../Typography';
 import CardCarousel from '../Carousels/CardCarousel/CardCarousel';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { Link } from 'react-router-dom';
-import { HousePropertyName } from '../../constants/house.constant';
+import { HousePropertyName, HousePropertyUnit } from '../../constants/house.constant';
 import { housePropertiesIconMapper } from '../../utils/house';
 
 const HouseItem = ({ house, type }) => {
@@ -40,7 +39,8 @@ const HouseItem = ({ house, type }) => {
                   <img src={areaIcon} alt="" />
                 </div>
                 <Caption size={110}>
-                  {house.size_in_m2} m<sup>2</sup>
+                  {house.size_in_m2}
+                  {HousePropertyUnit.METER_SQUARE}
                 </Caption>
               </div>
               {AMENITIES_NAME.map((name, index) => {

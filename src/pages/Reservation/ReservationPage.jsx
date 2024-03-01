@@ -3,7 +3,7 @@ import './style.scss';
 import { useTranslation } from 'react-i18next';
 import { Headline } from '../../components/Typography/Headline/Headline';
 import { FieldTimeOutlined, HomeOutlined, LeftOutlined, StarFilled } from '@ant-design/icons';
-import { Breadcrumb, Button, Col, Row } from 'antd';
+import { Breadcrumb, Button, Col, Radio, Row } from 'antd';
 import { SubHeading } from '../../components/Typography/SubHeading/SubHeading';
 import { Paragraph } from '../../components/Typography/Paragraph/Paragraph';
 import { Caption } from '../../components/Typography/Caption/Caption';
@@ -12,14 +12,15 @@ import { useLocation } from 'react-router-dom';
 import { Layout } from '../../hoc/Layout/Layout';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { requestReserveHouse } from '../../services/apis/payments.service';
+import { PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
+import { PAYMENT_METHOD } from '../../constants/payment.constant';
 import VNPay2 from '../../assets/images/vnpay-qr-23-06-2020-2.jpg';
 import VNPay1 from '../../assets/images/Logo-VNPAY-QR.webp';
+import ONEPay from '../../assets/images/onepay.svg';
 import Selection from '../DetailHouse/components/Selection/Selection';
 import DatePickerAnt from '../DetailHouse/components/DatePickerComponent/DatePickerAnt';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
-import { PAYMENT_METHOD } from '../../constants/payment.constant';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
-import { PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
 
 const ReservationPage = () => {
   const { t } = useTranslation();
@@ -34,6 +35,7 @@ const ReservationPage = () => {
   const [idPricingPolicy, setIdPricingPolicy] = useState(null);
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [isEditingMonths, setIsEditingMonths] = useState(false);
+  const [opPayment, setOpPayment] = useState(null);
 
   const getPriceAndIdFromHouse = months => {
     if (house && months) {
@@ -91,7 +93,10 @@ const ReservationPage = () => {
   const handleBack = () => {
     navigate(`/houses/${house_id}`);
   };
-
+  const handleOptionPayment = e => {
+    console.log('radio checked', e.target.value);
+    setOpPayment(e.target.value);
+  };
   const handlePayments = async () => {
     try {
       const response_url = await requestReserveHouse({
@@ -99,7 +104,7 @@ const ReservationPage = () => {
         pricing_policy_id: idPricingPolicy,
         total_months: selectedNewMonths,
         expected_move_in_date: selectedNewDate,
-        gateway_provider: PAYMENT_METHOD.VNPAY,
+        gateway_provider: opPayment,
       });
       window.location.href = response_url;
     } catch (error) {
@@ -192,19 +197,29 @@ const ReservationPage = () => {
               </Row>
               <Row className="main-payment section">
                 <Col xs={24}>
-                  {' '}
                   <SubHeading size={230} strong>
                     {t('RESERVATION.payment')}
                   </SubHeading>
                 </Col>
-                <Col className="banner-payment-vnpay" xs={24}>
-                  <img src={VNPay1} className="img-vnpay-1" alt="" />
-                  <img src={VNPay2} className="img-vnpay-2" alt="" />
+                <Col xs={24}>
+                  <Radio.Group
+                    onChange={handleOptionPayment}
+                    value={opPayment}
+                    size="small"
+                    optionType="button">
+                    <Radio value={PAYMENT_METHOD.VNPAY} className="main-payment-banner">
+                      <span className="main-payment-banner-inner">
+                        <img src={VNPay1} />
+                        <img src={VNPay2} />
+                      </span>
+                    </Radio>
+                    <Radio disabled value={PAYMENT_METHOD.ONEPAY} className="main-payment-banner">
+                      <span className="main-payment-banner-inner">
+                        <img src={ONEPay} />
+                      </span>
+                    </Radio>
+                  </Radio.Group>
                 </Col>
-                {/* <Col className="banner-payment-vnpay" xs={24}>
-              <img src={VNPay1} className="img-vnpay-1" alt="" />
-              <img src={VNPay2} className="img-vnpay-2" alt="" />
-            </Col> */}
               </Row>
               <Row className="section">
                 <SubHeading size={230} strong>

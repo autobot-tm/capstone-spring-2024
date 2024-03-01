@@ -13,6 +13,8 @@ import { getHouseById, getHouseReview } from '../../services/apis/houses.service
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { formatCustomCurrency } from '../../utils/number-seperator';
+import { addToWishlist, removeFromWishlist } from '../../store/slices/wishlist.slice';
+import { HousePropertyUnit, PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
 import HouseUtility from './components/HouseUtility/HouseUtility';
 import FeedBackCustomer from './components/FeedBackCustomer/FeedBackCustomer';
 import HouseAmenities from './components/HouseAmenities/HouseAmenities';
@@ -22,11 +24,9 @@ import DatePickerAnt from './components/DatePickerComponent/DatePickerAnt';
 import ReviewForm from './components/ReviewForm/ReviewForm';
 import CarouselHeader from '../../components/CarouselHeader/CarouselHeader';
 import SizeImg from '../../assets/images/SizeIcon.svg';
-import { HousePropertyUnit, PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import HousesMap from '../../components/HousesMap/HousesMap';
-import { addToWishlist, removeFromWishlist } from '../../store/slices/wishlist.slice';
 
 const DetailHouse = () => {
   const { t } = useTranslation();
@@ -252,18 +252,14 @@ const DetailHouse = () => {
         state: { house, selectedDate, selectedMonths, reviews },
       });
     };
-
     const handleMonthChange = value => {
       setSelectedMonths(value);
     };
-
     const handleDateChange = dateString => {
       setSelectedDate(dateString);
     };
-
     const renderPrice = () => {
       const selectedMonthsInt = parseInt(selectedMonths);
-
       const pricePerMonth = house?.pricing_policies?.find(
         policy => parseInt(policy.total_months) === 1,
       )?.price_per_month;
@@ -326,12 +322,12 @@ const DetailHouse = () => {
                 </Tooltip>
               </SubHeading>
             </Col>
-            <Col xs={14}>
+            <Col xs={13}>
               <Form.Item name="selectedDate" label={t('detail-house.time-to-move-in')} required>
                 <DatePickerAnt onDateChange={handleDateChange} />
               </Form.Item>
             </Col>
-            <Col xs={10}>
+            <Col xs={11}>
               <Form.Item name="selectedMonths" label={t('detail-house.rental-period')} required>
                 <Selection onChange={handleMonthChange} />
               </Form.Item>
@@ -379,6 +375,7 @@ const DetailHouse = () => {
       </>
     );
   };
+
   const handleBookNowClick = () => {
     const priceSection = document.querySelector('.side-form-estimated-section');
     if (priceSection) {
@@ -401,6 +398,7 @@ const DetailHouse = () => {
                 <BaseButton
                   shape="circle"
                   type="primary"
+                  size="large"
                   className="book-now-btn"
                   onClick={handleBookNowClick}>
                   {t('detail-house.book')}

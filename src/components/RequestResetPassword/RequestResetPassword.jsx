@@ -60,7 +60,7 @@ const RequestResetPassword = () => {
   return (
     <div>
       <CustomModal
-        width={400}
+        width={440}
         nameOfModal={requestResetPasswordModal}
         title={t('modal.forgotPassword')}
         action={closeRequestResetPasswordModal}
@@ -74,7 +74,7 @@ const RequestResetPassword = () => {
               { required: true, message: t('validationRules.required.email') },
               { type: 'email', message: t('validationRules.invalid.email') },
             ]}>
-            <Input placeholder="Email" />
+            <Input size="large" placeholder="Email" />
           </Form.Item>
           <Form.Item>
             <BaseButton type="primary" htmlType="submit" disabled={loading} loading={loading}>
