@@ -17,7 +17,6 @@ import {
 } from 'antd';
 import { Caption } from '../Typography';
 import { formatCustomCurrency } from '../../utils/number-seperator';
-import styles from './AdvanceSearch.module.scss';
 import { t } from 'i18next';
 import { setFilter } from '../../store/slices/houseSlice';
 import { useNavigate } from 'react-router-dom';
@@ -158,8 +157,8 @@ const AdvanceSearch = () => {
           />
         </Form.Item>
         <Form.Item label={t('label.location')}>
-          <div className={styles.propertyContainer}>
-            <div>
+          <Row>
+            <Col sm={8} xs={24}>
               <Form.Item name="provinces">
                 <Select
                   placeholder={t('placeholder.provinces')}
@@ -173,8 +172,8 @@ const AdvanceSearch = () => {
                   disabled={loading}
                 />
               </Form.Item>
-            </div>
-            <div>
+            </Col>
+            <Col sm={8} xs={24}>
               <Form.Item name="districts">
                 <Select
                   placeholder={t('placeholder.districts')}
@@ -188,8 +187,8 @@ const AdvanceSearch = () => {
                   disabled={loading}
                 />
               </Form.Item>
-            </div>
-            <div>
+            </Col>
+            <Col sm={8} xs={24}>
               <Form.Item name="wards">
                 <Select
                   placeholder={t('placeholder.wards')}
@@ -202,8 +201,8 @@ const AdvanceSearch = () => {
                   disabled={loading}
                 />
               </Form.Item>
-            </div>
-          </div>
+            </Col>
+          </Row>
         </Form.Item>
         <Form.Item label={t('label.propertySize')}>
           <Space>

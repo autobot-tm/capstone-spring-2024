@@ -11,7 +11,7 @@ import { openLoginModal } from '../../../../store/slices/modalSlice';
 import { Paragraph } from '../../../../components/Typography';
 import Avatar from '../../../../assets/images/avatar.svg';
 import { signOut } from '../../../../store/slices';
-export const LayoutMenu = () => {
+export const LayoutMenu = ({ isInline = false }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -81,7 +81,7 @@ export const LayoutMenu = () => {
 
   return (
     <Menu
-      mode="horizontal"
+      mode={isInline ? 'inline' : 'horizontal'}
       defaultSelectedKeys={[selectedKeys]}
       selectedKeys={[selectedKeys]}
       className="menu"
