@@ -1,6 +1,7 @@
 export const routeNames = {
   Home: '/',
   About: '/about',
+  Contact: '/contact',
   NotFound: '/not-found',
   SignIn: '/auth/sign-in',
   Payment: '/payments',
@@ -9,4 +10,5 @@ export const routeNames = {
   DetailHouse: '/houses/:house_id',
   OrderSuccess: '/payments/order',
   UserDashboard: '/user-dashboard/:user_id',
+  ReportLivingIssues: '/living-issues',
 };

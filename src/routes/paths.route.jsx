@@ -8,6 +8,7 @@ import HousesPage from '../pages/Houses/HousesPage';
 import ReservationPage from '../pages/Reservation/ReservationPage';
 import OrderSuccessView from '../pages/Payment/components/OrderSuccessView/OrderSuccessView';
 import UserDashboard from '../pages/UserDashboard/UserDashboard';
+import ReportLivingIssues from '../pages/ReportLivingIssues/ReportLivingIssues';
 
 export const routePaths = {
   public: [
@@ -44,5 +45,10 @@ export const routePaths = {
       element: <UserDashboard />,
     },
   ],
-  private: [],
+  private: [
+    {
+      path: routeNames.ReportLivingIssues,
+      element: <ReportLivingIssues />,
+    },
+  ],
 };
