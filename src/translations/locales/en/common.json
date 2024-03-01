@@ -240,5 +240,11 @@
 
   "USER-DASHBOARD": {
     "user-dashboard": "User Dashboard"
+  },
+
+  "NOT-FOUND": {
+    "title": "Oops... Page Not Found!",
+    "description": "The page you are looking for does not exist. It might have been moved or deleted.",
+    "back-to-home": "Back to Homepage"
   }
 }

@@ -9,6 +9,7 @@ import { REQUEST_TIME_OUT } from './constants/api.constant';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop'; // Import ScrollToTop
 import { getMetaData } from './services/apis/houses.service';
 import { setMetaData } from './store/slices/houseSlice';
+import NotFoundPage from './pages/NotFound/NotFoundPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +53,8 @@ function App() {
               <Route key={route.path} path={route.path} element={route.element} />
             ))}
           </Route>
+
+          <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       </>
     )

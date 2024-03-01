@@ -16,7 +16,7 @@ import EditProfile from './components/EditProfile/EditProfile';
 import MyWishlist from './components/MyWishlist/MyWishlist';
 import MyProfile from './components/MyProfile/MyProfile';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeSignOutModal, openSignOutModal } from '../../store/slices/modalSlice';
+import { closeConfirmLogoutModal, openConfirmLogoutModal } from '../../store/slices/modalSlice';
 import { signOut } from '../../store/slices';
 import MyOrder from './components/MyOrder/MyOrder';
 const { TabPane } = Tabs;
@@ -31,12 +31,12 @@ const UserDashboard = () => {
   };
 
   const handleOk = () => {
-    dispatch(closeSignOutModal());
+    dispatch(closeConfirmLogoutModal());
     dispatch(signOut());
   };
 
   const handleCancel = () => {
-    dispatch(closeSignOutModal());
+    dispatch(closeConfirmLogoutModal());
     setActiveTabKey('1');
   };
 
@@ -87,7 +87,7 @@ const UserDashboard = () => {
     },
     {
       title: (
-        <div onClick={() => dispatch(openSignOutModal())}>
+        <div onClick={() => dispatch(openConfirmLogoutModal())}>
           <Row justify="center">
             <LogoutOutlined className="icon-tab-item" />
           </Row>

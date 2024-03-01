@@ -21,10 +21,6 @@ export const routePaths = {
       element: <AboutUs />,
     },
     {
-      path: routeNames.Payment,
-      element: <Payment />,
-    },
-    {
       path: routeNames.DetailHouse,
       element: <DetailHouse />,
     },
@@ -32,23 +28,27 @@ export const routePaths = {
       path: routeNames.Houses,
       element: <HousesPage />,
     },
-    {
-      path: routeNames.Reservation,
-      element: <ReservationPage />,
-    },
-    {
-      path: routeNames.OrderSuccess,
-      element: <OrderSuccessView />,
-    },
-    {
-      path: routeNames.UserDashboard,
-      element: <UserDashboard />,
-    },
   ],
   private: [
     {
       path: routeNames.ReportLivingIssues,
       element: <ReportLivingIssues />,
+    },
+    {
+      path: routeNames.UserDashboard,
+      element: <UserDashboard />,
+    },
+    {
+      path: routeNames.Reservation,
+      element: <ReservationPage />,
+    },
+    {
+      path: routeNames.Payment,
+      element: <Payment />,
+    },
+    {
+      path: routeNames.OrderSuccess,
+      element: <OrderSuccessView />,
     },
   ],
 };

@@ -71,10 +71,12 @@ export const {
   openAuthenticationCodeModal,
   openResetPasswordModal,
   openAdvanceSearchModal,
+  openConfirmLogoutModal,
   closeLoginModal,
   closeRegisterModal,
   closeRequestResetPasswordModal,
   closeAuthenticationCodeModal,
   closeResetPasswordModal,
   closeAdvanceSearchModal,
+  closeConfirmLogoutModal,
 } = modalSlice.actions;
