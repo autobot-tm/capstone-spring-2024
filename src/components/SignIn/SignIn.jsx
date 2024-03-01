@@ -50,7 +50,7 @@ const SignIn = () => {
   return (
     <div>
       <CustomModal
-        width={400}
+        width={440}
         nameOfModal={loginModal}
         title={t('modal.login')}
         action={closeLoginModal}
@@ -62,7 +62,7 @@ const SignIn = () => {
               { required: true, message: t('validationRules.required.email') },
               { type: 'email', message: t('validationRules.invalid.email') },
             ]}>
-            <Input placeholder="Email" disabled={loading} />
+            <Input placeholder="Email" size="large" disabled={loading} />
           </Form.Item>
           <Form.Item
             name={'password'}
@@ -70,7 +70,11 @@ const SignIn = () => {
               { required: true, message: t('validationRules.required.password') },
               { min: 8, message: t('validationRules.min.password') },
             ]}>
-            <Input.Password placeholder={t('placeholder.password')} disabled={loading} />
+            <Input.Password
+              placeholder={t('placeholder.password')}
+              size="large"
+              disabled={loading}
+            />
           </Form.Item>
 
           {errorTranslationKey === ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS && (

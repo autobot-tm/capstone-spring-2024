@@ -194,7 +194,15 @@
     "more-comment-btn": "もっと見る",
     "error": "エラー",
     "error-date": "入居日を選択してください",
-    "error-login": "この機能を実行するにはログインしてください。"
+    "error-login": "この機能を実行するにはログインしてください。",
+    "RESERVE": "予約",
+    "RESERVED": "予約済み",
+    "OCCUPIED": "占有",
+    "DEPOSITED": "寄託",
+    "UNDER_MAINTENANCE": "メンテナンス中",
+    "PENDING_APPROVAL": "承認待ち",
+    "HOMEOWNER_CONTRACT_EXPIRED": "ホームオーナー契約満了",
+    "book": "賃貸"
   },
 
   "RESERVATION": {
@@ -222,5 +230,11 @@
     "back-to-home": "ホームに戻る",
     "fail": "予約に失敗しました",
     "success": "予約の作成に成功しました。"
+  },
+
+  "NOT-FOUND": {
+    "title": "おっと... ページが見つかりません！",
+    "description": "Tお探しのページは存在しません。移動または削除された可能性があります。",
+    "back-to-home": "ホームページに戻る"
   }
 }

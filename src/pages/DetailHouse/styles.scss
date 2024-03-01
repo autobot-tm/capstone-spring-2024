@@ -34,6 +34,9 @@
       .size-caption {
         display: flex;
       }
+      .star-icon {
+        color: $colors-primary;
+      }
     }
     &-frame-description {
       margin-top: 50px;
@@ -98,6 +101,12 @@
   }
 
   .side {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 900;
+    padding-top: 65px;
     &-form {
       border: 0.8px solid #ccc;
       border-radius: 5px;
@@ -110,7 +119,6 @@
         width: 100%;
         height: 60px;
         border-bottom: 0.8px solid #ccc;
-
         .price-group {
           display: block;
           text-align: end;
@@ -127,12 +135,12 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-        height: 200px;
+        height: 210px;
         padding: 10px 0;
 
         .center {
           display: flex;
-          justify-content: center;
+          gap: 4px;
         }
         .book-btn {
           display: flex;
@@ -168,5 +176,36 @@
 @media screen and (max-width: 1200px) {
   #dh-container {
     padding: 50px 20px;
+  }
+}
+@media screen and (max-width: 992px) {
+  .book-now-btn {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 60px;
+    height: 60px !important;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+
+  .book-now-btn.hide {
+    transform: translateY(100%);
+  }
+
+  .book-now-btn:hover {
+    transform: translateY(-10px);
+  }
+}
+@media screen and (min-width: 992px) {
+  .book-now-btn {
+    display: none;
   }
 }

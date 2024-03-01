@@ -190,8 +190,8 @@
     "select-date": "Select date",
     "add-to-wishlist": "Add to wishlist",
     "estimated": "Estimated",
-    "rental-period": "rental period",
-    "time-to-move-in": "time to move in",
+    "rental-period": "Rental period",
+    "time-to-move-in": "Time to move in",
     "reserve-now-btn": "Reserve Now",
     "reserved-btn": "Reserved",
     "related-property": "Related properties",
@@ -200,10 +200,17 @@
     "more-comment-btn": "more",
     "error": "Error",
     "error-date": "Please select move-in date.",
-    "error-login": "Please log in to perform this function."
+    "RESERVE": "RESERVE",
+    "RESERVED": "RESERVED",
+    "OCCUPIED": "OCCUPIED",
+    "DEPOSITED": "DEPOSITED",
+    "UNDER_MAINTENANCE": "UNDER MAINTENANCE",
+    "PENDING_APPROVAL": "PENDING APPROVAL",
+    "HOMEOWNER_CONTRACT_EXPIRED": "HOMEOWNER CONTRACT EXPIRED",
+    "book": "Book"
   },
 
-  "reservation": {
+  "RESERVATION": {
     "checkout": "Checkout",
     "reservation-required": "Reservation required",
     "your-intentions": "Your intentions",
@@ -220,7 +227,9 @@
     "total-fee": "Total fee",
     "reservation-fee": "Reservation fee",
     "exception-fee": "Exception fee",
-    "total": "Total"
+    "total": "Total",
+    "error": "Error",
+    "error-option-payment": "Please choose a payment method."
   },
 
   "PAYMENT": {
@@ -228,5 +237,15 @@
     "back-to-home": "Back to home",
     "fail": "Your reservation has failed.",
     "success": "Your reservation has been successfully created."
+  },
+
+  "USER-DASHBOARD": {
+    "user-dashboard": "User Dashboard"
+  },
+
+  "NOT-FOUND": {
+    "title": "Oops... Page Not Found!",
+    "description": "The page you are looking for does not exist. It might have been moved or deleted.",
+    "back-to-home": "Back to Homepage"
   }
 }

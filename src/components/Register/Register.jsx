@@ -57,7 +57,7 @@ const Register = () => {
   }, [form, registerModal]);
   return (
     <CustomModal
-      width={400}
+      width={440}
       nameOfModal={registerModal}
       title={t('modal.register')}
       action={closeRegisterModal}
@@ -70,7 +70,7 @@ const Register = () => {
             { required: true, message: t('validationRules.required.email') },
             { type: 'email', message: t('validationRules.invalid.email') },
           ]}>
-          <Input placeholder="Email" disabled={loading} />
+          <Input size="large" placeholder="Email" disabled={loading} />
         </Form.Item>
         <Form.Item
           name={'password'}
@@ -95,7 +95,7 @@ const Register = () => {
               message: t('validationRules.password.contain.digit'),
             },
           ]}>
-          <Input.Password placeholder={t('placeholder.password')} disabled={loading} />
+          <Input.Password size="large" placeholder={t('placeholder.password')} disabled={loading} />
         </Form.Item>
         <Form.Item
           name={'repeatpassword'}
@@ -114,9 +114,15 @@ const Register = () => {
               },
             }),
           ]}>
-          <Input.Password placeholder={t('placeholder.repeatpassword')} disabled={loading} />
+          <Input.Password
+            size="large"
+            placeholder={t('placeholder.repeatpassword')}
+            disabled={loading}
+          />
         </Form.Item>
-        <Paragraph classNames={styles.message}>{t('registration.disclaimer')}</Paragraph>
+        <Form.Item>
+          <Paragraph classNames={styles.message}>{t('registration.disclaimer')}</Paragraph>
+        </Form.Item>
 
         <Form.Item>
           <BaseButton type="primary" htmlType="submit" disabled={loading} loading={loading}>

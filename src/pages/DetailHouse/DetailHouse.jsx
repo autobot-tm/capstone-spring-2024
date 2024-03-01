@@ -7,12 +7,14 @@ import { InfoCircleOutlined, StarFilled, StarOutlined } from '@ant-design/icons'
 import { Caption, SubHeading } from '../../components/Typography';
 import { Button, Row, Col, Form, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { notification } from 'antd';
 import { getHouseById, getHouseReview } from '../../services/apis/houses.service';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { formatCustomCurrency } from '../../utils/number-seperator';
+import { addToWishlist, removeFromWishlist } from '../../store/slices/wishlist.slice';
+import { HousePropertyUnit, PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
 import HouseUtility from './components/HouseUtility/HouseUtility';
 import FeedBackCustomer from './components/FeedBackCustomer/FeedBackCustomer';
 import HouseAmenities from './components/HouseAmenities/HouseAmenities';
@@ -22,22 +24,24 @@ import DatePickerAnt from './components/DatePickerComponent/DatePickerAnt';
 import ReviewForm from './components/ReviewForm/ReviewForm';
 import CarouselHeader from '../../components/CarouselHeader/CarouselHeader';
 import SizeImg from '../../assets/images/SizeIcon.svg';
-import { HousePropertyUnit } from '../../constants/house.constant';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import HousesMap from '../../components/HousesMap/HousesMap';
+import { openLoginModal } from '../../store/slices/modalSlice';
 
 const DetailHouse = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { house_id: house_id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [houseAmenities, setHouseAmenities] = useState([]);
   const [houseUtilities, setHouseUtilities] = useState([]);
   const [imgHouse, setImgHouse] = useState([]);
   const [comment, setComment] = useState([]);
-  const [isClickedWishlist, setIsClickedWishlist] = useState(false);
   const { access_token } = useSelector(state => state.auth);
+  const wishlist = useSelector(state => state.wishlist.houses);
+  const isClickedWishlist = useSelector(state => state.wishlist.clickedStatus[house_id] || false);
 
   const { data: house } = useSWR(
     `getHouseById/${house_id}`,
@@ -57,7 +61,6 @@ const DetailHouse = () => {
           setHouseUtilities(house?.utilities);
           setImgHouse(house?.image_urls);
           setComment(reviews?.reviews);
-
           setIsLoading(false);
         }
       } catch (error) {
@@ -69,11 +72,14 @@ const DetailHouse = () => {
   }, [house, reviews]);
 
   const handleAddWishlist = () => {
-    if (access_token) {
-      setIsClickedWishlist(!isClickedWishlist);
-      //continue
+    if (!access_token) {
+      return dispatch(openLoginModal());
+    }
+    const isHouseInWishlist = wishlist.some(item => item.id === house.id);
+    if (!isHouseInWishlist) {
+      dispatch(addToWishlist({ house }));
     } else {
-      errorLoginNotification();
+      dispatch(removeFromWishlist({ id: house.id }));
     }
   };
 
@@ -84,15 +90,6 @@ const DetailHouse = () => {
       description: t('detail-house.error-date'),
     });
   }
-
-  function errorLoginNotification() {
-    return notification.error({
-      message: t('detail-house.error'),
-      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-      description: t('detail-house.error-login'),
-    });
-  }
-
   const TitleHeadingComponent = () => {
     return (
       <>
@@ -106,8 +103,8 @@ const DetailHouse = () => {
             {t(`detail-house.${house?.category.replace(/\s/g, '')}`)}
           </Caption>
           <Caption classNames="caption-hr color-black" size={140}>
-            <StarFilled />
-            &nbsp;{reviews?.average_rating > 0 ? `${reviews?.average_rating}/5` : 'No rating'}
+            <StarFilled className="star-icon" />
+            &nbsp;{reviews?.average_rating > 0 ? `${reviews?.average_rating}` : 'No rating'}
           </Caption>
           <Caption classNames="size-caption color-black" size={140}>
             <img src={SizeImg} />
@@ -235,8 +232,7 @@ const DetailHouse = () => {
 
     const onFinish = () => {
       if (!access_token) {
-        errorLoginNotification();
-        return;
+        return dispatch(openLoginModal());
       }
       if (!selectedMonths || !selectedDate) {
         errorDateNotification();
@@ -246,24 +242,19 @@ const DetailHouse = () => {
         state: { house, selectedDate, selectedMonths, reviews },
       });
     };
-
     const handleMonthChange = value => {
       setSelectedMonths(value);
     };
-
     const handleDateChange = dateString => {
       setSelectedDate(dateString);
     };
-
     const renderPrice = () => {
-      const promotionPackageMonths = [3, 6, 12];
       const selectedMonthsInt = parseInt(selectedMonths);
-
       const pricePerMonth = house?.pricing_policies?.find(
         policy => parseInt(policy.total_months) === 1,
       )?.price_per_month;
 
-      if (promotionPackageMonths.includes(selectedMonthsInt)) {
+      if (PROMOTION_PACKAGE_MONTHS.includes(selectedMonthsInt)) {
         const selectedPrice = house?.pricing_policies?.find(
           policy => parseInt(policy.total_months) === selectedMonthsInt,
         )?.price_per_month;
@@ -308,36 +299,46 @@ const DetailHouse = () => {
               {renderPrice()}
             </Col>
           </Row>
-          <Row className="side-form-estimated-section">
-            <Col xs={12}>
+          <Row className="side-form-estimated-section" gutter={[4, 4]}>
+            <Col xs={16}>
               <SubHeading size={230} strong>
                 {t('detail-house.estimated')}
               </SubHeading>
             </Col>
-            <Col xs={12} style={{ textAlign: 'right' }}>
+            <Col xs={8} style={{ textAlign: 'right' }}>
               <SubHeading size={230} strong>
                 <Tooltip placement="left" title={t('detail-house.hint-price')}>
                   <InfoCircleOutlined />
                 </Tooltip>
               </SubHeading>
             </Col>
-            <Col xs={12} className="center">
-              <Form.Item name="selectedMonths" label={t('detail-house.rental-period')} required>
-                <Selection onChange={handleMonthChange} />
-              </Form.Item>
-            </Col>
-            <Col xs={12} className="center">
+            <Col xs={13}>
               <Form.Item name="selectedDate" label={t('detail-house.time-to-move-in')} required>
                 <DatePickerAnt onDateChange={handleDateChange} />
               </Form.Item>
             </Col>
+            <Col xs={11}>
+              <Form.Item name="selectedMonths" label={t('detail-house.rental-period')} required>
+                <Selection onChange={handleMonthChange} />
+              </Form.Item>
+            </Col>
             <Col xs={24}>
-              <BaseButton
-                htmlType="submit"
-                type="primary"
-                style={{ width: '100%', justifyContent: 'center' }}>
-                {t('detail-house.reserve-now-btn')}
-              </BaseButton>
+              {house.status === 'AVAILABLE' ? (
+                <BaseButton
+                  htmlType="submit"
+                  type="primary"
+                  style={{ width: '100%', justifyContent: 'center' }}>
+                  {t('detail-house.reserve-now-btn')}
+                </BaseButton>
+              ) : (
+                <BaseButton
+                  htmlType="submit"
+                  type="primary"
+                  disabled
+                  style={{ width: '100%', justifyContent: 'center' }}>
+                  {t(`detail-house.${house.status.replace(/_/g, '')}`)}
+                </BaseButton>
+              )}
             </Col>
           </Row>
         </Form>
@@ -365,6 +366,13 @@ const DetailHouse = () => {
     );
   };
 
+  const handleBookNowClick = () => {
+    const priceSection = document.querySelector('.side-form-estimated-section');
+    if (priceSection) {
+      priceSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  };
+
   return (
     <Layout>
       {isLoading ? (
@@ -377,6 +385,15 @@ const DetailHouse = () => {
           <main id="dh-container">
             <Row align="stretch">
               <Col style={{ paddingRight: 30 }} className="main" xs={24} lg={16}>
+                <BaseButton
+                  shape="circle"
+                  type="primary"
+                  size="large"
+                  className="book-now-btn"
+                  onClick={handleBookNowClick}>
+                  {t('detail-house.book')}
+                </BaseButton>
+
                 <TitleHeadingComponent />
                 <DescriptionComponent />
                 <PropertyFeatureComponent />

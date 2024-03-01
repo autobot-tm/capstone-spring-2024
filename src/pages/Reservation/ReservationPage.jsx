@@ -2,8 +2,14 @@ import React, { useState, useEffect } from 'react';
 import './style.scss';
 import { useTranslation } from 'react-i18next';
 import { Headline } from '../../components/Typography/Headline/Headline';
-import { FieldTimeOutlined, HomeOutlined, LeftOutlined, StarFilled } from '@ant-design/icons';
-import { Breadcrumb, Button, Col, Row } from 'antd';
+import {
+  ExclamationCircleOutlined,
+  FieldTimeOutlined,
+  HomeOutlined,
+  LeftOutlined,
+  StarFilled,
+} from '@ant-design/icons';
+import { Breadcrumb, Button, Col, Radio, Row, notification } from 'antd';
 import { SubHeading } from '../../components/Typography/SubHeading/SubHeading';
 import { Paragraph } from '../../components/Typography/Paragraph/Paragraph';
 import { Caption } from '../../components/Typography/Caption/Caption';
@@ -12,12 +18,14 @@ import { useLocation } from 'react-router-dom';
 import { Layout } from '../../hoc/Layout/Layout';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { requestReserveHouse } from '../../services/apis/payments.service';
+import { PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
+import { PAYMENT_METHOD } from '../../constants/payment.constant';
 import VNPay2 from '../../assets/images/vnpay-qr-23-06-2020-2.jpg';
 import VNPay1 from '../../assets/images/Logo-VNPAY-QR.webp';
+import ONEPay from '../../assets/images/onepay.svg';
 import Selection from '../DetailHouse/components/Selection/Selection';
 import DatePickerAnt from '../DetailHouse/components/DatePickerComponent/DatePickerAnt';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
-import { PAYMENT_METHOD } from '../../constants/payment.constant';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
 
 const ReservationPage = () => {
@@ -33,14 +41,13 @@ const ReservationPage = () => {
   const [idPricingPolicy, setIdPricingPolicy] = useState(null);
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [isEditingMonths, setIsEditingMonths] = useState(false);
-
-  const promotionPackageMonths = [1, 3, 6, 12];
+  const [opPayment, setOpPayment] = useState(null);
 
   const getPriceAndIdFromHouse = months => {
     if (house && months) {
       const selectedMonthsInt = parseInt(months);
 
-      if (promotionPackageMonths.includes(selectedMonthsInt)) {
+      if (PROMOTION_PACKAGE_MONTHS.includes(selectedMonthsInt)) {
         const selectedPolicy = house?.pricing_policies.find(
           policy => parseInt(policy.total_months) === selectedMonthsInt,
         );
@@ -83,33 +90,38 @@ const ReservationPage = () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, [house, reviews]);
-
-  useEffect(() => {
     const { id, price_per_month } = getPriceAndIdFromHouse(selectedNewMonths);
     setPriceOfMonths(price_per_month);
     setIdPricingPolicy(id);
-    console.log('priceOfMonths', priceOfMonths);
-    console.log('idPricingPolicy', idPricingPolicy);
-    console.log('selectedNewMonths', selectedNewMonths);
-    console.log('selectedNewDate', selectedNewDate);
+    setIsLoading(false);
   }, [selectedNewMonths, idPricingPolicy, selectedNewDate]);
 
   const handleBack = () => {
     navigate(`/houses/${house_id}`);
   };
 
+  const handleOptionPayment = e => {
+    console.log('radio checked', e.target.value);
+    setOpPayment(e.target.value);
+  };
+
+  function errorPaymentNotification() {
+    return notification.error({
+      message: t('RESERVATION.error'),
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      description: t('RESERVATION.error-option-payment'),
+    });
+  }
+
   const handlePayments = async () => {
+    if (!opPayment) return errorPaymentNotification();
     try {
       const response_url = await requestReserveHouse({
         house_id: house_id,
         pricing_policy_id: idPricingPolicy,
         total_months: selectedNewMonths,
         expected_move_in_date: selectedNewDate,
-        gateway_provider: PAYMENT_METHOD.VNPAY,
+        gateway_provider: opPayment,
       });
       window.location.href = response_url;
     } catch (error) {
@@ -202,19 +214,29 @@ const ReservationPage = () => {
               </Row>
               <Row className="main-payment section">
                 <Col xs={24}>
-                  {' '}
                   <SubHeading size={230} strong>
                     {t('RESERVATION.payment')}
                   </SubHeading>
                 </Col>
-                <Col className="banner-payment-vnpay" xs={24}>
-                  <img src={VNPay1} className="img-vnpay-1" alt="" />
-                  <img src={VNPay2} className="img-vnpay-2" alt="" />
+                <Col xs={24}>
+                  <Radio.Group
+                    onChange={handleOptionPayment}
+                    value={opPayment}
+                    size="small"
+                    optionType="button">
+                    <Radio value={PAYMENT_METHOD.VNPAY} className="main-payment-banner">
+                      <span className="main-payment-banner-inner">
+                        <img src={VNPay1} />
+                        <img src={VNPay2} />
+                      </span>
+                    </Radio>
+                    <Radio disabled value={PAYMENT_METHOD.ONEPAY} className="main-payment-banner">
+                      <span className="main-payment-banner-inner">
+                        <img src={ONEPay} />
+                      </span>
+                    </Radio>
+                  </Radio.Group>
                 </Col>
-                {/* <Col className="banner-payment-vnpay" xs={24}>
-              <img src={VNPay1} className="img-vnpay-1" alt="" />
-              <img src={VNPay2} className="img-vnpay-2" alt="" />
-            </Col> */}
               </Row>
               <Row className="section">
                 <SubHeading size={230} strong>
@@ -288,7 +310,7 @@ const ReservationPage = () => {
                       <Caption size={140}>&nbsp;/{t('RESERVATION.month')}</Caption>
                     </Row>
                     <Caption size={120}>
-                      <StarFilled />
+                      <StarFilled style={{ color: '#f8a11e' }} />
                       &nbsp;
                       {reviews?.average_rating > 0 ? `${reviews?.average_rating}/5` : 'No rating'}
                     </Caption>
@@ -299,9 +321,7 @@ const ReservationPage = () => {
                     {t('RESERVATION.total-fee')}
                   </SubHeading>
                   <Paragraph classNames="fee-table-section-2-description">
-                    <span>
-                      {t('RESERVATION.reservation-fee')} ({t('reservation.month')}):
-                    </span>
+                    <span>{t('RESERVATION.reservation-fee')}:</span>
                     <span>{formatCustomCurrency(house?.reservation_fee)}</span>
                   </Paragraph>
                   <Paragraph classNames="fee-table-section-2-description">

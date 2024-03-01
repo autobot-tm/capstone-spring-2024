@@ -8,12 +8,10 @@
   align-items: center;
   justify-content: center;
   padding: 0 20px;
-
   .breadcrumb {
     display: flex;
     justify-content: end;
   }
-
   .header-row {
     width: 1400px;
   }
@@ -49,26 +47,40 @@
     &-estimated {
       .edit-date {
         color: #000;
-
         &:hover {
           color: $colors-primary;
         }
       }
     }
     &-payment {
-      .banner-payment-vnpay {
+      &-banner {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin: 10px 0;
-        padding: 0 10px;
+        width: 100%;
+        margin: 20px 0;
         height: 100px;
         background-color: $colors-bg-secondary;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-        .img-vnpay-1,
-        .img-vnpay-2 {
-          height: 60px;
+        &-inner {
+          display: flex;
+          justify-content: space-between;
+          width: 600px;
+          padding: 0 20px;
+          @media screen and (max-width: 1200px) {
+            width: 500px;
+          }
+          @media screen and (max-width: 768px) {
+            width: 400px;
+          }
+          @media screen and (max-width: 540px) {
+            width: 300px;
+          }
+          @media screen and (max-width: 400px) {
+            width: 200px;
+          }
+        }
+        img {
+          height: 50px;
         }
       }
     }

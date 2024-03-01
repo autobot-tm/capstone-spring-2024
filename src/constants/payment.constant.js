@@ -1,3 +1,4 @@
 export const PAYMENT_METHOD = {
   VNPAY: 'VNPAY',
+  ONEPAY: 'ONEPAY',
 };

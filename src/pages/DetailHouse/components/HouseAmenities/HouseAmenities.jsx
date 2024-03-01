@@ -22,7 +22,7 @@ const HouseAmenities = ({ amenities }) => {
                   alt={amenity.name}
                   className="icon"
                 />
-                <Paragraph>{t(`detail-house.${amenity.name.replace(/\s/g, '')}`)}: </Paragraph>
+                <Paragraph>{t(`detail-house.${amenity.name.replace(/\s/g, '')}`)} </Paragraph>
               </span>
               <Paragraph strong className="property-detail-group-2" classNames="color-black">
                 {amenity.amount}
@@ -39,7 +39,7 @@ const HouseAmenities = ({ amenities }) => {
                   alt={amenity.name}
                   className="icon"
                 />
-                <Paragraph>{t(`detail-house.${amenity.name.replace(/\s/g, '')}`)}: </Paragraph>
+                <Paragraph>{t(`detail-house.${amenity.name.replace(/\s/g, '')}`)} </Paragraph>
               </span>
               <Paragraph strong className="property-detail-group-2" classNames="color-black">
                 {amenity.amount}
