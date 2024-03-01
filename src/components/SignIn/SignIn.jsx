@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Alert, Checkbox, Form, Input } from 'antd';
+import { Alert, Form, Input } from 'antd';
 import styles from './SignIn.module.scss';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -72,18 +72,7 @@ const SignIn = () => {
             ]}>
             <Input.Password placeholder={t('placeholder.password')} disabled={loading} />
           </Form.Item>
-          <div className={styles.supportSignInContainer}>
-            <Form.Item name="remember" noStyle>
-              <Checkbox>{t('checkbox.rememberme')}</Checkbox>
-            </Form.Item>
-            <span
-              onClick={() => {
-                dispatch(closeLoginModal());
-                dispatch(openRequestResetPasswordModal());
-              }}>
-              {t('forgetpassword')}
-            </span>
-          </div>
+
           {errorTranslationKey === ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS && (
             <Form.Item>
               <Alert message={t(errorTranslationKey)} type="error" />
@@ -96,6 +85,15 @@ const SignIn = () => {
             </BaseButton>
           </Form.Item>
           <Form.Item>
+            <div className={styles.supportSignInContainer}>
+              <span
+                onClick={() => {
+                  dispatch(closeLoginModal());
+                  dispatch(openRequestResetPasswordModal());
+                }}>
+                {t('forgetpassword')}
+              </span>
+            </div>
             <div className={styles.askMemberContainer}>
               <Paragraph>
                 <Trans
