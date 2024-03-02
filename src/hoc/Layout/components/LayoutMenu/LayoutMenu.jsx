@@ -52,7 +52,7 @@ export const LayoutMenu = ({ isInline = false }) => {
               <UserOutlined />
             </span>
           ),
-          key: '',
+          key: routeNames.UserDashboard,
         },
         {
           label: <span className="color-black">{t('reportlivingissue')}</span>,

@@ -17,7 +17,7 @@ const Selection = ({ defaultValue, onChange }) => {
         value={editedValue}
         size="large"
         style={{
-          flex: '1',
+          width: '100%',
           color: '#ccc',
           textAlign: 'left',
         }}

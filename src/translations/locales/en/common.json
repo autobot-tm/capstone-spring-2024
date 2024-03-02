@@ -219,9 +219,11 @@
     "time-to-move-in": "Estimated time to move in",
     "edit": "Edit",
     "payment": "Payment",
-    "cancellation-policy": "Cancellation Policy",
-    "des-policy": "Free cancellation within 48 hours. You will receive a partial refund if you cancel after 48 hours. Find out more",
-    "general-standards": "General standards",
+    "reservation-cancellation-policy": "Reservation Cancellation Policies",
+    "reservation-des-1": "In case of a reservation request cancellation, the following policies apply",
+    "reservation-des-2": "If a renter reserves a property but decides not to sign the contract, they will receive a partial refund of the reservation fee.",
+    "reservation-des-3": " If the house has any issues that may affect the renter, a full refund of the reservation fee will be issued along with an apology email.",
+    "conclude-cancellation-policy": "These policies are designed to uphold fairness and transparency in our reservation process. If you have any questions, please don't hesitate to contact us.",
     "description-field-time": "Your reservation/reservation will not be confirmed until the host/organizer accepts your request (within 24 hours). You will not be charged until then.",
     "reservation-btn": "Reservation Required",
     "month": "month",
@@ -230,7 +232,8 @@
     "exception-fee": "Exception fee",
     "total": "Total",
     "error": "Error",
-    "error-option-payment": "Please choose a payment method."
+    "error-option-payment": "Please choose a payment method.",
+    "reserve-btn": "Pay"
   },
 
   "PAYMENT": {

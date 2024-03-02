@@ -20,7 +20,6 @@ import { formatCustomCurrency } from '../../utils/number-seperator';
 import { requestReserveHouse } from '../../services/apis/payments.service';
 import { PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
 import { PAYMENT_METHOD } from '../../constants/payment.constant';
-import VNPay2 from '../../assets/images/vnpay-qr-23-06-2020-2.jpg';
 import VNPay1 from '../../assets/images/Logo-VNPAY-QR.webp';
 import ONEPay from '../../assets/images/onepay.svg';
 import Selection from '../DetailHouse/components/Selection/Selection';
@@ -43,15 +42,17 @@ const ReservationPage = () => {
   const [isEditingMonths, setIsEditingMonths] = useState(false);
   const [opPayment, setOpPayment] = useState(null);
 
+  const handleBack = () => {
+    navigate(`/houses/${house_id}`);
+  };
+
   const getPriceAndIdFromHouse = months => {
     if (house && months) {
       const selectedMonthsInt = parseInt(months);
-
       if (PROMOTION_PACKAGE_MONTHS.includes(selectedMonthsInt)) {
         const selectedPolicy = house?.pricing_policies.find(
           policy => parseInt(policy.total_months) === selectedMonthsInt,
         );
-
         if (selectedPolicy) {
           const { id, price_per_month } = selectedPolicy;
           return { id, price_per_month };
@@ -63,7 +64,6 @@ const ReservationPage = () => {
         const selectedPolicy = house?.pricing_policies.find(
           policy => parseInt(policy.total_months) === 1,
         );
-
         if (selectedPolicy) {
           const { id, price_per_month } = selectedPolicy;
           return { id, price_per_month };
@@ -73,7 +73,6 @@ const ReservationPage = () => {
         }
       }
     }
-
     return { id: null, price_per_month: null };
   };
 
@@ -86,7 +85,6 @@ const ReservationPage = () => {
 
   const handleDateChange = date => {
     setSelectedNewDate(date);
-    console.log(selectedNewDate);
   };
 
   useEffect(() => {
@@ -96,12 +94,7 @@ const ReservationPage = () => {
     setIsLoading(false);
   }, [selectedNewMonths, idPricingPolicy, selectedNewDate]);
 
-  const handleBack = () => {
-    navigate(`/houses/${house_id}`);
-  };
-
   const handleOptionPayment = e => {
-    console.log('radio checked', e.target.value);
     setOpPayment(e.target.value);
   };
 
@@ -128,7 +121,12 @@ const ReservationPage = () => {
       console.error('Error reserving house:', error);
     }
   };
-
+  const handleBookNowClick = () => {
+    const priceSection = document.querySelector('.reservation-btn');
+    if (priceSection) {
+      priceSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  };
   return (
     <Layout>
       {isLoading ? (
@@ -158,6 +156,14 @@ const ReservationPage = () => {
             </Row>
           </header>
           <Row id="reservation-container">
+            <BaseButton
+              shape="circle"
+              type="primary"
+              size="large"
+              className="book-now-btn"
+              onClick={handleBookNowClick}>
+              {t('RESERVATION.reserve-btn')}
+            </BaseButton>
             <Col className="reservation-title" xs={24}>
               <LeftOutlined className="icon-left" onClick={handleBack} />
               <Headline strong>{t('RESERVATION.reservation-required')}</Headline>
@@ -169,12 +175,12 @@ const ReservationPage = () => {
                     {t('RESERVATION.your-intentions')}
                   </SubHeading>
                 </Col>
-                <Col style={{ marginBottom: 14 }} xs={12}>
+                <Col style={{ paddingLeft: 10 }} xs={24} sm={14}>
                   <Paragraph classNames="color-black" strong>
                     {t('RESERVATION.rental-period')}
                   </Paragraph>
                 </Col>
-                <Col xs={12} style={{ textAlign: 'right' }}>
+                <Col xs={16} sm={7} style={{ textAlign: 'right' }}>
                   {isEditingMonths ? (
                     <Selection defaultValue={selectedMonths} onChange={handleMonthChange} />
                   ) : (
@@ -191,12 +197,12 @@ const ReservationPage = () => {
                     </>
                   )}
                 </Col>
-                <Col xs={12}>
+                <Col style={{ paddingLeft: 10 }} xs={24} sm={14}>
                   <Paragraph classNames="color-black" strong>
                     {t('RESERVATION.time-to-move-in')}
                   </Paragraph>
                 </Col>
-                <Col xs={12} style={{ textAlign: 'right' }}>
+                <Col xs={16} sm={7} style={{ textAlign: 'right' }}>
                   {isEditingDate ? (
                     <DatePickerAnt onDateChange={handleDateChange} />
                   ) : (
@@ -227,7 +233,6 @@ const ReservationPage = () => {
                     <Radio value={PAYMENT_METHOD.VNPAY} className="main-payment-banner">
                       <span className="main-payment-banner-inner">
                         <img src={VNPay1} />
-                        <img src={VNPay2} />
                       </span>
                     </Radio>
                     <Radio disabled value={PAYMENT_METHOD.ONEPAY} className="main-payment-banner">
@@ -239,59 +244,24 @@ const ReservationPage = () => {
                 </Col>
               </Row>
               <Row className="section">
-                <SubHeading size={230} strong>
-                  {t('RESERVATION.cancellation-policy')}
-                </SubHeading>
-                <Paragraph>{t('RESERVATION.des-policy')}</Paragraph>
-              </Row>
-              <Row className="section">
-                <SubHeading size={230} strong>
-                  {t('RESERVATION.general-standards')}
+                <SubHeading size={230} classNames="block" strong>
+                  {t('RESERVATION.reservation-cancellation-policy')}
                 </SubHeading>
                 <Paragraph>
-                  All guests are urged to adhere to the following simple rules to ensure the best
-                  experience:
+                  &nbsp;&nbsp;{t('RESERVATION.reservation-des-1')}:
                   <ul>
-                    <li>Comply with house rules</li>
-                    <li>Use supplies and equipment carefully and responsibly.</li>
-                    <li>
-                      Report any problems or damage immediately so the homeowner can promptly
-                      resolve them.
-                    </li>
-                    <li>
-                      Understand and comply with all house policies and regulations, including
-                      cancellation and refund regulations.
-                    </li>
-                    <li>
-                      Remember that you are staying in someone else s home, so show respect and be a
-                      good guest.
-                    </li>
+                    <li>{t('RESERVATION.reservation-des-2')}</li>
+                    <li>{t('RESERVATION.reservation-des-3')}</li>
                   </ul>
                 </Paragraph>
               </Row>
-              <Row className="section">
-                <Col xs={24} xl={3}>
-                  {' '}
+              <Row style={{ padding: '20px 0', gap: 20 }}>
+                <Col xs={24} xl={2}>
                   <FieldTimeOutlined className="field-time-icon" />
                 </Col>
-                <Col xs={24} xl={21}>
-                  <Paragraph style={{ color: 'black' }} strong>
-                    {t('RESERVATION.description-field-time')}
-                  </Paragraph>
+                <Col xs={24} xl={18}>
+                  <Caption size={120}>{t('RESERVATION.conclude-cancellation-policy')}</Caption>
                 </Col>
-              </Row>
-              <Row className="main-reservation-required">
-                <Caption size={120}>
-                  nibh praesent tristique magna sit amet purus gravida quis blandit turpis cursus in
-                  hac habitasse platea dictumst quisque sagittis purus sit amet volutpat consequat
-                  mauris nunc congue nisi vitae suscipit tellus mauris a diam maecenas sed enim ut
-                  sem viverra aliquet eget sit amet tellus cras adipiscing enim eu turpis
-                </Caption>
-                <span className="reservation-btn">
-                  <BaseButton type="primary" onClick={handlePayments}>
-                    {t('RESERVATION.reservation-btn')}
-                  </BaseButton>
-                </span>
               </Row>
             </Col>
             <Col className="side" xs={23} lg={8}>
@@ -312,7 +282,7 @@ const ReservationPage = () => {
                     <Caption size={120}>
                       <StarFilled style={{ color: '#f8a11e' }} />
                       &nbsp;
-                      {reviews?.average_rating > 0 ? `${reviews?.average_rating}/5` : 'No rating'}
+                      {reviews?.average_rating > 0 ? `${reviews?.average_rating}` : 'No rating'}
                     </Caption>
                   </div>
                 </div>
@@ -336,6 +306,13 @@ const ReservationPage = () => {
                   </Paragraph>
                 </div>
               </div>
+              <Row>
+                <Col className="reservation-btn" xs={24}>
+                  <BaseButton style={{ width: '100%' }} type="primary" onClick={handlePayments}>
+                    {t('RESERVATION.reservation-btn')}
+                  </BaseButton>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </>
