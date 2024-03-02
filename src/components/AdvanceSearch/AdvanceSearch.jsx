@@ -15,7 +15,7 @@ import {
   Slider,
   Space,
 } from 'antd';
-import { Caption } from '../Typography';
+import { Caption, Paragraph } from '../Typography';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { t } from 'i18next';
 import { setFilter } from '../../store/slices/houseSlice';
@@ -139,10 +139,12 @@ const AdvanceSearch = () => {
         </Button>,
       ]}>
       <Form layout="vertical" onFinish={handleFinish} form={form}>
-        <Form.Item label={t('label.searchHouse')} name="name">
+        <Form.Item label={<Paragraph strong>{t('label.searchHouse')}</Paragraph>} name="name">
           <Input placeholder={t('placeholder.searchHouse')} disabled={loading} />
         </Form.Item>
-        <Form.Item label={t('label.propertyDetails')} name="categories">
+        <Form.Item
+          label={<Paragraph strong>{t('label.propertyDetails')}</Paragraph>}
+          name="categories">
           <Select
             mode="multiple"
             allowClear
@@ -156,8 +158,8 @@ const AdvanceSearch = () => {
             disabled={loading}
           />
         </Form.Item>
-        <Form.Item label={t('label.location')}>
-          <Row>
+        <Form.Item label={<Paragraph strong>{t('label.location')}</Paragraph>}>
+          <Row gutter={8}>
             <Col sm={8} xs={24}>
               <Form.Item name="provinces">
                 <Select
@@ -204,7 +206,7 @@ const AdvanceSearch = () => {
             </Col>
           </Row>
         </Form.Item>
-        <Form.Item label={t('label.propertySize')}>
+        <Form.Item label={<Paragraph strong>{t('label.propertySize')}</Paragraph>}>
           <Space>
             <Form.Item
               name="minArea"
@@ -219,6 +221,11 @@ const AdvanceSearch = () => {
                     return Promise.resolve();
                   },
                 }),
+                {
+                  type: 'number',
+                  min: 1,
+                  message: t('validationRules.min'),
+                },
               ]}>
               <InputNumber
                 placeholder={t('placeholder.minimumSize')}
@@ -226,7 +233,15 @@ const AdvanceSearch = () => {
                 disabled={loading}
               />
             </Form.Item>
-            <Form.Item name="maxArea">
+            <Form.Item
+              name="maxArea"
+              rules={[
+                {
+                  type: 'number',
+                  min: 1,
+                  message: t('validationRules.min'),
+                },
+              ]}>
               <InputNumber
                 placeholder={t('placeholder.maximumSize')}
                 style={{ width: '100%' }}
@@ -236,7 +251,7 @@ const AdvanceSearch = () => {
           </Space>
         </Form.Item>
 
-        <Form.Item label={t('label.priceRange')}>
+        <Form.Item label={<Paragraph strong>{t('label.priceRange')}</Paragraph>}>
           <Space>
             <Caption size={140}>
               From <b>{formatCustomCurrency(sliderValue[0])}</b> to
@@ -255,7 +270,7 @@ const AdvanceSearch = () => {
           />
         </Form.Item>
 
-        <Form.Item label={t('label.amenities')} name="amenities">
+        <Form.Item label={<Paragraph strong>{t('label.amenities')}</Paragraph>} name="amenities">
           <Checkbox.Group>
             <Row>
               {amenities.map(amenity => {
@@ -270,7 +285,7 @@ const AdvanceSearch = () => {
             </Row>
           </Checkbox.Group>
         </Form.Item>
-        <Form.Item label={t('label.Utilities')} name="utilities">
+        <Form.Item label={<Paragraph strong>{t('label.Utilities')}</Paragraph>} name="utilities">
           <Checkbox.Group>
             <Row>
               {utilities.map(utility => {
