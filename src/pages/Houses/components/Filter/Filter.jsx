@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './Filter.module.scss';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { CaretDownOutlined, CaretUpOutlined, SearchOutlined } from '@ant-design/icons';
-import { Caption } from '../../../../components/Typography';
+import { Caption, Paragraph } from '../../../../components/Typography';
 import { formatCustomCurrency } from '../../../../utils/number-seperator';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter, setInitialState } from '../../../../store/slices/houseSlice';
@@ -138,7 +138,7 @@ const Filter = () => {
         <Row gutter={[10, 4]}>
           <Col lg={12} sm={24} xs={24}>
             <Form.Item
-              label={t('label.searchHouse')}
+              label={<Paragraph strong>{t('label.searchHouse')}</Paragraph>}
               name="name"
               style={{ margin: 0 }}
               initialValue={nameValue}>
@@ -147,7 +147,7 @@ const Filter = () => {
           </Col>
           <Col lg={12} sm={24} xs={24}>
             <Form.Item
-              label={t('label.propertyDetails')}
+              label={<Paragraph strong>{t('label.propertyDetails')}</Paragraph>}
               name="categories"
               style={{ margin: 0 }}
               initialValue={categoriesValue}>
@@ -165,8 +165,8 @@ const Filter = () => {
             </Form.Item>
           </Col>
           <Col lg={24} sm={24} xs={24}>
-            <Form.Item label={t('label.location')}>
-              <Row>
+            <Form.Item label={<Paragraph strong>{t('label.location')}</Paragraph>}>
+              <Row gutter={8}>
                 <Col lg={8} sm={8} xs={24}>
                   <Form.Item name="provinces" style={{ margin: 0 }} initialValue={provincesValue}>
                     <Select
@@ -218,8 +218,8 @@ const Filter = () => {
             </Form.Item>
           </Col>
           <Col lg={12} sm={24} xs={24}>
-            <Form.Item label={t('label.propertySize')}>
-              <Row>
+            <Form.Item label={<Paragraph strong>{t('label.propertySize')}</Paragraph>}>
+              <Row gutter={8}>
                 <Col lg={12} xs={12}>
                   <Form.Item
                     initialValue={minAreaValue}
@@ -236,6 +236,11 @@ const Filter = () => {
                           return Promise.resolve();
                         },
                       }),
+                      {
+                        type: 'number',
+                        min: 1,
+                        message: t('validationRules.min'),
+                      },
                     ]}>
                     <InputNumber
                       placeholder={t('placeholder.minimumSize')}
@@ -245,7 +250,17 @@ const Filter = () => {
                   </Form.Item>
                 </Col>
                 <Col lg={12} xs={12}>
-                  <Form.Item name="maxArea" style={{ margin: 0 }} initialValue={maxAreaValue}>
+                  <Form.Item
+                    name="maxArea"
+                    style={{ margin: 0 }}
+                    initialValue={maxAreaValue}
+                    rules={[
+                      {
+                        type: 'number',
+                        min: 1,
+                        message: t('validationRules.min'),
+                      },
+                    ]}>
                     <InputNumber
                       placeholder={t('placeholder.maximumSize')}
                       style={{ width: '100%' }}
@@ -257,7 +272,9 @@ const Filter = () => {
             </Form.Item>
           </Col>
           <Col lg={12} md={12} xs={24}>
-            <Form.Item label={t('label.priceRange')} style={{ margin: 0 }}>
+            <Form.Item
+              label={<Paragraph strong>{t('label.priceRange')}</Paragraph>}
+              style={{ margin: 0 }}>
               <Space>
                 <Caption size={110}>
                   From <b>{formatCustomCurrency(sliderValue[0])}</b> to
@@ -304,7 +321,9 @@ const Filter = () => {
           {isShow && (
             <>
               <Col lg={24}>
-                <Form.Item label={t('label.amenities')} name="amenities">
+                <Form.Item
+                  label={<Paragraph strong>{t('label.amenities')}</Paragraph>}
+                  name="amenities">
                   <Checkbox.Group>
                     <Row>
                       {amenities.map(amenity => {
@@ -321,7 +340,9 @@ const Filter = () => {
                 </Form.Item>
               </Col>
               <Col lg={24}>
-                <Form.Item label={t('label.Utilities')} name="utilities">
+                <Form.Item
+                  label={<Paragraph strong>{t('label.Utilities')}</Paragraph>}
+                  name="utilities">
                   <Checkbox.Group>
                     <Row>
                       {utilities.map(utility => {

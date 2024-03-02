@@ -118,10 +118,12 @@ const SignIn = () => {
               </Paragraph>
             </div>
           </Form.Item>
+          <Form.Item>
+            <div className={styles.loginByGoogleContainer}>
+              <GoogleSignInButton />
+            </div>
+          </Form.Item>
         </Form>
-        <div className={styles.loginByGoogleContainer}>
-          <GoogleSignInButton />
-        </div>
       </CustomModal>
     </div>
   );
