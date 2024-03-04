@@ -13,6 +13,8 @@
   "modal.forgotPassword": "パスワードを忘れた",
   "modal.resetpassword": "パスワードのリセット",
   "modal.advanceFilter": "アドバンスフィルター",
+  "modal.confirm": "確認する",
+
   "button.login": "サインイン",
   "button.register": "登録",
   "button.confirm": "確認",
@@ -22,6 +24,10 @@
   "button.explore": "エクスペリエンス",
   "button.reset": "リセット",
   "button.browseMore": "さらに物件を閲覧する",
+  "button.cancel": "キャンセル",
+  "button.ok": "わかりました",
+  "button.showMap": "地図を表示",
+  "button.showList": "ショーリスト",
 
   "checkbox.rememberme": "リメンバー・ミー",
   "forgetpassword": "パスワードをお忘れですか？",
@@ -31,7 +37,7 @@
   "label.propertySize": "物件サイズ",
   "label.priceRange": "価格帯",
   "label.amenities": "アメニティ",
-  "label.Utilities": "ユーティリティ",
+  "label.Utilities": "公共事業",
   "placeholder.password": "パスワード",
   "placeholder.repeatpassword": "リピートパスワード",
   "placeholder.authenticationCode": "認証コード",
@@ -64,7 +70,7 @@
   "validationRules.size": "最大面積以下",
   "registration.disclaimer": "お客様の個人情報は,当ウェブサイトでのお客様のご利用をサポートするため,お客様のアカウントへのアクセスを管理するため,および当社のプライバシーポリシーに記載されているその他の目的のために使用されます。",
   "home.disclaimer": "人気の不動産を厳選",
-
+  "logout.disclaimer": "ログアウトしてもよろしいですか?",
   "carousel.disclaimer": "手数料無料で物件を購入または賃貸",
   "activateAccount.resendCode": "コードを受け取っていませんか？<resend>再送してください</resend> <in>別のものを</in>",
   "notamember": "メンバーではありませんか？",

@@ -1,8 +1,20 @@
-import { Checkbox, Col, Form, Input, InputNumber, Row, Select, Slider, Space } from 'antd';
+import {
+  Button,
+  Checkbox,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Popover,
+  Row,
+  Select,
+  Slider,
+  Space,
+} from 'antd';
 import React, { useEffect, useState } from 'react';
 import styles from './Filter.module.scss';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
-import { CaretDownOutlined, CaretUpOutlined, SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, UndoOutlined } from '@ant-design/icons';
 import { Caption, Paragraph } from '../../../../components/Typography';
 import { formatCustomCurrency } from '../../../../utils/number-seperator';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +33,6 @@ const Filter = () => {
   const maxPriceValue = useSelector(state => state.house.maxPrice);
   const amenitiesValue = useSelector(state => state.house.amenities);
   const utilitiesValue = useSelector(state => state.house.utilities);
-  const [isShow, setIsShow] = useState(false);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [categories, setCategories] = useState([]);
@@ -56,11 +67,6 @@ const Filter = () => {
     }
   }, [metadata]);
 
-  useEffect(() => {
-    if (amenitiesValue || utilitiesValue) {
-      setIsShow(true);
-    }
-  }, [amenitiesValue, utilitiesValue]);
   const handleChangeProvince = value => {
     setProvinceId(value);
   };
@@ -125,6 +131,181 @@ const Filter = () => {
     setLoading(false);
   };
 
+  const locationContent = (
+    <div>
+      <Form.Item>
+        <Row gutter={[8, 8]}>
+          <Col xs={24}>
+            <Form.Item name="provinces" style={{ margin: 0 }} initialValue={provincesValue}>
+              <Select
+                placeholder={t('placeholder.provinces')}
+                style={{ width: '100%' }}
+                onChange={handleChangeProvince}
+                options={provinces.map(province => {
+                  return {
+                    value: province.id,
+                    label: t('province.' + province.name),
+                  };
+                })}
+                disabled={loading}
+              />
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item name="districts" style={{ margin: 0 }} initialValue={districtsValue}>
+              <Select
+                placeholder={t('placeholder.districts')}
+                style={{ width: '100%' }}
+                onChange={handleChangeDistrict}
+                options={districts
+                  .filter(district => district.province_id === provinceId)
+                  .map(district => ({
+                    value: district.id,
+                    label: t('district.' + district.name),
+                  }))}
+                disabled={loading}
+              />
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item name="wards" style={{ margin: 0 }} initialValue={wardsValue}>
+              <Select
+                placeholder={t('placeholder.wards')}
+                style={{ width: '100%' }}
+                options={wards
+                  .filter(ward => ward.district_id === districtId)
+                  .map(ward => ({
+                    value: ward.id,
+                    label: ward.name,
+                  }))}
+                disabled={loading}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form.Item>
+    </div>
+  );
+
+  const propertySizeContent = (
+    <div>
+      <Form.Item>
+        <Row gutter={8}>
+          <Col lg={12} xs={12}>
+            <Form.Item
+              initialValue={minAreaValue}
+              style={{ margin: 0 }}
+              name="minArea"
+              dependencies={['maxArea']}
+              rules={[
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    const maxArea = getFieldValue('maxArea');
+                    if (maxArea && value && value >= maxArea) {
+                      return Promise.reject(t('validationRules.size'));
+                    }
+                    return Promise.resolve();
+                  },
+                }),
+                {
+                  type: 'number',
+                  min: 1,
+                  message: t('validationRules.min'),
+                },
+              ]}>
+              <InputNumber
+                placeholder={t('placeholder.minimumSize')}
+                style={{ width: '100%' }}
+                disabled={loading}
+              />
+            </Form.Item>
+          </Col>
+          <Col lg={12} xs={12}>
+            <Form.Item
+              name="maxArea"
+              style={{ margin: 0 }}
+              initialValue={maxAreaValue}
+              rules={[
+                {
+                  type: 'number',
+                  min: 1,
+                  message: t('validationRules.min'),
+                },
+              ]}>
+              <InputNumber
+                placeholder={t('placeholder.maximumSize')}
+                style={{ width: '100%' }}
+                disabled={loading}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form.Item>
+    </div>
+  );
+
+  const priceRangeContent = (
+    <div>
+      <Form.Item style={{ margin: 0 }}>
+        <Space>
+          <Caption size={110}>
+            From <b>{formatCustomCurrency(sliderValue[0])}</b> to
+            <b> {formatCustomCurrency(sliderValue[1])}</b>
+          </Caption>
+        </Space>
+        <Slider
+          min={minPrice}
+          max={maxPrice}
+          range
+          step={100000}
+          draggableTrack
+          value={sliderValue}
+          onChange={handleSliderChange}
+          disabled={loading}
+        />
+      </Form.Item>
+    </div>
+  );
+
+  const amenityContent = (
+    <div>
+      <Form.Item name="amenities">
+        <Checkbox.Group>
+          <Row>
+            {amenities.map(amenity => {
+              return (
+                <Col sm={8} xs={12} key={amenity.id}>
+                  <Checkbox value={amenity.id} disabled={loading}>
+                    {t('amenity.' + amenity.name)}
+                  </Checkbox>
+                </Col>
+              );
+            })}
+          </Row>
+        </Checkbox.Group>
+      </Form.Item>
+    </div>
+  );
+
+  const utilityContent = (
+    <div>
+      <Form.Item name="utilities">
+        <Checkbox.Group>
+          <Row>
+            {utilities.map(utility => {
+              return (
+                <Col sm={8} xs={12} key={utility.id}>
+                  <Checkbox value={utility.id} disabled={loading}>
+                    {t('utility.' + utility.name)}
+                  </Checkbox>
+                </Col>
+              );
+            })}
+          </Row>
+        </Checkbox.Group>
+      </Form.Item>
+    </div>
+  );
   return (
     <div className={styles.filterContainer}>
       <Form
@@ -136,26 +317,25 @@ const Filter = () => {
           utilities: utilitiesValue?.map(obj => obj.id),
         }}>
         <Row gutter={[10, 4]}>
-          <Col lg={12} sm={24} xs={24}>
-            <Form.Item
-              label={<Paragraph strong>{t('label.searchHouse')}</Paragraph>}
-              name="name"
-              style={{ margin: 0 }}
-              initialValue={nameValue}>
-              <Input placeholder={t('placeholder.searchHouse')} disabled={loading} />
+          <Col xl={6} sm={12} xs={24}>
+            <Form.Item name="name" style={{ margin: 0 }} initialValue={nameValue}>
+              <Input
+                size="large"
+                placeholder={t('placeholder.searchHouse')}
+                disabled={loading}
+                prefix={<SearchOutlined />}
+                allowClear
+              />
             </Form.Item>
           </Col>
-          <Col lg={12} sm={24} xs={24}>
-            <Form.Item
-              label={<Paragraph strong>{t('label.propertyDetails')}</Paragraph>}
-              name="categories"
-              style={{ margin: 0 }}
-              initialValue={categoriesValue}>
+          <Col xl={5} sm={12} xs={24}>
+            <Form.Item name="categories" style={{ margin: 0 }} initialValue={categoriesValue}>
               <Select
+                size="large"
                 maxTagCount={1}
                 mode="multiple"
                 allowClear
-                placeholder={t('placeholder.categories')}
+                placeholder={<Paragraph>{t('placeholder.categories')}</Paragraph>}
                 style={{ width: '100%' }}
                 options={categories.map(category => {
                   return { value: category, label: t('category.' + category) };
@@ -164,204 +344,61 @@ const Filter = () => {
               />
             </Form.Item>
           </Col>
-          <Col lg={24} sm={24} xs={24}>
-            <Form.Item label={<Paragraph strong>{t('label.location')}</Paragraph>}>
-              <Row gutter={8}>
-                <Col lg={8} sm={8} xs={24}>
-                  <Form.Item name="provinces" style={{ margin: 0 }} initialValue={provincesValue}>
-                    <Select
-                      placeholder={t('placeholder.provinces')}
-                      style={{ width: '100%' }}
-                      onChange={handleChangeProvince}
-                      options={provinces.map(province => {
-                        return {
-                          value: province.id,
-                          label: t('province.' + province.name),
-                        };
-                      })}
-                      disabled={loading}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col lg={8} sm={8} xs={24}>
-                  <Form.Item name="districts" style={{ margin: 0 }} initialValue={districtsValue}>
-                    <Select
-                      placeholder={t('placeholder.districts')}
-                      style={{ width: '100%' }}
-                      onChange={handleChangeDistrict}
-                      options={districts
-                        .filter(district => district.province_id === provinceId)
-                        .map(district => ({
-                          value: district.id,
-                          label: t('district.' + district.name),
-                        }))}
-                      disabled={loading}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col lg={8} sm={8} xs={24}>
-                  <Form.Item name="wards" style={{ margin: 0 }} initialValue={wardsValue}>
-                    <Select
-                      placeholder={t('placeholder.wards')}
-                      style={{ width: '100%' }}
-                      options={wards
-                        .filter(ward => ward.district_id === districtId)
-                        .map(ward => ({
-                          value: ward.id,
-                          label: ward.name,
-                        }))}
-                      disabled={loading}
-                    />
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Form.Item>
+          <Col xl={2} lg={4} sm={8} xs={12}>
+            <Popover content={locationContent} title={t('label.location')} trigger="click">
+              <Button className={styles.button} size="large">
+                <Paragraph>{t('label.location')}</Paragraph>
+              </Button>
+            </Popover>
           </Col>
-          <Col lg={12} sm={24} xs={24}>
-            <Form.Item label={<Paragraph strong>{t('label.propertySize')}</Paragraph>}>
-              <Row gutter={8}>
-                <Col lg={12} xs={12}>
-                  <Form.Item
-                    initialValue={minAreaValue}
-                    style={{ margin: 0 }}
-                    name="minArea"
-                    dependencies={['maxArea']}
-                    rules={[
-                      ({ getFieldValue }) => ({
-                        validator(_, value) {
-                          const maxArea = getFieldValue('maxArea');
-                          if (maxArea && value && value >= maxArea) {
-                            return Promise.reject(t('validationRules.size'));
-                          }
-                          return Promise.resolve();
-                        },
-                      }),
-                      {
-                        type: 'number',
-                        min: 1,
-                        message: t('validationRules.min'),
-                      },
-                    ]}>
-                    <InputNumber
-                      placeholder={t('placeholder.minimumSize')}
-                      style={{ width: '100%' }}
-                      disabled={loading}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col lg={12} xs={12}>
-                  <Form.Item
-                    name="maxArea"
-                    style={{ margin: 0 }}
-                    initialValue={maxAreaValue}
-                    rules={[
-                      {
-                        type: 'number',
-                        min: 1,
-                        message: t('validationRules.min'),
-                      },
-                    ]}>
-                    <InputNumber
-                      placeholder={t('placeholder.maximumSize')}
-                      style={{ width: '100%' }}
-                      disabled={loading}
-                    />
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Form.Item>
+          <Col xl={3} lg={4} sm={8} xs={12}>
+            <Popover content={propertySizeContent} title={t('label.propertySize')} trigger="click">
+              <Button className={styles.button} size="large">
+                <Paragraph>{t('label.propertySize')}</Paragraph>
+              </Button>
+            </Popover>
           </Col>
-          <Col lg={12} md={12} xs={24}>
-            <Form.Item
-              label={<Paragraph strong>{t('label.priceRange')}</Paragraph>}
-              style={{ margin: 0 }}>
-              <Space>
-                <Caption size={110}>
-                  From <b>{formatCustomCurrency(sliderValue[0])}</b> to
-                  <b> {formatCustomCurrency(sliderValue[1])}</b>
-                </Caption>
-              </Space>
-              <Slider
-                min={minPrice}
-                max={maxPrice}
-                range
-                step={100000}
-                draggableTrack
-                value={sliderValue}
-                onChange={handleSliderChange}
-                disabled={loading}
-              />
-            </Form.Item>
+          <Col xl={2} lg={4} sm={8} xs={8}>
+            <Popover content={priceRangeContent} title={t('label.priceRange')} trigger="click">
+              <Button className={styles.button} size="large">
+                <Paragraph>{t('label.priceRange')}</Paragraph>
+              </Button>
+            </Popover>
           </Col>
-          <Col lg={13} xs={0}></Col>
-          <Col lg={2} md={4} xs={5}>
+          <Col xl={2} lg={4} sm={8} xs={8}>
+            <Popover content={amenityContent} title={t('label.amenities')} trigger="click">
+              <Button className={styles.button} size="large">
+                <Paragraph>{t('label.amenities')}</Paragraph>
+              </Button>
+            </Popover>
+          </Col>
+          <Col xl={2} lg={4} sm={8} xs={8}>
+            <Popover content={utilityContent} title={t('label.Utilities')} trigger="click">
+              <Button className={styles.button} size="large">
+                <Paragraph>{t('label.Utilities')}</Paragraph>
+              </Button>
+            </Popover>
+          </Col>
+          <Space>
             <BaseButton
-              type="primary"
-              icon={isShow ? <CaretUpOutlined /> : <CaretDownOutlined />}
-              onClick={() => setIsShow(!isShow)}
-              loading={loading}
-              disabled={loading}
-            />
-          </Col>
-          <Col lg={5} md={4} xs={11}>
-            <BaseButton
+              className={styles.button}
+              size="large"
               type="primary"
               icon={<SearchOutlined />}
               htmlType="submit"
               loading={loading}
-              disabled={loading}>
-              {t('button.search')}
-            </BaseButton>
-          </Col>
-          <Col lg={4} md={4} xs={8}>
-            <BaseButton type="text" loading={loading} disabled={loading} onClick={handleReset}>
-              {t('button.reset')}
-            </BaseButton>
-          </Col>
-          {isShow && (
-            <>
-              <Col lg={24}>
-                <Form.Item
-                  label={<Paragraph strong>{t('label.amenities')}</Paragraph>}
-                  name="amenities">
-                  <Checkbox.Group>
-                    <Row>
-                      {amenities.map(amenity => {
-                        return (
-                          <Col sm={8} xs={12} key={amenity.id}>
-                            <Checkbox value={amenity.id} disabled={loading}>
-                              {t('amenity.' + amenity.name)}
-                            </Checkbox>
-                          </Col>
-                        );
-                      })}
-                    </Row>
-                  </Checkbox.Group>
-                </Form.Item>
-              </Col>
-              <Col lg={24}>
-                <Form.Item
-                  label={<Paragraph strong>{t('label.Utilities')}</Paragraph>}
-                  name="utilities">
-                  <Checkbox.Group>
-                    <Row>
-                      {utilities.map(utility => {
-                        return (
-                          <Col sm={8} xs={12} key={utility.id}>
-                            <Checkbox value={utility.id} disabled={loading}>
-                              {t('utility.' + utility.name)}
-                            </Checkbox>
-                          </Col>
-                        );
-                      })}
-                    </Row>
-                  </Checkbox.Group>
-                </Form.Item>
-              </Col>
-            </>
-          )}
+              disabled={loading}></BaseButton>
+
+            <BaseButton
+              className={styles.button}
+              size="large"
+              type="primary"
+              icon={<UndoOutlined />}
+              loading={loading}
+              disabled={loading}
+              onClick={handleReset}></BaseButton>
+          </Space>
         </Row>
-        <Row></Row>
       </Form>
     </div>
   );

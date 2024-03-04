@@ -140,12 +140,13 @@ const AdvanceSearch = () => {
       ]}>
       <Form layout="vertical" onFinish={handleFinish} form={form}>
         <Form.Item label={<Paragraph strong>{t('label.searchHouse')}</Paragraph>} name="name">
-          <Input placeholder={t('placeholder.searchHouse')} disabled={loading} />
+          <Input size="large" placeholder={t('placeholder.searchHouse')} disabled={loading} />
         </Form.Item>
         <Form.Item
           label={<Paragraph strong>{t('label.propertyDetails')}</Paragraph>}
           name="categories">
           <Select
+            size="large"
             mode="multiple"
             allowClear
             style={{
@@ -163,6 +164,7 @@ const AdvanceSearch = () => {
             <Col sm={8} xs={24}>
               <Form.Item name="provinces">
                 <Select
+                  size="large"
                   placeholder={t('placeholder.provinces')}
                   onChange={handleChangeProvince}
                   options={provinces.map(province => {
@@ -178,6 +180,7 @@ const AdvanceSearch = () => {
             <Col sm={8} xs={24}>
               <Form.Item name="districts">
                 <Select
+                  size="large"
                   placeholder={t('placeholder.districts')}
                   onChange={handleChangeDistrict}
                   options={districts
@@ -193,6 +196,7 @@ const AdvanceSearch = () => {
             <Col sm={8} xs={24}>
               <Form.Item name="wards">
                 <Select
+                  size="large"
                   placeholder={t('placeholder.wards')}
                   options={wards
                     .filter(ward => ward.district_id === districtId)
@@ -228,6 +232,7 @@ const AdvanceSearch = () => {
                 },
               ]}>
               <InputNumber
+                size="large"
                 placeholder={t('placeholder.minimumSize')}
                 style={{ width: '100%' }}
                 disabled={loading}
@@ -243,6 +248,7 @@ const AdvanceSearch = () => {
                 },
               ]}>
               <InputNumber
+                size="large"
                 placeholder={t('placeholder.maximumSize')}
                 style={{ width: '100%' }}
                 disabled={loading}
