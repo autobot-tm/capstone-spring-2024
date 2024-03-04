@@ -9,7 +9,7 @@ import HouseItem from '../../../../components/HouseItem/HouseItem';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setFilter } from '../../../../store/slices/houseSlice';
+import { setFilter, setPage } from '../../../../store/slices/houseSlice';
 import { useTranslation } from 'react-i18next';
 import SpinLoading from '../../../../components/SpinLoading/SpinLoading';
 
@@ -57,6 +57,7 @@ const Houses = () => {
                     type="primary"
                     onClick={() => {
                       dispatch(setFilter({}));
+                      dispatch(setPage({ page: 1 }));
                       navigate('/houses');
                     }}>
                     {t('button.browseMore')}
