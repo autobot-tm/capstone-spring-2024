@@ -6,7 +6,7 @@ import styles from './CardSkeleton.module.scss';
 const CardSkeleton = ({ type }) => {
   return (
     <Card
-      cover={<Skeleton.Input style={{ height: '200px' }} active block />}
+      cover={<Skeleton.Input style={{ height: '290px' }} active block />}
       actions={[
         <div key="houseInfo" className={styles.houseInfo}>
           <div className={styles.price}>

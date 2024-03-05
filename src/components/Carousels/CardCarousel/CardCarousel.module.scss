@@ -1,5 +1,22 @@
-.cardImage {
-  height: 210px;
+.carouselContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  object-fit: cover;
+  height: 100%;
+  .image {
+    object-fit: cover;
+  }
+
+  .prevButtonContainer {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+  }
+  .nextButtonContainer {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+  }
 }

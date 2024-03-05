@@ -1,7 +1,11 @@
 {
   "home": "Home",
-  "about": "About",
-  "account": "Account",
+  "about": "About Us",
+  "support": "Support",
+  "management": "Management",
+  "wishlist": "Wishlist",
+  "userprofile": "User",
+  "profile": "Profile",
   "reportlivingissue": "Report living issues",
   "logout": "Logout",
   "welcome-text": "Welcome hjhj",
@@ -30,6 +34,7 @@
   "button.ok": "Ok",
   "button.showMap": "Show maps",
   "button.showList": "Show list",
+
   "checkbox.rememberme": "Remember me",
   "forgetpassword": "Forgot your password?",
   "label.searchHouse": "Search Houses",
