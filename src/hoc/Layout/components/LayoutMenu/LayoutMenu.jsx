@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './styles.scss';
 import { TranslationSelector } from '../TranslationSelector';
 import { useTranslation } from 'react-i18next';
-import { IssuesCloseOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { BellOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConfirmLogoutModal, openLoginModal } from '../../../../store/slices/modalSlice';
 import { Paragraph } from '../../../../components/Typography';
@@ -37,7 +37,7 @@ export const LayoutMenu = ({ isInline = false }) => {
     {
       label: (
         <Paragraph classNames="color-black" strong>
-          username
+          {t('userprofile')}
         </Paragraph>
       ),
       key: 'SubMenu',
@@ -46,7 +46,7 @@ export const LayoutMenu = ({ isInline = false }) => {
       ),
       children: [
         {
-          label: <span className="color-black">{t('account')}</span>,
+          label: <span className="color-black">{t('profile')}</span>,
           icon: (
             <span className="color-black">
               <UserOutlined />
@@ -54,15 +54,15 @@ export const LayoutMenu = ({ isInline = false }) => {
           ),
           key: routeNames.UserDashboard,
         },
-        {
-          label: <span className="color-black">{t('reportlivingissue')}</span>,
-          icon: (
-            <span className="color-black">
-              <IssuesCloseOutlined />
-            </span>
-          ),
-          key: routeNames.ReportLivingIssues,
-        },
+        // {
+        //   label: <span className="color-black">{t('reportlivingissue')}</span>,
+        //   icon: (
+        //     <span className="color-black">
+        //       <IssuesCloseOutlined />
+        //     </span>
+        //   ),
+        //   key: routeNames.ReportLivingIssues,
+        // },
 
         {
           label: <span style={{ color: 'red' }}>{t('logout')}</span>,
@@ -99,12 +99,25 @@ export const LayoutMenu = ({ isInline = false }) => {
           {t('about').toUpperCase()}
         </Paragraph>
       </Menu.Item>
-      <Menu.Item key={routeNames.Contact} className="menuItem" onClick={onItemClick}>
+      <Menu.Item key={routeNames.Support} className="menuItem" onClick={onItemClick}>
         <Paragraph classNames="color-black" strong>
-          {t('contact').toUpperCase()}
+          {t('support').toUpperCase()}
         </Paragraph>
       </Menu.Item>
-
+      {access_token && (
+        <>
+          <Menu.Item key="" className="menuItem" onClick={onItemClick}>
+            <Paragraph classNames="color-black" strong>
+              {t('management').toUpperCase()}
+            </Paragraph>
+          </Menu.Item>
+          <Menu.Item key="" className="menuItem" onClick={onItemClick}>
+            <Paragraph classNames="color-black" strong>
+              {t('wishlist').toUpperCase()}
+            </Paragraph>
+          </Menu.Item>
+        </>
+      )}
       <Menu.Item key="usermenu" style={{ marginLeft: 'auto', padding: 0 }}>
         {access_token ? (
           <Menu onClick={onItemClick} mode="horizontal" items={items} />
@@ -120,7 +133,13 @@ export const LayoutMenu = ({ isInline = false }) => {
           </Button>
         )}
       </Menu.Item>
-
+      <Menu.Item key="notification">
+        <Button
+          type="text"
+          style={{ margin: 0 }}
+          icon={<BellOutlined style={{ fontSize: 20 }} />}
+          onClick={() => {}}></Button>
+      </Menu.Item>
       <Menu.Item key="translation">
         <TranslationSelector />
       </Menu.Item>

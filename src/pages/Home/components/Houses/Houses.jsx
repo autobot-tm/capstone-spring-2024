@@ -33,7 +33,7 @@ const Houses = () => {
         <div className={styles.houses}>
           <Headline size={450}>{t('home.disclaimer')}</Headline>
           <div className={styles.housesContainer}>
-            <Row gutter={[16, 16]}>
+            <Row gutter={[24, 24]}>
               {isLoading
                 ? Array.from({ length: LIMIT }).map((_, index) => (
                     <Col xl={6} lg={8} sm={12} key={index}>

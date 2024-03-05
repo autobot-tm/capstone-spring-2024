@@ -81,7 +81,7 @@ const Houses = () => {
         </Row>
         {showMap === false ? (
           <>
-            <Row gutter={[16, 16]}>
+            <Row gutter={[24, 24]}>
               {isLoading ? (
                 Array.from({ length: LIMIT }).map((_, index) => (
                   <Col md={6} key={index}>

@@ -1,7 +1,6 @@
 {
   "locales": [
-    { "value": "ja", "label": "日本語" },
-    { "value": "en", "label": "English" },
-    { "value": "vi", "label": "Tiếng Việt" }
+    { "value": "ja", "label": "日本語", "emoji": "🇯🇵" },
+    { "value": "en", "label": "English", "emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿" }
   ]
 }
