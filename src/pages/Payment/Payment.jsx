@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './styles.scss';
+import { VNPayTransactionStatus } from '../../constants/vnpay.constant';
 import { useNavigate } from 'react-router-dom';
 import { routeNames } from '../../config';
-import { Headline, SubHeading } from '../../components/Typography';
-import { Col, Row } from 'antd';
-import { VNPayTransactionStatus } from '../../constants/vnpay.constant';
-import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import SpinLoading from '../../components/SpinLoading/SpinLoading';
-import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import { useTranslation } from 'react-i18next';
+import SpinLoading from '../../components/SpinLoading/SpinLoading';
+import ResultSuccessfully from './components/ResultSucessfully/ResultSuccessfully';
+import ResultFailed from './components/ResultFailed/ResultFailed';
 
 const PaymentView = ({ handleUrlChange }) => {
   useEffect(() => {
     handleUrlChange({ url: window.location.href });
   }, [handleUrlChange]);
-
   return (
     <div className="container">
       <SpinLoading />
@@ -22,65 +19,15 @@ const PaymentView = ({ handleUrlChange }) => {
   );
 };
 
-const PaymentSuccess = ({ t, onNavigate }) => {
-  return (
-    <Row className="container" gutter={[16, 16]}>
-      <Col xs={24}>
-        <Headline classNames="text-color-success" size={600}>
-          <CheckCircleFilled />
-        </Headline>
-      </Col>
-      <Col xs={24}>
-        <SubHeading size={230} strong>
-          {t('PAYMENT.success')}
-        </SubHeading>
-      </Col>
-      <Col xs={24} className="reservation-btn">
-        <span>
-          <BaseButton type="primary" onClick={onNavigate}>
-            {t('PAYMENT.view-your-reservation')}
-          </BaseButton>
-        </span>
-      </Col>
-    </Row>
-  );
-};
-
-const PaymentError = ({ t, onNavigate }) => {
-  return (
-    <Row className="container" gutter={[16, 16]}>
-      <Col xs={24}>
-        <Headline classNames="text-color-fail" size={600}>
-          <CloseCircleFilled />
-        </Headline>
-      </Col>
-      <Col xs={24}>
-        <SubHeading size={230} strong>
-          {t('PAYMENT.fail')}
-        </SubHeading>
-      </Col>
-      <Col xs={24} className="reservation-btn">
-        <span>
-          <BaseButton type="primary" onClick={onNavigate}>
-            {t('PAYMENT.back-to-home')}
-          </BaseButton>
-        </span>
-      </Col>
-    </Row>
-  );
-};
-
 export const Payment = () => {
   const { t } = useTranslation();
   const [step, setStep] = useState('payment');
   const navigate = useNavigate();
-
   const handleUrlChange = urlState => {
     if (urlState && urlState.url) {
       const url = urlState.url;
       const match = url.match(/vnp_TransactionStatus=([^&]*)/);
       const vnp_TransactionStatus = match ? match[1] : null;
-
       if (vnp_TransactionStatus) {
         if (vnp_TransactionStatus === VNPayTransactionStatus.Success) {
           setStep('success');
@@ -91,12 +38,16 @@ export const Payment = () => {
     }
   };
 
-  const onSuccess = () => {
+  const leadingDashboard = () => {
+    navigate(routeNames.UserDashboard);
+  };
+
+  const leadingOrderSuccess = () => {
     navigate(routeNames.OrderSuccess);
   };
 
-  const onError = () => {
-    navigate(routeNames.Home);
+  const leadingHouses = () => {
+    navigate(routeNames.Houses);
   };
 
   const renderStep = () => {
@@ -104,9 +55,17 @@ export const Payment = () => {
       case 'payment':
         return <PaymentView handleUrlChange={handleUrlChange} />;
       case 'success':
-        return <PaymentSuccess t={t} onNavigate={onSuccess} />;
+        return (
+          <ResultSuccessfully
+            t={t}
+            leadingDashboard={leadingDashboard}
+            leadingOrderSuccess={leadingOrderSuccess}
+          />
+        );
       case 'error':
-        return <PaymentError t={t} onNavigate={onError} />;
+        return (
+          <ResultFailed t={t} leadingDashboard={leadingDashboard} leadingHouses={leadingHouses} />
+        );
       default:
         return null;
     }

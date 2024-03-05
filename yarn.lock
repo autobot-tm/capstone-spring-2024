@@ -5953,7 +5953,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:^1.11.1":
+"dayjs@npm:^1.11.1, dayjs@npm:^1.11.10":
   version: 1.11.10
   resolution: "dayjs@npm:1.11.10"
   checksum: a6b5a3813b8884f5cd557e2e6b7fa569f4c5d0c97aca9558e38534af4f2d60daafd3ff8c2000fed3435cfcec9e805bcebd99f90130c6d1c5ef524084ced588c4
@@ -16181,6 +16181,7 @@ __metadata:
     buffer: 6.0.3
     commitizen: 4.3.0
     cz-conventional-changelog: 3.3.0
+    dayjs: ^1.11.10
     env-cmd: 10.1.0
     eslint: 8.53.0
     eslint-config-prettier: 9.0.0
