@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { DatePicker, Space } from 'antd';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+import dayjs from 'dayjs';
 
-const DatePickerAnt = ({ onDateChange }) => {
-  const [selectedDate, setSelectedDate] = useState(null);
+const DatePickerAnt = ({ propValue, onDateChange }) => {
+  const [selectedDate, setSelectedDate] = useState(propValue || null);
   const { t } = useTranslation();
+  const dateFormat = 'YYYY-MM-DD';
+  moment.defaultFormat = dateFormat;
 
   const handleChange = (date, dateString) => {
     setSelectedDate(dateString);
@@ -23,6 +26,8 @@ const DatePickerAnt = ({ onDateChange }) => {
     <Space direction="vertical" style={{ width: '100%' }}>
       <DatePicker
         style={{ width: '100%' }}
+        value={selectedDate ? dayjs(selectedDate) : null}
+        format={dateFormat}
         size="large"
         placeholder={t('detail-house.select-date')}
         onChange={handleChange}

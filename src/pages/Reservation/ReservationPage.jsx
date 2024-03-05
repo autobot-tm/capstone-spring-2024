@@ -35,12 +35,12 @@ const ReservationPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { house, reviews, selectedDate, selectedMonths } = location.state || {};
   const [selectedNewDate, setSelectedNewDate] = useState(selectedDate || null);
-  const [selectedNewMonths, setSelectedNewMonths] = useState(selectedMonths || '1');
+  const [selectedNewMonths, setSelectedNewMonths] = useState(selectedMonths || 1);
   const [priceOfMonths, setPriceOfMonths] = useState(null);
   const [idPricingPolicy, setIdPricingPolicy] = useState(null);
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [isEditingMonths, setIsEditingMonths] = useState(false);
-  const [opPayment, setOpPayment] = useState(null);
+  const [opPayment, setOpPayment] = useState(PAYMENT_METHOD.VNPAY);
 
   const handleBack = () => {
     navigate(`/houses/${house_id}`);
@@ -118,15 +118,17 @@ const ReservationPage = () => {
       });
       window.location.href = response_url;
     } catch (error) {
-      console.error('Error reserving house:', error);
+      console.error('Error reserving house:', error.errorCode);
     }
   };
+
   const handleBookNowClick = () => {
     const priceSection = document.querySelector('.reservation-btn');
     if (priceSection) {
       priceSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   };
+
   return (
     <Layout>
       {isLoading ? (
@@ -204,7 +206,7 @@ const ReservationPage = () => {
                 </Col>
                 <Col xs={16} sm={7} style={{ textAlign: 'right' }}>
                   {isEditingDate ? (
-                    <DatePickerAnt onDateChange={handleDateChange} />
+                    <DatePickerAnt propValue={selectedDate} onDateChange={handleDateChange} />
                   ) : (
                     <>
                       <span>{selectedNewDate}</span>
@@ -228,7 +230,7 @@ const ReservationPage = () => {
                   <Radio.Group
                     onChange={handleOptionPayment}
                     value={opPayment}
-                    size="small"
+                    size="large"
                     optionType="button">
                     <Radio value={PAYMENT_METHOD.VNPAY} className="main-payment-banner">
                       <span className="main-payment-banner-inner">
@@ -238,6 +240,7 @@ const ReservationPage = () => {
                     <Radio disabled value={PAYMENT_METHOD.ONEPAY} className="main-payment-banner">
                       <span className="main-payment-banner-inner">
                         <img src={ONEPay} />
+                        <Caption>(Coming soon)</Caption>
                       </span>
                     </Radio>
                   </Radio.Group>
@@ -267,7 +270,7 @@ const ReservationPage = () => {
             <Col className="side" xs={23} lg={8}>
               <div className="fee-table">
                 <div className="fee-table-section-1">
-                  <img src={house?.image_urls?.[0]} className="img-fee" alt={house.name} />
+                  <img src={house?.image_urls?.[0]} className="img-fee" alt={house?.name} />
                   <div className="fee-table-section-1-description">
                     <Caption size={120}>
                       {' '}

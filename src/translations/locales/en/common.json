@@ -225,14 +225,14 @@
     "rental-period": "Estimated rental period",
     "time-to-move-in": "Estimated time to move in",
     "edit": "Edit",
-    "payment": "Payment",
+    "payment": "Payment Method",
     "reservation-cancellation-policy": "Reservation Cancellation Policies",
     "reservation-des-1": "In case of a reservation request cancellation, the following policies apply",
     "reservation-des-2": "If a renter reserves a property but decides not to sign the contract, they will receive a partial refund of the reservation fee.",
     "reservation-des-3": " If the house has any issues that may affect the renter, a full refund of the reservation fee will be issued along with an apology email.",
     "conclude-cancellation-policy": "These policies are designed to uphold fairness and transparency in our reservation process. If you have any questions, please don't hesitate to contact us.",
     "description-field-time": "Your reservation/reservation will not be confirmed until the host/organizer accepts your request (within 24 hours). You will not be charged until then.",
-    "reservation-btn": "Reservation Required",
+    "reservation-btn": "Reserve",
     "month": "month",
     "total-fee": "Total fee",
     "reservation-fee": "Reservation fee",
@@ -244,9 +244,11 @@
   },
 
   "PAYMENT": {
-    "view-your-reservation": "View your reservation",
-    "back-to-home": "Back to home",
+    "go-console-btn": " Go Console",
+    "reserve-again-btn": "Reserve Again",
+    "view-your-reservation-btn": "View Your Reservation",
     "fail": "Your reservation has failed.",
+    "fail-des": "Please check and modify the following information before resubmitting.",
     "success": "Your reservation has been successfully created."
   },
 
