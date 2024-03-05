@@ -1,8 +1,14 @@
 {
   "home": "ホーム",
   "about": "会社概要",
-  "contact": "お問い合わせ",
+  "support": "サポート",
+  "management": "管理",
+  "wishlist": "ウィッシュリスト",
+  "userprofile": "ユーザー",
+  "profile": "プロフィール",
   "join-us": "参加する",
+  "logout": "ログアウト",
+
   "welcome-text": "ようこそ！",
   "error": "何かが間違っていた",
   "ok": "オッケー",
