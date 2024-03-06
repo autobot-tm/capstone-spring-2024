@@ -18,7 +18,7 @@ import { SearchOutlined, UndoOutlined } from '@ant-design/icons';
 import { Caption, Paragraph } from '../../../../components/Typography';
 import { formatCustomCurrency } from '../../../../utils/number-seperator';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilter, setInitialState } from '../../../../store/slices/houseSlice';
+import { setFilter, setInitialState, setPage } from '../../../../store/slices/houseSlice';
 import { useTranslation } from 'react-i18next';
 
 const Filter = () => {
@@ -97,6 +97,7 @@ const Filter = () => {
     setProvinceId(0);
     setDistrictId(0);
     setSliderValue([minPrice, maxPrice]);
+    dispatch(setPage({ page: 1 }));
   };
   const handleFinish = values => {
     setLoading(true);
