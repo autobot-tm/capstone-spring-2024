@@ -1,4 +1,5 @@
 {
+  "title-tab-main": "ロータス｜貸別荘。",
   "home": "ホーム",
   "about": "会社概要",
   "support": "サポート",
@@ -148,6 +149,7 @@
   "api.error.invalidOtpCode": "無効なOTPコードです",
 
   "detail-house": {
+    "title-tab": "ディテールハウス",
     "STUDIO": "スタジオ",
     "DUPLEX": "デュプレックス",
     "TRIPLEX": "triplトリプレックスex",
@@ -219,6 +221,7 @@
   },
 
   "RESERVATION": {
+    "title-tab": "予約",
     "checkout": "チェックアウト",
     "reservation-required": "要予約",
     "your-intentions": "あなたの意向",
@@ -240,6 +243,7 @@
     "total": "合計",
     "error": "エラー",
     "error-option-payment": "支払い方法を選択してください。",
+    "error-date": "入居日を選択してください",
     "reserve-btn": "支払う"
   },
 

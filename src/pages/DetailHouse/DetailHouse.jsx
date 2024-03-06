@@ -28,6 +28,7 @@ import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import HousesMap from '../../components/HousesMap/HousesMap';
 import { openLoginModal } from '../../store/slices/modalSlice';
+import { Helmet } from 'react-helmet';
 
 const DetailHouse = () => {
   const { t } = useTranslation();
@@ -381,6 +382,9 @@ const DetailHouse = () => {
         <SpinLoading />
       ) : (
         <>
+          <Helmet>
+            <title>{house?.name}</title>
+          </Helmet>
           <header>
             <CarouselHeader img={imgHouse} />
           </header>

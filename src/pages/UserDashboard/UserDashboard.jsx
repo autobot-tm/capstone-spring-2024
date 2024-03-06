@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeConfirmLogoutModal, openConfirmLogoutModal } from '../../store/slices/modalSlice';
 import { signOut } from '../../store/slices';
 import MyOrder from './components/MyOrder/MyOrder';
+import { Helmet } from 'react-helmet';
 const { TabPane } = Tabs;
 const UserDashboard = () => {
   const { t } = useTranslation();
@@ -99,6 +100,9 @@ const UserDashboard = () => {
   ];
   return (
     <Layout>
+      <Helmet>
+        <title>{t('USER-DASHBOARD.user-dashboard')}</title>
+      </Helmet>
       <header id="header-user-dashboard">
         <Row className="header-row" align="middle">
           <Col xs={24} sm={12}>

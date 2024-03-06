@@ -19,7 +19,8 @@ import { Layout } from '../../hoc/Layout/Layout';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { requestReserveHouse } from '../../services/apis/payments.service';
 import { PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
-import { BASE_URL_STATUS, PAYMENT_METHOD } from '../../constants/payment.constant';
+import { PAYMENT_METHOD } from '../../constants/payment.constant';
+import { Helmet } from 'react-helmet';
 import VNPay1 from '../../assets/images/Logo-VNPAY-QR.webp';
 import ONEPay from '../../assets/images/onepay.svg';
 import Selection from '../DetailHouse/components/Selection/Selection';
@@ -42,6 +43,8 @@ const ReservationPage = () => {
   const [isEditingMonths, setIsEditingMonths] = useState(false);
   const [opPayment, setOpPayment] = useState(PAYMENT_METHOD.VNPAY);
 
+  const urlStatus = window.location.href + '/payments';
+  console.log('url', urlStatus);
   const handleBack = () => {
     navigate(`/houses/${house_id}`);
   };
@@ -106,8 +109,17 @@ const ReservationPage = () => {
     });
   }
 
+  function errorDateNotification() {
+    return notification.error({
+      message: t('RESERVATION.error'),
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      description: t('RESERVATION.error-date'),
+    });
+  }
+
   const handlePayments = async () => {
     if (!opPayment) return errorPaymentNotification();
+    if (!selectedNewDate) return errorDateNotification();
     try {
       const response_url = await requestReserveHouse({
         house_id: house_id,
@@ -115,7 +127,7 @@ const ReservationPage = () => {
         total_months: selectedNewMonths,
         expected_move_in_date: selectedNewDate,
         gateway_provider: opPayment,
-        callback_base_url: BASE_URL_STATUS,
+        callback_base_url: urlStatus,
       });
       window.location.href = response_url;
     } catch (error) {
@@ -137,6 +149,9 @@ const ReservationPage = () => {
       ) : (
         <>
           <header id="header-checkout">
+            <Helmet>
+              <title>{t('RESERVATION.title-tab')}</title>
+            </Helmet>
             <Row className="header-row" align="middle">
               <Col xs={24} sm={12}>
                 <Headline size={450} strong>
