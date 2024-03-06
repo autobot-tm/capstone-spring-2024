@@ -1,4 +1,5 @@
 {
+  "title-tab-main": "Lotus | House for rent.",
   "home": "Home",
   "about": "About Us",
   "support": "Support",
@@ -150,6 +151,7 @@
   "api.error.invalidOtpCode": "Invalid OTP code.",
 
   "detail-house": {
+    "title-tab": "Detail House",
     "STUDIO": "STUDIO",
     "DUPLEX": "DUPLEX",
     "TRIPLEX": "TRIPLEX",
@@ -220,6 +222,7 @@
   },
 
   "RESERVATION": {
+    "title-tab": "Reservation",
     "checkout": "Checkout",
     "reservation-required": "Reservation required",
     "your-intentions": "Your intentions",
@@ -241,6 +244,7 @@
     "total": "Total",
     "error": "Error",
     "error-option-payment": "Please choose a payment method.",
+    "error-date": "Please select move-in date.",
     "reserve-btn": "Pay"
   },
 
