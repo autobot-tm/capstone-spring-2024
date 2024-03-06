@@ -2,7 +2,7 @@ import { Button, Carousel } from 'antd';
 import React, { useRef, useState } from 'react';
 import styles from './CardCarousel.module.scss';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { HeartTwoTone, LeftOutlined, RightOutlined } from '@ant-design/icons';
 
 const CardCarousel = ({ images, limit, isHovered }) => {
   const [showLeft, setShowLeft] = useState(false);
@@ -62,6 +62,16 @@ const CardCarousel = ({ images, limit, isHovered }) => {
           />
         </div>
       )}
+      <div className={styles.heartContainer}>
+        <HeartTwoTone
+          twoToneColor={['#ffffff', 'rgba(0, 0, 0, 0.6)']}
+          className={styles.icon}
+          onClick={event => {
+            alert('Comming soon!');
+            event.stopPropagation();
+          }}
+        />
+      </div>
     </div>
   );
 };

@@ -31,11 +31,11 @@ const HouseItem = ({ house, type }) => {
         <div key="houseInfo" className={styles.houseInfo}>
           <div className={styles.price}>
             {type === 'home' ? (
-              <Paragraph key="price" size={160} strong>
+              <Paragraph key="price" size={160} strong classNames="color-black">
                 {formatCustomCurrency(house.pricing_policies[0].price_per_month)}
               </Paragraph>
             ) : (
-              <Caption size={140} strong>
+              <Caption size={140} strong classNames="color-black">
                 {formatCustomCurrency(house.pricing_policies[0].price_per_month)}
               </Caption>
             )}
@@ -67,11 +67,11 @@ const HouseItem = ({ house, type }) => {
               </div>
             </div>
             {type === 'home' ? (
-              <Paragraph size={160} strong ellipsis>
+              <Paragraph size={160} strong ellipsis classNames="color-black">
                 {house.name}
               </Paragraph>
             ) : (
-              <Caption size={140} strong ellipsis>
+              <Caption size={140} strong ellipsis classNames="color-black">
                 {house.name}
               </Caption>
             )}

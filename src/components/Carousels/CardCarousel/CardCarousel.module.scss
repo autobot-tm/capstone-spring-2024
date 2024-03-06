@@ -19,4 +19,16 @@
     top: 50%;
     right: 16px;
   }
+  .heartContainer {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    .icon {
+      font-size: 25px;
+      transition: 0.1s ease font-size;
+    }
+  }
+  .heartContainer .icon:hover {
+    font-size: 27px;
+  }
 }
