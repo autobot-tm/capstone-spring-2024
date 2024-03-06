@@ -19,7 +19,7 @@ import { Layout } from '../../hoc/Layout/Layout';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { requestReserveHouse } from '../../services/apis/payments.service';
 import { PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
-import { PAYMENT_METHOD } from '../../constants/payment.constant';
+import { BASE_URL_STATUS, PAYMENT_METHOD } from '../../constants/payment.constant';
 import VNPay1 from '../../assets/images/Logo-VNPAY-QR.webp';
 import ONEPay from '../../assets/images/onepay.svg';
 import Selection from '../DetailHouse/components/Selection/Selection';
@@ -115,6 +115,7 @@ const ReservationPage = () => {
         total_months: selectedNewMonths,
         expected_move_in_date: selectedNewDate,
         gateway_provider: opPayment,
+        callback_base_url: BASE_URL_STATUS,
       });
       window.location.href = response_url;
     } catch (error) {
