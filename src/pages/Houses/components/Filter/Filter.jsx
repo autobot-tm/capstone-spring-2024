@@ -129,6 +129,7 @@ const Filter = () => {
         utilities: utilities?.map(str => ({ id: str })),
       }),
     );
+    dispatch(setPage({ page: 1 }));
     setLoading(false);
   };
 
