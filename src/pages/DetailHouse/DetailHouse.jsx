@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Layout } from '../../hoc/Layout';
 import { Headline } from '../../components/Typography/Headline/Headline';
 import { Paragraph } from '../../components/Typography/Paragraph/Paragraph';
-import { InfoCircleOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
+import { HeartTwoTone, InfoCircleOutlined, StarFilled } from '@ant-design/icons';
 import { Caption, SubHeading } from '../../components/Typography';
 import { Button, Row, Col, Form, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,7 @@ import { getHouseById, getHouseReview } from '../../services/apis/houses.service
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { formatCustomCurrency } from '../../utils/number-seperator';
-import { addToWishlist, removeFromWishlist } from '../../store/slices/wishlist.slice';
+// import { addToWishlist, removeFromWishlist } from '../../store/slices/wishlist.slice';
 import { HousePropertyUnit, PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
 import HouseUtility from './components/HouseUtility/HouseUtility';
 import FeedBackCustomer from './components/FeedBackCustomer/FeedBackCustomer';
@@ -41,8 +41,8 @@ const DetailHouse = () => {
   const [comment, setComment] = useState([]);
   // const [starDate, setStarDate] = useState(new Date());
   const { access_token } = useSelector(state => state.auth);
-  const wishlist = useSelector(state => state.wishlist.houses);
-  const isClickedWishlist = useSelector(state => state.wishlist.clickedStatus[house_id] || false);
+  // const wishlist = useSelector(state => state.wishlist.houses);
+  // const isClickedWishlist = useSelector(state => state.wishlist.clickedStatus[house_id] || false);
 
   const { data: house } = useSWR(
     `getHouseById/${house_id}`,
@@ -73,15 +73,16 @@ const DetailHouse = () => {
   }, [house, reviews]);
 
   const handleAddWishlist = () => {
-    if (!access_token) {
-      return dispatch(openLoginModal());
-    }
-    const isHouseInWishlist = wishlist.some(item => item.id === house.id);
-    if (!isHouseInWishlist) {
-      dispatch(addToWishlist({ house }));
-    } else {
-      dispatch(removeFromWishlist({ id: house.id }));
-    }
+    // if (!access_token) {
+    //   return dispatch(openLoginModal());
+    // }
+    // const isHouseInWishlist = wishlist.some(item => item.id === house.id);
+    // if (!isHouseInWishlist) {
+    //   dispatch(addToWishlist({ house }));
+    // } else {
+    //   dispatch(removeFromWishlist({ id: house.id }));
+    // }
+    alert('Comming soon!');
   };
 
   function errorDateNotification() {
@@ -408,10 +409,16 @@ const DetailHouse = () => {
                 <Row className="side-form-wishlist-section">
                   <Tooltip placement="right" title={t('detail-house.add-to-wishlist')}>
                     <Button
-                      style={{ backgroundColor: isClickedWishlist ? '#f8a11e' : 'inherit' }}
-                      onClick={handleAddWishlist}>
-                      <StarOutlined />
-                    </Button>
+                      type="link"
+                      size="large"
+                      icon={
+                        <HeartTwoTone
+                          twoToneColor={['#000000', '#ffffff']}
+                          style={{ fontSize: '25px' }}
+                        />
+                      }
+                      // style={{ backgroundColor: isClickedWishlist ? '#f8a11e' : 'inherit' }}
+                      onClick={handleAddWishlist}></Button>
                   </Tooltip>
                 </Row>
                 <Row className="side-form">
