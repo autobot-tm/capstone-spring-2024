@@ -3,7 +3,7 @@ import Meta from 'antd/es/card/Meta';
 import React from 'react';
 import styles from './CardSkeleton.module.scss';
 
-const CardSkeleton = ({ type }) => {
+const CardSkeleton = () => {
   return (
     <Card
       cover={<Skeleton.Input style={{ height: '290px' }} active block />}
@@ -22,11 +22,7 @@ const CardSkeleton = ({ type }) => {
       <Meta
         title={
           <>
-            {type === 'home' ? (
-              <Skeleton.Input style={{ height: 49.5 }} block active />
-            ) : (
-              <Skeleton.Input style={{ height: 47.15 }} block active />
-            )}
+            <Skeleton.Input style={{ height: 62 }} block active />
           </>
         }
         description={

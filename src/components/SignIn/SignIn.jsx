@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Form, Input } from 'antd';
 import styles from './SignIn.module.scss';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
@@ -10,19 +10,20 @@ import {
 } from '../../store/slices/modalSlice';
 import CustomModal from '../Modal/CustomModal';
 import { useAuthSlice } from '../../store/slices';
-import { t } from 'i18next';
 import GoogleSignInButton from '../GoogleSignInButton/GoogleSignInButton';
 import { AUTH_ACTIONS } from '../../store/constants/action-name.constant';
 import { Paragraph } from '../Typography';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
 const SignIn = () => {
   const loginModal = useSelector(state => state.modal.loginModal);
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   const { actions: authActions } = useAuthSlice();
   const { actionSucceeded, loading, errorTranslationKey } = useSelector(state => state.auth);
   const [form] = Form.useForm();
+  const [flag, setFlag] = useState(false);
+  const [errorHolder, setErrorHolder] = useState('');
 
   const handleFinish = values => {
     const { email, password } = values;
@@ -44,8 +45,19 @@ const SignIn = () => {
     if (!loginModal) {
       form.resetFields();
       dispatch(authActions.clearError());
+      setFlag(false);
+    } else {
+      setFlag(false);
     }
   }, [form, loginModal]);
+
+  useEffect(() => {
+    if (errorTranslationKey === ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS) {
+      setFlag(true);
+      setErrorHolder(errorTranslationKey);
+      console.log(errorTranslationKey);
+    }
+  }, [errorTranslationKey]);
 
   return (
     <div>
@@ -77,9 +89,9 @@ const SignIn = () => {
             />
           </Form.Item>
 
-          {errorTranslationKey === ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS && (
+          {flag && (
             <Form.Item>
-              <Alert message={t(errorTranslationKey)} type="error" />
+              <Alert message={t(errorHolder)} type="error" />
             </Form.Item>
           )}
 

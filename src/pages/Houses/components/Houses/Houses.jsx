@@ -22,7 +22,7 @@ const Houses = () => {
   const [showMap, setShowMap] = useState(false);
 
   // const [page, setPage] = useState(1);
-  const LIMIT = 8;
+  const LIMIT = 6;
 
   const name = useSelector(state => state.house.name);
   const categories = useSelector(state => state.house.categories);
@@ -84,13 +84,13 @@ const Houses = () => {
             <Row gutter={[24, 24]}>
               {isLoading ? (
                 Array.from({ length: LIMIT }).map((_, index) => (
-                  <Col md={6} key={index}>
+                  <Col lg={8} sm={12} xs={24} key={index}>
                     <CardSkeleton />
                   </Col>
                 ))
               ) : data?.houses.length !== 0 ? (
                 data?.houses.map(house => (
-                  <Col xl={6} lg={8} sm={12} xs={24} key={house.id}>
+                  <Col lg={8} sm={12} xs={24} key={house.id}>
                     <HouseItem house={house} />
                   </Col>
                 ))
