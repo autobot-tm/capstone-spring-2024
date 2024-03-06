@@ -11,11 +11,13 @@ export const requestReserveHouse = async ({
   total_months,
   expected_move_in_date,
   gateway_provider,
+  callback_base_url,
 }) => {
   return apiCaller.post(ENDPOINTS.payments.reserve(house_id), {
     pricing_policy_id,
     total_months,
     expected_move_in_date,
     gateway_provider,
+    callback_base_url,
   });
 };
