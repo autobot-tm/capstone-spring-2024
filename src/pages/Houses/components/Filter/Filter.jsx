@@ -15,11 +15,16 @@ import React, { useEffect, useState } from 'react';
 import styles from './Filter.module.scss';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { SearchOutlined, UndoOutlined } from '@ant-design/icons';
-import { Caption, Paragraph } from '../../../../components/Typography';
+import { Caption } from '../../../../components/Typography';
 import { formatCustomCurrency } from '../../../../utils/number-seperator';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter, setInitialState, setPage } from '../../../../store/slices/houseSlice';
 import { useTranslation } from 'react-i18next';
+import locationIcon from '../../../../assets/images/location.png';
+import sizeIcon from '../../../../assets/images/size.png';
+import priceIcon from '../../../../assets/images/price.png';
+import amenityIcon from '../../../../assets/images/tv.png';
+import utilityIcon from '../../../../assets/images/water.png';
 
 const Filter = () => {
   const nameValue = useSelector(state => state.house.name);
@@ -318,8 +323,8 @@ const Filter = () => {
           amenities: amenitiesValue?.map(obj => obj.id),
           utilities: utilitiesValue?.map(obj => obj.id),
         }}>
-        <Row gutter={[10, 4]}>
-          <Col xl={6} sm={12} xs={24}>
+        <Row gutter={[4, 4]}>
+          <Col xl={4} sm={12} xs={24}>
             <Form.Item name="name" style={{ margin: 0 }} initialValue={nameValue}>
               <Input
                 size="large"
@@ -337,7 +342,11 @@ const Filter = () => {
                 maxTagCount={1}
                 mode="multiple"
                 allowClear
-                placeholder={<Paragraph>{t('placeholder.categories')}</Paragraph>}
+                placeholder={
+                  <Caption size={140} strong>
+                    {t('placeholder.categories')}
+                  </Caption>
+                }
                 style={{ width: '100%' }}
                 options={categories.map(category => {
                   return { value: category, label: t('category.' + category) };
@@ -346,60 +355,106 @@ const Filter = () => {
               />
             </Form.Item>
           </Col>
-          <Col xl={2} lg={4} sm={8} xs={12}>
+          <Col xl={3} lg={4} sm={8} xs={24}>
             <Popover content={locationContent} title={t('label.location')} trigger="click">
-              <Button className={styles.button} size="large">
-                <Paragraph>{t('label.location')}</Paragraph>
+              <Button
+                className={styles.button}
+                size="large"
+                icon={
+                  <div className={styles.imageContainer}>
+                    <img src={locationIcon} />
+                  </div>
+                }>
+                <Caption strong size={140}>
+                  {t('label.location')}
+                </Caption>
               </Button>
             </Popover>
           </Col>
           <Col xl={3} lg={4} sm={8} xs={12}>
             <Popover content={propertySizeContent} title={t('label.propertySize')} trigger="click">
-              <Button className={styles.button} size="large">
-                <Paragraph>{t('label.propertySize')}</Paragraph>
+              <Button
+                className={styles.button}
+                size="large"
+                icon={
+                  <div className={styles.imageContainer}>
+                    <img src={sizeIcon} />
+                  </div>
+                }>
+                <Caption size={140} strong>
+                  {t('label.propertySize')}
+                </Caption>
               </Button>
             </Popover>
           </Col>
-          <Col xl={2} lg={4} sm={8} xs={8}>
+          <Col xl={2} lg={4} sm={8} xs={12}>
             <Popover content={priceRangeContent} title={t('label.priceRange')} trigger="click">
-              <Button className={styles.button} size="large">
-                <Paragraph>{t('label.priceRange')}</Paragraph>
+              <Button
+                className={styles.button}
+                size="large"
+                icon={
+                  <div className={styles.imageContainer}>
+                    <img src={priceIcon} />
+                  </div>
+                }>
+                <Caption size={140} strong>
+                  {t('label.priceRange')}
+                </Caption>
               </Button>
             </Popover>
           </Col>
-          <Col xl={2} lg={4} sm={8} xs={8}>
+          <Col xl={3} lg={4} sm={8} xs={12}>
             <Popover content={amenityContent} title={t('label.amenities')} trigger="click">
-              <Button className={styles.button} size="large">
-                <Paragraph>{t('label.amenities')}</Paragraph>
+              <Button
+                className={styles.button}
+                size="large"
+                icon={
+                  <div className={styles.imageContainer}>
+                    <img src={amenityIcon} />
+                  </div>
+                }>
+                <Caption size={140} strong>
+                  {t('label.amenities')}
+                </Caption>
               </Button>
             </Popover>
           </Col>
-          <Col xl={2} lg={4} sm={8} xs={8}>
+          <Col xl={2} lg={4} sm={8} xs={12}>
             <Popover content={utilityContent} title={t('label.Utilities')} trigger="click">
-              <Button className={styles.button} size="large">
-                <Paragraph>{t('label.Utilities')}</Paragraph>
+              <Button
+                className={styles.button}
+                size="large"
+                icon={
+                  <div className={styles.imageContainer}>
+                    <img src={utilityIcon} />
+                  </div>
+                }>
+                <Caption size={140} strong>
+                  {t('label.Utilities')}
+                </Caption>
               </Button>
             </Popover>
           </Col>
-          <Space>
+          <Col xl={1} lg={2} md={4} xs={3}>
             <BaseButton
-              className={styles.button}
+              style={{ width: '100%' }}
               size="large"
               type="primary"
               icon={<SearchOutlined />}
               htmlType="submit"
               loading={loading}
               disabled={loading}></BaseButton>
-
+          </Col>
+          <Col xl={1} lg={2} md={4} xs={3}>
             <BaseButton
-              className={styles.button}
+              style={{ width: '100%' }}
               size="large"
               type="primary"
               icon={<UndoOutlined />}
               loading={loading}
               disabled={loading}
               onClick={handleReset}></BaseButton>
-          </Space>
+          </Col>
         </Row>
       </Form>
     </div>
