@@ -160,7 +160,7 @@ const AdvanceSearch = () => {
           />
         </Form.Item>
         <Form.Item label={<Paragraph strong>{t('label.location')}</Paragraph>}>
-          <Row gutter={8}>
+          <Row gutter={[8, 0]}>
             <Col sm={8} xs={24}>
               <Form.Item name="provinces">
                 <Select
