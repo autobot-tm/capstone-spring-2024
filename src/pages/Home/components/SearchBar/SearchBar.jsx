@@ -134,7 +134,7 @@ const SearchBar = () => {
               />
             </Form.Item>
           </Col>
-          <Col lg={9} xs={24}>
+          <Col lg={9} sm={24} xs={24}>
             <Popover content={locationContent} title={t('label.location')} trigger="click">
               <Button className={styles.button} size="large">
                 <Paragraph>{t('label.location')}</Paragraph>
