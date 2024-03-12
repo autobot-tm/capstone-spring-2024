@@ -9,8 +9,8 @@ import HousesMap from '../../../../components/HousesMap/HousesMap';
 import { useDispatch, useSelector } from 'react-redux';
 import Filter from '../Filter/Filter';
 
-import { FrownOutlined } from '@ant-design/icons';
-import { Paragraph } from '../../../../components/Typography';
+import { FrownTwoTone } from '@ant-design/icons';
+import { Paragraph, SubHeading } from '../../../../components/Typography';
 import { useTranslation } from 'react-i18next';
 import MapIcon from '../../../../assets/images/map.png';
 import listIcon from '../../../../assets/images/list.png';
@@ -95,8 +95,18 @@ const Houses = () => {
                   </Col>
                 ))
               ) : (
-                <div style={{ width: '100%', height: '100vh' }}>
-                  <Result icon={<FrownOutlined />} title={t('noresult')} />
+                <div
+                  style={{
+                    width: '100%',
+                    height: '70vh',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <Result
+                    icon={<FrownTwoTone twoToneColor="#f8a11e" />}
+                    title={<SubHeading classNames="color-black">{t('noresult')}</SubHeading>}
+                  />
                 </div>
               )}
             </Row>

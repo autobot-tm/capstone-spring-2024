@@ -31,7 +31,9 @@ const Houses = () => {
         <SpinLoading />
       ) : (
         <div className={styles.houses}>
-          <Headline size={450}>{t('home.disclaimer')}</Headline>
+          <div className={styles.disclaimerContainer}>
+            <Headline size={450}>{t('home.disclaimer')}</Headline>
+          </div>
           <div className={styles.housesContainer}>
             <Row gutter={[24, 24]}>
               {isLoading
