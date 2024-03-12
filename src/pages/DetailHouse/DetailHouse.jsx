@@ -40,7 +40,6 @@ const DetailHouse = () => {
   const [houseUtilities, setHouseUtilities] = useState([]);
   const [imgHouse, setImgHouse] = useState([]);
   const [comment, setComment] = useState([]);
-  // const [starDate, setStarDate] = useState(new Date());
   const { access_token } = useSelector(state => state.auth);
   // const wishlist = useSelector(state => state.wishlist.houses);
   // const isClickedWishlist = useSelector(state => state.wishlist.clickedStatus[house_id] || false);

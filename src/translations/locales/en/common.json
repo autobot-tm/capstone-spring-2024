@@ -5,7 +5,7 @@
   "support": "Support",
   "management": "Management",
   "wishlist": "Wishlist",
-  "userprofile": "User",
+  "userprofile": "username",
   "profile": "Profile",
   "reportlivingissue": "Report living issues",
   "logout": "Logout",
@@ -258,7 +258,32 @@
   },
 
   "USER-DASHBOARD": {
-    "user-dashboard": "User Dashboard"
+    "user-dashboard": "User Dashboard",
+    "my-profile": "My Profile",
+    "edit-profile": "Edit Profile",
+    "my-wishlist": "My Wishlist",
+    "my-order": "My Order",
+    "log-out": "Log Out",
+    "username": "username",
+    "general-info": "General info",
+    "contact-info": "Contact info",
+    "email": "Email",
+    "profile-img": "Profile image",
+    "first-name": "First name",
+    "last-name": "Last name",
+    "password": "Password",
+    "new-password": "New Password",
+    "repeat-password": "Repeat Password",
+    "mobile-phone": "Mobile Phone",
+    "country": "Country",
+    "placeholder-first-name": "Enter your first name",
+    "placeholder-last-name": "Enter your last name",
+    "placeholder-password": "Enter your current password",
+    "placeholder-new-password": "Enter your new password",
+    "placeholder-repeat-password": "Enter your repeat new password",
+    "placeholder-mobile-phone": "Enter your mobile phone",
+    "placeholder-country": "Enter your country",
+    "update-profile-btn": "Update Profile"
   },
 
   "NOT-FOUND": {

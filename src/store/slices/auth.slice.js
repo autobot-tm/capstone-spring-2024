@@ -14,6 +14,7 @@ import {
 import { load, remove, save } from '../../utils/local-storage';
 import { AUTH_ACTIONS } from '../constants/action-name.constant';
 import { googleLogout } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 
 const createInitialState = () => {
   const initialState = {
@@ -33,6 +34,8 @@ export const signIn = createAsyncThunk('auth/signIn', async (input, { rejectWith
   try {
     const response = await signInService(input);
     save(STORAGE_KEYS.AUTH, response);
+    const userInfo = jwtDecode(response.access_token);
+    save(STORAGE_KEYS.USER, userInfo);
     return { ...response, actionSucceeded: AUTH_ACTIONS.SIGN_IN };
   } catch (error) {
     console.warn('🚀 ~ file: auth.slice.ts:11 ~ error:', error);
@@ -47,6 +50,8 @@ export const signInWithGoogle = createAsyncThunk(
       console.log('🚀 ~ idToken:', idToken);
       const response = await signInWithGoogleService({ id_token: idToken ?? '' });
       save(STORAGE_KEYS.AUTH, response);
+      const userInfo = jwtDecode(response.access_token);
+      save(STORAGE_KEYS.USER, userInfo);
       return { ...response, actionSucceeded: AUTH_ACTIONS.SIGN_IN_WITH_GOOGLE };
     } catch (error) {
       console.warn('🚀 ~ file: auth.slice.ts:11 ~ error:', error);

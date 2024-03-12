@@ -21,11 +21,22 @@ import { signOut } from '../../store/slices';
 import MyOrder from './components/MyOrder/MyOrder';
 import { Helmet } from 'react-helmet';
 const { TabPane } = Tabs;
+import { useParams } from 'react-router-dom';
+import { getUserByIdService } from '../../services/apis/users.service';
+import useSWR, { mutate } from 'swr';
+import AVATAR from '../../assets/images/avatar.svg';
+
 const UserDashboard = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const showModal = useSelector(state => state.modal.signOutModal);
   const [activeTabKey, setActiveTabKey] = useState('1');
+
+  const { user_id: user_id } = useParams();
+  const { data: user } = useSWR(
+    ['getUserByIdService', user_id],
+    async () => await getUserByIdService({ user_id }),
+  );
 
   const handleTabChange = key => {
     setActiveTabKey(key);
@@ -48,7 +59,7 @@ const UserDashboard = () => {
           <Row justify="center">
             <UserOutlined className="icon-tab-item" />
           </Row>
-          <Row>My Profile</Row>
+          <Row>{t('USER-DASHBOARD.my-profile')}</Row>
         </>
       ),
       key: '1',
@@ -59,7 +70,7 @@ const UserDashboard = () => {
           <Row justify="center">
             <SettingOutlined className="icon-tab-item" />
           </Row>
-          <Row>Edit Profile</Row>
+          <Row>{t('USER-DASHBOARD.edit-profile')}</Row>
         </>
       ),
       key: '2',
@@ -70,7 +81,7 @@ const UserDashboard = () => {
           <Row justify="center">
             <HeartOutlined className="icon-tab-item" />
           </Row>
-          <Row> My Wishlist</Row>
+          <Row>{t('USER-DASHBOARD.my-wishlist')}</Row>
         </>
       ),
       key: '3',
@@ -81,7 +92,7 @@ const UserDashboard = () => {
           <Row justify="center">
             <MoneyCollectOutlined className="icon-tab-item" />
           </Row>
-          <Row> My Order</Row>
+          <Row>{t('USER-DASHBOARD.my-order')}</Row>
         </>
       ),
       key: '4',
@@ -92,12 +103,17 @@ const UserDashboard = () => {
           <Row justify="center">
             <LogoutOutlined className="icon-tab-item" />
           </Row>
-          <Row>Log Out</Row>
+          <Row>{t('USER-DASHBOARD.log-out')}</Row>
         </div>
       ),
       key: '5',
     },
   ];
+
+  const handleProfileUpdate = async () => {
+    mutate(['getUserByIdService', user_id]);
+    setActiveTabKey('1');
+  };
   return (
     <Layout>
       <Helmet>
@@ -148,8 +164,15 @@ const UserDashboard = () => {
       <main id="container-user-dashboard">
         <Row justify="center">
           <Col xs={24}>
-            {activeTabKey === '1' && <MyProfile />}
-            {activeTabKey === '2' && <EditProfile />}
+            {activeTabKey === '1' && <MyProfile user={user} t={t} avatarDefault={AVATAR} />}
+            {activeTabKey === '2' && (
+              <EditProfile
+                user={user}
+                t={t}
+                avatarDefault={AVATAR}
+                onUpdate={handleProfileUpdate}
+              />
+            )}
             {activeTabKey === '3' && <MyWishlist />}
             {activeTabKey === '4' && <MyOrder />}
             {activeTabKey === '5' && (
@@ -159,7 +182,7 @@ const UserDashboard = () => {
                 onOk={handleOk}
                 onCancel={handleCancel}
                 centered>
-                <p>Are you sure you want to log out?</p>
+                <p>Are you sure you want to log ousst?</p>
               </Modal>
             )}
           </Col>

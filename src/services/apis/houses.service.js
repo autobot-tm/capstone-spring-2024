@@ -44,11 +44,11 @@ export const getMetaData = () => {
   return apiCaller.get(ENDPOINTS.houses.metadata);
 };
 
-export const getHouseById = ({ house_id }) => {
+export const getHouseById = async ({ house_id }) => {
   return apiCaller.get(`${ENDPOINTS.houses.base}/${house_id}`);
 };
 
-export const getHouseReview = ({ house_id }) => {
+export const getHouseReview = async ({ house_id }) => {
   const endpoint = ENDPOINTS.houses.reviews(house_id);
   return apiCaller.get(endpoint);
 };

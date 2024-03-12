@@ -17,6 +17,8 @@ export const LayoutMenu = ({ isInline = false }) => {
   const [selectedKeys, setSelectedKeys] = React.useState(routeNames.Home);
   const location = useLocation();
   const { access_token } = useSelector(state => state.auth);
+  const userString = localStorage.getItem('USER');
+  const user_id = JSON.parse(userString).sub;
 
   const onItemClick = event => {
     const { key } = event;
@@ -35,11 +37,11 @@ export const LayoutMenu = ({ isInline = false }) => {
 
   const items = [
     {
-      label: (
-        <Paragraph classNames="color-black" strong>
-          {t('userprofile')}
-        </Paragraph>
-      ),
+      // label: (
+      //   <Paragraph classNames="color-black" strong>
+      //     {t('userprofile')}
+      //   </Paragraph>
+      // ),
       key: 'SubMenu',
       icon: (
         <img src={Avatar} alt="" style={{ width: '16px', height: '16px', objectFit: 'cover' }} />
@@ -52,7 +54,7 @@ export const LayoutMenu = ({ isInline = false }) => {
               <UserOutlined />
             </span>
           ),
-          key: routeNames.UserDashboard,
+          key: '/user-dashboard/' + user_id,
         },
         // {
         //   label: <span className="color-black">{t('reportlivingissue')}</span>,
