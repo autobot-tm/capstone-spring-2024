@@ -139,7 +139,7 @@ const Filter = () => {
   };
 
   const locationContent = (
-    <div>
+    <div className={styles.locationContainer}>
       <Form.Item>
         <Row gutter={[8, 8]}>
           <Col xs={24}>

@@ -104,7 +104,7 @@ export const LayoutFooter = () => {
               </Paragraph>
               <ul>
                 <li style={{ display: 'flex', gap: '8px', alignItems: 'start' }}>
-                  <HomeOutlined />
+                  <HomeOutlined style={{ marginTop: '4px' }} />
 
                   <Caption size={140}>
                     8F Miss Aodai Building, 21 Nguyen Trung Ngan, Ben Nghe Ward, District 1, Ho Chi
