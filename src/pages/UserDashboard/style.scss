@@ -27,11 +27,15 @@
       font-size: 25px;
     }
     &-inner {
-      flex-wrap: wrap;
+      display: block;
+      margin: auto !important;
       padding: 0 20px;
       background-color: white;
       border: 0.8px solid #ccc;
       border-radius: 4px;
+      // @media screen and (max-width: 768px) {
+      //   margin-l: 100px;
+      // }
     }
   }
 }

@@ -20,4 +20,9 @@ export const ENDPOINTS = {
     demo: '/payments/demo-checkout-url',
     reserve: house_id => `/houses/${house_id}/reserve`,
   },
+  users: {
+    base: '/users',
+    user: user_id => `/users/${user_id}`,
+    updateUpdate: '/users/me',
+  },
 };

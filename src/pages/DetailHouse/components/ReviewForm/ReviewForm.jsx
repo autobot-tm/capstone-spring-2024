@@ -34,8 +34,8 @@ const ReviewForm = () => {
         </Form.Item>
       </Form.Item>
 
-      <Form.Item wrapperCol={{ span: 12 }}>
-        <BaseButton type="primary" style={{ width: '60%' }} htmlType="submit">
+      <Form.Item wrapperCol={{ span: 6 }}>
+        <BaseButton type="primary" style={{ width: 'auto' }} htmlType="submit">
           <b>{t('detail-house.post-btn')}</b>
         </BaseButton>
       </Form.Item>
