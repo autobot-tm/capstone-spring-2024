@@ -6,6 +6,9 @@
       height: 60vh;
       width: 100%;
       object-fit: cover;
+      @media screen and (max-width: 769px) {
+        height: 45vh;
+      }
     }
   }
 

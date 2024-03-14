@@ -20,6 +20,7 @@ import { formatCustomCurrency } from '../../utils/number-seperator';
 import { t } from 'i18next';
 import { setFilter } from '../../store/slices/houseSlice';
 import { useNavigate } from 'react-router-dom';
+import styles from './AdvanceSearch.module.scss';
 const AdvanceSearch = () => {
   const navigate = useNavigate();
   const advanceSearchModal = useSelector(state => state.modal.advanceSearchModal);
@@ -139,11 +140,21 @@ const AdvanceSearch = () => {
         </Button>,
       ]}>
       <Form layout="vertical" onFinish={handleFinish} form={form}>
-        <Form.Item label={<Paragraph strong>{t('label.searchHouse')}</Paragraph>} name="name">
+        <Form.Item
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.searchHouse')}
+            </Paragraph>
+          }
+          name="name">
           <Input size="large" placeholder={t('placeholder.searchHouse')} disabled={loading} />
         </Form.Item>
         <Form.Item
-          label={<Paragraph strong>{t('label.propertyDetails')}</Paragraph>}
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.propertyDetails')}
+            </Paragraph>
+          }
           name="categories">
           <Select
             size="large"
@@ -159,8 +170,13 @@ const AdvanceSearch = () => {
             disabled={loading}
           />
         </Form.Item>
-        <Form.Item label={<Paragraph strong>{t('label.location')}</Paragraph>}>
-          <Row gutter={8}>
+        <Form.Item
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.location')}
+            </Paragraph>
+          }>
+          <Row gutter={[8, 0]}>
             <Col sm={8} xs={24}>
               <Form.Item name="provinces">
                 <Select
@@ -210,7 +226,12 @@ const AdvanceSearch = () => {
             </Col>
           </Row>
         </Form.Item>
-        <Form.Item label={<Paragraph strong>{t('label.propertySize')}</Paragraph>}>
+        <Form.Item
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.propertySize')}
+            </Paragraph>
+          }>
           <Space>
             <Form.Item
               name="minArea"
@@ -257,13 +278,16 @@ const AdvanceSearch = () => {
           </Space>
         </Form.Item>
 
-        <Form.Item label={<Paragraph strong>{t('label.priceRange')}</Paragraph>}>
-          <Space>
+        <Form.Item>
+          <div className={styles.priceRangeLabelContainer}>
+            <Paragraph strong classNames="color-black">
+              {t('label.priceRange')}
+            </Paragraph>
             <Caption size={140}>
               From <b>{formatCustomCurrency(sliderValue[0])}</b> to
               <b> {formatCustomCurrency(sliderValue[1])}</b>
             </Caption>
-          </Space>
+          </div>
           <Slider
             min={minPrice}
             max={maxPrice}
@@ -276,7 +300,13 @@ const AdvanceSearch = () => {
           />
         </Form.Item>
 
-        <Form.Item label={<Paragraph strong>{t('label.amenities')}</Paragraph>} name="amenities">
+        <Form.Item
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.amenities')}
+            </Paragraph>
+          }
+          name="amenities">
           <Checkbox.Group>
             <Row>
               {amenities.map(amenity => {
@@ -291,7 +321,13 @@ const AdvanceSearch = () => {
             </Row>
           </Checkbox.Group>
         </Form.Item>
-        <Form.Item label={<Paragraph strong>{t('label.Utilities')}</Paragraph>} name="utilities">
+        <Form.Item
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.Utilities')}
+            </Paragraph>
+          }
+          name="utilities">
           <Checkbox.Group>
             <Row>
               {utilities.map(utility => {

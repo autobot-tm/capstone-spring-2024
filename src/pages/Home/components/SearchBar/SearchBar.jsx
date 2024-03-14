@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './SearchBar.module.scss';
-import { Col, Form, Row, Select } from 'antd';
+import { Button, Col, Form, Popover, Row, Select } from 'antd';
 import { SearchOutlined, SelectOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
@@ -8,6 +8,7 @@ import { openAdvanceSearchModal } from '../../../../store/slices/modalSlice';
 import { setFilter } from '../../../../store/slices/houseSlice';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Paragraph } from '../../../../components/Typography';
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -57,30 +58,14 @@ const SearchBar = () => {
     setLoading(false);
     navigate('/houses');
   };
-  return (
-    <div className={styles.searchBar}>
-      <Form onFinish={handleFinish} form={form}>
-        <Row gutter={[4, 4]}>
-          <Col lg={7} sm={24} xs={24}>
-            <Form.Item name="categories" style={{ margin: 0 }}>
-              <Select
-                size="large"
-                maxTagCount={2}
-                mode="multiple"
-                allowClear
-                placeholder={t('placeholder.categories')}
-                style={{ width: '100%' }}
-                options={categories.map(category => {
-                  return { value: category, label: t('category.' + category) };
-                })}
-                disabled={loading}
-              />
-            </Form.Item>
-          </Col>
-          <Col lg={3} sm={8} xs={24}>
+
+  const locationContent = (
+    <div className={styles.locationContainer}>
+      <Form.Item>
+        <Row gutter={[8, 8]}>
+          <Col xs={24}>
             <Form.Item name="provinces" style={{ margin: 0 }}>
               <Select
-                size="large"
                 placeholder={t('placeholder.provinces')}
                 style={{ width: '100%' }}
                 onChange={handleChangeProvince}
@@ -94,10 +79,9 @@ const SearchBar = () => {
               />
             </Form.Item>
           </Col>
-          <Col lg={4} sm={8} xs={24}>
+          <Col xs={24}>
             <Form.Item name="districts" style={{ margin: 0 }}>
               <Select
-                size="large"
                 placeholder={t('placeholder.districts')}
                 style={{ width: '100%' }}
                 onChange={handleChangeDistrict}
@@ -111,10 +95,9 @@ const SearchBar = () => {
               />
             </Form.Item>
           </Col>
-          <Col lg={4} sm={8} xs={24}>
+          <Col xs={24}>
             <Form.Item name="wards" style={{ margin: 0 }}>
               <Select
-                size="large"
                 placeholder={t('placeholder.wards')}
                 style={{ width: '100%' }}
                 options={wards
@@ -127,6 +110,37 @@ const SearchBar = () => {
               />
             </Form.Item>
           </Col>
+        </Row>
+      </Form.Item>
+    </div>
+  );
+  return (
+    <div className={styles.searchBar}>
+      <Form onFinish={handleFinish} form={form}>
+        <Row gutter={[4, 4]}>
+          <Col lg={9} sm={24} xs={24}>
+            <Form.Item name="categories" style={{ margin: 0 }}>
+              <Select
+                maxTagCount={2}
+                size="large"
+                mode="multiple"
+                allowClear
+                placeholder={<Paragraph>{t('placeholder.categories')}</Paragraph>}
+                style={{ width: '100%' }}
+                options={categories.map(category => {
+                  return { value: category, label: t('category.' + category) };
+                })}
+                disabled={loading}
+              />
+            </Form.Item>
+          </Col>
+          <Col lg={9} sm={24} xs={24}>
+            <Popover content={locationContent} title={t('label.location')} trigger="click">
+              <Button className={styles.button} size="large">
+                <Paragraph>{t('label.location')}</Paragraph>
+              </Button>
+            </Popover>
+          </Col>
           <Col lg={3} xs={12}>
             <BaseButton
               size="large"
@@ -138,6 +152,7 @@ const SearchBar = () => {
               {t('button.search')}
             </BaseButton>
           </Col>
+
           <Col lg={3} xs={12}>
             <BaseButton
               size="large"

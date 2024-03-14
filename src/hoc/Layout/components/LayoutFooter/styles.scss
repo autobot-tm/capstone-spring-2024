@@ -1,23 +1,42 @@
-@import "../../../../theme/scss/colors.theme.scss";
+@import '../../../../theme/scss/colors.theme.scss';
 
-.footer{
-    padding: 0;
-    &-container{
-        max-width: 1024px;
-        margin: 0 auto;
-        padding: 0 24px;
+.footer {
+  padding: 0;
+  margin-top: 78px;
+  background-color: $colors-secondary;
+
+  &-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    @media screen and (max-width: 1401px) {
+      max-width: 100%;
+      padding: 0 16px;
     }
-    &-top{
-        background-color: $colors-secondary;
-        color: $colors-white;
+  }
+  &-top {
+    padding: 50px 0;
+    color: $colors-black;
+    ul {
+      list-style: none;
+      padding-left: 0;
+      li {
+        cursor: pointer;
+      }
     }
-    &-bottom{
-        background-color: $colors-secondary;
-        color: $colors-white;
+  }
+  &-bottom {
+    background-color: $colors-secondary;
+    color: $colors-black;
+  }
+  &-bottom-container {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @media screen and (max-width: 769px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-    &-bottom-container{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+  }
 }

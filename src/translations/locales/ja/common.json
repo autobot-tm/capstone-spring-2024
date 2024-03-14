@@ -138,6 +138,9 @@
   "district.Can Gio District": "カンジオ区",
   "link.viewdetail": "詳細を見る",
 
+  "footer.links": "リンク",
+  "footer.contact": "お問い合わせ",
+
   "api.error.invalidAccountCredentials": "電子メールまたはパスワードが正しくありません",
   "api.error.emailAlreadyExists": "メールが既に存在します",
   "api.error.invalidRefreshToken": "セッションの有効期限が切れています。再度サインインしてください",
