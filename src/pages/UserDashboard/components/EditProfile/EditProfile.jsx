@@ -105,7 +105,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
   return (
     <>
       <Form onFinish={handleSubmit} onFinishFailed={onFinishFailed} layout="vertical">
-        <Row id="edit-profile" gutter={[32, 44]}>
+        <Row id="edit-profile" gutter={[24, 24]} justify="center">
           <Col xs={24} className="line">
             <SubHeading size={230} strong>
               <UserOutlined className="icon" /> {t('USER-DASHBOARD.general-info')}

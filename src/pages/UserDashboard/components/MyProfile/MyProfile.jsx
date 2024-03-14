@@ -6,7 +6,7 @@ import { Paragraph, SubHeading } from '../../../../components/Typography';
 const MyProfile = ({ user, t, avatarDefault }) => {
   console.log(user);
   return (
-    <Row gutter={[36, 24]} id="mp-container">
+    <Row gutter={[0, 24]} id="mp-container">
       <Col xs={24} sm={7} style={{ display: 'flex', justifyContent: 'center' }}>
         {user?.avatar ? (
           <Avatar

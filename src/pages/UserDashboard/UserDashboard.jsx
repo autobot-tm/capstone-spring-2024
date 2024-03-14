@@ -20,12 +20,12 @@ import { closeConfirmLogoutModal, openConfirmLogoutModal } from '../../store/sli
 import { signOut } from '../../store/slices';
 import MyOrder from './components/MyOrder/MyOrder';
 import { Helmet } from 'react-helmet';
-const { TabPane } = Tabs;
 import { useParams } from 'react-router-dom';
 import { getUserByIdService } from '../../services/apis/users.service';
 import useSWR, { mutate } from 'swr';
 import AVATAR from '../../assets/images/avatar.svg';
 
+const { TabPane } = Tabs;
 const UserDashboard = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -111,8 +111,8 @@ const UserDashboard = () => {
   ];
 
   const handleProfileUpdate = async () => {
-    mutate(['getUserByIdService', user_id]);
     setActiveTabKey('1');
+    mutate(['getUserByIdService', user_id]);
   };
   return (
     <Layout>
@@ -141,22 +141,24 @@ const UserDashboard = () => {
           </Col>
           <Col xs={24}>
             <Row className="tabs-bar" justify="center">
-              <Tabs
-                activeKey={activeTabKey}
-                onChange={handleTabChange}
-                className="tabs-bar-inner"
-                centered>
-                {tabPanes.map(pane => (
-                  <TabPane
-                    tab={
-                      <Paragraph classNames="color-black" strong>
-                        {pane.title}
-                      </Paragraph>
-                    }
-                    key={pane.key}
-                  />
-                ))}
-              </Tabs>
+              <Col xs={24} sm={20} md={16} lg={14}>
+                <Tabs
+                  activeKey={activeTabKey}
+                  onChange={handleTabChange}
+                  className="tabs-bar-inner"
+                  centered>
+                  {tabPanes.map(pane => (
+                    <TabPane
+                      tab={
+                        <Paragraph classNames="color-black" strong>
+                          {pane.title}
+                        </Paragraph>
+                      }
+                      key={pane.key}
+                    />
+                  ))}
+                </Tabs>
+              </Col>
             </Row>
           </Col>
         </Row>
