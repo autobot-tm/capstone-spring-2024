@@ -18,7 +18,7 @@ export const LayoutMenu = ({ isInline = false }) => {
   const location = useLocation();
   const { access_token } = useSelector(state => state.auth);
   const userString = localStorage.getItem('USER');
-  const user_id = JSON.parse(userString).sub;
+  const user_id = JSON.parse(userString)?.sub;
 
   const onItemClick = event => {
     const { key } = event;
