@@ -9,11 +9,14 @@
   "profile": "プロフィール",
   "join-us": "参加する",
   "logout": "ログアウト",
-
   "welcome-text": "ようこそ！",
   "error": "何かが間違っていた",
   "ok": "オッケー",
   "cancel": "キャンセル",
+  "select-file": "ファイルを選択",
+  "uploading-status": "アップロード...",
+  "upload-status": "アップロード",
+  "alert-1-file": "アップロードできる画像は1枚のみです！",
   "modal.login": "サインイン",
   "modal.register": "登録",
   "modal.authenticationCode": "メールをチェックする",
@@ -251,12 +254,13 @@
   },
 
   "PAYMENT": {
-    "go-console-btn": " コンソールに移動",
+    "back-to-home-btn": "ホームページに戻る",
     "reserve-again-btn": "再度予約",
     "view-your-reservation-btn": "予約を表示",
     "fail": "予約は失敗しました。",
-    "fail-des": "再送信する前に,次の情報を確認して変更してください。",
-    "success": "予約は正常に作成されました。"
+    "fail-des": "申し訳ございませんが、お客様のご予約リクエストは現在処理できません。サポートチームまでご連絡ください。",
+    "success": "予約は正常に作成されました。",
+    "des-success": "ご予約のお申し込みありがとうございます。通常1～5分で完了いたします。お手数をおかけいたしますが、よろしくお願いいたします。"
   },
 
   "USER-DASHBOARD": {
@@ -285,7 +289,21 @@
     "placeholder-repeat-password": "繰り返し新しいパスワードを入力する",
     "placeholder-mobile-phone": "携帯電話を入力してください",
     "placeholder-country": "国を入力してください",
-    "update-profile-btn": "プロフィールの更新"
+    "update-profile-btn": "プロフィールの更新",
+    "the-password-do-not-match": "パスワードが一致しない",
+    "please-enter-current-password": "現在のパスワードを入力してください",
+    "please-enter-new-password": "新しいパスワードを入力してください",
+    "please-repeat-your-new-password": "新しいパスワードをもう一度入力してください",
+    "update-profile-success": "ユーザープロファイルが正常に更新されました",
+    "your-current-password-is-not-correct": "現在のパスワードが正しくありません！"
+  },
+  "ORDER": {
+    "thanks": "ありがとうございます。ご注文を承りました。",
+    "order": "オーダー",
+    "email": "Eメール",
+    "reservation-fee": "予約料",
+    "total-months": "合計月数",
+    "expected-move-in-date": "入居予定日"
   },
 
   "NOT-FOUND": {

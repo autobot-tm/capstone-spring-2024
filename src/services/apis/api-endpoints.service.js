@@ -18,6 +18,9 @@ export const ENDPOINTS = {
   },
   payments: {
     demo: '/payments/demo-checkout-url',
+    //other folder
+    reservation: reservation_id => `/reservations/${reservation_id}`,
+    reservationId: '/reservations',
     reserve: house_id => `/houses/${house_id}/reserve`,
   },
   users: {

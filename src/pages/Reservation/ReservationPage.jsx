@@ -131,7 +131,7 @@ const ReservationPage = () => {
       });
       window.location.href = response_url;
     } catch (error) {
-      console.error('Error reserving house:', error.errorCode);
+      console.error('Error reserving house:', error);
     }
   };
 

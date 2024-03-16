@@ -32,6 +32,10 @@ export const routePaths = {
       path: routeNames.Payment,
       element: <Payment />,
     },
+    {
+      path: routeNames.OrderSuccess,
+      element: <OrderSuccessView />,
+    },
   ],
   private: [
     {
@@ -45,10 +49,6 @@ export const routePaths = {
     {
       path: routeNames.Reservation,
       element: <ReservationPage />,
-    },
-    {
-      path: routeNames.OrderSuccess,
-      element: <OrderSuccessView />,
     },
   ],
 };

@@ -15,6 +15,10 @@
   "error": "Oops something went wrong",
   "ok": "Ok",
   "cancel": "Cancel",
+  "select-file": "Select File",
+  "uploading-status": "Uploading..",
+  "upload-status": "Upload",
+  "alert-1-file": "You can only upload one image!",
   "modal.login": "Sign In",
   "modal.register": "Register",
   "modal.authenticationCode": "Check your email",
@@ -251,12 +255,13 @@
   },
 
   "PAYMENT": {
-    "go-console-btn": " Go Console",
+    "back-to-home-btn": "Back to Homepage",
     "reserve-again-btn": "Reserve Again",
     "view-your-reservation-btn": "View Your Reservation",
     "fail": "Your reservation has failed.",
-    "fail-des": "Please check and modify the following information before resubmitting.",
-    "success": "Your reservation has been successfully created."
+    "fail-des": "We regret to inform you that your reservation request could not be processed at this time. Please contact our support team for further assistance.",
+    "success": "Your reservation has been successfully created.",
+    "des-success": "Thank you for your reservation request. The process typically takes 1-5 minutes to complete. We appreciate your patience."
   },
 
   "USER-DASHBOARD": {
@@ -284,8 +289,23 @@
     "placeholder-new-password": "Enter your new password",
     "placeholder-repeat-password": "Enter your repeat new password",
     "placeholder-mobile-phone": "Enter your mobile phone",
-    "placeholder-country": "Enter your country",
-    "update-profile-btn": "Update Profile"
+    "placeholder-country": "Select your country",
+    "update-profile-btn": "Update Profile",
+    "the-password-do-not-match": "The passwords don't match",
+    "please-enter-current-password": "Please enter your current password",
+    "please-enter-new-password": "Please enter your new password",
+    "please-repeat-your-new-password": "Please repeat your new password",
+    "update-profile-success": "User profile updated successfully",
+    "your-current-password-is-not-correct": "Your current password is not correct!"
+  },
+
+  "ORDER": {
+    "thanks": "Thank you. Your order has been received.",
+    "order": "Order",
+    "email": "Email",
+    "reservation-fee": "Reservation fee",
+    "total-months": "Total months",
+    "expected-move-in-date": "Expected move-in date"
   },
 
   "NOT-FOUND": {

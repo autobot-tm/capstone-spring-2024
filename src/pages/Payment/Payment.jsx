@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import './styles.scss';
 import { VNPayTransactionStatus } from '../../constants/vnpay.constant';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { routeNames } from '../../config';
 import { useTranslation } from 'react-i18next';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import ResultSuccessfully from './components/ResultSucessfully/ResultSuccessfully';
 import ResultFailed from './components/ResultFailed/ResultFailed';
+import {
+  // getReservationById,
+  getReservationIdByHouseIdService,
+} from '../../services/apis/payments.service';
 
 const PaymentView = ({ handleUrlChange }) => {
   useEffect(() => {
@@ -22,7 +26,9 @@ const PaymentView = ({ handleUrlChange }) => {
 export const Payment = () => {
   const { t } = useTranslation();
   const [step, setStep] = useState('payment');
+  const [reservation, setReservation] = useState(null);
   const navigate = useNavigate();
+  const { house_id: house_id } = useParams();
   const handleUrlChange = urlState => {
     if (urlState && urlState.url) {
       const url = urlState.url;
@@ -38,16 +44,41 @@ export const Payment = () => {
     }
   };
 
-  const leadingDashboard = () => {
-    navigate(routeNames.UserDashboard);
+  useEffect(() => {
+    const fetchReservation = async () => {
+      try {
+        const res = await getReservationIdByHouseIdService({
+          house_id,
+          status: 'PAYMENT_COMPLETE',
+        });
+        if (res && res.reservations && res.reservations.length > 0) {
+          const reservationId = res.reservations[0].id;
+          setReservation(reservationId);
+        } else {
+          console.log('No reservation found');
+        }
+
+        // const order = await getReservationById(reservationId);
+        // console.log(order);
+      } catch (error) {
+        console.error('Error fetching reservation:', error);
+      }
+    };
+
+    fetchReservation();
+  }, [house_id]);
+
+  console.log('Reservation ID:', reservation);
+  const leadingHomepage = () => {
+    navigate(routeNames.Home);
   };
 
   const leadingOrderSuccess = () => {
-    navigate(routeNames.OrderSuccess);
+    navigate(`/payments/${house_id}?reservation_id=${reservation}`);
   };
 
   const leadingHouses = () => {
-    navigate(routeNames.Houses);
+    navigate('/houses/' + house_id);
   };
 
   const renderStep = () => {
@@ -58,13 +89,14 @@ export const Payment = () => {
         return (
           <ResultSuccessfully
             t={t}
-            leadingDashboard={leadingDashboard}
+            reservation={reservation}
+            leadingHomepage={leadingHomepage}
             leadingOrderSuccess={leadingOrderSuccess}
           />
         );
       case 'error':
         return (
-          <ResultFailed t={t} leadingDashboard={leadingDashboard} leadingHouses={leadingHouses} />
+          <ResultFailed t={t} leadingHomepage={leadingHomepage} leadingHouses={leadingHouses} />
         );
       default:
         return null;

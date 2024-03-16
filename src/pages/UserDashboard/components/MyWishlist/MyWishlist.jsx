@@ -1,9 +1,11 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { StarOutlined } from '@ant-design/icons';
-import { Button, Tooltip, Row } from 'antd';
+import { Button, Tooltip, Row, Col } from 'antd';
 import { removeFromWishlist } from '../../../../store/slices/wishlist.slice';
 import HouseItem from '../../../../components/HouseItem/HouseItem';
+import { Paragraph, SubHeading } from '../../../../components/Typography';
+import './style.scss';
 
 const MyWishlist = () => {
   const wishlist = useSelector(state => state.wishlist.houses);
@@ -15,6 +17,17 @@ const MyWishlist = () => {
   console.log('wishlist page', wishlist);
   return (
     <>
+      <Row justify="center" id="wl-container">
+        <Col xs={24}>
+          <SubHeading size={230} classNames="d-block" strong>
+            My Wishlist
+          </SubHeading>
+          <Paragraph>
+            This page contains all the items you have added to your personal wishlist. Add items to
+            your wishlist by click the &quot;heart&quot; icon while logged in to your account.
+          </Paragraph>
+        </Col>
+      </Row>
       {wishlist.length > 0 ? (
         wishlist.map(house => (
           <div key={house.id}>

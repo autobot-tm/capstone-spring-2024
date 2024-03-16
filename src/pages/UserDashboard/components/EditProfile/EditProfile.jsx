@@ -1,25 +1,23 @@
 import './style.scss';
-import { Avatar, Col, Form, Input, Row, Select, message, notification } from 'antd';
+import { Avatar, Col, Form, Input, Row, Select, message } from 'antd';
 import React, { useState } from 'react';
 import { Paragraph, SubHeading } from '../../../../components/Typography';
-import { ExclamationCircleOutlined, InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import UploadFile from '../../../../components/UploadFile/UploadFile';
 import { updateUserCurrentService } from '../../../../services/apis/users.service';
 import { PASSWORD_REGEX } from '../../../../constants/auth.constant';
 import { ERROR_TRANS_KEYS } from '../../../../constants/error.constant';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetPasswordUseAfterUpdate, updateUser } from '../../../../store/slices/user.slice';
 
 const { Option } = Select;
-const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
-  const [formUser, setFormUser] = useState({
-    first_name: user.first_name,
-    last_name: user.last_name,
-    email: user.email,
-    phone_number: user.phone_number,
-    country: user.country,
-    new_password: null,
-    current_password: null,
-  });
+const EditProfile = ({ t, avatarDefault, onUpdate }) => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
+  const [currentPasswordError, setCurrentPasswordError] = useState(null);
+  const [newPasswordError, setNewPasswordError] = useState(null);
+  const [repeatPasswordError, setRepeatPasswordError] = useState(null);
 
   const debounce = (func, delay) => {
     let timer;
@@ -30,50 +28,71 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
   };
 
   const handleInputChange = (fieldName, value) => {
-    setFormUser({ ...formUser, [fieldName]: value });
+    if (
+      fieldName === 'current_password' ||
+      fieldName === 'new_password' ||
+      fieldName === 'repeat_password'
+    ) {
+      if (!value.trim()) {
+        value = null;
+      }
+    }
+    switch (fieldName) {
+      case 'current_password':
+        setCurrentPasswordError(null);
+        break;
+      case 'new_password':
+        setNewPasswordError(null);
+        break;
+      case 'repeat_password':
+        setRepeatPasswordError(null);
+        break;
+      default:
+        break;
+    }
+    dispatch(updateUser({ ...user, [fieldName]: value }));
   };
 
   const debouncedInputChange = debounce(handleInputChange, 500);
 
-  const handleSubmit = async () => {
-    if (
-      !formUser.first_name ||
-      !formUser.last_name ||
-      !formUser.phone_number ||
-      !formUser.country
-    ) {
-      return notification.error({
-        message: t('detail-house.error'),
-        icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-        description: 'Please fill in all fields',
-      });
+  const validateRepeatPassword = (_, value) => {
+    const { new_password } = user;
+    if (value && new_password !== value) {
+      return Promise.reject(new Error('The passwords do not match'));
     }
+    return Promise.resolve();
+  };
 
-    if (user.auth_method === 'NORMAL') {
-      if (
-        (!formUser.current_password && formUser.new_password) ||
-        (formUser.current_password && !formUser.new_password)
-      ) {
-        return notification.error({
-          message: t('detail-house.error'),
-          icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-          description: 'You have not entered your current password or a new password',
-        });
+  const handleSubmit = async () => {
+    setCurrentPasswordError(null);
+
+    const isFieldsBeingUpdated = user.current_password || user.new_password || user.repeat_password;
+
+    if (!isFieldsBeingUpdated) {
+      console.log('User is updating fields only');
+    } else {
+      console.log('User is updating fields');
+      if (!user.current_password) {
+        return setCurrentPasswordError('Please enter your current password');
+      }
+      if (!user.new_password) {
+        return setNewPasswordError('Please enter your new password');
+      }
+      if (!user.repeat_password) {
+        return setRepeatPasswordError('Please repeat your new password');
       }
     }
+
     try {
-      const res = await updateUserCurrentService(formUser);
+      const res = await updateUserCurrentService(user);
       onUpdate();
+      dispatch(resetPasswordUseAfterUpdate());
       message.success('User profile updated successfully');
       console.log('Update success:', res);
     } catch (error) {
       console.error('Error updating user:', error);
       if (ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS === error) {
-        notification.error({
-          message: t('detail-house.error'),
-          icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
-          description: 'Your current password is not correct!',
-        });
+        setCurrentPasswordError('Your current password is not correct!');
       }
     }
   };
@@ -82,17 +101,16 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
     console.log('Failed:', errorInfo);
   };
 
-  const renderSelect = (label, fieldName, placeholder) => (
+  const renderSelect = (label, fieldName) => (
     <Form.Item
       label={
         <Paragraph classNames="color-black" strong>
           {t(`USER-DASHBOARD.${label}`)}
         </Paragraph>
-      }
-      name={fieldName}>
+      }>
       <Select
-        value={formUser[fieldName]}
-        placeholder={user?.country ? user.country : t(`USER-DASHBOARD.${placeholder}`)}
+        // defaultValue={user?.country }
+        placeholder={user?.country || t(`USER-DASHBOARD.placeholder-country`)}
         onChange={value => handleInputChange(fieldName, value)}
         style={{ width: '100%' }}>
         <Option value="Vietnam">Vietnam</Option>
@@ -105,75 +123,82 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
   return (
     <>
       <Form onFinish={handleSubmit} onFinishFailed={onFinishFailed} layout="vertical">
-        <Row id="edit-profile" gutter={[24, 24]} justify="center">
+        <Row id="edit-profile" gutter={[24, 12]}>
           <Col xs={24} className="line">
             <SubHeading size={230} strong>
               <UserOutlined className="icon" /> {t('USER-DASHBOARD.general-info')}
             </SubHeading>
           </Col>
-          <Col xs={24} md={4} className="flex-item">
-            <Paragraph classNames="color-black" strong>
-              {t('USER-DASHBOARD.profile-img')}
-            </Paragraph>
-            <Avatar src={avatarDefault} shape="square" className="avatar-user" />
-          </Col>
-          <Col xs={24} md={20} className="upload-file">
-            <UploadFile />
-          </Col>
-          <Col xs={24} md={12} className="flex-item">
+          <Col xs={24}>
+            <Avatar
+              src={user?.avatar_url ? user.avatar_url : avatarDefault}
+              shape="square"
+              size={100}
+            />
             <Form.Item
-              name="first_name"
+              label={
+                <Paragraph classNames="color-black" strong>
+                  {t('USER-DASHBOARD.profile-img')}
+                </Paragraph>
+              }>
+              <UploadFile
+                acceptTypes="image/*"
+                multiple={false}
+                onChange={value => debouncedInputChange('avatar_url', value)}
+              />
+            </Form.Item>
+          </Col>
+
+          <Col xs={24} md={12}>
+            <Form.Item
               label={
                 <Paragraph classNames="color-black" strong>
                   {t('USER-DASHBOARD.first-name')}
                 </Paragraph>
               }>
               <Input
-                value={formUser.first_name}
+                defaultValue={user?.first_name}
                 onChange={e => debouncedInputChange('first_name', e.target.value)}
-                placeholder={
-                  user?.first_name
-                    ? user.first_name
-                    : `${t('USER-DASHBOARD.placeholder-first-name')}`
-                }
+                placeholder={t('USER-DASHBOARD.placeholder-first-name')}
               />
             </Form.Item>
           </Col>
-          <Col xs={24} md={12} className="flex-item">
+          <Col xs={24} md={12}>
             <Form.Item
-              name="last_name"
               label={
                 <Paragraph classNames="color-black" strong>
                   {t('USER-DASHBOARD.last-name')}
                 </Paragraph>
               }>
               <Input
+                defaultValue={user?.last_name}
                 onChange={e => debouncedInputChange('last_name', e.target.value)}
-                placeholder={
-                  user?.last_name ? user.last_name : `${t('USER-DASHBOARD.placeholder-last-name')}`
-                }
+                placeholder={t('USER-DASHBOARD.placeholder-last-name')}
               />
             </Form.Item>
           </Col>
 
-          {user.auth_method === 'NORMAL' && (
+          {user?.auth_method === 'NORMAL' && (
             <>
-              <Col xs={24} md={12} className="flex-item">
+              <Col xs={24} md={12}>
                 <Form.Item
                   name="current_password"
                   label={
                     <Paragraph classNames="color-black" strong>
                       {t('USER-DASHBOARD.password')}
                     </Paragraph>
-                  }>
-                  <Input
+                  }
+                  validateStatus={currentPasswordError ? 'error' : ''}
+                  help={currentPasswordError}>
+                  <Input.Password
                     onChange={e => debouncedInputChange('current_password', e.target.value)}
                     type="password"
+                    autoComplete="true"
                     placeholder={t('USER-DASHBOARD.placeholder-password')}
                   />
                 </Form.Item>
               </Col>
-              <Col xs={24} md={12} className="flex-item">
+              <Col xs={24} md={12} lg={6}>
                 <Form.Item
                   name="new_password"
                   label={
@@ -181,6 +206,8 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                       {t('USER-DASHBOARD.new-password')}
                     </Paragraph>
                   }
+                  validateStatus={newPasswordError ? 'error' : ''}
+                  help={newPasswordError}
                   rules={[
                     { message: t('validationRules.required.password') },
                     {
@@ -204,59 +231,84 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                       message: t('validationRules.password.contain.digit'),
                     },
                   ]}>
-                  <Input
+                  <Input.Password
                     type="password"
                     onChange={e => debouncedInputChange('new_password', e.target.value)}
-                    autoComplete
+                    autoComplete="true"
                     placeholder={t('USER-DASHBOARD.placeholder-new-password')}
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={24} md={12} lg={6}>
+                <Form.Item
+                  name="repeat_password"
+                  label={
+                    <Paragraph classNames="color-black" strong>
+                      {t('USER-DASHBOARD.repeat-password')}
+                    </Paragraph>
+                  }
+                  validateStatus={repeatPasswordError ? 'error' : ''}
+                  help={repeatPasswordError}
+                  rules={[
+                    { message: t('validationRules.required.password') },
+                    {
+                      pattern: PASSWORD_REGEX.MIN_LENGTH,
+                      message: t('validationRules.min.password'),
+                    },
+                    {
+                      pattern: PASSWORD_REGEX.LOWERCASE,
+                      message: t('validationRules.password.contain.lowercase'),
+                    },
+                    {
+                      pattern: PASSWORD_REGEX.UPPERCASE,
+                      message: t('validationRules.password.contain.uppercase'),
+                    },
+                    {
+                      pattern: PASSWORD_REGEX.SPECIAL_CHARACTER,
+                      message: t('validationRules.password.contain.special'),
+                    },
+                    {
+                      pattern: PASSWORD_REGEX.NUMBER,
+                      message: t('validationRules.password.contain.digit'),
+                    },
+                    { validator: validateRepeatPassword },
+                  ]}>
+                  <Input.Password
+                    type="password"
+                    onChange={e => debouncedInputChange('repeat_password', e.target.value)}
+                    autoComplete="true"
+                    placeholder={t('USER-DASHBOARD.placeholder-repeat-password')}
                   />
                 </Form.Item>
               </Col>
             </>
           )}
-          {/* <Col xs={24} md={6} className="flex-item">
-            <Form.Item
-              name="repeat_password"
-              label={
-                <Paragraph classNames="color-black" strong>
-                  {t('USER-DASHBOARD.repeat-password')}
-                </Paragraph>
-              }>
-              <Input
-                value={repeat_password}
-                placeholder={t('USER-DASHBOARD.placeholder-repeat-password')}
-              />
-            </Form.Item>
-          </Col> */}
+
           <Col xs={24} className="line">
             <SubHeading size={230} strong>
               <InfoCircleOutlined className="icon" /> {t('USER-DASHBOARD.contact-info')}
             </SubHeading>
           </Col>
-          <Col xs={24} md={12} className="flex-item">
+          <Col xs={24} md={12}>
             <Form.Item
-              name="phone_number"
               label={
                 <Paragraph classNames="color-black" strong>
                   {t('USER-DASHBOARD.mobile-phone')}
                 </Paragraph>
               }>
               <Input
+                defaultValue={user?.phone_number}
                 onChange={e => debouncedInputChange('phone_number', e.target.value)}
                 type="number"
                 min="0"
-                placeholder={
-                  user?.phone_number
-                    ? user.phone_number
-                    : `${t('USER-DASHBOARD.placeholder-mobile-phone')}`
-                }
+                placeholder={t('USER-DASHBOARD.placeholder-mobile-phone')}
               />
             </Form.Item>
           </Col>
-          <Col xs={24} md={12} className="flex-item">
+          <Col xs={24} md={12}>
             {renderSelect('country', 'country')}
           </Col>
-          <Col xs={24} md={12} className="flex-item">
+          <Col xs={24} md={12}>
             <Form.Item
               label={
                 <Paragraph classNames="color-black" strong>

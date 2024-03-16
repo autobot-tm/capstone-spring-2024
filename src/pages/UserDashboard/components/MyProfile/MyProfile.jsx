@@ -4,19 +4,14 @@ import React from 'react';
 import { Paragraph, SubHeading } from '../../../../components/Typography';
 
 const MyProfile = ({ user, t, avatarDefault }) => {
-  console.log(user);
   return (
     <Row gutter={[0, 24]} id="mp-container">
-      <Col xs={24} sm={7} style={{ display: 'flex', justifyContent: 'center' }}>
-        {user?.avatar ? (
-          <Avatar
-            src={user?.avatar_url}
-            shape="square"
-            size={220 | { xs: 100, sm: 150, md: 200 }}
-          />
-        ) : (
-          <Avatar src={avatarDefault} shape="square" size={220 | { xs: 150, md: 200 }} />
-        )}
+      <Col xs={24} sm={10} style={{ display: 'flex', justifyContent: 'center' }}>
+        <Avatar
+          src={user?.avatar_url || avatarDefault}
+          shape="square"
+          size={220 | { xs: 100, sm: 150, md: 200 }}
+        />
       </Col>
       <Col xs={24} sm={10}>
         <SubHeading size={230} strong>
