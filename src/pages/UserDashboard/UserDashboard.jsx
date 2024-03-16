@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './style.scss';
 import { Breadcrumb, Col, Modal, Row, Tabs } from 'antd';
 import { Headline, Paragraph } from '../../components/Typography';
@@ -18,11 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeConfirmLogoutModal, openConfirmLogoutModal } from '../../store/slices/modalSlice';
 import { signOut } from '../../store/slices';
 import { Helmet } from 'react-helmet';
-import { useParams } from 'react-router-dom';
-import { getUserByIdService } from '../../services/apis/users.service';
-import useSWR, { mutate } from 'swr';
 import AVATAR from '../../assets/images/avatar.svg';
-import { updateUser } from '../../store/slices/user.slice';
 
 const { TabPane } = Tabs;
 const UserDashboard = () => {
@@ -30,18 +26,7 @@ const UserDashboard = () => {
   const dispatch = useDispatch();
   const showModal = useSelector(state => state.modal.signOutModal);
   const [activeTabKey, setActiveTabKey] = useState('1');
-
-  const { user_id: user_id } = useParams();
-  const { data: user } = useSWR(
-    ['getUserByIdService', user_id],
-    async () => await getUserByIdService({ user_id }),
-  );
-
-  useEffect(() => {
-    if (user) {
-      dispatch(updateUser(user));
-    }
-  }, [dispatch, user]);
+  const user = useSelector(state => state.user);
 
   const handleTabChange = key => {
     setActiveTabKey(key);
@@ -106,7 +91,6 @@ const UserDashboard = () => {
 
   const handleProfileUpdate = async () => {
     setActiveTabKey('1');
-    mutate(['getUserByIdService', user_id]);
   };
   return (
     <Layout>
@@ -114,7 +98,7 @@ const UserDashboard = () => {
         <title>{t('USER-DASHBOARD.user-dashboard')}</title>
       </Helmet>
       <header id="header-user-dashboard">
-        <Row className="header-row" align="middle">
+        <Row className="header-row" align="middle" justify="center">
           <Col xs={24} sm={12}>
             <Headline size={450} strong>
               {t('USER-DASHBOARD.user-dashboard')}
@@ -134,8 +118,21 @@ const UserDashboard = () => {
             />
           </Col>
           <Col xs={24}>
-            <Row className="tabs-bar" justify="center">
-              <Col xs={24} sm={24} md={20} lg={12}>
+            <Tabs activeKey={activeTabKey} onChange={handleTabChange} className="tabs-bar" centered>
+              {tabPanes.map(pane => (
+                <TabPane
+                  tab={
+                    <Paragraph classNames="color-black" strong>
+                      {pane.title}
+                    </Paragraph>
+                  }
+                  key={pane.key}
+                />
+              ))}
+            </Tabs>
+
+            {/* <Row className="tabs-bar" justify="center">
+              <Col xs={24}>
                 <Tabs
                   tabBarStyle={{ width: '100%' }}
                   activeKey={activeTabKey}
@@ -154,7 +151,7 @@ const UserDashboard = () => {
                   ))}
                 </Tabs>
               </Col>
-            </Row>
+            </Row> */}
           </Col>
         </Row>
       </header>

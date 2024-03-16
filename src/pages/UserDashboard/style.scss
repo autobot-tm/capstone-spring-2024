@@ -8,35 +8,38 @@
   align-items: center;
   justify-content: center;
   padding: 0 20px;
-
   .breadcrumb {
     display: flex;
     justify-content: end;
   }
-
   .header-row {
     width: 1400px;
   }
-
+  // .ant-tabs-nav-list {
+  //   width: 100%;
+  // }
   .tabs-bar {
     position: absolute;
     top: 50px;
     width: 100%;
     z-index: 500;
+    background-color: white;
+    border: 0.8px solid #ccc;
+    border-radius: 4px;
     .icon-tab-item {
       font-size: 25px;
-    }
-    &-inner {
-      margin: auto !important;
-      background-color: white;
-      border: 0.8px solid #ccc;
-      border-radius: 4px;
     }
   }
   @media screen and (max-width: 831px) {
     .tabs-bar {
       display: flex;
       top: 20px;
+    }
+  }
+  @media screen and (max-width: 1025px) {
+    .tabs-bar {
+      display: flex;
+      top: 30px;
     }
   }
 }

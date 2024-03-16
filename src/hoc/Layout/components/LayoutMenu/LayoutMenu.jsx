@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Avatar, Button, Menu } from 'antd';
 import { routeNames } from '../../../../config';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -14,11 +14,9 @@ export const LayoutMenu = ({ isInline = false }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [selectedKeys, setSelectedKeys] = React.useState(routeNames.Home);
+  const [selectedKeys, setSelectedKeys] = useState(routeNames.Home);
   const location = useLocation();
   const { access_token } = useSelector(state => state.auth);
-  const userString = localStorage.getItem('USER');
-  const user_id = JSON.parse(userString)?.sub;
   const user = useSelector(state => state.user);
 
   const onItemClick = event => {
@@ -48,7 +46,7 @@ export const LayoutMenu = ({ isInline = false }) => {
               <UserOutlined />
             </span>
           ),
-          key: '/user-dashboard/' + user_id,
+          key: '/user-dashboard/' + user.id,
         },
         {
           label: <span>{t('management')}</span>,

@@ -8,13 +8,12 @@ import UploadFile from '../../../../components/UploadFile/UploadFile';
 import { updateUserCurrentService } from '../../../../services/apis/users.service';
 import { PASSWORD_REGEX, PHONE_NUMBER } from '../../../../constants/auth.constant';
 import { ERROR_TRANS_KEYS } from '../../../../constants/error.constant';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { resetPasswordUseAfterUpdate, updateUser } from '../../../../store/slices/user.slice';
 
 const { Option } = Select;
-const EditProfile = ({ t, avatarDefault, onUpdate }) => {
+const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user);
   const [currentPasswordError, setCurrentPasswordError] = useState(null);
   const [newPasswordError, setNewPasswordError] = useState(null);
   const [repeatPasswordError, setRepeatPasswordError] = useState(null);
@@ -64,7 +63,7 @@ const EditProfile = ({ t, avatarDefault, onUpdate }) => {
     }
     return Promise.resolve();
   };
-  console.log('form', formUser);
+
   const handleSubmit = async () => {
     setCurrentPasswordError(null);
 
@@ -111,7 +110,6 @@ const EditProfile = ({ t, avatarDefault, onUpdate }) => {
         </Paragraph>
       }>
       <Select
-        // defaultValue={user?.country }
         placeholder={user?.country || t(`USER-DASHBOARD.placeholder-country`)}
         onChange={value => handleInputChange(fieldName, value)}
         style={{ width: '100%' }}>

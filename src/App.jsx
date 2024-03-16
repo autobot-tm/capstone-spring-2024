@@ -10,6 +10,9 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop'; // Import Scroll
 import { getMetaData } from './services/apis/houses.service';
 import { setMetaData } from './store/slices/houseSlice';
 import NotFoundPage from './pages/NotFound/NotFoundPage';
+import useSWR, { mutate } from 'swr';
+import { getUserByIdService } from './services/apis/users.service';
+import { updateUser } from './store/slices/user.slice';
 
 function App() {
   const dispatch = useDispatch();
@@ -17,11 +20,21 @@ function App() {
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
   const { access_token, access_token_expires_at } = useSelector(state => state.auth);
   const [loading, setLoading] = useState(true);
+  const userString = localStorage.getItem('USER');
+  const user_id = JSON.parse(userString)?.sub;
+
+  const { data: user } = useSWR(
+    ['getUserByIdService', user_id],
+    async () => await getUserByIdService({ user_id }),
+  );
+  dispatch(updateUser(user));
+  mutate(['getUserByIdService', user_id]);
+
   useEffect(() => {
     if (!access_token) {
       dispatch(authActions.initState());
     }
-  }, [access_token]);
+  }, [access_token, user]);
 
   useEffect(() => {
     const isAccessTokenExpired = isTimeExpired(access_token_expires_at, REQUEST_TIME_OUT);
