@@ -295,7 +295,9 @@
     "please-enter-new-password": "新しいパスワードを入力してください",
     "please-repeat-your-new-password": "新しいパスワードをもう一度入力してください",
     "update-profile-success": "ユーザープロファイルが正常に更新されました",
-    "your-current-password-is-not-correct": "現在のパスワードが正しくありません！"
+    "your-current-password-is-not-correct": "現在のパスワードが正しくありません！",
+    "change-password": "パスワードの変更",
+    "mobile-phone-error-valid-length": "電話番号は10～11桁であること！"
   },
   "ORDER": {
     "thanks": "ありがとうございます。ご注文を承りました。",

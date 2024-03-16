@@ -296,7 +296,9 @@
     "please-enter-new-password": "Please enter your new password",
     "please-repeat-your-new-password": "Please repeat your new password",
     "update-profile-success": "User profile updated successfully",
-    "your-current-password-is-not-correct": "Your current password is not correct!"
+    "your-current-password-is-not-correct": "Your current password is not correct!",
+    "change-password": "Change Password",
+    "mobile-phone-error-valid-length": "Phone number must have 10 to 11 digits!"
   },
 
   "ORDER": {

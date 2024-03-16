@@ -6,7 +6,7 @@ import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import UploadFile from '../../../../components/UploadFile/UploadFile';
 import { updateUserCurrentService } from '../../../../services/apis/users.service';
-import { PASSWORD_REGEX } from '../../../../constants/auth.constant';
+import { PASSWORD_REGEX, PHONE_NUMBER } from '../../../../constants/auth.constant';
 import { ERROR_TRANS_KEYS } from '../../../../constants/error.constant';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPasswordUseAfterUpdate, updateUser } from '../../../../store/slices/user.slice';
@@ -18,6 +18,8 @@ const EditProfile = ({ t, avatarDefault, onUpdate }) => {
   const [currentPasswordError, setCurrentPasswordError] = useState(null);
   const [newPasswordError, setNewPasswordError] = useState(null);
   const [repeatPasswordError, setRepeatPasswordError] = useState(null);
+  const [showPasswordBtn, setShowPasswordBtn] = useState(false);
+  const [formUser, setFormUser] = useState(user);
 
   const debounce = (func, delay) => {
     let timer;
@@ -50,19 +52,19 @@ const EditProfile = ({ t, avatarDefault, onUpdate }) => {
       default:
         break;
     }
-    dispatch(updateUser({ ...user, [fieldName]: value }));
+    setFormUser(prevUser => ({ ...prevUser, [fieldName]: value }));
   };
 
   const debouncedInputChange = debounce(handleInputChange, 500);
 
   const validateRepeatPassword = (_, value) => {
-    const { new_password } = user;
+    const { new_password } = formUser;
     if (value && new_password !== value) {
-      return Promise.reject(new Error('The passwords do not match'));
+      return Promise.reject(new Error(t('USER-DASHBOARD.the-password-do-not-match')));
     }
     return Promise.resolve();
   };
-
+  console.log('form', formUser);
   const handleSubmit = async () => {
     setCurrentPasswordError(null);
 
@@ -71,7 +73,6 @@ const EditProfile = ({ t, avatarDefault, onUpdate }) => {
     if (!isFieldsBeingUpdated) {
       console.log('User is updating fields only');
     } else {
-      console.log('User is updating fields');
       if (!user.current_password) {
         return setCurrentPasswordError('Please enter your current password');
       }
@@ -84,9 +85,10 @@ const EditProfile = ({ t, avatarDefault, onUpdate }) => {
     }
 
     try {
-      const res = await updateUserCurrentService(user);
+      const res = await updateUserCurrentService(formUser);
       onUpdate();
       dispatch(resetPasswordUseAfterUpdate());
+      dispatch(updateUser(res));
       message.success('User profile updated successfully');
       console.log('Update success:', res);
     } catch (error) {
@@ -129,18 +131,20 @@ const EditProfile = ({ t, avatarDefault, onUpdate }) => {
               <UserOutlined className="icon" /> {t('USER-DASHBOARD.general-info')}
             </SubHeading>
           </Col>
-          <Col xs={24}>
-            <Avatar
-              src={user?.avatar_url ? user.avatar_url : avatarDefault}
-              shape="square"
-              size={100}
-            />
+          <Col xs={12} style={{ display: 'flex', alignItems: 'center' }}>
             <Form.Item
               label={
                 <Paragraph classNames="color-black" strong>
                   {t('USER-DASHBOARD.profile-img')}
                 </Paragraph>
               }>
+              <Avatar
+                src={user?.avatar_url ? formUser?.avatar_url : avatarDefault}
+                shape="square"
+                size={100}
+              />
+            </Form.Item>
+            <Form.Item>
               <UploadFile
                 acceptTypes="image/*"
                 multiple={false}
@@ -148,7 +152,14 @@ const EditProfile = ({ t, avatarDefault, onUpdate }) => {
               />
             </Form.Item>
           </Col>
-
+          <Col xs={12} style={{ display: 'flex', alignItems: 'center' }}>
+            <BaseButton
+              size="medium"
+              style={{ width: 'fit-content' }}
+              onClick={() => setShowPasswordBtn(!showPasswordBtn)}>
+              <Paragraph classNames="color-black">{t('USER-DASHBOARD.change-password')}</Paragraph>
+            </BaseButton>
+          </Col>
           <Col xs={24} md={12}>
             <Form.Item
               label={
@@ -178,7 +189,7 @@ const EditProfile = ({ t, avatarDefault, onUpdate }) => {
             </Form.Item>
           </Col>
 
-          {user?.auth_method === 'NORMAL' && (
+          {showPasswordBtn && user?.auth_method === 'NORMAL' && (
             <>
               <Col xs={24} md={12}>
                 <Form.Item
@@ -291,15 +302,22 @@ const EditProfile = ({ t, avatarDefault, onUpdate }) => {
           </Col>
           <Col xs={24} md={12}>
             <Form.Item
+              name="phone_number"
               label={
                 <Paragraph classNames="color-black" strong>
                   {t('USER-DASHBOARD.mobile-phone')}
                 </Paragraph>
-              }>
+              }
+              rules={[
+                {
+                  pattern: PHONE_NUMBER.VALID_LENGTH,
+                  message: t('USER-DASHBOARD.mobile-phone-error-valid-length'),
+                },
+              ]}>
               <Input
-                defaultValue={user?.phone_number}
+                defaultValue={formUser?.phone_number}
                 onChange={e => debouncedInputChange('phone_number', e.target.value)}
-                type="number"
+                type="tel"
                 min="0"
                 placeholder={t('USER-DASHBOARD.placeholder-mobile-phone')}
               />
