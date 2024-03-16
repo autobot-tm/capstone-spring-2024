@@ -129,7 +129,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
               <UserOutlined className="icon" /> {t('USER-DASHBOARD.general-info')}
             </SubHeading>
           </Col>
-          <Col xs={12} style={{ display: 'flex', alignItems: 'center' }}>
+          <Col xs={24} sm={16} md={12} style={{ display: 'flex', alignItems: 'center' }}>
             <Form.Item
               label={
                 <Paragraph classNames="color-black" strong>
@@ -150,7 +150,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
               />
             </Form.Item>
           </Col>
-          <Col xs={12} style={{ display: 'flex', alignItems: 'center' }}>
+          <Col xs={24} sm={8} md={12} style={{ display: 'flex', alignItems: 'center' }}>
             <BaseButton
               size="medium"
               style={{ width: 'fit-content' }}
@@ -251,6 +251,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
               <Col xs={24} md={12} lg={6}>
                 <Form.Item
                   name="repeat_password"
+                  dependencies={['new_password']}
                   label={
                     <Paragraph classNames="color-black" strong>
                       {t('USER-DASHBOARD.repeat-password')}

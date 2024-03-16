@@ -10,7 +10,7 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop'; // Import Scroll
 import { getMetaData } from './services/apis/houses.service';
 import { setMetaData } from './store/slices/houseSlice';
 import NotFoundPage from './pages/NotFound/NotFoundPage';
-import useSWR, { mutate } from 'swr';
+import { mutate } from 'swr';
 import { getUserByIdService } from './services/apis/users.service';
 import { updateUser } from './store/slices/user.slice';
 
@@ -19,38 +19,55 @@ function App() {
   const { actions: authActions } = useAuthSlice();
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
   const { access_token, access_token_expires_at } = useSelector(state => state.auth);
-  const [loading, setLoading] = useState(true);
   const userString = localStorage.getItem('USER');
   const user_id = JSON.parse(userString)?.sub;
-
-  const { data: user } = useSWR(
-    ['getUserByIdService', user_id],
-    async () => await getUserByIdService({ user_id }),
-  );
-  dispatch(updateUser(user));
-  mutate(['getUserByIdService', user_id]);
 
   useEffect(() => {
     if (!access_token) {
       dispatch(authActions.initState());
     }
-  }, [access_token, user]);
+  }, [access_token, dispatch]);
 
   useEffect(() => {
     const isAccessTokenExpired = isTimeExpired(access_token_expires_at, REQUEST_TIME_OUT);
     if (access_token && !isTokenRefreshed && isAccessTokenExpired) {
       setIsTokenRefreshed(true);
       dispatch(authActions.refreshToken());
+    } else if (!isAccessTokenExpired) {
+      setIsTokenRefreshed(false);
     }
-  }, [access_token]);
+  }, [access_token, access_token_expires_at, dispatch, isTokenRefreshed, authActions]);
 
   useEffect(() => {
-    getMetaData()
-      .then(response => {
+    const fetchData = async () => {
+      try {
+        const user = await getUserByIdService({ user_id });
+        dispatch(updateUser(user));
+        mutate(['getUserByIdService', user_id], user);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    if (user_id) {
+      fetchData();
+    }
+  }, [user_id, dispatch]);
+
+  useEffect(() => {
+    const fetchMetaData = async () => {
+      try {
+        const response = await getMetaData();
         dispatch(setMetaData({ metadata: response }));
-      })
-      .then(setLoading(false));
-  }, []);
+      } catch (error) {
+        console.error('Error fetching metadata:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMetaData();
+  }, [dispatch]);
+
+  const [loading, setLoading] = useState(true);
 
   return (
     !loading && (
