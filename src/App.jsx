@@ -10,16 +10,22 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop'; // Import Scroll
 import { getMetaData } from './services/apis/houses.service';
 import { setMetaData } from './store/slices/houseSlice';
 import NotFoundPage from './pages/NotFound/NotFoundPage';
+import { useUserSlice } from './store/slices/user.slice';
 
 function App() {
   const dispatch = useDispatch();
   const { actions: authActions } = useAuthSlice();
+  const { actions: userActions } = useUserSlice();
   const [isTokenRefreshed, setIsTokenRefreshed] = useState(false);
   const { access_token, access_token_expires_at } = useSelector(state => state.auth);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (!access_token) {
       dispatch(authActions.initState());
+    }
+    if (access_token) {
+      dispatch(userActions.getUserProfile());
     }
   }, [access_token]);
 

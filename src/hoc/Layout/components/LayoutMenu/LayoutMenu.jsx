@@ -1,24 +1,23 @@
-import React, { useEffect } from 'react';
-import { Button, Menu } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Avatar, Button, Menu } from 'antd';
 import { routeNames } from '../../../../config';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './styles.scss';
 import { TranslationSelector } from '../TranslationSelector';
 import { useTranslation } from 'react-i18next';
-import { BellOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { BellOutlined, LogoutOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConfirmLogoutModal, openLoginModal } from '../../../../store/slices/modalSlice';
 import { Paragraph } from '../../../../components/Typography';
-import Avatar from '../../../../assets/images/avatar.svg';
+import AVATAR from '../../../../assets/images/avatar.svg';
 export const LayoutMenu = ({ isInline = false }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [selectedKeys, setSelectedKeys] = React.useState(routeNames.Home);
+  const [selectedKeys, setSelectedKeys] = useState(routeNames.Home);
   const location = useLocation();
   const { access_token } = useSelector(state => state.auth);
-  const userString = localStorage.getItem('USER');
-  const user_id = JSON.parse(userString)?.sub;
+  const { user } = useSelector(state => state.user);
 
   const onItemClick = event => {
     const { key } = event;
@@ -37,35 +36,27 @@ export const LayoutMenu = ({ isInline = false }) => {
 
   const items = [
     {
-      // label: (
-      //   <Paragraph classNames="color-black" strong>
-      //     {t('userprofile')}
-      //   </Paragraph>
-      // ),
       key: 'SubMenu',
-      icon: (
-        <img src={Avatar} alt="" style={{ width: '16px', height: '16px', objectFit: 'cover' }} />
-      ),
+      icon: <Avatar src={user?.avatar_url || AVATAR} alt="avatar" shape="square" size={22} />,
       children: [
         {
-          label: <span className="color-black">{t('profile')}</span>,
+          label: <span>{t('profile')}</span>,
           icon: (
             <span className="color-black">
               <UserOutlined />
             </span>
           ),
-          key: '/user-dashboard/' + user_id,
+          key: '/user-dashboard/' + user?.id,
         },
-        // {
-        //   label: <span className="color-black">{t('reportlivingissue')}</span>,
-        //   icon: (
-        //     <span className="color-black">
-        //       <IssuesCloseOutlined />
-        //     </span>
-        //   ),
-        //   key: routeNames.ReportLivingIssues,
-        // },
-
+        {
+          label: <span>{t('management')}</span>,
+          icon: (
+            <span>
+              <SolutionOutlined />
+            </span>
+          ),
+          key: '', //replace
+        },
         {
           label: <span style={{ color: 'red' }}>{t('logout')}</span>,
           icon: (
@@ -106,23 +97,9 @@ export const LayoutMenu = ({ isInline = false }) => {
           {t('support').toUpperCase()}
         </Paragraph>
       </Menu.Item>
-      {access_token && (
-        <>
-          <Menu.Item key="" className="menuItem" onClick={onItemClick}>
-            <Paragraph classNames="color-black" strong>
-              {t('management').toUpperCase()}
-            </Paragraph>
-          </Menu.Item>
-          <Menu.Item key="" className="menuItem" onClick={onItemClick}>
-            <Paragraph classNames="color-black" strong>
-              {t('wishlist').toUpperCase()}
-            </Paragraph>
-          </Menu.Item>
-        </>
-      )}
       <Menu.Item key="usermenu" style={{ marginLeft: 'auto', padding: 0 }}>
         {access_token ? (
-          <Menu onClick={onItemClick} mode="horizontal" items={items} />
+          <Menu onClick={onItemClick} mode="horizontal" items={items} style={{ margin: 0 }} />
         ) : (
           <Button
             type="text"

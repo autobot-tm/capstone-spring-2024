@@ -1,19 +1,38 @@
-import { Button, Upload } from 'antd';
+import { Button, Upload, message } from 'antd';
 import React, { useState } from 'react';
 import { UploadOutlined } from '@ant-design/icons';
 import { getPresignedURLs, mediaUploadService } from '../../services/media';
 import './style.scss';
+import { useTranslation } from 'react-i18next';
 
-const UploadFile = ({ acceptTypes }) => {
+const UploadFile = ({ acceptTypes, multiple, onChange }) => {
+  const { t } = useTranslation();
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
+
   const handleUpload = async () => {
     setUploading(true);
     const presignedURLs = await getPresignedURLs(fileList);
-    console.log(presignedURLs);
+    const firstPresignedURL = multiple ? presignedURLs : [presignedURLs[0]];
     await mediaUploadService(presignedURLs);
+
+    for (const url of firstPresignedURL) {
+      const uploadUrl = url.presignedURL.cdn_url;
+      const avatarUrl = `https://${uploadUrl}`;
+      onChange(avatarUrl);
+    }
     setFileList([]);
     setUploading(false);
+  };
+
+  const beforeUpload = file => {
+    if (!multiple && fileList.length > 0) {
+      message.error(t('alert-1-file'));
+      return false;
+    }
+
+    setFileList([...fileList, file]);
+    return false;
   };
 
   const props = {
@@ -24,20 +43,18 @@ const UploadFile = ({ acceptTypes }) => {
       newFileList.splice(index, 1);
       setFileList(newFileList);
     },
-    beforeUpload: file => {
-      setFileList([...fileList, file]);
-      return false;
-    },
+    beforeUpload: beforeUpload,
     fileList,
     listType: 'picture',
   };
+
   return (
     <div id="upload-file-container">
       <Upload {...props}>
-        <Button icon={<UploadOutlined />}>Select File</Button>
+        <Button icon={<UploadOutlined />}>{t('select-file')}</Button>
       </Upload>
       <Button type="primary" onClick={handleUpload} disabled={fileList.length === 0}>
-        {uploading ? 'Uploading' : 'Upload'}
+        {uploading ? `${t('uploading-status')}` : `${t('upload-status')}`}
       </Button>
     </div>
   );

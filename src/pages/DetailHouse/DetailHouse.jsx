@@ -388,7 +388,7 @@ const DetailHouse = () => {
             <CarouselHeader img={imgHouse} />
           </header>
           <main id="dh-container">
-            <Row gutter={[36, 24]}>
+            <Row gutter={[36, 24]} justify="center">
               <Col className="main" xs={24} lg={14}>
                 <BaseButton
                   shape="circle"

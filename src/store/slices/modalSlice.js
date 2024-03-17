@@ -8,6 +8,7 @@ const initialState = {
   resetPasswordModal: false,
   advanceSearchModal: false,
   confirmLogoutModal: false,
+  reservationPolicyModal: false,
   email: '',
 };
 
@@ -38,7 +39,13 @@ const modalSlice = createSlice({
     openConfirmLogoutModal: state => {
       state.confirmLogoutModal = true;
     },
+    openReservationPolicyModal: state => {
+      state.reservationPolicyModal = true;
+    },
 
+    closeReservationPolicyModal: state => {
+      state.reservationPolicyModal = false;
+    },
     closeLoginModal: state => {
       state.loginModal = false;
     },
@@ -79,4 +86,6 @@ export const {
   closeResetPasswordModal,
   closeAdvanceSearchModal,
   closeConfirmLogoutModal,
+  openReservationPolicyModal,
+  closeReservationPolicyModal,
 } = modalSlice.actions;

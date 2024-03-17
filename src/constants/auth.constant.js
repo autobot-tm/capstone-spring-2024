@@ -7,3 +7,7 @@ export const PASSWORD_REGEX = {
   SPECIAL_CHARACTER: /^(?=.*[!@#$%^&*])/,
   MIN_LENGTH: /^(?=.{8,})/,
 };
+
+export const PHONE_NUMBER = {
+  VALID_LENGTH: /^\d{10,11}$/,
+};

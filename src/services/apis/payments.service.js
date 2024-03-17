@@ -21,3 +21,11 @@ export const requestReserveHouse = async ({
     callback_base_url,
   });
 };
+
+export const getReservationIdByHouseIdService = async ({ house_id, status }) => {
+  return apiCaller.get(ENDPOINTS.payments.reservationId + `?house_id=${house_id}&status=${status}`);
+};
+
+export const getReservationById = async reservation_id => {
+  return apiCaller.get(ENDPOINTS.payments.reservation(reservation_id));
+};

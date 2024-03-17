@@ -3,7 +3,7 @@ import React from 'react';
 import { Result } from 'antd';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { Caption, SubHeading } from '../../../../components/Typography';
-const ResultFailed = ({ t, leadingDashboard, leadingHouses }) => (
+const ResultFailed = ({ t, leadingHomepage, leadingHouses }) => (
   <div className="center-container">
     <Result
       status="error"
@@ -20,10 +20,9 @@ const ResultFailed = ({ t, leadingDashboard, leadingHouses }) => (
               style={{ width: 'auto' }}
               type="primary"
               key="console"
-              onClick={leadingDashboard}>
-              {t('PAYMENT.go-console-btn')}
+              onClick={leadingHomepage}>
+              {t('PAYMENT.back-to-home-btn')}
             </BaseButton>
-            ,
             <BaseButton style={{ width: 'auto' }} key="buy" onClick={leadingHouses}>
               {t('PAYMENT.reserve-again-btn')}
             </BaseButton>

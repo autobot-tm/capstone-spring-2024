@@ -1,20 +1,39 @@
 import { Breadcrumb, Button, Col, Row } from 'antd';
 import { Layout } from '../../../../hoc/Layout/Layout';
 import './style.scss';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Headline, Paragraph } from '../../../../components/Typography';
 import { HomeOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { routeNames } from '../../../../config';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getReservationById } from '../../../../services/apis/payments.service';
+import { formatCustomCurrency } from '../../../../utils/number-seperator';
 
 const OrderSuccessView = () => {
+  const [reservation, setReservation] = useState(null);
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const reservationId = queryParams.get('reservation_id');
 
   const handleNavigateUserDashboard = () => {
-    navigate(routeNames.UserDashboard);
+    navigate('/user-dashboard/' + reservation?.renter?.id);
   };
+
+  useEffect(() => {
+    const fetchReservation = async () => {
+      try {
+        const res = await getReservationById(reservationId);
+        setReservation(res);
+      } catch (error) {
+        console.error('Error fetching reservation:', error);
+      }
+    };
+
+    fetchReservation();
+  }, [reservationId]);
+  console.log(reservation);
   return (
     <Layout>
       <header id="header-checkout">
@@ -40,30 +59,30 @@ const OrderSuccessView = () => {
         </Row>
       </header>
       <Row id="order-container">
-        <Col xs={24}>
+        <Col xs={24} style={{ marginBottom: 20 }}>
           <Headline size={450} strong>
-            Thank you. Your order has been received.
+            {t('ORDER.thanks')}
           </Headline>
         </Col>
         <Col xs={24}>
-          <Paragraph> Order: </Paragraph>
-          <Paragraph strong> 1111 </Paragraph>
+          <Paragraph> {t('ORDER.order')}: </Paragraph>
+          <Paragraph strong> {reservation?.id} </Paragraph>
         </Col>
         <Col xs={24}>
-          <Paragraph> Date: </Paragraph>
-          <Paragraph strong> 28. January 2024. </Paragraph>
+          <Paragraph> {t('ORDER.email')}: </Paragraph>
+          <Paragraph strong> {reservation?.renter?.email} </Paragraph>
         </Col>
         <Col xs={24}>
-          <Paragraph> Email: </Paragraph>
-          <Paragraph strong> username@gmail.com </Paragraph>
+          <Paragraph> {t('ORDER.reservation-fee')}: </Paragraph>
+          <Paragraph strong> {formatCustomCurrency(reservation?.fee)} </Paragraph>
         </Col>
         <Col xs={24}>
-          <Paragraph> Total: </Paragraph>
-          <Paragraph strong> 1000.00$ </Paragraph>
+          <Paragraph> {t('ORDER.total-months')}: </Paragraph>
+          <Paragraph strong>{reservation?.total_months}</Paragraph>
         </Col>
         <Col xs={24}>
-          <Paragraph> Payment method: </Paragraph>
-          <Paragraph strong> Direct bank transfer </Paragraph>
+          <Paragraph> {t('ORDER.expected-move-in-date')}: </Paragraph>
+          <Paragraph strong>{reservation?.expected_move_in_date}</Paragraph>
         </Col>
         <Col xs={24}>
           <Button onClick={handleNavigateUserDashboard} className="return-btn">

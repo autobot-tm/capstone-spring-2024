@@ -9,11 +9,14 @@
   "profile": "プロフィール",
   "join-us": "参加する",
   "logout": "ログアウト",
-
   "welcome-text": "ようこそ！",
   "error": "何かが間違っていた",
   "ok": "オッケー",
   "cancel": "キャンセル",
+  "select-file": "ファイルを選択",
+  "uploading-status": "アップロード...",
+  "upload-status": "アップロード",
+  "alert-1-file": "アップロードできる画像は1枚のみです！",
   "modal.login": "サインイン",
   "modal.register": "登録",
   "modal.authenticationCode": "メールをチェックする",
@@ -247,16 +250,26 @@
     "error": "エラー",
     "error-option-payment": "支払い方法を選択してください。",
     "error-date": "入居日を選択してください",
-    "reserve-btn": "支払う"
+    "reserve-btn": "支払う",
+    "title-terms": "ご利用条件",
+    "terms-reservation": "予約申し込みのキャンセルの場合、以下のポリシーが適用されます",
+    "terms-reservation-1": "予約日から2ヶ月以内に入居がない場合、予約はキャンセルとなります。",
+    "terms-reservation-2": "物件を予約したにもかかわらず、契約を結ばない場合は、予約金の50％を返金します。",
+    "terms-reservation-3": "万が一、レンタルハウスに問題があった場合は、お詫びのメールとともに予約金を全額返金いたします。",
+    "terms-reservation-4": "これらのポリシーは、予約プロセスにおける公平性と透明性を維持するために策定されたものです。ご不明な点がございましたら、お気軽にお問い合わせください。",
+    "accept-checked": "すべての利用規約に同意する",
+    "agree-btn": "アグリー",
+    "cancel-btn": "キャンセル"
   },
 
   "PAYMENT": {
-    "go-console-btn": " コンソールに移動",
+    "back-to-home-btn": "ホームページに戻る",
     "reserve-again-btn": "再度予約",
     "view-your-reservation-btn": "予約を表示",
     "fail": "予約は失敗しました。",
-    "fail-des": "再送信する前に,次の情報を確認して変更してください。",
-    "success": "予約は正常に作成されました。"
+    "fail-des": "申し訳ございませんが、お客様のご予約リクエストは現在処理できません。サポートチームまでご連絡ください。",
+    "success": "予約は正常に作成されました。",
+    "des-success": "ご予約のお申し込みありがとうございます。通常1～5分で完了いたします。お手数をおかけいたしますが、よろしくお願いいたします。"
   },
 
   "USER-DASHBOARD": {
@@ -285,7 +298,23 @@
     "placeholder-repeat-password": "繰り返し新しいパスワードを入力する",
     "placeholder-mobile-phone": "携帯電話を入力してください",
     "placeholder-country": "国を入力してください",
-    "update-profile-btn": "プロフィールの更新"
+    "update-profile-btn": "プロフィールの更新",
+    "the-password-do-not-match": "パスワードが一致しない",
+    "please-enter-current-password": "現在のパスワードを入力してください",
+    "please-enter-new-password": "新しいパスワードを入力してください",
+    "please-repeat-your-new-password": "新しいパスワードをもう一度入力してください",
+    "update-profile-success": "ユーザープロファイルが正常に更新されました",
+    "your-current-password-is-not-correct": "現在のパスワードが正しくありません！",
+    "change-password": "パスワードの変更",
+    "mobile-phone-error-valid-length": "電話番号は10～11桁であること！"
+  },
+  "ORDER": {
+    "thanks": "ありがとうございます。ご注文を承りました。",
+    "order": "オーダー",
+    "email": "Eメール",
+    "reservation-fee": "予約料",
+    "total-months": "合計月数",
+    "expected-move-in-date": "入居予定日"
   },
 
   "NOT-FOUND": {
