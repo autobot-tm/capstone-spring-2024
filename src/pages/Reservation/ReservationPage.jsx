@@ -9,7 +9,7 @@ import {
   LeftOutlined,
   StarFilled,
 } from '@ant-design/icons';
-import { Breadcrumb, Button, Col, Radio, Row, notification } from 'antd';
+import { Avatar, Breadcrumb, Button, Checkbox, Col, Radio, Row, notification } from 'antd';
 import { SubHeading } from '../../components/Typography/SubHeading/SubHeading';
 import { Paragraph } from '../../components/Typography/Paragraph/Paragraph';
 import { Caption } from '../../components/Typography/Caption/Caption';
@@ -27,6 +27,12 @@ import Selection from '../DetailHouse/components/Selection/Selection';
 import DatePickerAnt from '../DetailHouse/components/DatePickerComponent/DatePickerAnt';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
+import {
+  closeReservationPolicyModal,
+  openReservationPolicyModal,
+} from '../../store/slices/modalSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import CustomModal from '../../components/Modal/CustomModal';
 
 const ReservationPage = () => {
   const { t } = useTranslation();
@@ -34,6 +40,7 @@ const ReservationPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
+  const reservationPolicyModal = useSelector(state => state.modal.reservationPolicyModal);
   const { house, reviews, selectedDate, selectedMonths } = location.state || {};
   const [selectedNewDate, setSelectedNewDate] = useState(selectedDate || null);
   const [selectedNewMonths, setSelectedNewMonths] = useState(selectedMonths || 1);
@@ -41,12 +48,34 @@ const ReservationPage = () => {
   const [idPricingPolicy, setIdPricingPolicy] = useState(null);
   const [isEditingDate, setIsEditingDate] = useState(false);
   const [isEditingMonths, setIsEditingMonths] = useState(false);
+  const [checkTerms, setCheckTerms] = useState(false);
   const [opPayment, setOpPayment] = useState(PAYMENT_METHOD.VNPAY);
 
   const urlStatus = window.location.href + '/payments';
   console.log('url', urlStatus);
   const handleBack = () => {
     navigate(`/houses/${house_id}`);
+  };
+
+  const dispatch = useDispatch();
+  const showPopup = () => {
+    dispatch(openReservationPolicyModal());
+  };
+
+  const hidePopup = () => {
+    dispatch(closeReservationPolicyModal());
+  };
+
+  const handleCheckedTerms = e => {
+    const isChecked = e.target.checked;
+    setCheckTerms(isChecked);
+  };
+
+  const handleAgree = () => {
+    if (checkTerms) {
+      hidePopup();
+      handlePayments();
+    }
   };
 
   const getPriceAndIdFromHouse = months => {
@@ -173,7 +202,7 @@ const ReservationPage = () => {
               </Col>
             </Row>
           </header>
-          <Row id="reservation-container">
+          <Row id="reservation-container" justify="center">
             <BaseButton
               shape="circle"
               type="primary"
@@ -275,10 +304,10 @@ const ReservationPage = () => {
                 </Paragraph>
               </Row>
               <Row style={{ padding: '20px 0', gap: 20 }}>
-                <Col xs={24} xl={2}>
+                <Col xs={3} style={{ display: 'flex', justifyContent: 'center' }}>
                   <FieldTimeOutlined className="field-time-icon" />
                 </Col>
-                <Col xs={24} xl={18}>
+                <Col xs={20}>
                   <Caption size={120}>{t('RESERVATION.conclude-cancellation-policy')}</Caption>
                 </Col>
               </Row>
@@ -286,7 +315,7 @@ const ReservationPage = () => {
             <Col className="side" xs={23} lg={8}>
               <div className="fee-table">
                 <div className="fee-table-section-1">
-                  <img src={house?.image_urls?.[0]} className="img-fee" alt={house?.name} />
+                  <Avatar src={house?.image_urls?.[0]} className="img-fee" alt={house?.name} />
                   <div className="fee-table-section-1-description">
                     <Caption size={120}>
                       {' '}
@@ -327,13 +356,51 @@ const ReservationPage = () => {
               </div>
               <Row>
                 <Col className="reservation-btn" xs={24}>
-                  <BaseButton style={{ width: '100%' }} type="primary" onClick={handlePayments}>
+                  <BaseButton style={{ width: '100%' }} type="primary" onClick={showPopup}>
                     {t('RESERVATION.reservation-btn')}
                   </BaseButton>
                 </Col>
               </Row>
             </Col>
           </Row>
+          <CustomModal
+            width={560}
+            nameOfModal={reservationPolicyModal}
+            centered
+            action={closeReservationPolicyModal}
+            footer={null}
+            title={t('RESERVATION.title-terms')}>
+            <Caption size={140} classNames="d-block">
+              {/* {t('Your terms and conditions text here...')} */}
+              {t('RESERVATION.terms-reservation')}:
+              <ul>
+                <li> {t('RESERVATION.terms-reservation-1')}</li>
+                <li> {t('RESERVATION.terms-reservation-2')}</li>
+                <li> {t('RESERVATION.terms-reservation-3')}</li>
+              </ul>
+              {t('RESERVATION.terms-reservation-4')}
+            </Caption>
+            <Checkbox onClick={handleCheckedTerms} style={{ padding: '20px 0' }}>
+              <Caption size={140} classNames="d-block">
+                {t('RESERVATION.accept-checked')}
+              </Caption>
+            </Checkbox>
+            <div className="btn-container-terms">
+              <BaseButton
+                style={{ width: 'auto' }}
+                size="medium"
+                key="submit"
+                type="primary"
+                htmlType="submit"
+                onClick={handleAgree}>
+                {t('RESERVATION.agree-btn')}
+              </BaseButton>
+              ,
+              <BaseButton size="medium" style={{ width: 'auto' }} key="" onClick={hidePopup}>
+                {t('RESERVATION.cancel-btn')}
+              </BaseButton>
+            </div>
+          </CustomModal>
         </>
       )}
     </Layout>

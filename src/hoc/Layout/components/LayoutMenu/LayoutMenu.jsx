@@ -17,7 +17,7 @@ export const LayoutMenu = ({ isInline = false }) => {
   const [selectedKeys, setSelectedKeys] = useState(routeNames.Home);
   const location = useLocation();
   const { access_token } = useSelector(state => state.auth);
-  const user = useSelector(state => state.user);
+  const { user } = useSelector(state => state.user);
 
   const onItemClick = event => {
     const { key } = event;
@@ -46,7 +46,7 @@ export const LayoutMenu = ({ isInline = false }) => {
               <UserOutlined />
             </span>
           ),
-          key: '/user-dashboard/' + user.id,
+          key: '/user-dashboard/' + user?.id,
         },
         {
           label: <span>{t('management')}</span>,

@@ -9,10 +9,11 @@ import { updateUserCurrentService } from '../../../../services/apis/users.servic
 import { PASSWORD_REGEX, PHONE_NUMBER } from '../../../../constants/auth.constant';
 import { ERROR_TRANS_KEYS } from '../../../../constants/error.constant';
 import { useDispatch } from 'react-redux';
-import { resetPasswordUseAfterUpdate, updateUser } from '../../../../store/slices/user.slice';
+import { useUserSlice } from '../../../../store/slices/user.slice';
 
 const { Option } = Select;
 const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
+  const { actions: userActions } = useUserSlice();
   const dispatch = useDispatch();
   const [currentPasswordError, setCurrentPasswordError] = useState(null);
   const [newPasswordError, setNewPasswordError] = useState(null);
@@ -56,14 +57,6 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
 
   const debouncedInputChange = debounce(handleInputChange, 500);
 
-  const validateRepeatPassword = (_, value) => {
-    const { new_password } = formUser;
-    if (value && new_password !== value) {
-      return Promise.reject(new Error(t('USER-DASHBOARD.the-password-do-not-match')));
-    }
-    return Promise.resolve();
-  };
-
   const handleSubmit = async () => {
     setCurrentPasswordError(null);
 
@@ -86,8 +79,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
     try {
       const res = await updateUserCurrentService(formUser);
       onUpdate();
-      dispatch(resetPasswordUseAfterUpdate());
-      dispatch(updateUser(res));
+      dispatch(userActions.updateUserProfile(res));
       message.success('User profile updated successfully');
       console.log('Update success:', res);
     } catch (error) {
@@ -129,7 +121,8 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
               <UserOutlined className="icon" /> {t('USER-DASHBOARD.general-info')}
             </SubHeading>
           </Col>
-          <Col xs={24} sm={16} md={12} style={{ display: 'flex', alignItems: 'center' }}>
+
+          <Col xs={24} style={{ display: 'flex', alignItems: 'center' }}>
             <Form.Item
               label={
                 <Paragraph classNames="color-black" strong>
@@ -150,14 +143,15 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
               />
             </Form.Item>
           </Col>
-          <Col xs={24} sm={8} md={12} style={{ display: 'flex', alignItems: 'center' }}>
+
+          {/* <Col xs={24} sm={8} md={12} style={{ display: 'flex', alignItems: 'center' }}>
             <BaseButton
               size="medium"
               style={{ width: 'fit-content' }}
               onClick={() => setShowPasswordBtn(!showPasswordBtn)}>
               <Paragraph classNames="color-black">{t('USER-DASHBOARD.change-password')}</Paragraph>
             </BaseButton>
-          </Col>
+          </Col> */}
           <Col xs={24} md={12}>
             <Form.Item
               label={
@@ -186,6 +180,21 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
               />
             </Form.Item>
           </Col>
+
+          {user?.auth_method === 'NORMAL' && (
+            <>
+              <Col xs={24} style={{ display: 'flex', alignItems: 'center' }}>
+                <BaseButton
+                  size="medium"
+                  style={{ width: 'fit-content' }}
+                  onClick={() => setShowPasswordBtn(!showPasswordBtn)}>
+                  <Paragraph classNames="color-black">
+                    {t('USER-DASHBOARD.change-password')}
+                  </Paragraph>
+                </BaseButton>
+              </Col>
+            </>
+          )}
 
           {showPasswordBtn && user?.auth_method === 'NORMAL' && (
             <>
@@ -281,7 +290,15 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                       pattern: PASSWORD_REGEX.NUMBER,
                       message: t('validationRules.password.contain.digit'),
                     },
-                    { validator: validateRepeatPassword },
+
+                    ({ getFieldValue }) => ({
+                      validator(_, value) {
+                        if (!value || getFieldValue('new_password') === value) {
+                          return Promise.resolve();
+                        }
+                        return Promise.reject(new Error(t('validationRules.notmatch.password')));
+                      },
+                    }),
                   ]}>
                   <Input.Password
                     type="password"

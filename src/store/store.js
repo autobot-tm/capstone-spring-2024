@@ -3,7 +3,7 @@ import { authReducer } from './slices';
 import modalReducer from './slices/modalSlice';
 import houseReducer from './slices/houseSlice';
 import wishlistSlice from './slices/wishlist.slice';
-import userReducer from './slices/user.slice';
+import { userReducer } from './slices/user.slice';
 
 export const store = configureStore({
   reducer: {

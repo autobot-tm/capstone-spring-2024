@@ -1,8 +1,8 @@
 import { apiCaller } from '../../axios';
 import { ENDPOINTS } from './api-endpoints.service';
 
-export const getUserByIdService = async ({ user_id }) => {
-  return apiCaller.get(ENDPOINTS.users.user(user_id));
+export const getUserByIdService = async id => {
+  return apiCaller.get(ENDPOINTS.users.user(id));
 };
 
 export const updateUserCurrentService = async input => {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.scss';
 import { Breadcrumb, Col, Modal, Row, Tabs } from 'antd';
 import { Headline, Paragraph } from '../../components/Typography';
@@ -19,14 +19,26 @@ import { closeConfirmLogoutModal, openConfirmLogoutModal } from '../../store/sli
 import { signOut } from '../../store/slices';
 import { Helmet } from 'react-helmet';
 import AVATAR from '../../assets/images/avatar.svg';
+import { useUserSlice } from '../../store/slices/user.slice';
 
 const { TabPane } = Tabs;
+
 const UserDashboard = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const showModal = useSelector(state => state.modal.signOutModal);
+  const { access_token } = useSelector(state => state.auth);
+  const { user } = useSelector(state => state.user);
+  const { actions: userActions } = useUserSlice();
   const [activeTabKey, setActiveTabKey] = useState('1');
-  const user = useSelector(state => state.user);
+
+  console.log(user);
+
+  useEffect(() => {
+    if (access_token) {
+      dispatch(userActions.getUserProfile());
+    }
+  }, [access_token]);
 
   const handleTabChange = key => {
     setActiveTabKey(key);
@@ -130,28 +142,6 @@ const UserDashboard = () => {
                 />
               ))}
             </Tabs>
-
-            {/* <Row className="tabs-bar" justify="center">
-              <Col xs={24}>
-                <Tabs
-                  tabBarStyle={{ width: '100%' }}
-                  activeKey={activeTabKey}
-                  onChange={handleTabChange}
-                  className="tabs-bar-inner"
-                  centered>
-                  {tabPanes.map(pane => (
-                    <TabPane
-                      tab={
-                        <Paragraph classNames="color-black" strong>
-                          {pane.title}
-                        </Paragraph>
-                      }
-                      key={pane.key}
-                    />
-                  ))}
-                </Tabs>
-              </Col>
-            </Row> */}
           </Col>
         </Row>
       </header>

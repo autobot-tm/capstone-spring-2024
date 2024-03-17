@@ -97,10 +97,10 @@
     }
   }
   .side {
-    padding: 0 10px;
+    padding: 30px 0;
     position: sticky;
     top: 0;
-    height: 100vh;
+    height: 40vh;
     z-index: 900;
     .fee-table {
       border: 0.8px solid #ccc;
@@ -148,9 +148,12 @@
     }
   }
 }
-
+.btn-container-terms {
+  display: flex;
+  justify-content: space-between;
+}
 @media screen and (max-width: 992px) {
   #reservation-container {
-    padding: 50px 20px;
+    padding: 50px 10px;
   }
 }
