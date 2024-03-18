@@ -19,6 +19,9 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { APP_CONFIG } from './config';
 import AdvanceSearch from './components/AdvanceSearch/AdvanceSearch';
 import ConfirmLogout from './components/ConfirmLogout/ConfirmLogout';
+import ReservationDetail from './components/ReservationDetail/ReservationDetail';
+import ContractDetail from './components/ContractDetail/ContractDetai';
+import RequestCancelConract from './components/RequestCancelContract/RequestCancelConract';
 
 initTranslations();
 configureApiCaller(store);
@@ -55,6 +58,9 @@ root.render(
           <ResetPassword />
           <AdvanceSearch />
           <ConfirmLogout />
+          <ReservationDetail />
+          <ContractDetail />
+          <RequestCancelConract />
         </BrowserRouter>
       </ConfigProvider>
     </GoogleOAuthProvider>

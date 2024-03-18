@@ -55,7 +55,7 @@ export const LayoutMenu = ({ isInline = false }) => {
               <SolutionOutlined />
             </span>
           ),
-          key: '', //replace
+          key: '/management',
         },
         {
           label: <span style={{ color: 'red' }}>{t('logout')}</span>,

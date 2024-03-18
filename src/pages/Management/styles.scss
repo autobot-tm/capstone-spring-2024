@@ -1,0 +1,27 @@
+.management {
+  &-container {
+    max-width: 1400px;
+    padding: 0 24px;
+    margin: 0 auto;
+    padding: 0;
+    .management-menu {
+      width: 100%;
+      height: 100%;
+    }
+
+    @media screen and (max-width: 1401px) {
+      max-width: 100%;
+      padding: 0 16px;
+    }
+    @media (max-width: 1024px) {
+      .management-menu {
+        display: none;
+      }
+    }
+    @media (min-width: 1025px) {
+      .management-menu2 {
+        display: none;
+      }
+    }
+  }
+}

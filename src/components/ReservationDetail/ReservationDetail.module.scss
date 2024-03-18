@@ -1,0 +1,28 @@
+.columnContainer {
+  display: flex;
+  flex-direction: column;
+  .rowContainer {
+    display: flex;
+    gap: 4px;
+  }
+}
+
+.loadingContainer {
+  height: 478px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 500px) {
+  .columnContainer {
+    gap: 10px;
+    .rowContainer {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .loadingContainer {
+    height: 478px;
+  }
+}

@@ -1,0 +1,17 @@
+.input {
+  border: none;
+  margin: 10px 0;
+  background: #eaeaea;
+  padding: 10px 25px;
+}
+
+@media (max-width: 1024px) {
+  .filterMenu {
+    display: none;
+  }
+}
+@media (min-width: 1025px) {
+  .filterMenu2 {
+    display: none;
+  }
+}
