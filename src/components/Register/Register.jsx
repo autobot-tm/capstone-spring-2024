@@ -70,7 +70,7 @@ const Register = () => {
             { required: true, message: t('validationRules.required.email') },
             { type: 'email', message: t('validationRules.invalid.email') },
           ]}>
-          <Input size="large" placeholder="Email" disabled={loading} />
+          <Input size="large" placeholder={t('placeholder.email')} disabled={loading} />
         </Form.Item>
         <Form.Item
           name={'password'}
