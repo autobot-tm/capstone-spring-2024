@@ -14,3 +14,34 @@
     font-size: 20px;
   }
 }
+.notification-popup {
+  position: absolute;
+  top: 50px; /* Điều chỉnh vị trí của popup thông báo */
+  right: 20px; /* Điều chỉnh vị trí của popup thông báo */
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  width: 300px; /* Điều chỉnh độ rộng của popup thông báo */
+  max-height: 400px; /* Điều chỉnh chiều cao tối đa của popup thông báo */
+  overflow-y: auto; /* Cho phép cuộn nếu nội dung quá dài */
+}
+
+.notification-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee; /* Đường kẻ phân cách giữa các thông báo */
+}
+
+.notification-item:last-child {
+  border-bottom: none; /* Loại bỏ đường kẻ phân cách cho mục cuối cùng */
+}
+
+.notification-item:hover {
+  background-color: #f0f0f0; /* Màu nền khi hover */
+}
+
+.notification-icon {
+  margin-right: 10px;
+}

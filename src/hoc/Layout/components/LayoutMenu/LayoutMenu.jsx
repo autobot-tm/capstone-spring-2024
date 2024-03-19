@@ -5,11 +5,15 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './styles.scss';
 import { TranslationSelector } from '../TranslationSelector';
 import { useTranslation } from 'react-i18next';
-import { BellOutlined, LogoutOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConfirmLogoutModal, openLoginModal } from '../../../../store/slices/modalSlice';
 import { Paragraph } from '../../../../components/Typography';
 import AVATAR from '../../../../assets/images/avatar.svg';
+import UserNotification from '../../../../components/UserNotification/UserNotification';
+import { getNotiUserCurrentService } from '../../../../services/apis/notification.service';
+import { setNotifications } from '../../../../store/slices/notification.slice';
+
 export const LayoutMenu = ({ isInline = false }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -18,6 +22,23 @@ export const LayoutMenu = ({ isInline = false }) => {
   const location = useLocation();
   const { access_token } = useSelector(state => state.auth);
   const { user } = useSelector(state => state.user);
+  const { notifications } = useSelector(state => state.notification);
+
+  useEffect(() => {
+    const fetchNotification = async () => {
+      try {
+        const res = await getNotiUserCurrentService();
+        console.log(res);
+        dispatch(setNotifications([...res.notifications]));
+        console.log('notifications', notifications);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchNotification();
+  }, []);
+
+  console.log('notification', notifications);
 
   const onItemClick = event => {
     const { key } = event;
@@ -70,6 +91,17 @@ export const LayoutMenu = ({ isInline = false }) => {
     },
   ];
 
+  const notificationItems = [
+    {
+      key: 'SubMenu3',
+      icon: <UserNotification numbers={notifications?.length} />,
+      children: notifications.map((item, index) => ({
+        label: <span key={index}>{item.description}</span>,
+        key: `/notification/${index}`,
+      })),
+    },
+  ];
+
   return (
     <Menu
       mode={isInline ? 'inline' : 'horizontal'}
@@ -112,12 +144,24 @@ export const LayoutMenu = ({ isInline = false }) => {
           </Button>
         )}
       </Menu.Item>
+      {/* <Menu.Item key="notification">
+        <div className="notification-popup">
+          {notificationItems.map(item => (
+            <div key={item.key} className="notification-item" onClick={() => onItemClick(item.key)}>
+              <span className="notification-icon">{item.icon}</span>
+              <span>{item.children[0].label}</span>
+            </div>
+          ))}
+        </div>
+      </Menu.Item> */}
+
       <Menu.Item key="notification">
-        <Button
-          type="text"
+        <Menu
+          onClick={onItemClick}
+          mode="horizontal"
+          items={notificationItems}
           style={{ margin: 0 }}
-          icon={<BellOutlined style={{ fontSize: 20 }} />}
-          onClick={() => {}}></Button>
+        />
       </Menu.Item>
       <Menu.Item key="translation">
         <TranslationSelector />
