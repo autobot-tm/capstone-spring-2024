@@ -3,9 +3,9 @@ import './style.scss';
 import { Breadcrumb, Col, Modal, Row, Tabs } from 'antd';
 import { Headline, Paragraph } from '../../components/Typography';
 import {
-  HeartOutlined,
+  // HeartOutlined,
   HomeOutlined,
-  LogoutOutlined,
+  // LogoutOutlined,
   SettingOutlined,
   UserOutlined,
 } from '@ant-design/icons';
@@ -15,7 +15,7 @@ import EditProfile from './components/EditProfile/EditProfile';
 import MyWishlist from './components/MyWishlist/MyWishlist';
 import MyProfile from './components/MyProfile/MyProfile';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeConfirmLogoutModal, openConfirmLogoutModal } from '../../store/slices/modalSlice';
+import { closeConfirmLogoutModal } from '../../store/slices/modalSlice';
 import { signOut } from '../../store/slices';
 import { Helmet } from 'react-helmet';
 import AVATAR from '../../assets/images/avatar.svg';
@@ -78,28 +78,28 @@ const UserDashboard = () => {
       ),
       key: '2',
     },
-    {
-      title: (
-        <>
-          <Row justify="center">
-            <HeartOutlined className="icon-tab-item" />
-          </Row>
-          <Row>{t('USER-DASHBOARD.my-wishlist')}</Row>
-        </>
-      ),
-      key: '3',
-    },
-    {
-      title: (
-        <div onClick={() => dispatch(openConfirmLogoutModal())}>
-          <Row justify="center">
-            <LogoutOutlined className="icon-tab-item" />
-          </Row>
-          <Row>{t('USER-DASHBOARD.log-out')}</Row>
-        </div>
-      ),
-      key: '4',
-    },
+    // {
+    //   title: (
+    //     <>
+    //       <Row justify="center">
+    //         <HeartOutlined className="icon-tab-item" />
+    //       </Row>
+    //       <Row>{t('USER-DASHBOARD.my-wishlist')}</Row>
+    //     </>
+    //   ),
+    //   key: '3',
+    // },
+    // {
+    //   title: (
+    //     <div onClick={() => dispatch(openConfirmLogoutModal())}>
+    //       <Row justify="center">
+    //         <LogoutOutlined className="icon-tab-item" />
+    //       </Row>
+    //       <Row>{t('USER-DASHBOARD.log-out')}</Row>
+    //     </div>
+    //   ),
+    //   key: '4',
+    // },
   ];
 
   const handleProfileUpdate = async () => {
@@ -134,7 +134,7 @@ const UserDashboard = () => {
                   ]}
                 />
               </Col>
-              <Col xs={24}>
+              <Col xs={24} style={{ display: 'flex', justifyContent: 'center' }}>
                 <Tabs
                   activeKey={activeTabKey}
                   onChange={handleTabChange}

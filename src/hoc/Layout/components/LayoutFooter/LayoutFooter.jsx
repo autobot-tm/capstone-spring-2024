@@ -130,7 +130,7 @@ export const LayoutFooter = () => {
 
         <div className="footer-container footer-bottom-container">
           <div className="footer-logo-container">
-            <Caption size={110}> Copyright © 2012 SZK VIETNAM. All Rights Reserved.</Caption>
+            <Caption size={110}> Copyright © 2024 SZK VIETNAM. All Rights Reserved.</Caption>
           </div>
           <div className="footer-contact-container">
             <Caption size={110} strong classNames="color-black">

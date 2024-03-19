@@ -20,8 +20,10 @@
   // }
   .tabs-bar {
     position: absolute;
+
+    padding: 0 20px;
     top: 50px;
-    width: 100%;
+    width: max-content;
     z-index: 500;
     background-color: white;
     border: 0.8px solid #ccc;
