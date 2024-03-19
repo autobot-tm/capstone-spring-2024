@@ -9,6 +9,7 @@ import ReservationPage from '../pages/Reservation/ReservationPage';
 import OrderSuccessView from '../pages/Payment/components/OrderSuccessView/OrderSuccessView';
 import UserDashboard from '../pages/UserDashboard/UserDashboard';
 import ReportLivingIssues from '../pages/ReportLivingIssues/ReportLivingIssues';
+import ExtraServices from '../pages/ExtraServices/ExtraServices';
 
 export const routePaths = {
   public: [
@@ -35,6 +36,14 @@ export const routePaths = {
     {
       path: routeNames.OrderSuccess,
       element: <OrderSuccessView />,
+    },
+    {
+      path: routeNames.ExtraServices,
+      element: <ExtraServices />,
+    },
+    {
+      path: routeNames.ExtraServices,
+      element: <ExtraServices />,
     },
   ],
   private: [

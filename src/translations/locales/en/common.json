@@ -319,6 +319,11 @@
     "expected-move-in-date": "Expected move-in date"
   },
 
+  "EXTRA-SERVICES": {
+    "our-services": "Our Services",
+    "extra-services": "Extra Services"
+  },
+
   "NOT-FOUND": {
     "title": "Oops... Page Not Found!",
     "description": "The page you are looking for does not exist. It might have been moved or deleted.",

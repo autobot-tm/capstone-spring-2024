@@ -1,0 +1,100 @@
+@import '../../theme/scss/colors.theme.scss';
+
+#header-extra-services {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  background-image: url('../../assets/images/extra-service-background.jpeg');
+  background-position: center;
+  height: 26vh;
+  width: 100%;
+  object-fit: cover;
+  .breadcrumb {
+    display: flex;
+    justify-content: end;
+  }
+  .header-row {
+    width: 1400px;
+  }
+  .title-page {
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+}
+
+#es-container {
+  display: flex;
+  justify-content: center;
+  width: 1400px;
+  height: auto;
+  margin: 0 auto;
+  padding: 50px 20px;
+
+  .es-section {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .content-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 120px;
+    padding: 6px;
+
+    &-top {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      .es-icon-primary {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 60px;
+        background-color: $colors-primary;
+        border-radius: 50%;
+        color: white;
+      }
+      .es-icon-tertiary {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 60px;
+        background-color: $colors-tertiary;
+        border-radius: 50%;
+        color: white;
+      }
+    }
+
+    .tertiary-link {
+      font-weight: 600;
+      color: $colors-tertiary;
+    }
+    .primary-link {
+      font-weight: 600;
+      color: $colors-primary;
+    }
+  }
+
+  .es-section-detail {
+    display: flex;
+    justify-content: center;
+    // text-align: center;
+    margin-top: 30px;
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .es-section {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    background-color: aqua;
+  }
+}
