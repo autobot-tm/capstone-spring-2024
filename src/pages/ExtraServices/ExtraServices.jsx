@@ -1,7 +1,7 @@
 import './styles.scss';
 import { Breadcrumb, Card, Col, Row } from 'antd';
 import React, { useState } from 'react';
-import { Headline, Paragraph, SubHeading } from '../../components/Typography';
+import { Caption, Headline, SubHeading } from '../../components/Typography';
 import { useTranslation } from 'react-i18next';
 import { FileProtectOutlined, HomeOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Layout } from '../../hoc/Layout/Layout';
@@ -47,21 +47,21 @@ const ExtraServices = () => {
               We Provide Professional
             </Headline>
             <Headline strong>Business Solutions</Headline>
-            <Paragraph classNames="d-block" style={{ marginTop: 20 }}>
+            <Caption size={140} classNames="d-block" style={{ marginTop: 20 }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore.
-            </Paragraph>
-            <Paragraph>
-              Nec nam aliquam sem et tortor consequat id porta. Praesent tristique magna sit amet
-              purus gravida.
-            </Paragraph>
+            </Caption>
+            <Caption size={140}>
+              Nec nam aliquam sem et tortor consequat id porta. Praesent tristique magna.
+            </Caption>
           </Col>
           <Col xs={24} className="es-section">
             <Card
               onClick={() => handleCardClick('utility')}
               hoverable
+              className="cs-card"
               style={{
-                width: 320,
+                // width: 320,
                 border: selectedCard === 'utility' ? '2px solid #f8a11e' : 'none',
               }}>
               <div className="content-card">
@@ -80,9 +80,10 @@ const ExtraServices = () => {
             </Card>
             <Card
               hoverable
+              className="cs-card"
               onClick={() => handleCardClick('residence')}
               style={{
-                width: 320,
+                // width: 320,
                 border: selectedCard === 'residence' ? '2px solid #28aae1' : 'none',
               }}>
               <div className="content-card">

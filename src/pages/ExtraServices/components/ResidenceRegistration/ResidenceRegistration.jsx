@@ -1,19 +1,23 @@
 import './styles.scss';
 import React from 'react';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
-import { Paragraph } from '../../../../components/Typography';
+import { Paragraph, SubHeading } from '../../../../components/Typography';
 
 const ResidenceRegistration = () => {
   return (
-    <div>
-      <Paragraph classNames="d-block">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua.
-      </Paragraph>
-      <Paragraph classNames="d-block">
+    <div className="rr-container">
+      <SubHeading classNames="d-block">Residence Registration</SubHeading>
+      <Paragraph classNames="d-block" style={{ padding: 10 }}>
         Nec nam aliquam sem et tortor consequat id porta. Praesent tristique magna sit amet purus
-        gravida quis blandit turpis.
+        gravida quis blandit turpis. Nec nam aliquam sem et tortor consequat id porta. Praesent
+        tristique magna sit amet purus gravida quis blandit turpis. Nec nam aliquam sem et tortor
+        consequat id porta. Praesent tristique magna sit amet purus gravida quis blandit turpis. Nec
+        nam aliquam sem et tortor consequat id porta. Praesent tristique magna sit amet purus
+        gravida quis blandit turpis. Nec nam aliquam sem et tortor consequat id porta. Praesent
+        tristique magna sit amet purus gravida quis blandit turpis. Nec nam aliquam sem et tortor
+        consequat id porta. Praesent tristique magna sit amet purus gravida quis blandit turpis.
       </Paragraph>
+
       <BaseButton className="bg-tertiary">Request</BaseButton>
     </div>
   );

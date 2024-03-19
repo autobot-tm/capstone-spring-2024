@@ -365,7 +365,8 @@
     "email": "Email",
     "reservation-fee": "Reservation fee",
     "total-months": "Total months",
-    "expected-move-in-date": "Expected move-in date"
+    "expected-move-in-date": "Expected move-in date",
+    "return-to-user-management": "Return to User Management"
   },
 
   "EXTRA-SERVICES": {

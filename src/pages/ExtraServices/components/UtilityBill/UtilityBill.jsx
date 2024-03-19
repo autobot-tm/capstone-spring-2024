@@ -1,25 +1,34 @@
 import './styles.scss';
 import React from 'react';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
-import { Paragraph } from '../../../../components/Typography';
+import { Paragraph, SubHeading } from '../../../../components/Typography';
 
 const UtilityBill = () => {
   return (
-    <>
-      <div>
-        <Paragraph classNames="d-block">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua.
-        </Paragraph>
-        <Paragraph classNames="d-block">
-          Nec nam aliquam sem et tortor consequat id porta. Praesent tristique magna sit amet purus
-          gravida quis blandit turpis.
-        </Paragraph>
-        <BaseButton style={{ width: 'auto', marginTop: 20 }} type="primary">
-          Request
-        </BaseButton>
-      </div>
-    </>
+    <div className="rr-container">
+      <SubHeading classNames="d-block">Utility Bill Collection</SubHeading>
+      <Paragraph classNames="d-block" style={{ padding: 10 }}>
+        Nec nam aliquam sem et tortor consequat id porta. Praesent tristique magna sit amet purus
+        gravida quis blandit turpis. Nec nam aliquam sem et tortor consequat id porta. Praesent
+        tristique magna sit amet purus gravida quis blandit turpis. Nec nam aliquam sem et tortor
+        consequat id porta. Praesent tristique magna sit amet purus gravida quis blandit turpis. Nec
+        nam aliquam sem et tortor consequat id porta. Praesent tristique magna sit amet purus
+        gravida quis blandit turpis. Nec nam aliquam sem et tortor consequat id porta. Praesent
+        tristique magna sit amet purus gravida quis blandit turpis. Nec nam aliquam sem et tortor
+        consequat id porta. Praesent tristique magna sit amet purus gravida quis blandit turpis.
+      </Paragraph>
+      <Paragraph classNames="d-block" style={{ padding: 10 }}>
+        Nec nam aliquam sem et tortor consequat id porta. Praesent tristique magna sit amet purus
+        gravida quis blandit turpis. Nec nam aliquam sem et tortor consequat id porta. Praesent
+        tristique magna sit amet purus gravida quis blandit turpis. Nec nam aliquam sem et tortor
+        consequat id porta.
+      </Paragraph>
+
+      <BaseButton className="bg-primary">Request</BaseButton>
+      {/* <BaseButton style={{ width: 'auto', marginTop: 20 }} type="primary">
+        Request
+      </BaseButton> */}
+    </div>
   );
 };
 

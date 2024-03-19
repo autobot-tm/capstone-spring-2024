@@ -26,7 +26,7 @@
 #es-container {
   display: flex;
   justify-content: center;
-  width: 1400px;
+  max-width: 1400px;
   height: auto;
   margin: 0 auto;
   padding: 50px 20px;
@@ -34,9 +34,13 @@
   .es-section {
     display: flex;
     justify-content: center;
+    width: 10px;
     gap: 20px;
   }
 
+  .cs-card {
+    width: 320px;
+  }
   .content-card {
     display: flex;
     flex-direction: column;
@@ -84,17 +88,20 @@
   .es-section-detail {
     display: flex;
     justify-content: center;
-    // text-align: center;
+    align-items: center;
+    text-align: center;
     margin-top: 30px;
   }
 }
 
-@media screen and (max-width: 730px) {
+@media screen and (max-width: 554px) {
   .es-section {
     display: flex;
     flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
-    background-color: aqua;
+  }
+  .cs-card {
+    width: 100% !important;
   }
 }
