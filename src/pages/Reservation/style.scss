@@ -53,38 +53,37 @@
       }
     }
     &-payment {
+      .banner-container {
+        display: flex;
+        gap: 10px;
+        @media screen and (max-width: 540px) {
+          display: block;
+        }
+      }
       &-banner {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         width: 100%;
         margin: 20px 0;
-        height: 100px;
+        height: 140px;
         background-color: $colors-bg-secondary;
-        //refactor
-        @media screen and (max-width: 540px) {
-          height: 110px;
-        }
         //refactor
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         &-inner {
           display: flex;
           text-align: center;
           justify-content: space-between;
-          width: 600px;
+          width: 100%;
           padding: 0 20px;
-          @media screen and (max-width: 1200px) {
-            width: 500px;
-          }
-          @media screen and (max-width: 768px) {
-            width: 400px;
-          }
-          @media screen and (max-width: 540px) {
-            width: 300px;
-            //refactor
+          // @media screen and (max-width: 1200px) {
+          //   width: 500px;
+          // }
+          // @media screen and (max-width: 768px) {
+          //   width: 400px;
+          // }
+          @media screen and (max-width: 686px) {
             display: block;
-          }
-          @media screen and (max-width: 400px) {
-            width: 200px;
           }
         }
         img {
