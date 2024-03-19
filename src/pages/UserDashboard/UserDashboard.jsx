@@ -20,6 +20,7 @@ import { signOut } from '../../store/slices';
 import { Helmet } from 'react-helmet';
 import AVATAR from '../../assets/images/avatar.svg';
 import { useUserSlice } from '../../store/slices/user.slice';
+import SpinLoading from '../../components/SpinLoading/SpinLoading';
 
 const { TabPane } = Tabs;
 
@@ -28,7 +29,7 @@ const UserDashboard = () => {
   const dispatch = useDispatch();
   const showModal = useSelector(state => state.modal.signOutModal);
   const { access_token } = useSelector(state => state.auth);
-  const { user } = useSelector(state => state.user);
+  const { user, loading } = useSelector(state => state.user);
   const { actions: userActions } = useUserSlice();
   const [activeTabKey, setActiveTabKey] = useState('1');
 
@@ -106,71 +107,81 @@ const UserDashboard = () => {
   };
   return (
     <Layout>
-      <Helmet>
-        <title>{t('USER-DASHBOARD.user-dashboard')}</title>
-      </Helmet>
-      <header id="header-user-dashboard">
-        <Row className="header-row" align="middle" justify="center">
-          <Col xs={24} sm={12}>
-            <Headline size={450} strong>
-              {t('USER-DASHBOARD.user-dashboard')}
-            </Headline>
-          </Col>
-          <Col xs={24} sm={12} className="breadcrumb">
-            <Breadcrumb
-              items={[
-                {
-                  href: '/',
-                  title: <HomeOutlined style={{ color: 'black' }} />,
-                },
-                {
-                  title: `${t('USER-DASHBOARD.user-dashboard')}`,
-                },
-              ]}
-            />
-          </Col>
-          <Col xs={24}>
-            <Tabs activeKey={activeTabKey} onChange={handleTabChange} className="tabs-bar" centered>
-              {tabPanes.map(pane => (
-                <TabPane
-                  tab={
-                    <Paragraph classNames="color-black" strong>
-                      {pane.title}
-                    </Paragraph>
-                  }
-                  key={pane.key}
+      {loading ? (
+        <SpinLoading size="large" />
+      ) : (
+        <>
+          <Helmet>
+            <title>{t('USER-DASHBOARD.user-dashboard')}</title>
+          </Helmet>
+          <header id="header-user-dashboard">
+            <Row className="header-row" align="middle" justify="center">
+              <Col xs={24} sm={12}>
+                <Headline size={450} strong>
+                  {t('USER-DASHBOARD.user-dashboard')}
+                </Headline>
+              </Col>
+              <Col xs={24} sm={12} className="breadcrumb">
+                <Breadcrumb
+                  items={[
+                    {
+                      href: '/',
+                      title: <HomeOutlined style={{ color: 'black' }} />,
+                    },
+                    {
+                      title: `${t('USER-DASHBOARD.user-dashboard')}`,
+                    },
+                  ]}
                 />
-              ))}
-            </Tabs>
-          </Col>
-        </Row>
-      </header>
-      <main id="container-user-dashboard">
-        <Row justify="center">
-          <Col xs={24}>
-            {activeTabKey === '1' && <MyProfile user={user} t={t} avatarDefault={AVATAR} />}
-            {activeTabKey === '2' && (
-              <EditProfile
-                user={user}
-                t={t}
-                avatarDefault={AVATAR}
-                onUpdate={handleProfileUpdate}
-              />
-            )}
-            {activeTabKey === '3' && <MyWishlist />}
-            {activeTabKey === '4' && (
-              <Modal
-                title="Confirm Logout"
-                open={showModal}
-                onOk={handleOk}
-                onCancel={handleCancel}
-                centered>
-                <p>Are you sure you want to log ousst?</p>
-              </Modal>
-            )}
-          </Col>
-        </Row>
-      </main>
+              </Col>
+              <Col xs={24}>
+                <Tabs
+                  activeKey={activeTabKey}
+                  onChange={handleTabChange}
+                  className="tabs-bar"
+                  centered>
+                  {tabPanes.map(pane => (
+                    <TabPane
+                      tab={
+                        <Paragraph classNames="color-black" strong>
+                          {pane.title}
+                        </Paragraph>
+                      }
+                      key={pane.key}
+                    />
+                  ))}
+                </Tabs>
+              </Col>
+            </Row>
+          </header>
+          <main id="container-user-dashboard">
+            <Row justify="center">
+              <Col xs={24}>
+                {activeTabKey === '1' && <MyProfile user={user} t={t} avatarDefault={AVATAR} />}
+                {activeTabKey === '2' && (
+                  <EditProfile
+                    user={user}
+                    t={t}
+                    avatarDefault={AVATAR}
+                    onUpdate={handleProfileUpdate}
+                  />
+                )}
+                {activeTabKey === '3' && <MyWishlist />}
+                {activeTabKey === '4' && (
+                  <Modal
+                    title="Confirm Logout"
+                    open={showModal}
+                    onOk={handleOk}
+                    onCancel={handleCancel}
+                    centered>
+                    <p>Are you sure you want to log ousst?</p>
+                  </Modal>
+                )}
+              </Col>
+            </Row>
+          </main>
+        </>
+      )}
     </Layout>
   );
 };

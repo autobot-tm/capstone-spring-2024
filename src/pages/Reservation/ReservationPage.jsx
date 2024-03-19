@@ -276,7 +276,6 @@ const ReservationPage = () => {
                     onChange={handleOptionPayment}
                     value={opPayment}
                     size="large"
-                    optionType="button"
                     className="banner-container">
                     <Radio value={PAYMENT_METHOD.VNPAY} className="main-payment-banner">
                       <span className="main-payment-banner-inner">
@@ -323,7 +322,7 @@ const ReservationPage = () => {
                       {t(`detail-house.${house?.category.replace(/\s/g, '')}`)}
                     </Caption>
                     <Row align="middle">
-                      <SubHeading size={230} strong>
+                      <SubHeading size={260} classNames="number-price" strong>
                         {formatCustomCurrency(priceOfMonths)}
                       </SubHeading>
                       <Caption size={140}>&nbsp;/{t('RESERVATION.month')}</Caption>
