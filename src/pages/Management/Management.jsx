@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout } from '../../hoc/Layout';
 import './styles.scss';
 import { Col, Menu, Row } from 'antd';
@@ -6,7 +6,7 @@ import Contract from './components/Contract/Contract';
 import Fee from './components/Fee/Fee';
 import Reservation from './components/Reservation/Reservation';
 import { useDispatch, useSelector } from 'react-redux';
-import { setMenuItem, setName, setPage, setStatus } from '../../store/slices/reservationSlice';
+import { setName, setPage, setStatus } from '../../store/slices/reservationSlice';
 import { useTranslation } from 'react-i18next';
 import { setContractPage, setContractStatus } from '../../store/slices/contractSlice';
 
@@ -14,7 +14,8 @@ const Management = () => {
   const dispatch = useDispatch();
   const page = useSelector(state => state.reservation.page);
   const contractPage = useSelector(state => state.contract.page);
-  const menuItem = useSelector(state => state.reservation.menuItem);
+  // const menuItem = useSelector(state => state.reservation.menuItem);
+  const [menuItem, setMenuItem] = useState('contract');
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -49,7 +50,8 @@ const Management = () => {
     },
   ];
   const onClick = e => {
-    dispatch(setMenuItem({ menuItem: e.key }));
+    // dispatch(setMenuItem({ menuItem: e.key }));
+    setMenuItem(e.key);
   };
 
   return (

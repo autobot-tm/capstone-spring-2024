@@ -4,7 +4,6 @@ const initialState = {
   name: '',
   status: 'ALL',
   page: 1,
-  menuItem: 'contract',
   loading: false,
 };
 
@@ -21,9 +20,7 @@ const reservationSlice = createSlice({
     setPage: (state, action) => {
       state.page = action.payload.page;
     },
-    setMenuItem: (state, action) => {
-      state.menuItem = action.payload.menuItem;
-    },
+
     setLoading: (state, action) => {
       state.loading = action.payload.loading;
     },
@@ -31,4 +28,4 @@ const reservationSlice = createSlice({
 });
 
 export default reservationSlice.reducer;
-export const { setStatus, setName, setPage, setMenuItem, setLoading } = reservationSlice.actions;
+export const { setStatus, setName, setPage, setLoading } = reservationSlice.actions;
