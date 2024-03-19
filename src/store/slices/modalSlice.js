@@ -8,6 +8,11 @@ const initialState = {
   resetPasswordModal: false,
   advanceSearchModal: false,
   confirmLogoutModal: false,
+  reservationDetailModal: false,
+  contractDetailModal: false,
+  requestCancelContractModal: false,
+  reservationId: undefined,
+  contractId: undefined,
   reservationPolicyModal: false,
   email: '',
 };
@@ -39,6 +44,17 @@ const modalSlice = createSlice({
     openConfirmLogoutModal: state => {
       state.confirmLogoutModal = true;
     },
+    openReservationDetailModal: (state, action) => {
+      state.reservationDetailModal = true;
+      state.reservationId = action.payload.reservationId;
+    },
+    openContractDetailModal: (state, action) => {
+      state.contractDetailModal = true;
+      state.contractId = action.payload.contractId;
+    },
+    openRequestCancelContractModal: state => {
+      state.requestCancelContractModal = true;
+    },
     openReservationPolicyModal: state => {
       state.reservationPolicyModal = true;
     },
@@ -67,6 +83,15 @@ const modalSlice = createSlice({
     closeConfirmLogoutModal: state => {
       state.confirmLogoutModal = false;
     },
+    closeReservationDetailModal: state => {
+      state.reservationDetailModal = false;
+    },
+    closeContractDetailModal: state => {
+      state.contractDetailModal = false;
+    },
+    closeRequestCancelContractModal: state => {
+      state.requestCancelContractModal = false;
+    },
   },
 });
 
@@ -79,6 +104,9 @@ export const {
   openResetPasswordModal,
   openAdvanceSearchModal,
   openConfirmLogoutModal,
+  openReservationDetailModal,
+  openContractDetailModal,
+  openRequestCancelContractModal,
   closeLoginModal,
   closeRegisterModal,
   closeRequestResetPasswordModal,
@@ -86,6 +114,9 @@ export const {
   closeResetPasswordModal,
   closeAdvanceSearchModal,
   closeConfirmLogoutModal,
+  closeReservationDetailModal,
+  closeContractDetailModal,
+  closeRequestCancelContractModal,
   openReservationPolicyModal,
   closeReservationPolicyModal,
 } = modalSlice.actions;

@@ -74,7 +74,7 @@ const RequestResetPassword = () => {
               { required: true, message: t('validationRules.required.email') },
               { type: 'email', message: t('validationRules.invalid.email') },
             ]}>
-            <Input size="large" placeholder="Email" />
+            <Input size="large" placeholder={t('placeholder.email')} />
           </Form.Item>
           <Form.Item>
             <BaseButton type="primary" htmlType="submit" disabled={loading} loading={loading}>

@@ -23,6 +23,12 @@ export const ENDPOINTS = {
     reservationId: '/reservations',
     reserve: house_id => `/houses/${house_id}/reserve`,
   },
+  reservations: {
+    base: '/reservations',
+  },
+  contracts: {
+    base: '/leases',
+  },
   users: {
     base: '/users',
     user: user_id => `/users/${user_id}`,

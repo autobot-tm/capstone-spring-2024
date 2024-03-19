@@ -9,6 +9,7 @@ import ReservationPage from '../pages/Reservation/ReservationPage';
 import OrderSuccessView from '../pages/Payment/components/OrderSuccessView/OrderSuccessView';
 import UserDashboard from '../pages/UserDashboard/UserDashboard';
 import ReportLivingIssues from '../pages/ReportLivingIssues/ReportLivingIssues';
+import Management from '../pages/Management/Management';
 import ExtraServices from '../pages/ExtraServices/ExtraServices';
 
 export const routePaths = {
@@ -41,10 +42,6 @@ export const routePaths = {
       path: routeNames.ExtraServices,
       element: <ExtraServices />,
     },
-    {
-      path: routeNames.ExtraServices,
-      element: <ExtraServices />,
-    },
   ],
   private: [
     {
@@ -58,6 +55,14 @@ export const routePaths = {
     {
       path: routeNames.Reservation,
       element: <ReservationPage />,
+    },
+    {
+      path: routeNames.OrderSuccess,
+      element: <OrderSuccessView />,
+    },
+    {
+      path: routeNames.Management,
+      element: <Management />,
     },
   ],
 };

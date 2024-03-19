@@ -74,7 +74,7 @@ const SignIn = () => {
               { required: true, message: t('validationRules.required.email') },
               { type: 'email', message: t('validationRules.invalid.email') },
             ]}>
-            <Input placeholder="Email" size="large" disabled={loading} />
+            <Input placeholder={t('placeholder.email')} size="large" disabled={loading} />
           </Form.Item>
           <Form.Item
             name={'password'}
