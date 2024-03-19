@@ -215,7 +215,7 @@ const ReservationPage = () => {
               <LeftOutlined className="icon-left" onClick={handleBack} />
               <Headline strong>{t('RESERVATION.reservation-required')}</Headline>
             </Col>
-            <Col className="main" xs={24} lg={14}>
+            <Col className="main" xs={24} xl={14}>
               <Row className="main-estimated section">
                 <Col style={{ marginBottom: 20 }} xs={24}>
                   <SubHeading size={260} strong>
@@ -276,7 +276,7 @@ const ReservationPage = () => {
                     onChange={handleOptionPayment}
                     value={opPayment}
                     size="large"
-                    optionType="button">
+                    className="banner-container">
                     <Radio value={PAYMENT_METHOD.VNPAY} className="main-payment-banner">
                       <span className="main-payment-banner-inner">
                         <img src={VNPay1} />
@@ -312,7 +312,7 @@ const ReservationPage = () => {
                 </Col>
               </Row>
             </Col>
-            <Col className="side" xs={23} lg={8}>
+            <Col className="side" xs={23} xl={8}>
               <div className="fee-table">
                 <div className="fee-table-section-1">
                   <Avatar src={house?.image_urls?.[0]} className="img-fee" alt={house?.name} />
@@ -322,7 +322,7 @@ const ReservationPage = () => {
                       {t(`detail-house.${house?.category.replace(/\s/g, '')}`)}
                     </Caption>
                     <Row align="middle">
-                      <SubHeading size={230} strong>
+                      <SubHeading size={260} classNames="number-price" strong>
                         {formatCustomCurrency(priceOfMonths)}
                       </SubHeading>
                       <Caption size={140}>&nbsp;/{t('RESERVATION.month')}</Caption>

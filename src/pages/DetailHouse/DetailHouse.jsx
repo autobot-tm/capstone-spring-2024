@@ -175,7 +175,7 @@ const DetailHouse = () => {
   const LocationComponent = () => {
     return (
       <>
-        <Row align="middle" className="main-frame-location" gutter={[0, 24]}>
+        <Row align="middle" className="main-frame-location" gutter={[0, 12]}>
           <Col xs={24}>
             <SubHeading size={260} classNames="main-title" strong>
               {t('detail-house.location-title')}
@@ -263,7 +263,7 @@ const DetailHouse = () => {
         return (
           <Row>
             <Col xs={24}>
-              <SubHeading size={230} style={{ color: '#f8a11e' }} strong>
+              <SubHeading size={260} style={{ color: '#f8a11e' }} strong>
                 {formatCustomCurrency(selectedPrice)}
               </SubHeading>
               <Caption size={140}>/{t('detail-house.month')}</Caption>
@@ -279,7 +279,7 @@ const DetailHouse = () => {
       } else {
         return (
           <>
-            <SubHeading size={230} strong>
+            <SubHeading size={260} classNames="number-price" strong>
               {formatCustomCurrency(pricePerMonth)}
             </SubHeading>
             <Caption size={140}>/{t('detail-house.month')}</Caption>
@@ -389,7 +389,7 @@ const DetailHouse = () => {
           </header>
           <main id="dh-container">
             <Row gutter={[36, 24]} justify="center">
-              <Col className="main" xs={24} lg={14}>
+              <Col className="main" xs={24} xl={14}>
                 <BaseButton
                   shape="circle"
                   type="primary"
@@ -408,7 +408,7 @@ const DetailHouse = () => {
                   <ReviewFormComponent />
                 </Row>
               </Col>
-              <Col className="side" xs={24} lg={8}>
+              <Col className="side" xs={24} xl={8}>
                 <Row className="side-form-wishlist-section">
                   <Tooltip placement="right" title={t('detail-house.add-to-wishlist')}>
                     <Button

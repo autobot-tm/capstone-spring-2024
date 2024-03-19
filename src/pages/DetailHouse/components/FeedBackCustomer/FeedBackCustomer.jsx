@@ -1,8 +1,7 @@
-import { Avatar, Button, Col, Row } from 'antd';
+import { Avatar, Button, Col, Rate, Row } from 'antd';
 import React, { useState } from 'react';
-import { SubHeading, Paragraph, Caption } from '../../../../components/Typography';
+import { SubHeading, Paragraph } from '../../../../components/Typography';
 import './FeedBackCustomer.scss';
-import { StarFilled } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 
 const FeedBackCustomer = ({ comment }) => {
@@ -37,7 +36,7 @@ const FeedBackCustomer = ({ comment }) => {
     }
   };
 
-  const visibleUsers = showAllUsers ? comment : comment?.slice(0, 4);
+  const visibleUsers = showAllUsers ? comment : comment?.slice(0, 3);
 
   return (
     <>
@@ -59,17 +58,19 @@ const FeedBackCustomer = ({ comment }) => {
                 <SubHeading style={{ marginRight: 14 }} strong>
                   {item.reviewer?.first_name}
                 </SubHeading>
-                <StarFilled className="star-icon" />
-                <Caption style={{ color: 'black' }} size={140}>
-                  &nbsp;{item.rating}
-                </Caption>
+                <Rate
+                  style={{ color: '#f8a11e', fontSize: 14 }}
+                  disabled
+                  allowHalf
+                  defaultValue={item.rating}
+                />
               </Row>
               <Row className="comment">{renderCommentContent(item.comment, index)}</Row>
             </Col>
           </Row>
         ))}
       </div>
-      {!showAllUsers && comment?.length > 4 && (
+      {!showAllUsers && comment?.length > 3 && (
         <Row>
           <Col className="see-more-btn" xs={24}>
             <Button onClick={handleSeeMoreUsers}>{t('detail-house.see-more-btn')}</Button>
