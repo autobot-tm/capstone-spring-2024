@@ -10,6 +10,7 @@ import OrderSuccessView from '../pages/Payment/components/OrderSuccessView/Order
 import UserDashboard from '../pages/UserDashboard/UserDashboard';
 import ReportLivingIssues from '../pages/ReportLivingIssues/ReportLivingIssues';
 import Management from '../pages/Management/Management';
+import ExtraServices from '../pages/ExtraServices/ExtraServices';
 
 export const routePaths = {
   public: [
@@ -36,6 +37,10 @@ export const routePaths = {
     {
       path: routeNames.OrderSuccess,
       element: <OrderSuccessView />,
+    },
+    {
+      path: routeNames.ExtraServices,
+      element: <ExtraServices />,
     },
   ],
   private: [

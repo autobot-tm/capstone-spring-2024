@@ -102,6 +102,39 @@ export const LayoutMenu = ({ isInline = false }) => {
     },
   ];
 
+  const supportItem = [
+    {
+      key: 'SubMenu2',
+      label: (
+        <div className="menuItem">
+          <Paragraph classNames="color-black" strong>
+            {t('support').toUpperCase()}
+          </Paragraph>
+        </div>
+      ),
+      children: [
+        {
+          label: <span>{t('services')}</span>,
+          icon: (
+            <span>
+              <CustomerServiceOutlined />{' '}
+            </span>
+          ),
+          key: '/services',
+        },
+        {
+          label: <span>{t('faq')}</span>,
+          icon: (
+            <span>
+              <QuestionCircleOutlined />
+            </span>
+          ),
+          key: '/faq',
+        },
+      ],
+    },
+  ];
+
   return (
     <Menu
       mode={isInline ? 'inline' : 'horizontal'}
@@ -124,10 +157,13 @@ export const LayoutMenu = ({ isInline = false }) => {
           {t('about').toUpperCase()}
         </Paragraph>
       </Menu.Item>
-      <Menu.Item key={routeNames.Support} className="menuItem" onClick={onItemClick}>
+      {/* <Menu.Item key={routeNames.Support} className="menuItem" onClick={onItemClick}>
         <Paragraph classNames="color-black" strong>
           {t('support').toUpperCase()}
         </Paragraph>
+      </Menu.Item> */}
+      <Menu.Item key="usermenu2" style={{ padding: 0 }}>
+        <Menu onClick={onItemClick} mode="horizontal" items={supportItem} style={{ margin: 0 }} />
       </Menu.Item>
       <Menu.Item key="usermenu" style={{ marginLeft: 'auto', padding: 0 }}>
         {access_token ? (

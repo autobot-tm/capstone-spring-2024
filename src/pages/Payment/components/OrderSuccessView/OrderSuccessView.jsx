@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getReservationById } from '../../../../services/apis/payments.service';
 import { formatCustomCurrency } from '../../../../utils/number-seperator';
+import { routeNames } from '../../../../config';
 
 const OrderSuccessView = () => {
   const [reservation, setReservation] = useState(null);
@@ -17,8 +18,8 @@ const OrderSuccessView = () => {
   const queryParams = new URLSearchParams(location.search);
   const reservationId = queryParams.get('reservation_id');
 
-  const handleNavigateUserDashboard = () => {
-    navigate('/user-dashboard/' + reservation?.renter?.id);
+  const handleNavigateUserManagement = () => {
+    navigate(routeNames.Management);
   };
 
   useEffect(() => {
@@ -85,10 +86,9 @@ const OrderSuccessView = () => {
           <Paragraph strong>{reservation?.expected_move_in_date}</Paragraph>
         </Col>
         <Col xs={24}>
-          <Button onClick={handleNavigateUserDashboard} className="return-btn">
-            {' '}
+          <Button onClick={handleNavigateUserManagement} className="return-btn">
             <Paragraph classNames="color-black" strong>
-              Return to User Dashboard
+              {t('ORDER.return-to-user-management')}
             </Paragraph>
           </Button>
         </Col>

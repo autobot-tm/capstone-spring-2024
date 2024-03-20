@@ -10,6 +10,8 @@
   "contract": "Contract",
   "utilityFees": "Utility fees",
   "reservation": "Reservation",
+  "services": "Our services",
+  "faq": "FAQ",
   "reportlivingissue": "Report living issues",
   "logout": "Logout",
   "welcome-text": "Welcome hjhj",
@@ -365,7 +367,13 @@
     "email": "Email",
     "reservation-fee": "Reservation fee",
     "total-months": "Total months",
-    "expected-move-in-date": "Expected move-in date"
+    "expected-move-in-date": "Expected move-in date",
+    "return-to-user-management": "Return to User Management"
+  },
+
+  "EXTRA-SERVICES": {
+    "our-services": "Our Services",
+    "extra-services": "Extra Services"
   },
 
   "NOT-FOUND": {

@@ -363,7 +363,8 @@
     "email": "Eメール",
     "reservation-fee": "予約料",
     "total-months": "合計月数",
-    "expected-move-in-date": "入居予定日"
+    "expected-move-in-date": "入居予定日",
+    "return-to-user-management": "ユーザー管理に戻る"
   },
 
   "NOT-FOUND": {

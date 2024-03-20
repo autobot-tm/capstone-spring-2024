@@ -14,4 +14,5 @@ export const routeNames = {
   Wishlist: '/wishlist',
   Support: '/support',
   Management: '/management',
+  ExtraServices: '/extra-services',
 };
