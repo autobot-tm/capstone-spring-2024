@@ -206,6 +206,7 @@
   "api.error.resetPasswordOnlyForNormalAccount": "Reset password only accepted normal sign up account.",
   "api.error.userAlreadyActivated": "User already activated.",
   "api.error.invalidOtpCode": "Invalid OTP code.",
+  "api.error.accountSuspended": "Your account has been suspended.",
 
   "detail-house": {
     "title-tab": "Detail House",
