@@ -39,4 +39,7 @@ export const ENDPOINTS = {
     realTime: '/notifications/me/realtime',
     notificationId: notification_id => `/notifications/${notification_id}`,
   },
+  leases: {
+    leaseId: lease_id => `/leases/${lease_id}`,
+  },
 };

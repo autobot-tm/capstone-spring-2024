@@ -22,6 +22,7 @@ import ConfirmLogout from './components/ConfirmLogout/ConfirmLogout';
 import ReservationDetail from './components/ReservationDetail/ReservationDetail';
 import ContractDetail from './components/ContractDetail/ContractDetai';
 import RequestCancelConract from './components/RequestCancelContract/RequestCancelConract';
+import DetailNotification from './components/UserNotification/DetailNotification/DetailNotification';
 
 initTranslations();
 configureApiCaller(store);
@@ -61,6 +62,7 @@ root.render(
           <ReservationDetail />
           <ContractDetail />
           <RequestCancelConract />
+          <DetailNotification />
         </BrowserRouter>
       </ConfigProvider>
     </GoogleOAuthProvider>

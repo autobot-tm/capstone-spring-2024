@@ -11,8 +11,6 @@ import { openConfirmLogoutModal, openLoginModal } from '../../../../store/slices
 import { Paragraph } from '../../../../components/Typography';
 import AVATAR from '../../../../assets/images/avatar.svg';
 import UserNotification from '../../../../components/UserNotification/UserNotification';
-import { getNotiUserCurrentService } from '../../../../services/apis/notification.service';
-import { setNotifications } from '../../../../store/slices/notification.slice';
 
 export const LayoutMenu = ({ isInline = false }) => {
   const dispatch = useDispatch();
@@ -22,23 +20,6 @@ export const LayoutMenu = ({ isInline = false }) => {
   const location = useLocation();
   const { access_token } = useSelector(state => state.auth);
   const { user } = useSelector(state => state.user);
-  const { notifications } = useSelector(state => state.notification);
-
-  useEffect(() => {
-    const fetchNotification = async () => {
-      try {
-        const res = await getNotiUserCurrentService();
-        console.log(res);
-        dispatch(setNotifications([...res.notifications]));
-        console.log('notifications', notifications);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchNotification();
-  }, []);
-
-  console.log('notification', notifications);
 
   const onItemClick = event => {
     const { key } = event;
@@ -91,17 +72,6 @@ export const LayoutMenu = ({ isInline = false }) => {
     },
   ];
 
-  const notificationItems = [
-    {
-      key: 'SubMenu3',
-      icon: <UserNotification numbers={notifications?.length} />,
-      children: notifications.map((item, index) => ({
-        label: <span key={index}>{item.description}</span>,
-        key: `/notification/${index}`,
-      })),
-    },
-  ];
-
   const supportItem = [
     {
       key: 'SubMenu2',
@@ -114,22 +84,22 @@ export const LayoutMenu = ({ isInline = false }) => {
       ),
       children: [
         {
-          label: <span>{t('services')}</span>,
-          icon: (
-            <span>
-              <CustomerServiceOutlined />{' '}
-            </span>
-          ),
-          key: '/services',
+          label: <span>{t('services').toUpperCase()}</span>,
+          // icon: (
+          //   <span>
+          //     <CustomerServiceOutlined />{' '}
+          //   </span>
+          // ),
+          key: '/extra-services',
         },
         {
-          label: <span>{t('faq')}</span>,
-          icon: (
-            <span>
-              <QuestionCircleOutlined />
-            </span>
-          ),
-          key: '/faq',
+          label: <span>{t('faq').toUpperCase()}</span>,
+          // icon: (
+          //   <span>
+          //     <QuestionCircleOutlined />
+          //   </span>
+          // ),
+          key: '/faqs',
         },
       ],
     },
@@ -157,11 +127,6 @@ export const LayoutMenu = ({ isInline = false }) => {
           {t('about').toUpperCase()}
         </Paragraph>
       </Menu.Item>
-      {/* <Menu.Item key={routeNames.Support} className="menuItem" onClick={onItemClick}>
-        <Paragraph classNames="color-black" strong>
-          {t('support').toUpperCase()}
-        </Paragraph>
-      </Menu.Item> */}
       <Menu.Item key="usermenu2" style={{ padding: 0 }}>
         <Menu onClick={onItemClick} mode="horizontal" items={supportItem} style={{ margin: 0 }} />
       </Menu.Item>
@@ -180,24 +145,8 @@ export const LayoutMenu = ({ isInline = false }) => {
           </Button>
         )}
       </Menu.Item>
-      {/* <Menu.Item key="notification">
-        <div className="notification-popup">
-          {notificationItems.map(item => (
-            <div key={item.key} className="notification-item" onClick={() => onItemClick(item.key)}>
-              <span className="notification-icon">{item.icon}</span>
-              <span>{item.children[0].label}</span>
-            </div>
-          ))}
-        </div>
-      </Menu.Item> */}
-
       <Menu.Item key="notification">
-        <Menu
-          onClick={onItemClick}
-          mode="horizontal"
-          items={notificationItems}
-          style={{ margin: 0 }}
-        />
+        <UserNotification />
       </Menu.Item>
       <Menu.Item key="translation">
         <TranslationSelector />

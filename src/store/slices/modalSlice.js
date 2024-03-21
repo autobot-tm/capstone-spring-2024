@@ -11,9 +11,11 @@ const initialState = {
   reservationDetailModal: false,
   contractDetailModal: false,
   requestCancelContractModal: false,
+  reservationPolicyModal: false,
+  notificationDetailModal: false,
   reservationId: undefined,
   contractId: undefined,
-  reservationPolicyModal: false,
+  notificationId: null,
   email: '',
 };
 
@@ -57,6 +59,14 @@ const modalSlice = createSlice({
     },
     openReservationPolicyModal: state => {
       state.reservationPolicyModal = true;
+    },
+    openNotificationDetailModal: (state, action) => {
+      state.notificationDetailModal = true;
+      state.notificationId = action.payload.notificationId;
+    },
+
+    closeNotificationDetailModal: state => {
+      state.notificationDetailModal = false;
     },
 
     closeReservationPolicyModal: state => {
@@ -107,6 +117,7 @@ export const {
   openReservationDetailModal,
   openContractDetailModal,
   openRequestCancelContractModal,
+  openNotificationDetailModal,
   closeLoginModal,
   closeRegisterModal,
   closeRequestResetPasswordModal,
@@ -119,4 +130,5 @@ export const {
   closeRequestCancelContractModal,
   openReservationPolicyModal,
   closeReservationPolicyModal,
+  closeNotificationDetailModal,
 } = modalSlice.actions;
