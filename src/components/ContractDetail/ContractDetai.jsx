@@ -8,7 +8,13 @@ import {
 } from '../../store/slices/modalSlice';
 import styles from './ContractDetail.module.scss';
 import ContractStatus from '../ContractStatus.jsx/ContractStatus';
-import { DownloadOutlined, LoadingOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  CaretDownOutlined,
+  DownloadOutlined,
+  LoadingOutlined,
+  MinusOutlined,
+  PlusOutlined,
+} from '@ant-design/icons';
 import { getLeaseByIdService } from '../../services/apis/contracts.service';
 import { setContractLoading } from '../../store/slices/contractSlice';
 import { Button, Empty, Table, Tabs } from 'antd';
@@ -38,6 +44,8 @@ const ContractDetail = () => {
   const [showFile, setShowFile] = useState(false);
   const [showHouse, setShowHouse] = useState(false);
   const [showRenter, setShowRenter] = useState(false);
+  const [isShowRequest, setIsShowRequet] = useState('');
+
   useEffect(() => {
     if (leaseId) {
       getLeaseByIdService({ leaseId }).then(response => {
@@ -63,6 +71,7 @@ const ContractDetail = () => {
       setShowHouse(false);
       setShowRenter(false);
       setShowFile(false);
+      setIsShowRequet('');
     }
   }, [contractDetailModal]);
 
@@ -226,45 +235,57 @@ const ContractDetail = () => {
       children: (
         <>
           {requests.length > 0 ? (
-            requests.map((request, index) => {
-              return (
-                <>
-                  <Table
-                    key={index}
-                    pagination={false}
-                    columns={columns}
-                    dataSource={[
-                      {
-                        key: '1',
-                        title: <b>{t('label.status')}</b>,
-                        content: <CancellationRequestStatus status={request.status} />,
-                      },
-                      {
-                        key: '2',
-                        title: <b>{t('label.summary')}</b>,
-                        content: request.title,
-                      },
-                      {
-                        key: '3',
-                        title: <b>{t('label.reason')}</b>,
-                        content: request.reason,
-                      },
-                    ]}
-                  />
-                  <div
-                    style={{
-                      width: '100%',
-                      display: 'flex',
-                      justifyContent: 'end',
-                      marginTop: '16px',
-                    }}>
-                    <Caption size={110}>
-                      {moment(request.created_at).format('H:mm -  DD/MM/YYYY')}
-                    </Caption>
-                  </div>
-                </>
-              );
-            })
+            requests
+              .map((request, index) => {
+                return (
+                  <>
+                    <Button
+                      size="large"
+                      icon={<CancellationRequestStatus status={request.status} />}
+                      type="text"
+                      style={{ cursor: 'pointer', marginTop: '10px' }}
+                      onClick={() => {
+                        setIsShowRequet(request.id);
+                      }}>
+                      <Caption strong>
+                        {moment(request.created_at).format('H:mm -  DD/MM/YYYY')}
+                      </Caption>
+                      <Caption elipsis>{': ' + request.title}</Caption>
+                      <CaretDownOutlined />
+                    </Button>
+                    {isShowRequest === request.id && (
+                      <Table
+                        key={index}
+                        pagination={false}
+                        columns={columns}
+                        dataSource={[
+                          {
+                            key: '1',
+                            title: <b>ID</b>,
+                            content: request.id,
+                          },
+                          {
+                            key: '2',
+                            title: <b>{t('label.status')}</b>,
+                            content: <CancellationRequestStatus status={request.status} />,
+                          },
+                          {
+                            key: '3',
+                            title: <b>{t('label.summary')}</b>,
+                            content: request.title,
+                          },
+                          {
+                            key: '4',
+                            title: <b>{t('label.reason')}</b>,
+                            content: request.reason,
+                          },
+                        ]}
+                      />
+                    )}
+                  </>
+                );
+              })
+              .reverse()
           ) : (
             <Empty />
           )}

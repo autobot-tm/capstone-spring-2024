@@ -61,6 +61,8 @@
   "button.showList": "Show list",
   "button.addToWishList": "Add to wishlist",
   "button.back": "Back",
+  "button.showAllPhoto": "Show all photo",
+
   "status.all": "All",
   "status.PAYMENT_PENDING": "Reservation pending",
   "status.PAYMENT_CANCELED": "Reservation canceled",
@@ -141,6 +143,8 @@
   "validationRules.required.authenticationCode": "Authentication code is required",
   "validationRules.required.title": "Title is required",
   "validationRules.required.reason": "Reason is required",
+  "validationRules.required.type": "Type is required",
+
   "validationRules.invalid.email": "Email is invalid",
   "validationRules.min.password": "Password must be at least 8 characters",
   "validationRules.notmatch.password": "Passwords must match",
@@ -215,6 +219,7 @@
   "link.viewdetail": "View detail",
   "footer.links": "Links",
   "footer.contact": "Contact Us",
+  "notification.submittedSuccessfully": "Submitted successfully",
 
   "api.error.invalidAccountCredentials": "Email or password is incorrect",
   "api.error.emailAlreadyExists": "Email already exists",

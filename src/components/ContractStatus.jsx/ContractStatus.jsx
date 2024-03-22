@@ -1,23 +1,24 @@
 import { Tag } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { Caption } from '../Typography';
 
 const ContractStatus = ({ status }) => {
   const { t } = useTranslation();
   return (
     <div>
       {status === 'ACTIVE' ? (
-        <Tag style={{ margin: 0 }} color="cyan">
-          {t('status.' + status)}
-        </Tag>
+        <Caption strong>
+          <Tag color="cyan">{t('status.' + status)}</Tag>
+        </Caption>
       ) : status === 'EXPIRED' || status === 'CANCELED' ? (
-        <Tag style={{ margin: 0 }} color="red">
-          {t('status.' + status)}
-        </Tag>
+        <Caption strong>
+          <Tag color="red">{t('status.' + status)}</Tag>
+        </Caption>
       ) : (
-        <Tag style={{ margin: 0 }} color="orange">
-          {t('status.' + status)}
-        </Tag>
+        <Caption strong>
+          <Tag color="orange">{t('status.' + status)}</Tag>
+        </Caption>
       )}
     </div>
   );
