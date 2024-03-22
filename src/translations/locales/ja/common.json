@@ -47,6 +47,7 @@
   "button.addToWishList": "ほしい物リストに追加する",
   "button.requestCancelContract": "契約解除を要求する",
   "button.back": "戻る",
+  "button.showAllPhoto": "すべての写真を表示",
 
   "status.all": "全て",
   "status.PAYMENT_PENDING": "支払いが保留中",
@@ -127,6 +128,10 @@
   "validationRules.required.newPassword": "新しいパスワードが必要です",
   "validationRules.required.repeatpassword": "繰り返しパスワードが必要",
   "validationRules.required.authenticationCode": "認証コードが必要",
+  "validationRules.required.title": "タイトルは必須です",
+  "validationRules.required.reason": "理由は必須です",
+  "validationRules.required.type": "タイプは必須です",
+
   "validationRules.invalid.email": "電子メールが無効です",
   "validationRules.min.password": "パスワードは8文字以上",
   "validationRules.notmatch.password": "パスワードは一致しなければならない",
@@ -202,6 +207,7 @@
 
   "footer.links": "リンク",
   "footer.contact": "お問い合わせ",
+  "notification.submittedSuccessfully": "正常に送信されました",
 
   "api.error.invalidAccountCredentials": "電子メールまたはパスワードが正しくありません",
   "api.error.emailAlreadyExists": "メールが既に存在します",

@@ -6,7 +6,7 @@ import {
   closeRequestCancelContractModal,
   openContractDetailModal,
 } from '../../store/slices/modalSlice';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, notification } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { requestCancelContractService } from '../../services/apis/contracts.service';
 
@@ -15,12 +15,20 @@ const RequestCancelConract = () => {
   const { t } = useTranslation();
   const requestCancelContractModal = useSelector(state => state.modal.requestCancelContractModal);
   const leaseId = useSelector(state => state.modal.contractId);
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotificationWithIcon = type => {
+    api[type]({
+      message: t('notìication.submittedSuccessfully'),
+    });
+  };
 
   const handleFinish = values => {
     const { title, reason, type } = values;
 
     requestCancelContractService({ leaseId, title, reason, type });
     dispatch(closeRequestCancelContractModal());
+    openNotificationWithIcon('success');
   };
   const [form] = Form.useForm();
 
@@ -56,48 +64,51 @@ const RequestCancelConract = () => {
     }
   }, [requestCancelContractModal]);
   return (
-    <CustomModal
-      width={600}
-      nameOfModal={requestCancelContractModal}
-      title={t('modal.requestCancelContract')}
-      action={closeRequestCancelContractModal}
-      footer={[
-        <Button
-          key=""
-          onClick={() => {
-            dispatch(closeRequestCancelContractModal());
-            dispatch(openContractDetailModal({ contractId: leaseId }));
-          }}>
-          {t('button.back')}
-        </Button>,
-        <Button key="submit" htmlType="submit" type="primary" onClick={() => form.submit()}>
-          {t('button.requestCancelContract')}
-        </Button>,
-      ]}>
-      <Form onFinish={handleFinish} form={form}>
-        <Form.Item
-          name={'type'}
-          rules={[{ required: true, message: t('validationRules.required.type') }]}>
-          <Select
-            style={{
-              width: '100%',
-            }}
-            placeholder={t('placeholder.type')}
-            options={options}
-          />
-        </Form.Item>
-        <Form.Item
-          name={'title'}
-          rules={[{ required: true, message: t('validationRules.required.title') }]}>
-          <Input placeholder={t('placeholder.title')} />
-        </Form.Item>
-        <Form.Item
-          name={'reason'}
-          rules={[{ required: true, message: t('validationRules.required.reason') }]}>
-          <TextArea rows={4} placeholder={t('placeholder.reason')} maxLength={200} />
-        </Form.Item>
-      </Form>
-    </CustomModal>
+    <>
+      {contextHolder}
+      <CustomModal
+        width={600}
+        nameOfModal={requestCancelContractModal}
+        title={t('modal.requestCancelContract')}
+        action={closeRequestCancelContractModal}
+        footer={[
+          <Button
+            key=""
+            onClick={() => {
+              dispatch(closeRequestCancelContractModal());
+              dispatch(openContractDetailModal({ contractId: leaseId }));
+            }}>
+            {t('button.back')}
+          </Button>,
+          <Button key="submit" htmlType="submit" type="primary" onClick={() => form.submit()}>
+            {t('button.requestCancelContract')}
+          </Button>,
+        ]}>
+        <Form onFinish={handleFinish} form={form}>
+          <Form.Item
+            name={'type'}
+            rules={[{ required: true, message: t('validationRules.required.type') }]}>
+            <Select
+              style={{
+                width: '100%',
+              }}
+              placeholder={t('placeholder.type')}
+              options={options}
+            />
+          </Form.Item>
+          <Form.Item
+            name={'title'}
+            rules={[{ required: true, message: t('validationRules.required.title') }]}>
+            <Input placeholder={t('placeholder.title')} />
+          </Form.Item>
+          <Form.Item
+            name={'reason'}
+            rules={[{ required: true, message: t('validationRules.required.reason') }]}>
+            <TextArea rows={4} placeholder={t('placeholder.reason')} maxLength={200} />
+          </Form.Item>
+        </Form>
+      </CustomModal>
+    </>
   );
 };
 
