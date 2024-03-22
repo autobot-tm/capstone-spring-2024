@@ -22,13 +22,14 @@ import useSWR from 'swr';
 import Selection from './components/Selection/Selection';
 import DatePickerAnt from './components/DatePickerComponent/DatePickerAnt';
 import ReviewForm from './components/ReviewForm/ReviewForm';
-import CarouselHeader from '../../components/CarouselHeader/CarouselHeader';
+// import CarouselHeader from '../../components/CarouselHeader/CarouselHeader';
 import SizeImg from '../../assets/images/SizeIcon.svg';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import HousesMap from '../../components/HousesMap/HousesMap';
 import { openLoginModal } from '../../store/slices/modalSlice';
 import { Helmet } from 'react-helmet';
+import ImageLayout from './components/ImageLayout/ImageLayout';
 
 const DetailHouse = () => {
   const { t } = useTranslation();
@@ -147,7 +148,6 @@ const DetailHouse = () => {
         </Row>
 
         <Row className="main-property-features-detail">
-          {' '}
           <SubHeading classNames="main-property-features-title" size={230} strong>
             {t('detail-house.property-detail-title')}
           </SubHeading>
@@ -384,58 +384,59 @@ const DetailHouse = () => {
           <Helmet>
             <title>{house?.name}</title>
           </Helmet>
-          <header>
-            <CarouselHeader img={imgHouse} />
-          </header>
-          <main id="dh-container">
-            <Row gutter={[36, 24]} justify="center">
-              <Col className="main" xs={24} xl={14}>
-                <BaseButton
-                  shape="circle"
-                  type="primary"
-                  size="large"
-                  className="book-now-btn"
-                  onClick={handleBookNowClick}>
-                  {t('detail-house.book')}
-                </BaseButton>
 
-                <TitleHeadingComponent />
-                <DescriptionComponent />
-                <PropertyFeatureComponent />
-                <LocationComponent />
-                <Row align="top" className="main-frame-review">
-                  <FeedBackCustomer comment={comment} />
-                  <ReviewFormComponent />
-                </Row>
-              </Col>
-              <Col className="side" xs={24} xl={8}>
-                <Row className="side-form-wishlist-section">
-                  <Tooltip placement="right" title={t('detail-house.add-to-wishlist')}>
-                    <Button
-                      type="link"
-                      size="large"
-                      icon={
-                        <HeartTwoTone
-                          twoToneColor={['#000000', '#ffffff']}
-                          style={{ fontSize: '25px' }}
-                        />
-                      }
-                      // style={{ backgroundColor: isClickedWishlist ? '#f8a11e' : 'inherit' }}
-                      onClick={handleAddWishlist}></Button>
-                  </Tooltip>
-                </Row>
-                <Row className="side-form">
-                  <Col xs={24}>
-                    <ReserveFormComponent />
-                  </Col>
-                </Row>
-                <Row className="side-related-house">
-                  <Col xs={24}>
-                    <RelatedPropertiesComponent />
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
+          <main>
+            <div id="dh-container">
+              <ImageLayout images={imgHouse} />
+              <Row gutter={[36, 24]}>
+                <Col className="main" xs={24} xl={16}>
+                  <BaseButton
+                    shape="circle"
+                    type="primary"
+                    size="large"
+                    className="book-now-btn"
+                    onClick={handleBookNowClick}>
+                    {t('detail-house.book')}
+                  </BaseButton>
+
+                  <TitleHeadingComponent />
+                  <DescriptionComponent />
+                  <PropertyFeatureComponent />
+                  <LocationComponent />
+                  <Row align="top" className="main-frame-review">
+                    <FeedBackCustomer comment={comment} />
+                    <ReviewFormComponent />
+                  </Row>
+                </Col>
+                <Col className="side" xs={24} xl={8}>
+                  <Row className="side-form-wishlist-section">
+                    <Tooltip placement="right" title={t('detail-house.add-to-wishlist')}>
+                      <Button
+                        type="link"
+                        size="large"
+                        icon={
+                          <HeartTwoTone
+                            twoToneColor={['#000000', '#ffffff']}
+                            style={{ fontSize: '25px' }}
+                          />
+                        }
+                        // style={{ backgroundColor: isClickedWishlist ? '#f8a11e' : 'inherit' }}
+                        onClick={handleAddWishlist}></Button>
+                    </Tooltip>
+                  </Row>
+                  <Row className="side-form">
+                    <Col xs={24}>
+                      <ReserveFormComponent />
+                    </Col>
+                  </Row>
+                  <Row className="side-related-house">
+                    <Col xs={24}>
+                      <RelatedPropertiesComponent />
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </div>
           </main>
         </>
       )}

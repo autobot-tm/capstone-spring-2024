@@ -12,11 +12,12 @@
 
 #dh-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 50px 22px 50px 22px;
+  padding: 8px 22px 50px 22px;
   .main {
     &-title {
       display: block;
