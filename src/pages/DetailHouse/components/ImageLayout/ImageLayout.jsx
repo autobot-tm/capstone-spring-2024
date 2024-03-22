@@ -4,8 +4,9 @@ import styles from './ImageLayout.module.scss';
 import { CompressOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { openShowAllImageModal } from '../../../../store/slices/modalSlice';
-
+import { useTranslation } from 'react-i18next';
 const ImageLayout = ({ images }) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   return (
     <div className={styles.imageLayoutContainer}>
@@ -35,7 +36,7 @@ const ImageLayout = ({ images }) => {
         className={styles.button}
         icon={<CompressOutlined />}
         onClick={() => dispatch(openShowAllImageModal({ images: images }))}>
-        Show all photo
+        {t('button.showAllPhoto')}
       </Button>
     </div>
   );
