@@ -50,7 +50,9 @@ function formatTimeDifference(notificationTime, t) {
     return `${value} ${unitString}`;
   };
 
-  if (timeDiffMinutes < 60) {
+  if (timeDiffMinutes < 1) {
+    return t('just-now');
+  } else if (timeDiffMinutes < 60) {
     return getTimeString(timeDiffMinutes, 'minute');
   } else if (timeDiffMinutes < 24 * 60) {
     return getTimeString(Math.floor(timeDiffMinutes / 60), 'hour');
