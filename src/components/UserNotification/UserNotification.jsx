@@ -126,7 +126,7 @@ const UserNotification = ({ t }) => {
             extra_service_request_id,
           );
           dispatch(markAllAsRead());
-          return navigate('/extra-services');
+          // return navigate('/extra-services');
         }
       } catch (error) {
         console.error('Error handling notification click:', error);
@@ -149,8 +149,8 @@ const UserNotification = ({ t }) => {
             <>
               <NotificationItem
                 key={item.id}
-                title={t('CANCEL_CONTRACT.title')}
-                description={t('CANCEL_CONTRACT.description')}
+                title={item.title}
+                description={item.description}
                 time={item.created_at}
                 isRead={item.current_user_has_read}
                 t={t}
