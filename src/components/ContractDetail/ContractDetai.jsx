@@ -209,14 +209,14 @@ const ContractDetail = () => {
         <>
           <Table pagination={false} columns={columns} dataSource={contractData} />
           <Button
-            icon={!showHouse ? <PlusOutlined /> : <MinusOutlined />}
+            icon={!showHouse ? <PlusOutlined style={{ fontWeight: 600 }} /> : <MinusOutlined />}
             type="text"
             block
             style={{ cursor: 'pointer', marginTop: '10px' }}
             onClick={() => {
               setShowHouse(!showHouse);
             }}>
-            <Paragraph>{t('label.houseDetail')}</Paragraph>
+            <Paragraph strong>{t('label.houseDetail')}</Paragraph>
           </Button>
           {showHouse && <Table pagination={false} columns={columns} dataSource={houseData} />}
 

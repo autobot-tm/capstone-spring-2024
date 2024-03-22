@@ -53,6 +53,7 @@ const modalSlice = createSlice({
     openContractDetailModal: (state, action) => {
       state.contractDetailModal = true;
       state.contractId = action.payload.contractId;
+      state.notificationId = action.payload.notificationId;
     },
     openRequestCancelContractModal: state => {
       state.requestCancelContractModal = true;

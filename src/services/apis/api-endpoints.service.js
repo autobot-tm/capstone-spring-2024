@@ -42,4 +42,8 @@ export const ENDPOINTS = {
   leases: {
     leaseId: lease_id => `/leases/${lease_id}`,
   },
+  services: {
+    base: '/extra-services',
+    request: '/extra-service-requests',
+  },
 };

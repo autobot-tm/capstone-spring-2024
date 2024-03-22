@@ -64,5 +64,9 @@ export const routePaths = {
       path: routeNames.Management,
       element: <Management />,
     },
+    {
+      path: routeNames.ManagementCancelRequest,
+      element: <Management />,
+    },
   ],
 };

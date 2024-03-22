@@ -7,8 +7,9 @@ import { Caption, SubHeading } from '../Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { markAsRead, markAllAsRead, setNotifications } from '../../store/slices/notification.slice';
 import { getNotiUserCurrentService } from '../../services/apis/notification.service';
-import { openNotificationDetailModal } from '../../store/slices/modalSlice';
+import { openContractDetailModal } from '../../store/slices/modalSlice';
 // import { updateNotiHasReadService } from '../../services/apis/notification.service';
+import { useNavigate } from 'react-router-dom';
 
 const NotificationItem = ({ isRead, onClick, title, description, time }) => {
   const notificationTime = new Date(time);
@@ -50,6 +51,7 @@ function formatTimeDifference(notificationTime) {
 }
 
 const UserNotification = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const unreadCount = useSelector(state => state.notification.unreadCount);
   const notificationState = useSelector(state => state.notification.notifications);
@@ -84,7 +86,8 @@ const UserNotification = () => {
     if (id) {
       try {
         setVisible(false);
-        dispatch(openNotificationDetailModal({ notificationId: id }));
+        navigate('/management/' + id);
+        dispatch(openContractDetailModal({ notificationId: id }));
         dispatch(markAsRead(id));
         // await updateNotiHasReadService(id);
         mutate('/api/notifications');

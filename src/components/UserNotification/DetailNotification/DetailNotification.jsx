@@ -38,9 +38,10 @@ const DetailNotification = () => {
       }
     };
 
-    console.log('user', user);
     fetchDetailCancelContract();
   }, [notificationId]);
+
+  console.log('notification', notification);
 
   const STATUS = {
     IN_PROGRESS: <Tag color="orange">Đang xử lý... </Tag>,
@@ -48,11 +49,16 @@ const DetailNotification = () => {
     APPROVED: <Tag color="green">Yêu cầu của bạn đã được đồng ý. </Tag>,
   };
 
+  const TITLE = {
+    EXTRA_SERVICE_REQUEST: 'EXTRA SERVICE REQUEST',
+    LEASE_CANCELATION_REQUEST: 'LEASE CANCELATION REQUEST',
+  };
+
   return (
     <CustomModal
       width={600}
       nameOfModal={notificationPopup}
-      title="Cancel Request"
+      title={TITLE[notification?.action_type]}
       action={closeNotificationDetailModal}
       footer={[]}>
       <div id="dn-container">
