@@ -126,7 +126,7 @@ const UserNotification = ({ t }) => {
             extra_service_request_id,
           );
           dispatch(markAllAsRead());
-          // return navigate('/extra-services');
+          return navigate('/extra-services');
         }
       } catch (error) {
         console.error('Error handling notification click:', error);
