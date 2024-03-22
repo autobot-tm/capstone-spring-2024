@@ -15,7 +15,6 @@ const initialState = {
   notificationDetailModal: false,
   reservationId: undefined,
   contractId: undefined,
-  notificationId: null,
   showAllImageModal: false,
   email: '',
   images: [],
@@ -55,21 +54,13 @@ const modalSlice = createSlice({
     openContractDetailModal: (state, action) => {
       state.contractDetailModal = true;
       state.contractId = action.payload.contractId;
-      state.notificationId = action.payload.notificationId;
+      state.cancelation_request_id = action.payload.cancelation_request_id;
     },
     openRequestCancelContractModal: state => {
       state.requestCancelContractModal = true;
     },
     openReservationPolicyModal: state => {
       state.reservationPolicyModal = true;
-    },
-    openNotificationDetailModal: (state, action) => {
-      state.notificationDetailModal = true;
-      state.notificationId = action.payload.notificationId;
-    },
-
-    closeNotificationDetailModal: state => {
-      state.notificationDetailModal = false;
     },
     openShowAllImageModal: (state, action) => {
       state.showAllImageModal = true;
@@ -127,6 +118,7 @@ export const {
   openReservationDetailModal,
   openContractDetailModal,
   openRequestCancelContractModal,
+  openShowAllImageModal,
   closeLoginModal,
   closeRegisterModal,
   closeRequestResetPasswordModal,
@@ -139,4 +131,5 @@ export const {
   closeRequestCancelContractModal,
   openReservationPolicyModal,
   closeReservationPolicyModal,
+  closeShowAllImageModal,
 } = modalSlice.actions;

@@ -1,22 +1,32 @@
 .ant-dropdown-menu {
   width: 440px;
   padding: 0 !important;
-  .noti-container {
-    width: 100%;
-    border-bottom: 0.6px solid #ccc;
-    .title {
-      display: flex;
-      justify-content: space-between;
-      padding: 20px 20px;
+  .noti {
+    // height: 400px;
+    &-header {
+      width: 100%;
+      border-bottom: 0.6px solid #ccc;
+      .title {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 20px;
 
-      & > a {
-        text-decoration: none;
-        color: black;
-        font-style: 11px;
+        & > a {
+          text-decoration: none;
+          color: black;
+          font-style: 11px;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
       }
-      a:hover {
-        text-decoration: underline;
-      }
+    }
+    &-list {
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 40vh !important;
+      height: 100%;
+      width: 100%;
     }
   }
 

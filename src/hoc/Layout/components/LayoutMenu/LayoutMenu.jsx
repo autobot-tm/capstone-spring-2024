@@ -157,7 +157,7 @@ export const LayoutMenu = ({ isInline = false }) => {
         )}
       </Menu.Item>
       <Menu.Item key="notification">
-        <UserNotification />
+        <UserNotification t={t} />
       </Menu.Item>
       <Menu.Item key="translation">
         <TranslationSelector />

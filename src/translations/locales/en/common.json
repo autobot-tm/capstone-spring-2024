@@ -14,6 +14,17 @@
   "faq": "FAQ",
   "reportlivingissue": "Report living issues",
   "logout": "Logout",
+  "notification": "Notification",
+  "minute": "minute",
+  "minutes": "minutes",
+  "hour": "hour",
+  "hours": "hour",
+  "day": "day",
+  "days": "days",
+  "month": "month",
+  "months": "months",
+  "year": "year",
+  "years": "years",
   "welcome-text": "Welcome hjhj",
   "contact": "Contact",
   "join-us": "Join us",
@@ -215,6 +226,11 @@
   "api.error.userAlreadyActivated": "User already activated.",
   "api.error.invalidOtpCode": "Invalid OTP code.",
   "api.error.accountSuspended": "Your account has been suspended.",
+
+  "CANCEL_CONTRACT": {
+    "title": "Your request for the extra service: Temporary Residence Registration Support Service is being reviewed.",
+    "description": "We are reviewing your extra service request. We will get back to you soon."
+  },
 
   "detail-house": {
     "title-tab": "Detail House",
