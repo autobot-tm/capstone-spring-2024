@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setName, setPage, setStatus } from '../../store/slices/reservationSlice';
 import { useTranslation } from 'react-i18next';
 import { setContractPage, setContractStatus } from '../../store/slices/contractSlice';
+import { CarryOutOutlined, FileTextOutlined, PayCircleOutlined } from '@ant-design/icons';
 
 const Management = () => {
   const dispatch = useDispatch();
@@ -37,14 +38,17 @@ const Management = () => {
   }, [menuItem]);
   const items = [
     {
+      icon: <FileTextOutlined />,
       label: <b>{t('contract')}</b>,
       key: 'contract',
     },
     {
+      icon: <PayCircleOutlined />,
       label: <b>{t('utilityFees')}</b>,
       key: 'fee',
     },
     {
+      icon: <CarryOutOutlined />,
       label: <b>{t('reservation')}</b>,
       key: 'reservation',
     },

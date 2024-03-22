@@ -127,12 +127,23 @@ export const LayoutMenu = ({ isInline = false }) => {
           {t('about').toUpperCase()}
         </Paragraph>
       </Menu.Item>
-      <Menu.Item key="usermenu2" style={{ padding: 0 }}>
-        <Menu onClick={onItemClick} mode="horizontal" items={supportItem} style={{ margin: 0 }} />
+
+      <Menu.Item key="usermenu2" style={{ padding: 0, height: '100%' }}>
+        <Menu
+          onClick={onItemClick}
+          mode={isInline ? 'inline' : 'horizontal'}
+          items={supportItem}
+          style={{ margin: 0 }}
+        />
       </Menu.Item>
-      <Menu.Item key="usermenu" style={{ marginLeft: 'auto', padding: 0 }}>
+      <Menu.Item key="usermenu" style={{ marginLeft: 'auto', padding: 0, height: '100%' }}>
         {access_token ? (
-          <Menu onClick={onItemClick} mode="horizontal" items={items} style={{ margin: 0 }} />
+          <Menu
+            onClick={onItemClick}
+            mode={isInline ? 'inline' : 'horizontal'}
+            items={items}
+            style={{ margin: 0 }}
+          />
         ) : (
           <Button
             type="text"

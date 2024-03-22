@@ -52,7 +52,10 @@ const SignIn = () => {
   }, [form, loginModal]);
 
   useEffect(() => {
-    if (errorTranslationKey === ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS) {
+    if (
+      errorTranslationKey === ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS ||
+      errorTranslationKey === ERROR_TRANS_KEYS.ACCOUNT_SUSPENDED
+    ) {
       setFlag(true);
       setErrorHolder(errorTranslationKey);
       console.log(errorTranslationKey);

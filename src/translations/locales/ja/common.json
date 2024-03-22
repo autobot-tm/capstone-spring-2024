@@ -58,6 +58,10 @@
   "status.ACTIVE": "アクティブ",
   "status.EXPIRED": "期限切れ",
   "status.PENDING_CANCELATION_APPROVAL": "停止保留中",
+  "status.UNDER_REVIEW": "検討中",
+  "status.IN_PROGRESS": "進行中",
+  "status.REJECTED": "拒否されました",
+  "status.APPROVED": "承認された",
   "checkbox.rememberme": "リメンバー・ミー",
   "forgetpassword": "パスワードをお忘れですか？",
   "label.searchHouse": "住宅検索",
@@ -92,6 +96,12 @@
   "label.familyIssue": "家族の問題",
   "label.healthIssue": "健康問題",
   "label.other": "他の",
+  "label.info": "情報",
+  "label.viewYourCancellationRequest": "キャンセルリクエストを表示する",
+  "label.summary": "まとめ",
+  "label.reason": "理由",
+  "label.status": "状態",
+
   "placeholder.email": "Eメール",
   "placeholder.password": "パスワード",
   "placeholder.repeatpassword": "リピートパスワード",
@@ -202,6 +212,7 @@
   "api.error.resetPasswordOnlyForNormalAccount": "パスワードのリセットは通常のサインアップアカウントのみ受け付けます",
   "api.error.userAlreadyActivated": "ユーザーは既にアクティブ化されています",
   "api.error.invalidOtpCode": "無効なOTPコードです",
+  "api.error.accountSuspended": "あなたのアカウントは停止されました",
 
   "detail-house": {
     "title-tab": "ディテールハウス",

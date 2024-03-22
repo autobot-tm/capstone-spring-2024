@@ -11,9 +11,11 @@ import ContractStatus from '../ContractStatus.jsx/ContractStatus';
 import { DownloadOutlined, LoadingOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { getLeaseByIdService } from '../../services/apis/contracts.service';
 import { setContractLoading } from '../../store/slices/contractSlice';
-import { Button, Table } from 'antd';
+import { Button, Empty, Table, Tabs } from 'antd';
 import { formatCustomCurrency } from '../../utils/number-seperator';
-import { Paragraph } from '../Typography';
+import { Caption, Paragraph } from '../Typography';
+import moment from 'moment';
+import CancellationRequestStatus from '../CancellationRequestStatus/CancellationRequestStatus';
 
 const ContractDetail = () => {
   const { t } = useTranslation();
@@ -30,6 +32,7 @@ const ContractDetail = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [requests, setRequests] = useState([]);
   const dispatch = useDispatch();
   const loading = useSelector(state => state.contract.loading);
   const [showFile, setShowFile] = useState(false);
@@ -49,6 +52,7 @@ const ContractDetail = () => {
         setFirstName(response.reservation.renter.first_name);
         setLastName(response.reservation.renter.last_name);
         setEmail(response.reservation.renter.email);
+        setRequests(response.cancelation_requests);
         dispatch(setContractLoading({ loading: false }));
       });
     }
@@ -183,29 +187,11 @@ const ContractDetail = () => {
     },
   ];
 
-  return (
-    <CustomModal
-      width={650}
-      nameOfModal={contractDetailModal}
-      title={t('modal.contract')}
-      action={closeContractDetailModal}
-      footer={
-        status === 'ACTIVE' && [
-          <Button
-            key=""
-            onClick={() => {
-              dispatch(openRequestCancelContractModal());
-              dispatch(closeContractDetailModal());
-            }}>
-            {t('button.requestCancelContract')}
-          </Button>,
-        ]
-      }>
-      {loading ? (
-        <div className={styles.loadingContainer}>
-          <LoadingOutlined size="large" />
-        </div>
-      ) : (
+  const items = [
+    {
+      key: '1',
+      label: t('label.info'),
+      children: (
         <>
           <Table pagination={false} columns={columns} dataSource={contractData} />
           <Button
@@ -232,6 +218,85 @@ const ContractDetail = () => {
           </Button>
           {showRenter && <Table pagination={false} columns={columns} dataSource={renterData} />}
         </>
+      ),
+    },
+    {
+      key: '2',
+      label: t('label.viewYourCancellationRequest'),
+      children: (
+        <>
+          {requests.length > 0 ? (
+            requests.map((request, index) => {
+              return (
+                <>
+                  <Table
+                    key={index}
+                    pagination={false}
+                    columns={columns}
+                    dataSource={[
+                      {
+                        key: '1',
+                        title: <b>{t('label.status')}</b>,
+                        content: <CancellationRequestStatus status={request.status} />,
+                      },
+                      {
+                        key: '2',
+                        title: <b>{t('label.summary')}</b>,
+                        content: request.title,
+                      },
+                      {
+                        key: '3',
+                        title: <b>{t('label.reason')}</b>,
+                        content: request.reason,
+                      },
+                    ]}
+                  />
+                  <div
+                    style={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'end',
+                      marginTop: '16px',
+                    }}>
+                    <Caption size={110}>
+                      {moment(request.created_at).format('H:mm -  DD/MM/YYYY')}
+                    </Caption>
+                  </div>
+                </>
+              );
+            })
+          ) : (
+            <Empty />
+          )}
+        </>
+      ),
+    },
+  ];
+
+  return (
+    <CustomModal
+      width={650}
+      nameOfModal={contractDetailModal}
+      title={t('modal.contract')}
+      action={closeContractDetailModal}
+      footer={
+        status === 'ACTIVE' && [
+          <Button
+            key=""
+            onClick={() => {
+              dispatch(openRequestCancelContractModal());
+              dispatch(closeContractDetailModal());
+            }}>
+            {t('button.requestCancelContract')}
+          </Button>,
+        ]
+      }>
+      {loading ? (
+        <div className={styles.loadingContainer}>
+          <LoadingOutlined size="large" />
+        </div>
+      ) : (
+        <Tabs defaultActiveKey="1" items={items} />
       )}
     </CustomModal>
   );
