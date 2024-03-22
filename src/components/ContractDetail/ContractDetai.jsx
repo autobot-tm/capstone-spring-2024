@@ -214,7 +214,7 @@ const ContractDetail = () => {
             onClick={() => {
               setShowRenter(!showRenter);
             }}>
-            <Paragraph>{t('label.renterDetail')}</Paragraph>
+            <Paragraph strong>{t('label.renterDetail')}</Paragraph>
           </Button>
           {showRenter && <Table pagination={false} columns={columns} dataSource={renterData} />}
         </>

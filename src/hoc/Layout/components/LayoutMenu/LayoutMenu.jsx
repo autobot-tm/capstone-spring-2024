@@ -156,9 +156,11 @@ export const LayoutMenu = ({ isInline = false }) => {
           </Button>
         )}
       </Menu.Item>
-      <Menu.Item key="notification">
-        <UserNotification t={t} />
-      </Menu.Item>
+      {access_token && (
+        <Menu.Item key="notification">
+          <UserNotification t={t} />
+        </Menu.Item>
+      )}
       <Menu.Item key="translation">
         <TranslationSelector />
       </Menu.Item>

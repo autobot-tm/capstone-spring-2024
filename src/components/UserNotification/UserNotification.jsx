@@ -1,6 +1,6 @@
 import './styles.scss';
 import React, { useEffect, useState } from 'react';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 import { Button, Dropdown, Menu, List, Badge } from 'antd';
 import { BellOutlined } from '@ant-design/icons';
 import { Caption, SubHeading } from '../Typography';
@@ -69,11 +69,31 @@ const UserNotification = ({ t }) => {
   const unreadCount = useSelector(state => state.notification.unreadCount);
   const notificationState = useSelector(state => state.notification.notifications);
   const [visible, setVisible] = useState(false);
+  // const eventSourceRef = useRef(null);
+
+  // useEffect(() => {
+  //   eventSourceRef.current = new EventSource(
+  //     'https://dev.lotus.ttq186.dev/notifications/me/realtime',
+  //   );
+  //   eventSourceRef.current.onmessage = event => {
+  //     const newNotification = JSON.parse(event.data);
+  //     console.log('data', JSON.parse(event.data));
+  //     dispatch(setNotifications(prevState => [...prevState, newNotification]));
+  //     // dispatch(markAllAsRead(prevCount => prevCount + 1));
+  //   };
+
+  //   return () => {
+  //     if (eventSourceRef.current) {
+  //       eventSourceRef.current.close();
+  //     }
+  //   };
+  // }, []);
 
   const { data: notifications } = useSWR('/api/notifications', async () => {
     try {
       const LIMIT = 6;
       const res = await getNotiUserCurrentService({ limit: LIMIT });
+      console.log(res.notifications);
       return res.notifications;
     } catch (error) {
       console.error('Error fetching metadata:', error);
@@ -102,7 +122,6 @@ const UserNotification = ({ t }) => {
         const contextOfNoti = noti.context;
         setVisible(false);
         dispatch(markAsRead(id));
-        mutate('/api/notifications');
         updateNotiHasReadService(id);
 
         if (ACTION_TYPE === 'LEASE_CANCELATION_REQUEST') {
@@ -126,7 +145,7 @@ const UserNotification = ({ t }) => {
             extra_service_request_id,
           );
           dispatch(markAllAsRead());
-          // return navigate('/extra-services');
+          return navigate('/extra-services');
         }
       } catch (error) {
         console.error('Error handling notification click:', error);
