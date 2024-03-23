@@ -9,6 +9,7 @@ export const ERROR_TRANS_KEYS = {
   USER_ALREADY_ACTIVATED: 'api.error.userAlreadyActivated',
   INVALID_OTP_CODE: 'api.error.invalidOtpCode',
   ACCOUNT_SUSPENDED: 'api.error.accountSuspended',
+  WAIT_FOR_SERVICE_CONFIRMATION: 'api.error.waitForServiceConfirmation',
 };
 export const ERROR_MAPPER = {
   40000: [
@@ -46,4 +47,5 @@ export const ERROR_MAPPER = {
   10104: [{ statusCode: 401, translationKey: ERROR_TRANS_KEYS.INVALID_JWT_TOKEN }],
   10004: [{ statusCode: 400, translationKey: ERROR_TRANS_KEYS.INVALID_OTP_CODE }],
   10011: [{ statusCode: 400, translationKey: ERROR_TRANS_KEYS.ACCOUNT_SUSPENDED }],
+  60101: [{ statusCode: 400, translationKey: ERROR_TRANS_KEYS.WAIT_FOR_SERVICE_CONFIRMATION }],
 };

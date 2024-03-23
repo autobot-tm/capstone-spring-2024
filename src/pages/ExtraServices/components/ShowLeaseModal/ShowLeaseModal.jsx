@@ -7,9 +7,10 @@ import HouseItemRow from '../../../../components/HouseItemRow/HouseItemRow';
 import { getLeasesService } from '../../../../services/apis/contracts.service';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Empty } from 'antd';
 
 const ShowLeaseModal = () => {
-  const showLeaseModal = useSelector(state => state.modal.showLeaseModal);
+  const { showLeaseModal } = useSelector(state => state.modal);
   const [leases, setLeases] = useState([]);
   const { t } = useTranslation();
 
@@ -19,18 +20,20 @@ const ShowLeaseModal = () => {
 
   return (
     <CustomModal
-      width={800}
+      width={640}
       nameOfModal={showLeaseModal}
       title={t('modal.chooseContract')}
       action={closeShowLeaseModal}
       footer={null}>
-      {leases.map((lease, index) => {
-        return (
+      {leases && leases?.length > 0 ? (
+        leases.map((lease, index) => (
           <React.Fragment key={index}>
             <HouseItemRow id={lease.id} house={lease.reservation.house} type="service" />
           </React.Fragment>
-        );
-      })}
+        ))
+      ) : (
+        <Empty />
+      )}
     </CustomModal>
   );
 };

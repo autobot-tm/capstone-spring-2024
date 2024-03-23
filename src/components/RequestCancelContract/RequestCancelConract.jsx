@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomModal from '../Modal/CustomModal';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,10 +7,11 @@ import {
   openContractDetailModal,
   openShowLeaseModal,
 } from '../../store/slices/modalSlice';
-import { Button, Form, Input, Select, notification } from 'antd';
+import { Alert, Button, Form, Input, Select, notification } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { requestCancelContractService } from '../../services/apis/contracts.service';
 import { requestExtraServices } from '../../services/apis/extra-services.service';
+import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
 
 const RequestCancelConract = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const RequestCancelConract = () => {
   const { requestCancelContractModal, typeOfRequest, contractId, extraServiceId } = useSelector(
     state => state.modal,
   );
+  const [error, setError] = useState(false);
   const [api, contextHolder] = notification.useNotification();
 
   const openNotificationWithIcon = type => {
@@ -27,20 +29,23 @@ const RequestCancelConract = () => {
   };
 
   const handleFinish = async values => {
-    const { title, reason, type } = values;
+    const { title, reason, type, description } = values;
 
     if (typeOfRequest === 'service') {
       try {
         const requestData = {
           lease_id: contractId,
           extra_service_id: extraServiceId,
-          description: reason,
+          description,
           title,
         };
         await requestExtraServices(requestData);
         dispatch(closeRequestCancelContractModal());
         openNotificationWithIcon('success');
       } catch (error) {
+        if (error === ERROR_TRANS_KEYS.WAIT_FOR_SERVICE_CONFIRMATION) {
+          setError(true);
+        }
         console.warn('Error request services: ', error);
       }
     } else {
@@ -88,6 +93,7 @@ const RequestCancelConract = () => {
   useEffect(() => {
     if (!requestCancelContractModal) {
       form.resetFields();
+      setError(false);
     }
   }, [requestCancelContractModal]);
 
@@ -138,12 +144,28 @@ const RequestCancelConract = () => {
             rules={[{ required: true, message: t('validationRules.required.title') }]}>
             <Input placeholder={t('placeholder.title')} />
           </Form.Item>
-          <Form.Item
-            name={'reason'}
-            rules={[{ required: true, message: t('validationRules.required.reason') }]}>
-            <TextArea rows={4} placeholder={t('placeholder.reason')} maxLength={200} />
-          </Form.Item>
+          {typeOfRequest !== 'service' ? (
+            <Form.Item
+              name={'reason'}
+              rules={[{ required: true, message: t('validationRules.required.reason') }]}>
+              <TextArea rows={4} placeholder={t('placeholder.reason')} maxLength={200} />
+            </Form.Item>
+          ) : (
+            <Form.Item
+              name={'description'}
+              rules={[{ required: true, message: t('validationRules.required.description') }]}>
+              <TextArea rows={4} placeholder={t('placeholder.description')} maxLength={200} />
+            </Form.Item>
+          )}
         </Form>
+        {error && (
+          <Alert
+            message={t('api.error.waitForServiceConfirmation')}
+            type="error"
+            showIcon
+            style={{ marginBottom: '16px' }}
+          />
+        )}
       </CustomModal>
     </>
   );

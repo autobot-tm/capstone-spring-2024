@@ -33,24 +33,24 @@ const UtilityBill = ({ electricity, water, dispatch, t }) => {
       </Col>
       <Col xs={24} md={12}>
         <SubHeading>{t('EXTRA-SERVICES.title-electricity-be')}</SubHeading>
-        <Paragraph classNames="d-block utility-section" style={{ padding: 4 }}>
+        <Paragraph classNames="d-block utility-section" style={{ padding: '10px 2px' }}>
           {' '}
           {t('EXTRA-SERVICES.des-electricity-be')}{' '}
-          <BaseButton onClick={requestElectricity} className="bg-primary">
-            {t('button.request')}
-          </BaseButton>
         </Paragraph>
+        <BaseButton onClick={requestElectricity} className="bg-primary">
+          {t('button.request')}
+        </BaseButton>
       </Col>
 
       <Col xs={24} md={12}>
         <SubHeading> {t('EXTRA-SERVICES.title-water-be')} </SubHeading>
-        <Paragraph classNames="d-block utility-section" style={{ padding: 4 }}>
+        <Paragraph classNames="d-block utility-section" style={{ padding: '10px 2px' }}>
           {' '}
           {t('EXTRA-SERVICES.des-water-be')}{' '}
-          <BaseButton onClick={requestWater} className="bg-primary">
-            {t('button.request')}
-          </BaseButton>
         </Paragraph>
+        <BaseButton onClick={requestWater} className="bg-primary">
+          {t('button.request')}
+        </BaseButton>
       </Col>
     </Row>
   );
