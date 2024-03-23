@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Contract.module.scss';
 import Filter from '../Filter/Filter';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { getLeasesService } from '../../../../services/apis/contracts.service';
 import { useDispatch, useSelector } from 'react-redux';
 import { FrownTwoTone } from '@ant-design/icons';
@@ -26,7 +26,7 @@ const Contract = () => {
       status: status,
     });
   });
-
+  mutate('/api/notifications');
   console.log(data);
   return (
     <div className={styles.contractContainer}>

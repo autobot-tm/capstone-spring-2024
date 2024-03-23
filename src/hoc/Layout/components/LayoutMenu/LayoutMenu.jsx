@@ -5,18 +5,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './styles.scss';
 import { TranslationSelector } from '../TranslationSelector';
 import { useTranslation } from 'react-i18next';
-import {
-  BellOutlined,
-  CustomerServiceOutlined,
-  LogoutOutlined,
-  QuestionCircleOutlined,
-  SolutionOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { LogoutOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConfirmLogoutModal, openLoginModal } from '../../../../store/slices/modalSlice';
 import { Paragraph } from '../../../../components/Typography';
 import AVATAR from '../../../../assets/images/avatar.svg';
+import UserNotification from '../../../../components/UserNotification/UserNotification';
+
 export const LayoutMenu = ({ isInline = false }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -89,22 +84,22 @@ export const LayoutMenu = ({ isInline = false }) => {
       ),
       children: [
         {
-          label: <span>{t('services')}</span>,
-          icon: (
-            <span>
-              <CustomerServiceOutlined />{' '}
-            </span>
-          ),
-          key: '/services',
+          label: <span>{t('services').toUpperCase()}</span>,
+          // icon: (
+          //   <span>
+          //     <CustomerServiceOutlined />{' '}
+          //   </span>
+          // ),
+          key: '/extra-services',
         },
         {
-          label: <span>{t('faq')}</span>,
-          icon: (
-            <span>
-              <QuestionCircleOutlined />
-            </span>
-          ),
-          key: '/faq',
+          label: <span>{t('faq').toUpperCase()}</span>,
+          // icon: (
+          //   <span>
+          //     <QuestionCircleOutlined />
+          //   </span>
+          // ),
+          key: '/faqs',
         },
       ],
     },
@@ -161,13 +156,11 @@ export const LayoutMenu = ({ isInline = false }) => {
           </Button>
         )}
       </Menu.Item>
-      <Menu.Item key="notification">
-        <Button
-          type="text"
-          style={{ margin: 0 }}
-          icon={<BellOutlined style={{ fontSize: 20 }} />}
-          onClick={() => {}}></Button>
-      </Menu.Item>
+      {access_token && (
+        <Menu.Item key="notification">
+          <UserNotification t={t} />
+        </Menu.Item>
+      )}
       <Menu.Item key="translation">
         <TranslationSelector />
       </Menu.Item>

@@ -1,19 +1,63 @@
 import './styles.scss';
-import { Breadcrumb, Card, Col, Row } from 'antd';
-import React, { useState } from 'react';
-import { Caption, Headline, SubHeading } from '../../components/Typography';
+import { Breadcrumb, Card, Col, Row, notification } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Caption, Headline, Paragraph, SubHeading } from '../../components/Typography';
 import { useTranslation } from 'react-i18next';
-import { FileProtectOutlined, HomeOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import {
+  FileProtectOutlined,
+  HomeOutlined,
+  SmileOutlined,
+  ThunderboltOutlined,
+} from '@ant-design/icons';
 import { Layout } from '../../hoc/Layout/Layout';
 import UtilityBill from './components/UtilityBill/UtilityBill';
 import ResidenceRegistration from './components/ResidenceRegistration/ResidenceRegistration';
+import { getExtraServices } from '../../services/apis/extra-services.service';
+import useSWR from 'swr';
 
 const ExtraServices = () => {
   const { t } = useTranslation();
   const [selectedCard, setSelectedCard] = useState(null);
+  const [services, setServices] = useState('');
 
   const handleCardClick = cardName => {
     setSelectedCard(cardName);
+  };
+
+  const { data: extraServices } = useSWR('/api/extra-services', async () => {
+    try {
+      const res = await getExtraServices();
+      console.log(res);
+      return res;
+    } catch (error) {
+      console.error('Error fetching extra services:', error);
+      throw new Error('Failed to fetch extra services');
+    }
+  });
+  console.log('services', services);
+
+  useEffect(() => {
+    if (extraServices) {
+      setServices(extraServices);
+    }
+  }, [extraServices]);
+
+  const requestSuccessfullyNoti = () => {
+    return notification.open({
+      message: (
+        <Paragraph size={230} classNames="color-black" strong>
+          Extra Services Request
+        </Paragraph>
+      ),
+      description: 'Your request has been successful!',
+      icon: (
+        <SmileOutlined
+          style={{
+            color: '#108ee9',
+          }}
+        />
+      ),
+    });
   };
 
   return (
@@ -102,8 +146,16 @@ const ExtraServices = () => {
             </Card>
           </Col>
           <Col xs={24} className="es-section-detail">
-            {selectedCard === 'utility' && <UtilityBill />}
-            {selectedCard === 'residence' && <ResidenceRegistration />}
+            {selectedCard === 'utility' && (
+              <UtilityBill
+                electricity={services[0]}
+                water={services[1]}
+                alert={requestSuccessfullyNoti}
+              />
+            )}
+            {selectedCard === 'residence' && (
+              <ResidenceRegistration residence={services[2]} alert={requestSuccessfullyNoti} />
+            )}
           </Col>
         </Row>
       </main>

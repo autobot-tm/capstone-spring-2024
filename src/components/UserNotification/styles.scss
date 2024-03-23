@@ -1,0 +1,50 @@
+.ant-dropdown-menu {
+  width: 440px;
+  padding: 0 !important;
+  .noti {
+    // height: 400px;
+    &-header {
+      width: 100%;
+      border-bottom: 0.2px solid #ccc;
+      .title {
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 20px;
+
+        & > a {
+          text-decoration: none;
+          color: black;
+          font-style: 11px;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    &-list {
+      overflow-y: auto;
+      overflow-x: hidden;
+      max-height: 40vh !important;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .ant-list-item {
+    width: 100%;
+
+    & > a {
+      cursor: pointer;
+      width: 100%;
+    }
+  }
+}
+
+.item-notification {
+  padding: 14px 20px !important;
+  transition: background-color 0.3s;
+}
+
+.item-notification.unRead {
+  background-color: #fef7f1;
+}

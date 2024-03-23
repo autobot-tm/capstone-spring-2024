@@ -12,6 +12,18 @@
   "reservation": "予約",
   "join-us": "参加する",
   "logout": "ログアウト",
+  "notification": "お知らせ",
+  "just-now": "たった今",
+  "minute": "分",
+  "minutes": "分",
+  "hour": "時",
+  "hours": "時",
+  "day": "日",
+  "days": "日",
+  "month": "月",
+  "months": "月",
+  "year": "年",
+  "years": "年",
   "welcome-text": "ようこそ！",
   "error": "何かが間違っていた",
   "ok": "オッケー",
@@ -219,6 +231,11 @@
   "api.error.userAlreadyActivated": "ユーザーは既にアクティブ化されています",
   "api.error.invalidOtpCode": "無効なOTPコードです",
   "api.error.accountSuspended": "あなたのアカウントは停止されました",
+
+  "CANCEL_CONTRACT": {
+    "title": "追加サービスのお申し込み 一時滞在登録サポートサービスは現在検討中です。",
+    "description": "追加サービスのリクエストについて検討中です。すぐにご連絡いたします。"
+  },
 
   "detail-house": {
     "title-tab": "ディテールハウス",

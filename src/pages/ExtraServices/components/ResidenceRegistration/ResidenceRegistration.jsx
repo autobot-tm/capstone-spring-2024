@@ -3,22 +3,24 @@ import React from 'react';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { Paragraph, SubHeading } from '../../../../components/Typography';
 
-const ResidenceRegistration = () => {
+const ResidenceRegistration = ({ residence, alert }) => {
   return (
     <div className="rr-container">
-      <SubHeading classNames="d-block">Residence Registration</SubHeading>
-      <Paragraph classNames="d-block" style={{ padding: 10 }}>
-        Nec nam aliquam sem et tortor consequat id porta. Praesent tristique magna sit amet purus
-        gravida quis blandit turpis. Nec nam aliquam sem et tortor consequat id porta. Praesent
-        tristique magna sit amet purus gravida quis blandit turpis. Nec nam aliquam sem et tortor
-        consequat id porta. Praesent tristique magna sit amet purus gravida quis blandit turpis. Nec
-        nam aliquam sem et tortor consequat id porta. Praesent tristique magna sit amet purus
-        gravida quis blandit turpis. Nec nam aliquam sem et tortor consequat id porta. Praesent
-        tristique magna sit amet purus gravida quis blandit turpis. Nec nam aliquam sem et tortor
-        consequat id porta. Praesent tristique magna sit amet purus gravida quis blandit turpis.
+      <SubHeading classNames="d-block" strong>
+        Assist with Temporary Residence Registration
+      </SubHeading>
+      <Paragraph classNames="d-block" style={{ padding: 4, marginTop: 6 }}>
+        We assist renters with registering their temporary residence, making it easier for
+        travelers, expats, or short-term movers to complete the necessary paperwork and get settled
+        quickly.
+      </Paragraph>
+      <Paragraph classNames="d-block" style={{ padding: 4 }}>
+        {residence?.description}
       </Paragraph>
 
-      <BaseButton className="bg-tertiary">Request</BaseButton>
+      <BaseButton onClick={alert} className="bg-tertiary">
+        Request
+      </BaseButton>
     </div>
   );
 };

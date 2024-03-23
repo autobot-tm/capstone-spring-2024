@@ -6,6 +6,7 @@ import wishlistSlice from './slices/wishlist.slice';
 import reservationReducer from './slices/reservationSlice';
 import contractReducer from './slices/contractSlice';
 import { userReducer } from './slices/user.slice';
+import notificationSlice from './slices/notification.slice';
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     wishlist: wishlistSlice,
     reservation: reservationReducer,
     contract: contractReducer,
+    notification: notificationSlice,
   },
 });

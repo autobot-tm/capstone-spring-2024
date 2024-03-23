@@ -11,9 +11,10 @@ const initialState = {
   reservationDetailModal: false,
   contractDetailModal: false,
   requestCancelContractModal: false,
+  reservationPolicyModal: false,
+  notificationDetailModal: false,
   reservationId: undefined,
   contractId: undefined,
-  reservationPolicyModal: false,
   showAllImageModal: false,
   email: '',
   images: [],
@@ -53,6 +54,7 @@ const modalSlice = createSlice({
     openContractDetailModal: (state, action) => {
       state.contractDetailModal = true;
       state.contractId = action.payload.contractId;
+      state.cancelation_request_id = action.payload.cancelation_request_id;
     },
     openRequestCancelContractModal: state => {
       state.requestCancelContractModal = true;

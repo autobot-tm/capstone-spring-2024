@@ -34,4 +34,16 @@ export const ENDPOINTS = {
     user: user_id => `/users/${user_id}`,
     updateUpdate: '/users/me',
   },
+  notification: {
+    me: '/notifications/me',
+    realTime: '/notifications/me/realtime',
+    notificationId: notification_id => `/notifications/${notification_id}`,
+  },
+  leases: {
+    leaseId: lease_id => `/leases/${lease_id}`,
+  },
+  services: {
+    base: '/extra-services',
+    request: '/extra-service-requests',
+  },
 };
