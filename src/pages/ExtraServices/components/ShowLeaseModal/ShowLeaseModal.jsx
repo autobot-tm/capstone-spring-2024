@@ -3,45 +3,34 @@ import CustomModal from '../../../../components/Modal/CustomModal';
 import './styles.scss';
 import React, { useEffect } from 'react';
 import { closeShowLeaseModal } from '../../../../store/slices/modalSlice';
-import { Button } from 'antd';
 import HouseItemRow from '../../../../components/HouseItemRow/HouseItemRow';
 import { getLeasesService } from '../../../../services/apis/contracts.service';
 import { useState } from 'react';
 
 const ShowLeaseModal = () => {
   const showLeaseModal = useSelector(state => state.modal.showLeaseModal);
-  const [data, setData] = useState([]);
+  const [leases, setLeases] = useState([]);
 
   useEffect(() => {
-    console.log('run run');
-    getLeasesService({ offset: 0, status: 'ACTIVE', limit: 20 }).then(res => setData(res));
+    getLeasesService({ offset: 0, status: 'ACTIVE', limit: 20 }).then(res => setLeases(res.leases));
   }, [showLeaseModal]);
 
-  console.log('lease', data);
-
-  const itemLease = () => {
-    data?.leases.length !== 0 &&
-      data.leases.map(lease => (
-        <div key={lease.id}>
-          <HouseItemRow
-            id={lease.id}
-            house={lease.reservation.house}
-            status={lease.status}
-            time={lease.created_at}
-            type="services"
-          />
-        </div>
-      ));
-  };
+  console.log(leases);
 
   return (
     <CustomModal
-      width={400}
+      width={800}
       nameOfModal={showLeaseModal}
       title="Choose lease"
       action={closeShowLeaseModal}
-      footer={[<Button key="">next</Button>]}>
-      {itemLease}
+      footer={null}>
+      {leases.map((lease, index) => {
+        return (
+          <div key={index}>
+            <HouseItemRow id={lease.id} house={lease.reservation.house} type="service" />
+          </div>
+        );
+      })}
     </CustomModal>
   );
 };
