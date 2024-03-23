@@ -16,6 +16,8 @@ const initialState = {
   reservationId: undefined,
   contractId: undefined,
   showAllImageModal: false,
+  showLeaseModal: false,
+  extraServiceId: '',
   email: '',
   images: [],
 };
@@ -66,7 +68,13 @@ const modalSlice = createSlice({
       state.showAllImageModal = true;
       state.images = action.payload.images;
     },
-
+    openShowLeaseModal: (state, action) => {
+      state.showLeaseModal = true;
+      state.extraServiceId = action.payload;
+    },
+    closeShowLeaseModal: state => {
+      state.showLeaseModal = false;
+    },
     closeReservationPolicyModal: state => {
       state.reservationPolicyModal = false;
     },
@@ -119,6 +127,8 @@ export const {
   openContractDetailModal,
   openRequestCancelContractModal,
   openShowAllImageModal,
+  openShowLeaseModal,
+  closeShowLeaseModal,
   closeLoginModal,
   closeRegisterModal,
   closeRequestResetPasswordModal,

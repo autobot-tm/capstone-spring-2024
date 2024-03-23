@@ -27,11 +27,18 @@
 
 #es-container {
   display: flex;
-  justify-content: center;
+  // justify-content: center;
   max-width: 1400px;
   height: auto;
   margin: 0 auto;
   padding: 50px 20px;
+
+  .es-wrap {
+    padding: 24px;
+    width: 100%;
+    // background-color: $colors-primary;
+    border-radius: 30px;
+  }
 
   .es-section {
     display: flex;
@@ -91,7 +98,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    // text-align: center;
     margin-top: 30px;
   }
 }
