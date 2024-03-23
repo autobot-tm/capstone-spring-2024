@@ -46,6 +46,8 @@
   "modal.reservation": "Reservation",
   "modal.contract": "Contract",
   "modal.requestCancelContract": "Request cancel contract",
+  "modal.extraServiceRequest": "Extra Service Request",
+  "modal.chooseContract": "Choose Contract",
   "button.login": "Login",
   "button.register": "Register",
   "button.confirm": "Confirm",
@@ -57,6 +59,7 @@
   "button.browseMore": "Browse More Properties",
   "button.cancel": "Cancel",
   "button.ok": "Ok",
+  "button.request": "Request",
   "button.requestCancelContract": "Request cancel contract",
   "button.showMap": "Show maps",
   "button.showList": "Show list",
@@ -404,7 +407,21 @@
 
   "EXTRA-SERVICES": {
     "our-services": "Our Services",
-    "extra-services": "Extra Services"
+    "extra-services": "Extra Services",
+    "utility-card": "Utility Bill Collection",
+    "residence-card": "Residence Registration",
+    "read-more": "Read More",
+    "services": "SERVICES",
+    "what-we-do-offer": "What we do offer",
+    "title-utility": "Pay Renter Utility Bills in Advance",
+    "title-residence": "Assist with Temporary Residence Registration  ",
+    "des-utility": "This service helps renters pay their utility bills early, ensuring they are always covered for electricity and water without any hassle or late fees.",
+    "des-residence": "We assist renters with registering their temporary residence, making it easier for travelers, expats, or short-term movers to complete the necessary paperwork and get settled quickly.",
+    "title-electricity-be": "Electricity bill payment service",
+    "des-electricity-be": "Never worry about late fees or power cuts again! Our reliable bill payment service ensures your electricity bill is paid on time.",
+    "title-water-be": "Water bill payment service",
+    "des-water-be": "Avoid late payments and ensure uninterrupted water supply with our reliable bill payment service.",
+    "des-residence-be": "Focus on your stay, not the red tape. Our Temporary Residence Registration Support Service takes the stress out of ensuring your legal status in Vietnam."
   },
 
   "NOT-FOUND": {

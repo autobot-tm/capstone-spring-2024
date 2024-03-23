@@ -93,9 +93,7 @@ const UserNotification = ({ t }) => {
 
   const { data: notifications } = useSWR('/api/notifications', async () => {
     try {
-      const LIMIT = 6;
-      const res = await getNotiUserCurrentService({ limit: LIMIT });
-      console.log(res.notifications);
+      const res = await getNotiUserCurrentService();
       return res.notifications;
     } catch (error) {
       console.error('Error fetching metadata:', error);

@@ -6,7 +6,12 @@ import { formatCustomCurrency } from '../../utils/number-seperator';
 import ReservationStatus from '../ReservationStatus/ReservationStatus';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { openContractDetailModal, openReservationDetailModal } from '../../store/slices/modalSlice';
+import {
+  closeShowLeaseModal,
+  openContractDetailModal,
+  openRequestCancelContractModal,
+  openReservationDetailModal,
+} from '../../store/slices/modalSlice';
 import { setLoading } from '../../store/slices/reservationSlice';
 import { setContractLoading } from '../../store/slices/contractSlice';
 import ContractStatus from '../ContractStatus.jsx/ContractStatus';
@@ -23,6 +28,9 @@ const HouseItemRow = ({ id, house, status, time, type }) => {
         } else if (type === 'reservation') {
           dispatch(setLoading({ loading: true }));
           dispatch(openReservationDetailModal({ reservationId: id }));
+        } else {
+          dispatch(closeShowLeaseModal());
+          dispatch(openRequestCancelContractModal({ contractId: id, typeOfRequest: type }));
         }
       }}>
       <div className={type !== 'service' ? styles.imageContainer : styles.imageContainer2}>

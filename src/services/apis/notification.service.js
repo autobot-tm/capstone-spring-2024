@@ -1,8 +1,8 @@
 import { apiCaller } from '../../axios';
 import { ENDPOINTS } from './api-endpoints.service';
 
-export const getNotiUserCurrentService = ({ limit }) => {
-  return apiCaller.get(ENDPOINTS.notification.me + `?limit=${limit}`);
+export const getNotiUserCurrentService = () => {
+  return apiCaller.get(ENDPOINTS.notification.me);
 };
 
 export const getNotiRealTimeUserCurrentService = () => {

@@ -17,7 +17,8 @@ const initialState = {
   contractId: undefined,
   showAllImageModal: false,
   showLeaseModal: false,
-  extraServiceId: '',
+  extraServiceId: undefined,
+  typeOfRequest: null,
   email: '',
   images: [],
 };
@@ -58,8 +59,10 @@ const modalSlice = createSlice({
       state.contractId = action.payload.contractId;
       state.cancelation_request_id = action.payload.cancelation_request_id;
     },
-    openRequestCancelContractModal: state => {
+    openRequestCancelContractModal: (state, action) => {
       state.requestCancelContractModal = true;
+      state.typeOfRequest = action?.payload?.typeOfRequest;
+      state.contractId = action?.payload?.contractId;
     },
     openReservationPolicyModal: state => {
       state.reservationPolicyModal = true;
@@ -70,7 +73,7 @@ const modalSlice = createSlice({
     },
     openShowLeaseModal: (state, action) => {
       state.showLeaseModal = true;
-      state.extraServiceId = action.payload;
+      state.extraServiceId = action?.payload?.extraServiceId;
     },
     closeShowLeaseModal: state => {
       state.showLeaseModal = false;

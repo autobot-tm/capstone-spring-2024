@@ -5,31 +5,57 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   closeRequestCancelContractModal,
   openContractDetailModal,
+  openShowLeaseModal,
 } from '../../store/slices/modalSlice';
 import { Button, Form, Input, Select, notification } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { requestCancelContractService } from '../../services/apis/contracts.service';
+import { requestExtraServices } from '../../services/apis/extra-services.service';
 
 const RequestCancelConract = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const requestCancelContractModal = useSelector(state => state.modal.requestCancelContractModal);
-  const leaseId = useSelector(state => state.modal.contractId);
+  const { requestCancelContractModal, typeOfRequest, contractId, extraServiceId } = useSelector(
+    state => state.modal,
+  );
   const [api, contextHolder] = notification.useNotification();
 
   const openNotificationWithIcon = type => {
     api[type]({
-      message: t('notìication.submittedSuccessfully'),
+      message: t('notification.submittedSuccessfully'),
     });
   };
 
-  const handleFinish = values => {
+  const handleFinish = async values => {
     const { title, reason, type } = values;
 
-    requestCancelContractService({ leaseId, title, reason, type });
-    dispatch(closeRequestCancelContractModal());
-    openNotificationWithIcon('success');
+    if (typeOfRequest === 'service') {
+      try {
+        const requestData = {
+          lease_id: contractId,
+          extra_service_id: extraServiceId,
+          description: reason,
+          title,
+        };
+        await requestExtraServices(requestData);
+        dispatch(closeRequestCancelContractModal());
+        openNotificationWithIcon('success');
+      } catch (error) {
+        console.warn('Error request services: ', error);
+      }
+    } else {
+      try {
+        console.log('run contract', extraServiceId, contractId, title, reason, type);
+        const requestData = { lease_id: contractId, title, reason, type };
+        await requestCancelContractService(requestData);
+        dispatch(closeRequestCancelContractModal());
+        openNotificationWithIcon('success');
+      } catch (error) {
+        console.warn('Error request cancel contract: ', error);
+      }
+    }
   };
+
   const [form] = Form.useForm();
 
   const options = [
@@ -58,44 +84,55 @@ const RequestCancelConract = () => {
       value: 'OTHER',
     },
   ];
+
   useEffect(() => {
     if (!requestCancelContractModal) {
       form.resetFields();
     }
   }, [requestCancelContractModal]);
+
   return (
     <>
       {contextHolder}
       <CustomModal
         width={600}
         nameOfModal={requestCancelContractModal}
-        title={t('modal.requestCancelContract')}
+        title={
+          typeOfRequest === 'service'
+            ? t('modal.extraServiceRequest')
+            : t('modal.requestCancelContract')
+        }
         action={closeRequestCancelContractModal}
         footer={[
           <Button
-            key=""
+            key="back"
             onClick={() => {
-              dispatch(closeRequestCancelContractModal());
-              dispatch(openContractDetailModal({ contractId: leaseId }));
+              if (typeOfRequest === 'service') {
+                dispatch(closeRequestCancelContractModal());
+                dispatch(openShowLeaseModal());
+              } else {
+                dispatch(closeRequestCancelContractModal());
+                dispatch(openContractDetailModal({ contractId: contractId }));
+              }
             }}>
             {t('button.back')}
           </Button>,
           <Button key="submit" htmlType="submit" type="primary" onClick={() => form.submit()}>
-            {t('button.requestCancelContract')}
+            {typeOfRequest === 'service' ? t('button.request') : t('button.requestCancelContract')}
           </Button>,
         ]}>
         <Form onFinish={handleFinish} form={form}>
-          <Form.Item
-            name={'type'}
-            rules={[{ required: true, message: t('validationRules.required.type') }]}>
-            <Select
-              style={{
-                width: '100%',
-              }}
-              placeholder={t('placeholder.type')}
-              options={options}
-            />
-          </Form.Item>
+          {typeOfRequest !== 'service' && (
+            <Form.Item
+              name={'type'}
+              rules={[{ required: true, message: t('validationRules.required.type') }]}>
+              <Select
+                style={{ width: '100%' }}
+                placeholder={t('placeholder.type')}
+                options={options}
+              />
+            </Form.Item>
+          )}
           <Form.Item
             name={'title'}
             rules={[{ required: true, message: t('validationRules.required.title') }]}>
