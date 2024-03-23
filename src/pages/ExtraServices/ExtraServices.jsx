@@ -1,25 +1,21 @@
 import './styles.scss';
-import { Breadcrumb, Card, Col, Row, notification } from 'antd';
+import { Breadcrumb, Card, Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Caption, Headline, Paragraph, SubHeading } from '../../components/Typography';
 import { useTranslation } from 'react-i18next';
-import {
-  FileProtectOutlined,
-  HomeOutlined,
-  SmileOutlined,
-  ThunderboltOutlined,
-} from '@ant-design/icons';
+import { FileProtectOutlined, HomeOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { Layout } from '../../hoc/Layout/Layout';
 import UtilityBill from './components/UtilityBill/UtilityBill';
 import ResidenceRegistration from './components/ResidenceRegistration/ResidenceRegistration';
 import { getExtraServices } from '../../services/apis/extra-services.service';
 import useSWR from 'swr';
+import { useDispatch } from 'react-redux';
 
 const ExtraServices = () => {
   const { t } = useTranslation();
   const [selectedCard, setSelectedCard] = useState(null);
   const [services, setServices] = useState('');
-
+  const dispatch = useDispatch();
   const handleCardClick = cardName => {
     setSelectedCard(cardName);
   };
@@ -27,38 +23,18 @@ const ExtraServices = () => {
   const { data: extraServices } = useSWR('/api/extra-services', async () => {
     try {
       const res = await getExtraServices();
-      console.log(res);
       return res;
     } catch (error) {
       console.error('Error fetching extra services:', error);
       throw new Error('Failed to fetch extra services');
     }
   });
-  console.log('services', services);
 
   useEffect(() => {
     if (extraServices) {
       setServices(extraServices);
     }
   }, [extraServices]);
-
-  const requestSuccessfullyNoti = () => {
-    return notification.open({
-      message: (
-        <Paragraph size={230} classNames="color-black" strong>
-          Extra Services Request
-        </Paragraph>
-      ),
-      description: 'Your request has been successful!',
-      icon: (
-        <SmileOutlined
-          style={{
-            color: '#108ee9',
-          }}
-        />
-      ),
-    });
-  };
 
   return (
     <Layout>
@@ -85,19 +61,16 @@ const ExtraServices = () => {
         </Row>
       </header>
       <main id="es-container">
-        <Row justify="center" gutter={[0, 30]}>
-          <Col xs={24} style={{ textAlign: 'center' }}>
+        <Row className="es-wrap" gutter={[0, 30]}>
+          <Col xs={24} style={{ textAlign: 'start' }}>
+            <Paragraph classNames="color-black">{t('EXTRA-SERVICES.services')}</Paragraph>
             <Headline strong classNames="d-block">
-              We Provide Professional
+              {t('EXTRA-SERVICES.what-we-do-offer')}
             </Headline>
-            <Headline strong>Business Solutions</Headline>
-            <Caption size={140} classNames="d-block" style={{ marginTop: 20 }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore.
+            <Caption size={140} classNames="d-block" style={{ marginTop: 6 }}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
             </Caption>
-            <Caption size={140}>
-              Nec nam aliquam sem et tortor consequat id porta. Praesent tristique magna.
-            </Caption>
+            <Caption size={140}>Nec nam aliquam sem et tortor consequat id porta.</Caption>
           </Col>
           <Col xs={24} className="es-section">
             <Card
@@ -111,13 +84,13 @@ const ExtraServices = () => {
               <div className="content-card">
                 <span className="content-card-top">
                   <SubHeading size={230} strong style={{ width: '60%' }}>
-                    Utility Bill Collection
+                    {t('EXTRA-SERVICES.utility-card')}
                   </SubHeading>
                   <ThunderboltOutlined className="es-icon-primary" style={{ fontSize: 30 }} />
                 </span>
                 <span>
                   <a href="#" className="primary-link">
-                    Read More
+                    {t('EXTRA-SERVICES.read-more')}
                   </a>
                 </span>
               </div>
@@ -133,13 +106,13 @@ const ExtraServices = () => {
               <div className="content-card">
                 <span className="content-card-top">
                   <SubHeading size={230} strong style={{ width: '60%' }}>
-                    Residence Registration
+                    {t('EXTRA-SERVICES.residence-card')}
                   </SubHeading>
                   <FileProtectOutlined className="es-icon-tertiary" style={{ fontSize: 30 }} />
                 </span>
                 <span>
                   <a href="#" className="tertiary-link">
-                    Read More
+                    {t('EXTRA-SERVICES.read-more')}
                   </a>
                 </span>
               </div>
@@ -148,13 +121,14 @@ const ExtraServices = () => {
           <Col xs={24} className="es-section-detail">
             {selectedCard === 'utility' && (
               <UtilityBill
+                dispatch={dispatch}
                 electricity={services[0]}
                 water={services[1]}
-                alert={requestSuccessfullyNoti}
+                t={t}
               />
             )}
             {selectedCard === 'residence' && (
-              <ResidenceRegistration residence={services[2]} alert={requestSuccessfullyNoti} />
+              <ResidenceRegistration dispatch={dispatch} residence={services[2]} t={t} />
             )}
           </Col>
         </Row>

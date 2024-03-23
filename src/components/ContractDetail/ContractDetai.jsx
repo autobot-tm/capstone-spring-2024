@@ -305,7 +305,7 @@ const ContractDetail = () => {
           <Button
             key=""
             onClick={() => {
-              dispatch(openRequestCancelContractModal());
+              dispatch(openRequestCancelContractModal({ contractId: leaseId }));
               dispatch(closeContractDetailModal());
             }}>
             {t('button.requestCancelContract')}

@@ -48,6 +48,7 @@ const Reservation = () => {
                 house={reservation.house}
                 status={reservation.status}
                 time={reservation.created_at}
+                type="reservation"
               />
             </div>
           ))

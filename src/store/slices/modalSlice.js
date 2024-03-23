@@ -16,6 +16,9 @@ const initialState = {
   reservationId: undefined,
   contractId: undefined,
   showAllImageModal: false,
+  showLeaseModal: false,
+  extraServiceId: undefined,
+  typeOfRequest: null,
   email: '',
   images: [],
 };
@@ -56,8 +59,10 @@ const modalSlice = createSlice({
       state.contractId = action.payload.contractId;
       state.cancelation_request_id = action.payload.cancelation_request_id;
     },
-    openRequestCancelContractModal: state => {
+    openRequestCancelContractModal: (state, action) => {
       state.requestCancelContractModal = true;
+      state.typeOfRequest = action?.payload?.typeOfRequest;
+      state.contractId = action?.payload?.contractId;
     },
     openReservationPolicyModal: state => {
       state.reservationPolicyModal = true;
@@ -66,7 +71,13 @@ const modalSlice = createSlice({
       state.showAllImageModal = true;
       state.images = action.payload.images;
     },
-
+    openShowLeaseModal: (state, action) => {
+      state.showLeaseModal = true;
+      state.extraServiceId = action?.payload?.extraServiceId;
+    },
+    closeShowLeaseModal: state => {
+      state.showLeaseModal = false;
+    },
     closeReservationPolicyModal: state => {
       state.reservationPolicyModal = false;
     },
@@ -119,6 +130,8 @@ export const {
   openContractDetailModal,
   openRequestCancelContractModal,
   openShowAllImageModal,
+  openShowLeaseModal,
+  closeShowLeaseModal,
   closeLoginModal,
   closeRegisterModal,
   closeRequestResetPasswordModal,
