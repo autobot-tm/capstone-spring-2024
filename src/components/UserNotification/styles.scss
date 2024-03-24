@@ -20,6 +20,30 @@
           text-decoration: underline;
         }
       }
+      @media (max-width: 500px) {
+        .title {
+          display: none;
+        }
+        .title2 {
+          display: flex;
+          justify-content: space-between;
+          padding: 16px 20px;
+
+          & > a {
+            text-decoration: none;
+            color: black;
+            font-style: 11px;
+          }
+          a:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+      @media (min-width: 500px) {
+        .title2 {
+          display: none;
+        }
+      }
     }
     &-list {
       overflow-y: auto;
@@ -28,6 +52,10 @@
       height: 100%;
       width: 100%;
     }
+  }
+
+  @media (max-width: 500px) {
+    width: 320px;
   }
 
   .ant-list-item {

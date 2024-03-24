@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import { Button, Dropdown, Menu, List, Badge } from 'antd';
 import { BellOutlined } from '@ant-design/icons';
-import { Caption, SubHeading } from '../Typography';
+import { Caption, Paragraph, SubHeading } from '../Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { markAsRead, markAllAsRead, setNotifications } from '../../store/slices/notification.slice';
 import {
@@ -158,7 +158,12 @@ const UserNotification = ({ t }) => {
       <div className="noti">
         <div className="noti-header">
           <div className="title">
-            <SubHeading strong>{t('notification')}</SubHeading>
+            <SubHeading size={230} strong>
+              {t('notification')}
+            </SubHeading>
+          </div>
+          <div className="title2">
+            <Paragraph strong>{t('notification')}</Paragraph>
           </div>
         </div>
         <List

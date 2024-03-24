@@ -114,9 +114,12 @@ export const LayoutMenu = ({ isInline = false }) => {
       style={{
         padding: 0,
       }}>
-      <Menu.Item onClick={() => navigate('/')} style={{ marginRight: 'auto', padding: 0 }}>
-        <h1>Logo</h1>
-      </Menu.Item>
+      {!isInline && (
+        <Menu.Item onClick={() => navigate('/')} style={{ marginRight: 'auto', padding: 0 }}>
+          <h1>Logo</h1>
+        </Menu.Item>
+      )}
+
       <Menu.Item key={routeNames.Home} className="menuItem" onClick={onItemClick}>
         <Paragraph classNames="color-black" strong>
           {t('home').toUpperCase()}
@@ -156,14 +159,16 @@ export const LayoutMenu = ({ isInline = false }) => {
           </Button>
         )}
       </Menu.Item>
-      {access_token && (
+      {access_token && !isInline && (
         <Menu.Item key="notification">
           <UserNotification t={t} />
         </Menu.Item>
       )}
-      <Menu.Item key="translation">
-        <TranslationSelector />
-      </Menu.Item>
+      {!isInline && (
+        <Menu.Item key="translation">
+          <TranslationSelector />
+        </Menu.Item>
+      )}
     </Menu>
   );
 };
