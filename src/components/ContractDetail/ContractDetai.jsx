@@ -236,9 +236,11 @@ const ContractDetail = () => {
         <>
           {requests.length > 0 ? (
             requests
+              .slice()
+              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
               .map((request, index) => {
                 return (
-                  <>
+                  <div key={index} style={{ wdith: '100%' }}>
                     <Button
                       size="large"
                       icon={<CancellationRequestStatus status={request.status} />}
@@ -255,7 +257,6 @@ const ContractDetail = () => {
                     </Button>
                     {isShowRequest === request.id && (
                       <Table
-                        key={index}
                         pagination={false}
                         columns={columns}
                         dataSource={[
@@ -282,10 +283,9 @@ const ContractDetail = () => {
                         ]}
                       />
                     )}
-                  </>
+                  </div>
                 );
               })
-              .reverse()
           ) : (
             <Empty />
           )}

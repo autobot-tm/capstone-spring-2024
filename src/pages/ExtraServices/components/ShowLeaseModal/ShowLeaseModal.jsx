@@ -10,12 +10,18 @@ import { useTranslation } from 'react-i18next';
 import { Empty } from 'antd';
 
 const ShowLeaseModal = () => {
+  const { access_token } = useSelector(state => state.auth);
+
   const { showLeaseModal } = useSelector(state => state.modal);
   const [leases, setLeases] = useState([]);
   const { t } = useTranslation();
 
   useEffect(() => {
-    getLeasesService({ offset: 0, status: 'ACTIVE', limit: 20 }).then(res => setLeases(res.leases));
+    if (access_token) {
+      getLeasesService({ offset: 0, status: 'ACTIVE', limit: 20 }).then(res =>
+        setLeases(res.leases),
+      );
+    }
   }, [showLeaseModal]);
 
   return (
