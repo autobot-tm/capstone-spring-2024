@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeConfirmLogoutModal } from '../../store/slices/modalSlice';
 import { signOut } from '../../store/slices';
 import { Helmet } from 'react-helmet';
-import AVATAR from '../../assets/images/avatar.svg';
+import AVATAR from '../../assets/images/avatar.png';
 import { useUserSlice } from '../../store/slices/user.slice';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
 
