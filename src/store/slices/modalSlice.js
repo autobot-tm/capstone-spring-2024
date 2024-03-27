@@ -13,8 +13,10 @@ const initialState = {
   requestCancelContractModal: false,
   reservationPolicyModal: false,
   notificationDetailModal: false,
+  invoiceDetailModal: false,
   reservationId: undefined,
   contractId: undefined,
+  invoiceId: undefined,
   showAllImageModal: false,
   showLeaseModal: false,
   extraServiceId: undefined,
@@ -75,6 +77,10 @@ const modalSlice = createSlice({
       state.showLeaseModal = true;
       state.extraServiceId = action?.payload?.extraServiceId;
     },
+    openInvoiceDetailModal: (state, action) => {
+      state.invoiceId = action.payload.invoiceId;
+      state.invoiceDetailModal = true;
+    },
     closeShowLeaseModal: state => {
       state.showLeaseModal = false;
     },
@@ -114,6 +120,9 @@ const modalSlice = createSlice({
     closeShowAllImageModal: state => {
       state.showAllImageModal = false;
     },
+    closeInvoiceDetailModal: state => {
+      state.invoiceDetailModal = false;
+    },
   },
 });
 
@@ -131,6 +140,7 @@ export const {
   openRequestCancelContractModal,
   openShowAllImageModal,
   openShowLeaseModal,
+  openInvoiceDetailModal,
   closeShowLeaseModal,
   closeLoginModal,
   closeRegisterModal,
@@ -145,4 +155,5 @@ export const {
   openReservationPolicyModal,
   closeReservationPolicyModal,
   closeShowAllImageModal,
+  closeInvoiceDetailModal,
 } = modalSlice.actions;

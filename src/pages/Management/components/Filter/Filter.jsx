@@ -5,10 +5,12 @@ import { setName, setPage, setStatus } from '../../../../store/slices/reservatio
 import { useTranslation } from 'react-i18next';
 import styles from './Filter.module.scss';
 import { setContractPage, setContractStatus } from '../../../../store/slices/contractSlice';
+import { setInvoicePage, setInvoiceStatus } from '../../../../store/slices/invoiceSlice';
 
 const Filter = ({ type }) => {
   const reservationStatus = useSelector(state => state.reservation.status);
   const contractStatus = useSelector(state => state.contract.status);
+  const invoiceStatus = useSelector(state => state.invoice.status);
   const name = useSelector(state => state.reservation.name);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -64,29 +66,79 @@ const Filter = ({ type }) => {
       key: 'PENDING_CANCELATION_APPROVAL',
     },
   ];
+
+  const invoiceStatuses = [
+    {
+      label: t('status.all'),
+      key: 'ALL',
+    },
+    {
+      label: t('status.PENDING'),
+      key: 'PENDING',
+    },
+    {
+      label: t('status.PAID'),
+      key: 'PAID',
+    },
+    {
+      label: t('status.CANCELED'),
+      key: 'CANCELED',
+    },
+    {
+      label: t('status.EXPIRED'),
+      key: 'EXPIRED',
+    },
+  ];
   const onClick = e => {
     if (type === 'reservation') {
       dispatch(setStatus({ status: e.key }));
       dispatch(setPage({ page: 1 }));
-    } else {
+    } else if (type === 'contract') {
       dispatch(setContractStatus({ status: e.key }));
       dispatch(setContractPage({ page: 1 }));
+    } else {
+      dispatch(setInvoiceStatus({ status: e.key }));
+      dispatch(setInvoicePage({ page: 1 }));
     }
   };
   return (
     <div>
       <Menu
         onClick={onClick}
-        selectedKeys={type === 'reservation' ? [reservationStatus] : [contractStatus]}
+        selectedKeys={
+          type === 'reservation'
+            ? [reservationStatus]
+            : type === 'contract'
+            ? [contractStatus]
+            : [invoiceStatus]
+        }
         mode="horizontal"
-        items={type === 'reservation' ? reservationStatuses : contractStatuses}
+        items={
+          type === 'reservation'
+            ? reservationStatuses
+            : type === 'contract'
+            ? contractStatuses
+            : invoiceStatuses
+        }
         className={styles.filterMenu}
       />
       <Menu
         onClick={onClick}
-        selectedKeys={type === 'reservation' ? [reservationStatus] : [contractStatus]}
+        selectedKeys={
+          type === 'reservation'
+            ? [reservationStatus]
+            : type === 'contract'
+            ? [contractStatus]
+            : [invoiceStatus]
+        }
         mode="inline"
-        items={type === 'reservation' ? reservationStatuses : contractStatuses}
+        items={
+          type === 'reservation'
+            ? reservationStatuses
+            : type === 'contract'
+            ? contractStatuses
+            : invoiceStatuses
+        }
         className={styles.filterMenu2}
       />
       {type === 'reservation' && (

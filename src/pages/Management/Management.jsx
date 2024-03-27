@@ -10,32 +10,23 @@ import { setName, setPage, setStatus } from '../../store/slices/reservationSlice
 import { useTranslation } from 'react-i18next';
 import { setContractPage, setContractStatus } from '../../store/slices/contractSlice';
 import { CarryOutOutlined, FileTextOutlined, PayCircleOutlined } from '@ant-design/icons';
+import { setInvoicePage, setInvoiceStatus } from '../../store/slices/invoiceSlice';
 
 const Management = () => {
   const dispatch = useDispatch();
   const page = useSelector(state => state.reservation.page);
   const contractPage = useSelector(state => state.contract.page);
+  const invoicePage = useSelector(state => state.invoice.page);
+
   // const menuItem = useSelector(state => state.reservation.menuItem);
   const [menuItem, setMenuItem] = useState('contract');
   const { t } = useTranslation();
+  console.log(menuItem);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [page, contractPage]);
+  }, [page, contractPage, invoicePage]);
 
-  useEffect(() => {
-    if (menuItem !== 'reservation') {
-      dispatch(setPage({ page: 1 }));
-      dispatch(setStatus({ status: 'ALL' }));
-      dispatch(setName({ name: '' }));
-      return;
-    }
-    if (menuItem !== 'contract') {
-      dispatch(setContractPage({ page: 1 }));
-      dispatch(setContractStatus({ status: 'ALL' }));
-      return;
-    }
-  }, [menuItem]);
   const items = [
     {
       icon: <FileTextOutlined />,
@@ -56,6 +47,16 @@ const Management = () => {
   const onClick = e => {
     // dispatch(setMenuItem({ menuItem: e.key }));
     setMenuItem(e.key);
+
+    dispatch(setPage({ page: 1 }));
+    dispatch(setStatus({ status: 'ALL' }));
+    dispatch(setName({ name: '' }));
+
+    dispatch(setContractPage({ page: 1 }));
+    dispatch(setContractStatus({ status: 'ALL' }));
+
+    dispatch(setInvoicePage({ page: 1 }));
+    dispatch(setInvoiceStatus({ status: 'ALL' }));
   };
 
   return (

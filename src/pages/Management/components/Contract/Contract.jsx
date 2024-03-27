@@ -27,10 +27,9 @@ const Contract = () => {
     });
   });
   mutate('/api/notifications');
-  console.log(data);
   return (
     <div className={styles.contractContainer}>
-      <Filter />
+      <Filter type="contract" />
       <div style={{ marginTop: '16px' }}>
         {isLoading ? (
           Array.from({ length: LIMIT }).map((_, index) => (

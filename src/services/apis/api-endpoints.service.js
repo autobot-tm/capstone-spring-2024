@@ -46,4 +46,7 @@ export const ENDPOINTS = {
     base: '/extra-services',
     request: '/extra-service-requests',
   },
+  invoices: {
+    base: '/invoices',
+  },
 };
