@@ -17,6 +17,8 @@ export const ERROR_TRANS_KEYS = {
     'api.error.extraServiceRequestProgressNotExistOrNoPermission',
   EXTRA_SERVICE_NOT_RESOLVABLE: 'api.error.extraServiceNotResolvable',
   EXTRA_SERVICE_REQUEST_NOT_RESOLVABLE: 'api.error.extraServiceRequestNotResolvable',
+  EXTRA_SERVICE_REQUEST_PROGRESS_NOT_CANCELABLE:
+    'api.error.extraServiceRequestProgressNotCancelable',
 };
 export const ERROR_MAPPER = {
   40000: [
@@ -74,5 +76,11 @@ export const ERROR_MAPPER = {
   60102: [{ statusCode: 400, translationKey: ERROR_TRANS_KEYS.EXTRA_SERVICE_NOT_RESOLVABLE }],
   60103: [
     { statusCode: 400, translationKey: ERROR_TRANS_KEYS.EXTRA_SERVICE_REQUEST_NOT_RESOLVABLE },
+  ],
+  60104: [
+    {
+      statusCode: 400,
+      translationKey: ERROR_TRANS_KEYS.EXTRA_SERVICE_REQUEST_PROGRESS_NOT_CANCELABLE,
+    },
   ],
 };
