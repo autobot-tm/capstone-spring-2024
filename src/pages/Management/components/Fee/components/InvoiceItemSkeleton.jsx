@@ -1,5 +1,4 @@
 import React from 'react';
-// import styles from './InvoiceItemSkeleton.module.scss';
 import { Skeleton } from 'antd';
 
 const InvoiceItemSkeleton = () => {
