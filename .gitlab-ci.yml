@@ -36,6 +36,9 @@ format_and_lint:
     - yarn format
     - yarn lint-fix
     - echo 'Format and lint completed  🚀'
+  only:
+    - master
+    - develop
 
 deploy:
   stage: deploy
