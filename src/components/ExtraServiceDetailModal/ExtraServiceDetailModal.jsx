@@ -104,7 +104,7 @@ const ExtraServiceDetailModal = () => {
     if (status === 'IN_PROGRESS') {
       return true;
     }
-    if (status === 'APPROVED' && progresses && progresses[0]?.status === 'IN_PROGRESS') {
+    if (status === 'APPROVED' && progresses && progresses[0]?.status !== 'IN_PROGRESS') {
       return true;
     }
     return false;
