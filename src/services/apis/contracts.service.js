@@ -1,10 +1,12 @@
 import { apiCaller } from '../../axios';
 import { ENDPOINTS } from './api-endpoints.service';
 
-export const getLeasesService = ({ offset, limit, status }) => {
+export const getLeasesService = ({ renter_email, offset, limit, status }) => {
   return apiCaller.get(
     ENDPOINTS.contracts.base +
-      `?limit=${limit}&offset=${offset}${status !== 'ALL' ? '&status=' + status : ''} `,
+      `?renter_email=${renter_email}&limit=${limit}&offset=${offset}${
+        status !== 'ALL' ? '&status=' + status : ''
+      }`,
   );
 };
 

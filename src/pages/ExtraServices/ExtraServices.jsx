@@ -1,24 +1,30 @@
 import './styles.scss';
-import { Breadcrumb, Card, Col, Row } from 'antd';
+import { Breadcrumb, Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Caption, Headline, Paragraph, SubHeading } from '../../components/Typography';
+import { Caption, Headline, Paragraph } from '../../components/Typography';
 import { useTranslation } from 'react-i18next';
-import { FileProtectOutlined, HomeOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { HomeOutlined } from '@ant-design/icons';
 import { Layout } from '../../hoc/Layout/Layout';
-import UtilityBill from './components/UtilityBill/UtilityBill';
-import ResidenceRegistration from './components/ResidenceRegistration/ResidenceRegistration';
-import { getExtraServices } from '../../services/apis/extra-services.service';
+import {
+  getExtraServiceRequests,
+  getExtraServices,
+} from '../../services/apis/extra-services.service';
 import useSWR from 'swr';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { openLoginModal, openShowLeaseModal } from '../../store/slices/modalSlice';
+import CardRequest from './components/CardRequest/CardRequest';
+import { setExtraServicesRequest } from '../../store/slices/extraServices.slice';
+import { getLeasesService } from '../../services/apis/contracts.service';
 
 const ExtraServices = () => {
-  const { t } = useTranslation();
-  const [selectedCard, setSelectedCard] = useState(null);
-  const [services, setServices] = useState('');
   const dispatch = useDispatch();
-  const handleCardClick = cardName => {
-    setSelectedCard(cardName);
-  };
+  const { t } = useTranslation();
+  const { access_token } = useSelector(state => state.auth);
+  const { user } = useSelector(state => state.user);
+  const [services, setServices] = useState('');
+  const electricity = services[0];
+  const water = services[1];
+  const residence = services[2];
 
   const { data: extraServices } = useSWR('/api/extra-services', async () => {
     try {
@@ -35,6 +41,55 @@ const ExtraServices = () => {
       setServices(extraServices);
     }
   }, [extraServices]);
+
+  const fetchLeases = async () => {
+    const response = await getLeasesService({
+      renter_email: user.email,
+      offset: 0,
+      status: 'ACTIVE',
+      limit: 20,
+    });
+    return response.leases;
+  };
+
+  const fetchExtraServiceRequests = async () => {
+    const response = await getExtraServiceRequests({ renter_email: user.email });
+    return response.extra_service_requests;
+  };
+
+  const { data: leasesData } = useSWR('/leases', fetchLeases);
+  const { data: extraServiceRequests } = useSWR('/extraServiceRequests', fetchExtraServiceRequests);
+  useEffect(() => {
+    if (leasesData && extraServiceRequests) {
+      dispatch(
+        setExtraServicesRequest({
+          extraServicesRequests: extraServiceRequests,
+        }),
+      );
+    }
+  }, [leasesData, extraServiceRequests]);
+
+  const handleCardClick = type => {
+    if (!access_token) {
+      dispatch(openLoginModal());
+      return;
+    }
+    let extraServiceId = null;
+    switch (type) {
+      case 'electricity':
+        extraServiceId = electricity?.id;
+        break;
+      case 'water':
+        extraServiceId = water?.id;
+        break;
+      case 'residence':
+        extraServiceId = residence?.id;
+        break;
+      default:
+        extraServiceId = null;
+    }
+    dispatch(openShowLeaseModal({ extraServiceId, leases: leasesData }));
+  };
 
   return (
     <Layout>
@@ -72,64 +127,45 @@ const ExtraServices = () => {
             </Caption>
             <Caption size={140}>Nec nam aliquam sem et tortor consequat id porta.</Caption>
           </Col>
-          <Col xs={24} className="es-section">
-            <Card
-              onClick={() => handleCardClick('utility')}
-              hoverable
-              className="cs-card"
-              style={{
-                // width: 320,
-                border: selectedCard === 'utility' ? '2px solid #f8a11e' : 'none',
-              }}>
-              <div className="content-card">
-                <span className="content-card-top">
-                  <SubHeading size={230} strong style={{ width: '60%' }}>
-                    {t('EXTRA-SERVICES.utility-card')}
-                  </SubHeading>
-                  <ThunderboltOutlined className="es-icon-primary" style={{ fontSize: 30 }} />
-                </span>
-                <span>
-                  <a href="#" className="primary-link">
-                    {t('EXTRA-SERVICES.read-more')}
-                  </a>
-                </span>
-              </div>
-            </Card>
-            <Card
-              hoverable
-              className="cs-card"
-              onClick={() => handleCardClick('residence')}
-              style={{
-                // width: 320,
-                border: selectedCard === 'residence' ? '2px solid #28aae1' : 'none',
-              }}>
-              <div className="content-card">
-                <span className="content-card-top">
-                  <SubHeading size={230} strong style={{ width: '60%' }}>
-                    {t('EXTRA-SERVICES.residence-card')}
-                  </SubHeading>
-                  <FileProtectOutlined className="es-icon-tertiary" style={{ fontSize: 30 }} />
-                </span>
-                <span>
-                  <a href="#" className="tertiary-link">
-                    {t('EXTRA-SERVICES.read-more')}
-                  </a>
-                </span>
-              </div>
-            </Card>
+        </Row>
+        <Row justify="center" gutter={[40, 12]}>
+          <Col xs={24} sm={10} md={12} xl={16} className="des-services">
+            <Paragraph classNames="right-text"> {t('EXTRA-SERVICES.des-electricity-be')}</Paragraph>
           </Col>
-          <Col xs={24} className="es-section-detail">
-            {selectedCard === 'utility' && (
-              <UtilityBill
-                dispatch={dispatch}
-                electricity={services[0]}
-                water={services[1]}
-                t={t}
-              />
-            )}
-            {selectedCard === 'residence' && (
-              <ResidenceRegistration dispatch={dispatch} residence={services[2]} t={t} />
-            )}
+          <Col xs={24} sm={14} md={12} xl={8}>
+            <CardRequest
+              color="#f8a11e"
+              type="electricity"
+              onClickRequest={handleCardClick}
+              t={t}
+            />
+          </Col>
+        </Row>
+        <Row justify="center" gutter={[40, 12]}>
+          <Col
+            xs={24}
+            sm={14}
+            md={12}
+            xl={8}
+            style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <CardRequest color="#28aae1" type="water" onClickRequest={handleCardClick} t={t} />
+          </Col>
+          <Col
+            xs={24}
+            sm={10}
+            md={12}
+            xl={16}
+            className="des-services"
+            style={{ justifyContent: 'flex-start' }}>
+            <Paragraph> {t('EXTRA-SERVICES.des-water-be')}</Paragraph>
+          </Col>
+        </Row>
+        <Row justify="center" gutter={[40, 12]}>
+          <Col xs={24} sm={10} md={12} xl={16} className="des-services">
+            <Paragraph classNames="right-text"> {t('EXTRA-SERVICES.des-residence-be')}</Paragraph>
+          </Col>
+          <Col xs={24} sm={14} md={12} xl={8}>
+            <CardRequest color="#ccc" type="residence" onClickRequest={handleCardClick} t={t} />
           </Col>
         </Row>
       </main>

@@ -1,55 +1,59 @@
 import React from 'react';
-import styles from './Contract.module.scss';
+import styles from './ExtraServices.module.scss';
 import Filter from '../Filter/Filter';
-import useSWR, { mutate } from 'swr';
-import { getLeasesService } from '../../../../services/apis/contracts.service';
+import useSWR from 'swr';
 import { useDispatch, useSelector } from 'react-redux';
 import { FrownTwoTone } from '@ant-design/icons';
 import { SubHeading } from '../../../../components/Typography';
 import { useTranslation } from 'react-i18next';
-import HouseItemRow from '../../../../components/HouseItemRow/HouseItemRow';
 import { Pagination, Result } from 'antd';
-import { setContractPage } from '../../../../store/slices/contractSlice';
 import RowCardSkeleton from '../../../../components/RowCardSkeleton/RowCardSkeleton';
-const Contract = () => {
-  const LIMIT = 4;
+import { getExtraServiceRequests } from '../../../../services/apis/extra-services.service';
+import { setExtraServicesPage } from '../../../../store/slices/extraServices.slice';
+import { openExtraServiceRequestDetailModal } from '../../../../store/slices/modalSlice';
+import CardService from '../../../../components/CardService/CardService';
 
-  const status = useSelector(state => state.contract?.status);
-  const page = useSelector(state => state.contract?.page);
+const ExtraServices = () => {
+  const LIMIT = 5;
+  const { status, page } = useSelector(state => state.extraServices);
+  const { user } = useSelector(state => state.user);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const { data, isLoading } = useSWR(`getLeasesService/${page}${status}`, async () => {
-    return await getLeasesService({
-      offset: LIMIT * (page - 1),
-      limit: LIMIT,
-      status: status,
-    });
-  });
+  const { data, isLoading } = useSWR(
+    `getExtraServiceRequests?page=${page}&status=${status}`,
+    async () => {
+      return await getExtraServiceRequests({
+        renter_email: user?.email,
+        offset: LIMIT * (page - 1),
+        limit: LIMIT,
+        status: status,
+      });
+    },
+  );
 
-  mutate('/api/notifications');
-  console.log(data);
+  const handleCardClick = service => {
+    dispatch(openExtraServiceRequestDetailModal({ extraServiceRequestDetail: service }));
+  };
+
   return (
     <div className={styles.contractContainer}>
-      <Filter type="contract" />
-      <div style={{ marginTop: '16px' }}>
+      <Filter type="service" />
+      <div className={styles.esManagementContainer}>
         {isLoading ? (
           Array.from({ length: LIMIT }).map((_, index) => (
             <div key={index}>
               <RowCardSkeleton />
             </div>
           ))
-        ) : data?.leases.length !== 0 ? (
-          data?.leases.map(lease => (
-            <div key={lease.id}>
-              <HouseItemRow
-                id={lease.id}
-                house={lease.reservation.house}
-                status={lease.status}
-                time={lease.created_at}
-                type="contract"
-              />
-            </div>
+        ) : data?.length !== 0 ? (
+          data?.extra_service_requests?.map(service => (
+            <CardService
+              key={service?.id}
+              data={service}
+              onClickDetail={() => handleCardClick(service)}
+              t={t}
+            />
           ))
         ) : (
           <div
@@ -74,7 +78,7 @@ const Contract = () => {
           pageSize={LIMIT}
           current={page}
           onChange={page => {
-            dispatch(setContractPage({ page }));
+            dispatch(setExtraServicesPage({ page }));
           }}
         />
       </div>
@@ -82,4 +86,4 @@ const Contract = () => {
   );
 };
 
-export default Contract;
+export default ExtraServices;

@@ -45,5 +45,7 @@ export const ENDPOINTS = {
   services: {
     base: '/extra-services',
     request: '/extra-service-requests',
+    cancel: extra_service_requests_id =>
+      `/extra-service-requests/${extra_service_requests_id}/cancel`,
   },
 };

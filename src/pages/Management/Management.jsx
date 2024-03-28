@@ -9,12 +9,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setName, setPage, setStatus } from '../../store/slices/reservationSlice';
 import { useTranslation } from 'react-i18next';
 import { setContractPage, setContractStatus } from '../../store/slices/contractSlice';
-import { CarryOutOutlined, FileTextOutlined, PayCircleOutlined } from '@ant-design/icons';
+import {
+  CarryOutOutlined,
+  FileTextOutlined,
+  PayCircleOutlined,
+  ToolOutlined,
+} from '@ant-design/icons';
+import {
+  setExtraServicesPage,
+  setExtraServicesStatus,
+} from '../../store/slices/extraServices.slice';
+import ExtraServices from './components/ExtraServices/ExtraServices';
 
 const Management = () => {
   const dispatch = useDispatch();
   const page = useSelector(state => state.reservation.page);
   const contractPage = useSelector(state => state.contract.page);
+  // const { typeNavigate } = useSelector(state => state.extraServices);
   // const menuItem = useSelector(state => state.reservation.menuItem);
   const [menuItem, setMenuItem] = useState('contract');
   const { t } = useTranslation();
@@ -35,6 +46,11 @@ const Management = () => {
       dispatch(setContractStatus({ status: 'ALL' }));
       return;
     }
+    if (menuItem !== 'service') {
+      dispatch(setExtraServicesPage({ page: 1 }));
+      dispatch(setExtraServicesStatus({ status: 'ALL' }));
+      return;
+    }
   }, [menuItem]);
   const items = [
     {
@@ -52,9 +68,13 @@ const Management = () => {
       label: <b>{t('reservation')}</b>,
       key: 'reservation',
     },
+    {
+      icon: <ToolOutlined />,
+      label: <b>{t('extra-service')}</b>,
+      key: 'service',
+    },
   ];
   const onClick = e => {
-    // dispatch(setMenuItem({ menuItem: e.key }));
     setMenuItem(e.key);
   };
 
@@ -84,8 +104,10 @@ const Management = () => {
                 <Contract />
               ) : menuItem === 'fee' ? (
                 <Fee />
-              ) : (
+              ) : menuItem === 'reservation' ? (
                 <Reservation />
+              ) : (
+                <ExtraServices />
               )}
             </Col>
           </Row>
