@@ -99,15 +99,15 @@ const ExtraServiceDetailModal = () => {
   const isCancelDisabled = () => {
     const { status, progresses } = extraServiceRequestDetail;
     if (status === 'UNDER_REVIEW') {
-      return false;
+      return true;
     }
     if (status === 'IN_PROGRESS') {
-      return false;
+      return true;
     }
     if (status === 'APPROVED' && progresses && progresses[0]?.status === 'IN_PROGRESS') {
-      return false;
+      return true;
     }
-    return true;
+    return false;
   };
 
   return (
@@ -127,16 +127,20 @@ const ExtraServiceDetailModal = () => {
               }}>
               {t('button.back')}
             </BaseButton>
-            <Popconfirm
-              title={t('cancel.confirm')}
-              onConfirm={handleCancelRequestService}
-              okText={t('yes')}
-              cancelText={t('no')}
-              placement="bottom">
-              <BaseButton disabled={isCancelDisabled()} style={{ width: 'auto' }} type="primary">
-                {t('button.cancel-request')}
-              </BaseButton>
-            </Popconfirm>
+            {isCancelDisabled() && (
+              <Popconfirm
+                title={t('cancel.confirm')}
+                onConfirm={handleCancelRequestService}
+                okText={t('yes')}
+                cancelText={t('no')}
+                placement="bottom">
+                <BaseButton style={{ width: 'auto' }} type="primary">
+                  {extraServiceRequestDetail?.status === 'APPROVED'
+                    ? t('button.cancel-service')
+                    : t('button.cancel-request')}
+                </BaseButton>
+              </Popconfirm>
+            )}
           </div>,
         ]}>
         <Table dataSource={infoRequest} columns={infoRequestHead} pagination={false} />

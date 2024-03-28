@@ -12,7 +12,7 @@ const ShowLeaseModal = () => {
   const { t } = useTranslation();
   return (
     <CustomModal
-      width={640}
+      width={800}
       nameOfModal={showLeaseModal}
       title={t('modal.chooseContract')}
       action={closeShowLeaseModal}

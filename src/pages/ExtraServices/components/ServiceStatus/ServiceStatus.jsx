@@ -10,7 +10,7 @@ const ServiceStatus = ({ status }) => {
     <div>
       {status === 'UNDER_REVIEW' ? (
         <Caption strong>
-          <Tag color="magenta">{t('status.' + status)}</Tag>
+          <Tag color="blue">{t('status.' + status)}</Tag>
         </Caption>
       ) : status === 'IN_PROGRESS' ? (
         <Caption strong>

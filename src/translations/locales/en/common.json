@@ -61,6 +61,7 @@
   "button.browseMore": "Browse More Properties",
   "button.cancel": "Cancel",
   "button.cancel-request": "Cancel Request",
+  "button.cancel-service": "Cancel Service",
   "button.ok": "Ok",
   "button.request": "Request",
   "button.requestCancelContract": "Request cancel contract",
