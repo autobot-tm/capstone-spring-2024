@@ -12,6 +12,8 @@ import ServiceStatus from '../../pages/ExtraServices/components/ServiceStatus/Se
 import { mutate } from 'swr';
 import { getLeaseByIdService } from '../../services/apis/contracts.service';
 import { Caption, Paragraph } from '../Typography';
+import { setExtraServicesLoading } from '../../store/slices/extraServices.slice';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const ExtraServiceDetailModal = () => {
   const dispatch = useDispatch();
@@ -20,6 +22,8 @@ const ExtraServiceDetailModal = () => {
   const { extraServiceRequestDetailModal, extraServiceRequestDetail } = useSelector(
     state => state.modal,
   );
+  const loading = useSelector(state => state.extraServices.loading);
+
   const [api, contextHolder] = notification.useNotification();
 
   const openNotificationWithIcon = (type, message) => {
@@ -33,12 +37,13 @@ const ExtraServiceDetailModal = () => {
       if (extraServiceRequestDetail?.lease_id) {
         getLeaseByIdService({ leaseId: extraServiceRequestDetail.lease_id }).then(response => {
           setHouseService(response?.reservation?.house);
+          dispatch(setExtraServicesLoading({ loading: false }));
         });
       }
     } catch (error) {
       console.warn('Error at get lease by id', error);
     }
-  }, [extraServiceRequestDetail]);
+  }, [loading]);
 
   const handleCancelRequestService = async () => {
     try {
@@ -143,21 +148,35 @@ const ExtraServiceDetailModal = () => {
             )}
           </div>,
         ]}>
-        <Table dataSource={infoRequest} columns={infoRequestHead} pagination={false} />
-        {houseService && (
+        {loading ? (
+          <div
+            style={{
+              height: '441px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <LoadingOutlined size="large" />
+          </div>
+        ) : (
           <>
-            <div className="house-service-container">
-              <Avatar src={houseService?.image_urls?.[0]} size={100} shape="square" />
-              <div className="house-info">
-                <Caption size={110} ellipsis classNames="d-block map">
-                  <img src={locationIcon} alt="" />
-                  {houseService?.address}
-                </Caption>
-                <Paragraph classNames="color-black" ellipsis strong>
-                  {houseService?.name}
-                </Paragraph>
-              </div>
-            </div>
+            <Table dataSource={infoRequest} columns={infoRequestHead} pagination={false} />
+            {houseService && (
+              <>
+                <div className="house-service-container">
+                  <Avatar src={houseService?.image_urls?.[0]} size={100} shape="square" />
+                  <div className="house-info">
+                    <Caption size={110} ellipsis classNames="d-block map">
+                      <img src={locationIcon} alt="" />
+                      {houseService?.address}
+                    </Caption>
+                    <Paragraph classNames="color-black" ellipsis strong>
+                      {houseService?.name}
+                    </Paragraph>
+                  </div>
+                </div>
+              </>
+            )}
           </>
         )}
       </CustomModal>

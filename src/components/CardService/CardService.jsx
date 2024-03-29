@@ -8,10 +8,14 @@ import { Caption, SubHeading } from '../Typography';
 const CardService = ({ data, onClickDetail, t }) => {
   return (
     <>
-      {' '}
       {data && (
         <>
-          <Card hoverable className="card-item" onClick={() => onClickDetail(data?.id)}>
+          <Card
+            hoverable
+            className="card-item"
+            onClick={() => {
+              onClickDetail(data?.id);
+            }}>
             <div className="inner-card">
               {data?.extra_service?.name === 'Electricity bill payment service' && (
                 <>

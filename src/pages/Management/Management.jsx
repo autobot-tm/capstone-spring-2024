@@ -36,24 +36,6 @@ const Management = () => {
     window.scrollTo(0, 0);
   }, [page, contractPage, invoicePage]);
 
-  useEffect(() => {
-    if (menuItem !== 'reservation') {
-      dispatch(setPage({ page: 1 }));
-      dispatch(setStatus({ status: 'ALL' }));
-      dispatch(setName({ name: '' }));
-      return;
-    }
-    if (menuItem !== 'contract') {
-      dispatch(setContractPage({ page: 1 }));
-      dispatch(setContractStatus({ status: 'ALL' }));
-      return;
-    }
-    if (menuItem !== 'service') {
-      dispatch(setExtraServicesPage({ page: 1 }));
-      dispatch(setExtraServicesStatus({ status: 'ALL' }));
-      return;
-    }
-  }, [menuItem]);
   const items = [
     {
       icon: <FileTextOutlined />,
@@ -85,6 +67,9 @@ const Management = () => {
 
     dispatch(setContractPage({ page: 1 }));
     dispatch(setContractStatus({ status: 'ALL' }));
+
+    dispatch(setExtraServicesPage({ page: 1 }));
+    dispatch(setExtraServicesStatus({ status: 'ALL' }));
 
     dispatch(setInvoicePage({ page: 1 }));
     dispatch(setInvoiceStatus({ status: 'ALL' }));

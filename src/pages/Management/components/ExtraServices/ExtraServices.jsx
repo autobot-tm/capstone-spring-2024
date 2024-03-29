@@ -9,7 +9,10 @@ import { useTranslation } from 'react-i18next';
 import { Pagination, Result } from 'antd';
 import RowCardSkeleton from '../../../../components/RowCardSkeleton/RowCardSkeleton';
 import { getExtraServiceRequests } from '../../../../services/apis/extra-services.service';
-import { setExtraServicesPage } from '../../../../store/slices/extraServices.slice';
+import {
+  setExtraServicesLoading,
+  setExtraServicesPage,
+} from '../../../../store/slices/extraServices.slice';
 import { openExtraServiceRequestDetailModal } from '../../../../store/slices/modalSlice';
 import CardService from '../../../../components/CardService/CardService';
 
@@ -33,6 +36,8 @@ const ExtraServices = () => {
   );
 
   const handleCardClick = service => {
+    dispatch(setExtraServicesLoading({ loading: true }));
+
     dispatch(openExtraServiceRequestDetailModal({ extraServiceRequestDetail: service }));
   };
 
@@ -46,7 +51,7 @@ const ExtraServices = () => {
               <RowCardSkeleton />
             </div>
           ))
-        ) : data?.length !== 0 ? (
+        ) : data?.extra_service_requests.length !== 0 ? (
           data?.extra_service_requests?.map(service => (
             <CardService
               key={service?.id}

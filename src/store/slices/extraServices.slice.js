@@ -14,7 +14,7 @@ const extraServicesSlice = createSlice({
   initialState,
   reducers: {
     setExtraServicesLoading(state, action) {
-      state.loading = action.payload;
+      state.loading = action.payload.loading;
     },
     setExtraServicesStatus: (state, action) => {
       state.status = action.payload.status;
