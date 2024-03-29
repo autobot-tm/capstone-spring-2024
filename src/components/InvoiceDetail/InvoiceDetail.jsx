@@ -70,9 +70,16 @@ const InvoiceDetail = () => {
       title={description}
       action={closeInvoiceDetailModal}
       footer={[
-        <Button type="primary" key="" onClick={() => {}} block size="large">
+        <Button
+          type="primary"
+          key=""
+          onClick={() => {}}
+          block
+          size="large"
+          loading={loading ? true : false}
+          disabled={loading ? true : false}>
           <Paragraph strong style={{ color: 'white' }}>
-            {t('button.pay') + ' ' + formatCustomCurrency(amount)}
+            {!loading && t('button.pay') + ' ' + formatCustomCurrency(amount)}
           </Paragraph>
         </Button>,
       ]}>

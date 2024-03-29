@@ -38,13 +38,13 @@ const Fee = () => {
         <>
           {isLoading ? (
             Array.from({ length: LIMIT }).map((_, index) => (
-              <Col lg={8} md={12} key={index}>
+              <Col xs={24} key={index}>
                 <InvoiceItemSkeleton />
               </Col>
             ))
           ) : data?.invoices.length !== 0 ? (
             data?.invoices.map(invoice => (
-              <Col lg={8} md={12} key={invoice.id}>
+              <Col xs={24} key={invoice.id}>
                 <InvoiceItem id={invoice.id} invoice={invoice} />
               </Col>
             ))
