@@ -25,6 +25,7 @@ import RequestCancelConract from './components/RequestCancelContract/RequestCanc
 import ShowAllImage from './components/ShowAllImage/ShowAllImage';
 import ShowLeaseModal from './pages/ExtraServices/components/ShowLeaseModal/ShowLeaseModal';
 import InvoiceDetail from './components/InvoiceDetail/InvoiceDetail';
+import ExtraServiceDetailModal from './components/ExtraServiceDetailModal/ExtraServiceDetailModal';
 
 initTranslations();
 configureApiCaller(store);
@@ -67,6 +68,7 @@ root.render(
           <ShowAllImage />
           <ShowLeaseModal />
           <InvoiceDetail />
+          <ExtraServiceDetailModal />
         </BrowserRouter>
       </ConfigProvider>
     </GoogleOAuthProvider>

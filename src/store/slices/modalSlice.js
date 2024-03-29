@@ -14,15 +14,20 @@ const initialState = {
   reservationPolicyModal: false,
   notificationDetailModal: false,
   invoiceDetailModal: false,
+  extraServiceRequestDetailModal: false,
+  extraServiceRequestDetail: '',
   reservationId: undefined,
   contractId: undefined,
   invoiceId: undefined,
   showAllImageModal: false,
   showLeaseModal: false,
+  leases: [],
   extraServiceId: undefined,
+  extraServiceRequestId: undefined,
   typeOfRequest: null,
   email: '',
   images: [],
+  actionType: null,
 };
 
 const modalSlice = createSlice({
@@ -60,6 +65,9 @@ const modalSlice = createSlice({
       state.contractDetailModal = true;
       state.contractId = action.payload.contractId;
       state.cancelation_request_id = action.payload.cancelation_request_id;
+      state.actionType = action.payload.actionType;
+      // state.extraServiceRequestId = action.payload.extraServiceRequestId;
+      // state.extraServiceId = action.payload.extraServiceId;
     },
     openRequestCancelContractModal: (state, action) => {
       state.requestCancelContractModal = true;
@@ -76,6 +84,16 @@ const modalSlice = createSlice({
     openShowLeaseModal: (state, action) => {
       state.showLeaseModal = true;
       state.extraServiceId = action?.payload?.extraServiceId;
+      state.leases = action?.payload?.leases;
+      state.contractId = action?.payload?.contractId;
+    },
+    openExtraServiceRequestDetailModal: (state, action) => {
+      state.extraServiceRequestDetailModal = true;
+      state.extraServiceRequestDetail = action?.payload?.extraServiceRequestDetail;
+    },
+
+    closeExtraServiceRequestDetailModal: state => {
+      state.extraServiceRequestDetailModal = false;
     },
     openInvoiceDetailModal: (state, action) => {
       state.invoiceId = action.payload.invoiceId;
@@ -141,6 +159,8 @@ export const {
   openShowAllImageModal,
   openShowLeaseModal,
   openInvoiceDetailModal,
+  openExtraServiceRequestDetailModal,
+  closeExtraServiceRequestDetailModal,
   closeShowLeaseModal,
   closeLoginModal,
   closeRegisterModal,

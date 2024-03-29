@@ -9,8 +9,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setName, setPage, setStatus } from '../../store/slices/reservationSlice';
 import { useTranslation } from 'react-i18next';
 import { setContractPage, setContractStatus } from '../../store/slices/contractSlice';
-import { CarryOutOutlined, FileTextOutlined, PayCircleOutlined } from '@ant-design/icons';
+import {
+  CarryOutOutlined,
+  FileTextOutlined,
+  PayCircleOutlined,
+  ToolOutlined,
+} from '@ant-design/icons';
 import { setInvoicePage, setInvoiceStatus } from '../../store/slices/invoiceSlice';
+import {
+  setExtraServicesPage,
+  setExtraServicesStatus,
+} from '../../store/slices/extraServices.slice';
+import ExtraServices from './components/ExtraServices/ExtraServices';
 
 const Management = () => {
   const dispatch = useDispatch();
@@ -18,7 +28,6 @@ const Management = () => {
   const contractPage = useSelector(state => state.contract.page);
   const invoicePage = useSelector(state => state.invoice.page);
 
-  // const menuItem = useSelector(state => state.reservation.menuItem);
   const [menuItem, setMenuItem] = useState('contract');
   const { t } = useTranslation();
   console.log(menuItem);
@@ -27,6 +36,24 @@ const Management = () => {
     window.scrollTo(0, 0);
   }, [page, contractPage, invoicePage]);
 
+  useEffect(() => {
+    if (menuItem !== 'reservation') {
+      dispatch(setPage({ page: 1 }));
+      dispatch(setStatus({ status: 'ALL' }));
+      dispatch(setName({ name: '' }));
+      return;
+    }
+    if (menuItem !== 'contract') {
+      dispatch(setContractPage({ page: 1 }));
+      dispatch(setContractStatus({ status: 'ALL' }));
+      return;
+    }
+    if (menuItem !== 'service') {
+      dispatch(setExtraServicesPage({ page: 1 }));
+      dispatch(setExtraServicesStatus({ status: 'ALL' }));
+      return;
+    }
+  }, [menuItem]);
   const items = [
     {
       icon: <FileTextOutlined />,
@@ -43,9 +70,13 @@ const Management = () => {
       label: <b>{t('reservation')}</b>,
       key: 'reservation',
     },
+    {
+      icon: <ToolOutlined />,
+      label: <b>{t('extra-service')}</b>,
+      key: 'service',
+    },
   ];
   const onClick = e => {
-    // dispatch(setMenuItem({ menuItem: e.key }));
     setMenuItem(e.key);
 
     dispatch(setPage({ page: 1 }));
@@ -85,8 +116,10 @@ const Management = () => {
                 <Contract />
               ) : menuItem === 'fee' ? (
                 <Fee />
-              ) : (
+              ) : menuItem === 'reservation' ? (
                 <Reservation />
+              ) : (
+                <ExtraServices />
               )}
             </Col>
           </Row>

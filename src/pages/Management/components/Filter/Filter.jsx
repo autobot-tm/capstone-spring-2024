@@ -6,11 +6,16 @@ import { useTranslation } from 'react-i18next';
 import styles from './Filter.module.scss';
 import { setContractPage, setContractStatus } from '../../../../store/slices/contractSlice';
 import { setInvoicePage, setInvoiceStatus } from '../../../../store/slices/invoiceSlice';
+import {
+  setExtraServicesPage,
+  setExtraServicesStatus,
+} from '../../../../store/slices/extraServices.slice';
 
 const Filter = ({ type }) => {
   const reservationStatus = useSelector(state => state.reservation.status);
   const contractStatus = useSelector(state => state.contract.status);
   const invoiceStatus = useSelector(state => state.invoice.status);
+  const serviceStatus = useSelector(state => state.extraServices.status);
   const name = useSelector(state => state.reservation.name);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -89,6 +94,32 @@ const Filter = ({ type }) => {
       key: 'EXPIRED',
     },
   ];
+  const serviceStatuses = [
+    {
+      label: t('status.all'),
+      key: 'ALL',
+    },
+    {
+      label: t('status.UNDER_REVIEW'),
+      key: 'UNDER_REVIEW',
+    },
+    {
+      label: t('status.IN_PROGRESS'),
+      key: 'IN_PROGRESS',
+    },
+    {
+      label: t('status.REJECTED'),
+      key: 'REJECTED',
+    },
+    {
+      label: t('status.APPROVED'),
+      key: 'APPROVED',
+    },
+    {
+      label: t('status.CANCELED'),
+      key: 'CANCELED',
+    },
+  ];
   const onClick = e => {
     if (type === 'reservation') {
       dispatch(setStatus({ status: e.key }));
@@ -96,6 +127,9 @@ const Filter = ({ type }) => {
     } else if (type === 'contract') {
       dispatch(setContractStatus({ status: e.key }));
       dispatch(setContractPage({ page: 1 }));
+    } else if (type === 'service') {
+      dispatch(setExtraServicesStatus({ status: e.key }));
+      dispatch(setExtraServicesPage({ page: 1 }));
     } else {
       dispatch(setInvoiceStatus({ status: e.key }));
       dispatch(setInvoicePage({ page: 1 }));
@@ -110,6 +144,8 @@ const Filter = ({ type }) => {
             ? [reservationStatus]
             : type === 'contract'
             ? [contractStatus]
+            : type === 'service'
+            ? [serviceStatus]
             : [invoiceStatus]
         }
         mode="horizontal"
@@ -118,6 +154,8 @@ const Filter = ({ type }) => {
             ? reservationStatuses
             : type === 'contract'
             ? contractStatuses
+            : type === 'service'
+            ? serviceStatuses
             : invoiceStatuses
         }
         className={styles.filterMenu}
@@ -129,6 +167,8 @@ const Filter = ({ type }) => {
             ? [reservationStatus]
             : type === 'contract'
             ? [contractStatus]
+            : type === 'service'
+            ? [serviceStatus]
             : [invoiceStatus]
         }
         mode="inline"
@@ -137,6 +177,8 @@ const Filter = ({ type }) => {
             ? reservationStatuses
             : type === 'contract'
             ? contractStatuses
+            : type === 'service'
+            ? serviceStatuses
             : invoiceStatuses
         }
         className={styles.filterMenu2}
