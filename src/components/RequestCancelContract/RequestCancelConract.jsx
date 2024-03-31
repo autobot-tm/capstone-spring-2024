@@ -41,7 +41,7 @@ const RequestCancelConract = () => {
       return (
         item.lease_id === contractId &&
         item.extra_service.id === extraServiceId &&
-        (item.status === 'UNDER_REVIEW' || item.status === 'IN_PROGRESS')
+        (item.status === 'UNDER_REVIEW' || item.status === 'APPROVED')
       );
     });
 
@@ -155,12 +155,12 @@ const RequestCancelConract = () => {
       title: <b>{t('placeholder.description')}</b>,
       content: requestInprogress.description,
     },
-    ...(requestInprogress.status === 'IN_PROGRESS'
+    ...(requestInprogress.status !== 'UNDER_REVIEW'
       ? [
           {
             key: '5',
             title: <b>{t('label.resolutionNote')}</b>,
-            content: requestInprogress.resolution_note,
+            content: requestInprogress.resolution_note || '-',
           },
         ]
       : []),

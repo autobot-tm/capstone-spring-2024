@@ -30,7 +30,6 @@ const Management = () => {
 
   const [menuItem, setMenuItem] = useState('contract');
   const { t } = useTranslation();
-  console.log(menuItem);
 
   useEffect(() => {
     window.scrollTo(0, 0);

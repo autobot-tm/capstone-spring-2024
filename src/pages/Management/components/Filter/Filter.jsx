@@ -103,10 +103,10 @@ const Filter = ({ type }) => {
       label: t('status.UNDER_REVIEW'),
       key: 'UNDER_REVIEW',
     },
-    {
-      label: t('status.IN_PROGRESS'),
-      key: 'IN_PROGRESS',
-    },
+    // {
+    //   label: t('status.IN_PROGRESS'),
+    //   key: 'IN_PROGRESS',
+    // },
     {
       label: t('status.REJECTED'),
       key: 'REJECTED',

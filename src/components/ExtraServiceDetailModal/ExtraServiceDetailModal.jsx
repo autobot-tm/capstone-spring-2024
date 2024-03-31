@@ -19,6 +19,7 @@ const ExtraServiceDetailModal = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [houseService, setHouseService] = useState({});
+
   const { extraServiceRequestDetailModal, extraServiceRequestDetail } = useSelector(
     state => state.modal,
   );
