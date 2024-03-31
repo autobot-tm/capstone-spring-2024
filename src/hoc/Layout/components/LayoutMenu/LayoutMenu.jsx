@@ -85,20 +85,14 @@ export const LayoutMenu = ({ isInline = false }) => {
       children: [
         {
           label: <span>{t('services').toUpperCase()}</span>,
-          // icon: (
-          //   <span>
-          //     <CustomerServiceOutlined />{' '}
-          //   </span>
-          // ),
           key: '/extra-services',
         },
         {
+          label: <span>{t('contactUs').toUpperCase()}</span>,
+          key: '/contact-us',
+        },
+        {
           label: <span>{t('faq').toUpperCase()}</span>,
-          // icon: (
-          //   <span>
-          //     <QuestionCircleOutlined />
-          //   </span>
-          // ),
           key: '/faqs',
         },
       ],
