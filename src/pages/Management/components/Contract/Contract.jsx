@@ -14,8 +14,8 @@ import RowCardSkeleton from '../../../../components/RowCardSkeleton/RowCardSkele
 const Contract = () => {
   const LIMIT = 4;
 
-  const status = useSelector(state => state.contract.status);
-  const page = useSelector(state => state.contract.page);
+  const status = useSelector(state => state.contract?.status);
+  const page = useSelector(state => state.contract?.page);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
@@ -26,11 +26,11 @@ const Contract = () => {
       status: status,
     });
   });
+
   mutate('/api/notifications');
-  console.log(data);
   return (
     <div className={styles.contractContainer}>
-      <Filter />
+      <Filter type="contract" />
       <div style={{ marginTop: '16px' }}>
         {isLoading ? (
           Array.from({ length: LIMIT }).map((_, index) => (

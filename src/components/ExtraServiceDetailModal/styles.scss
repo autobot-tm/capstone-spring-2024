@@ -1,0 +1,31 @@
+.btn-container {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px;
+
+  @media screen and (max-width: 375px) {
+    display: flexbox;
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+.house-service-container {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  .map {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .house-info {
+    padding: 16px;
+    display: grid;
+    // row-gap: 4px;
+  }
+  @media screen and (max-width: 600px) {
+    display: block;
+  }
+}

@@ -4,7 +4,7 @@ import { Result } from 'antd';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { SubHeading } from '../../../../components/Typography';
 
-const ResultSuccessfully = ({ t, leadingHomepage, leadingOrderSuccess }) => (
+const ResultSuccessfully = ({ t, leadingToHomepage, leadingToOrderSuccessfulReservation }) => (
   <div className="center-container">
     <Result
       status="success"
@@ -22,10 +22,13 @@ const ResultSuccessfully = ({ t, leadingHomepage, leadingOrderSuccess }) => (
               style={{ width: 'auto' }}
               type="primary"
               key="console"
-              onClick={leadingHomepage}>
+              onClick={leadingToHomepage}>
               {t('PAYMENT.back-to-home-btn')}
             </BaseButton>
-            <BaseButton style={{ width: 'auto' }} key="buy" onClick={leadingOrderSuccess}>
+            <BaseButton
+              style={{ width: 'auto' }}
+              key="buy"
+              onClick={leadingToOrderSuccessfulReservation}>
               {t('PAYMENT.view-your-reservation-btn')}
             </BaseButton>
           </div>
