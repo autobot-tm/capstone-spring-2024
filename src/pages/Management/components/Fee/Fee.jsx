@@ -45,7 +45,7 @@ const Fee = () => {
           ) : data?.invoices.length !== 0 ? (
             data?.invoices.map(invoice => (
               <Col xs={24} key={invoice.id}>
-                <InvoiceItem id={invoice.id} invoice={invoice} />
+                <InvoiceItem t={t} id={invoice.id} invoice={invoice} />
               </Col>
             ))
           ) : (

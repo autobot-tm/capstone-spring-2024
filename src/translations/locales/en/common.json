@@ -7,9 +7,9 @@
   "wishlist": "Wishlist",
   "userprofile": "username",
   "profile": "Profile",
-  "contract": "Contract",
+  "contract": "Contracts",
   "utilityFees": "Rental fees",
-  "reservation": "Reservation",
+  "reservation": "Reservations",
   "extra-service": "Extra Services",
   "services": "Our services",
   "faq": "FAQ",
@@ -260,6 +260,15 @@
   "api.error.invalidOtpCode": "Invalid OTP code.",
   "api.error.accountSuspended": "Your account has been suspended.",
   "api.error.waitForServiceConfirmation": "We are in the process of confirming your request.",
+
+  "invoice": "Invoice",
+  "invoice.issued": "Issued",
+  "invoice.due": "Due",
+  "invoice.billedTo": "Billed To",
+  "invoice.from": "From",
+  "invoice.houseForRent": "House for rent",
+  "invoice.tks": "Thank you for the business",
+  "invoice.payWithin15": "Please pay within 15 days of receiving this invoice.",
 
   "CANCEL_CONTRACT": {
     "title": "Your request for the extra service: Temporary Residence Registration Support Service is being reviewed.",

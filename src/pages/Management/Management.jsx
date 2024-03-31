@@ -21,6 +21,7 @@ import {
   setExtraServicesStatus,
 } from '../../store/slices/extraServices.slice';
 import ExtraServices from './components/ExtraServices/ExtraServices';
+import { Paragraph } from '../../components/Typography';
 
 const Management = () => {
   const dispatch = useDispatch();
@@ -38,22 +39,38 @@ const Management = () => {
   const items = [
     {
       icon: <FileTextOutlined />,
-      label: <b>{t('contract')}</b>,
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('contract')}
+        </Paragraph>
+      ),
       key: 'contract',
     },
     {
       icon: <PayCircleOutlined />,
-      label: <b>{t('utilityFees')}</b>,
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('utilityFees')}
+        </Paragraph>
+      ),
       key: 'fee',
     },
     {
       icon: <CarryOutOutlined />,
-      label: <b>{t('reservation')}</b>,
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('reservation')}
+        </Paragraph>
+      ),
       key: 'reservation',
     },
     {
       icon: <ToolOutlined />,
-      label: <b>{t('extra-service')}</b>,
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('extra-service')}
+        </Paragraph>
+      ),
       key: 'service',
     },
   ];
