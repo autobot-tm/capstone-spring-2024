@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 import { closeInvoiceDetailModal } from '../../store/slices/modalSlice';
 import { setInvoiceLoading } from '../../store/slices/invoiceSlice';
 import { getInvoiceByIdService, payInvoiceById } from '../../services/apis/invoices.service';
-import { Button, Table } from 'antd';
+import { Button, Col, Image, Row, Table } from 'antd';
 import { formatCustomCurrency } from '../../utils/number-seperator';
-import { Paragraph } from '../Typography';
-import { LoadingOutlined } from '@ant-design/icons';
-import styles from './InvoiceDetail.module.scss';
+import { Caption, Headline, Paragraph } from '../Typography';
+import { LoadingOutlined, TagsFilled } from '@ant-design/icons';
+import './styles.scss';
 import { PAYMENT_METHOD } from '../../constants/payment.constant';
 
 const InvoiceDetail = () => {
@@ -18,15 +18,17 @@ const InvoiceDetail = () => {
   const invoiceId = useSelector(state => state.modal.invoiceId);
   const loading = useSelector(state => state.invoice.loading);
   const dispatch = useDispatch();
-  const [description, setDescription] = useState('');
+  // const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [statusFee, setStatusFee] = useState('');
   const [items, setItems] = useState([]);
+  const [data, setData] = useState({});
 
   useEffect(() => {
     if (invoiceId) {
       getInvoiceByIdService({ invoiceId }).then(response => {
-        setDescription(response.description);
+        // setDescription(response.description);
+        setData(response);
         setAmount(response.amount);
         setItems(response.items);
         setStatusFee(response.status);
@@ -49,8 +51,8 @@ const InvoiceDetail = () => {
   ];
 
   const additionalItem = {
-    description: <b>{t('label.total')}</b>,
-    price: <b>{formatCustomCurrency(amount)}</b>,
+    description: <b style={{ color: '#f8a11e' }}>{t('label.total')}</b>,
+    price: <b style={{ color: '#f8a11e' }}>{formatCustomCurrency(amount)}</b>,
   };
 
   const updatedDataSource = [
@@ -82,12 +84,13 @@ const InvoiceDetail = () => {
       }
     }
   };
+  console.log(data);
 
   return (
     <CustomModal
-      width={650}
+      width={900}
       nameOfModal={invoiceDetailModal}
-      title={description}
+      title=""
       action={closeInvoiceDetailModal}
       footer={[
         statusFee === 'PENDING' && (
@@ -106,11 +109,99 @@ const InvoiceDetail = () => {
         ),
       ]}>
       {loading ? (
-        <div className={styles.loadingContainer}>
+        <div className="loading-container">
           <LoadingOutlined size="large" />
         </div>
       ) : (
-        <Table pagination={false} columns={columns} dataSource={updatedDataSource} />
+        <div className="invoice-container">
+          <Row className="title-invoice">
+            <Col xs={24} sm={16}>
+              <Headline classNames="d-block" strong>
+                {t('invoice').toUpperCase()}
+              </Headline>
+
+              <Paragraph>#{data?.id}</Paragraph>
+              <Paragraph classNames="d-block color-black">{data?.description}</Paragraph>
+            </Col>
+
+            <Col xs={24} sm={8} style={{ textAlign: 'end' }}>
+              <Image
+                width={100}
+                src="https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/logo-main.png"></Image>
+            </Col>
+          </Row>
+          <Row className="info-invoice">
+            <Col xs={24} sm={8} className="info-invoice-inner">
+              <Paragraph strong classNames="d-block color-black">
+                {t('invoice.issued')}
+              </Paragraph>
+              <Paragraph strong classNames="d-block" style={{ marginBottom: 10 }}>
+                {data?.lease?.move_in_date}
+              </Paragraph>
+
+              <Paragraph strong classNames="d-block color-black">
+                {t('invoice.due')}
+              </Paragraph>
+              <Paragraph strong classNames="d-block ">
+                {data?.due_date}
+              </Paragraph>
+            </Col>
+            <Col xs={24} sm={8} className="info-invoice-inner border">
+              <Paragraph strong classNames="d-block color-black">
+                {t('invoice.billedTo')}
+              </Paragraph>
+              <Paragraph strong classNames="d-block" style={{ marginBottom: 10 }}>
+                {data?.lease?.reservation?.house?.name}
+              </Paragraph>
+              <Caption strong classNames="d-block" style={{ marginBottom: 10 }}>
+                {data?.lease?.reservation?.house?.address}
+              </Caption>
+              <Paragraph classNames="d-block">
+                {' '}
+                {data?.lease?.reservation?.house?.category}
+              </Paragraph>
+            </Col>
+            <Col xs={24} sm={8} className="info-invoice-inner">
+              <Paragraph strong classNames="d-block color-black">
+                {t('invoice.from')}
+              </Paragraph>
+              <Paragraph strong classNames="d-block" style={{ marginBottom: 10 }}>
+                Lotus | {t('invoice.houseForRent')}
+              </Paragraph>
+              <Caption strong classNames="d-block" style={{ marginBottom: 10 }}>
+                8F Miss Aodai Building, 21 Nguyen Trung Ngan, HCM City
+              </Caption>
+              <Paragraph classNames="d-block">+028-3827-5068</Paragraph>
+            </Col>
+          </Row>
+          <Row className="content-invoice">
+            <Table
+              pagination={false}
+              columns={columns}
+              dataSource={updatedDataSource}
+              style={{ width: '100%' }}
+            />
+          </Row>
+
+          <Row>
+            <Col xs={24} style={{ paddingBottom: 10 }}>
+              <Paragraph strong classNames="d-block color-black">
+                {t('invoice.tks')}!
+              </Paragraph>
+              <Paragraph classNames="d-block">
+                <TagsFilled /> {t('invoice.payWithin15')}
+              </Paragraph>
+            </Col>
+            <Col xs={24} className="footer-invoice">
+              <Paragraph strong>Lotus | {t('invoice.houseForRent')}</Paragraph>
+
+              <Paragraph strong>+028-3827-5068</Paragraph>
+              <Paragraph strong classNames="color-black">
+                info@aodaihousing.com{' '}
+              </Paragraph>
+            </Col>
+          </Row>
+        </div>
       )}
     </CustomModal>
   );

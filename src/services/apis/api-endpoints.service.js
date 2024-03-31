@@ -50,6 +50,6 @@ export const ENDPOINTS = {
   },
   invoices: {
     base: '/invoices',
-    paying: id => `/invoices/${id}/pay`
+    paying: id => `/invoices/${id}/pay`,
   },
 };

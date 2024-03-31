@@ -258,6 +258,15 @@
   "api.error.accountSuspended": "あなたのアカウントは停止されました",
   "api.error.waitForServiceConfirmation": "リクエストを確認中です。",
 
+  "invoice": "インボイス",
+  "invoice.issued": "発行",
+  "invoice.due": "期日",
+  "invoice.billedTo": "請求先",
+  "invoice.from": "より",
+  "invoice.houseForRent": "貸家",
+  "invoice.tks": "お取引ありがとうございました",
+  "invoice.payWithin15": "この請求書を受け取ってから15日以内にお支払いください。",
+
   "CANCEL_CONTRACT": {
     "title": "追加サービスのお申し込み 一時滞在登録サポートサービスは現在検討中です。",
     "description": "追加サービスのリクエストについて検討中です。すぐにご連絡いたします。"

@@ -10,6 +10,7 @@ import {
   setExtraServicesPage,
   setExtraServicesStatus,
 } from '../../../../store/slices/extraServices.slice';
+import { Paragraph } from '../../../../components/Typography';
 
 const Filter = ({ type }) => {
   const reservationStatus = useSelector(state => state.reservation.status);
@@ -21,102 +22,190 @@ const Filter = ({ type }) => {
   const dispatch = useDispatch();
   const reservationStatuses = [
     {
-      label: t('status.all'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.all')}
+        </Paragraph>
+      ),
       key: 'ALL',
     },
     {
-      label: t('status.PAYMENT_PENDING'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PAYMENT_PENDING')}
+        </Paragraph>
+      ),
       key: 'PAYMENT_PENDING',
     },
     {
-      label: t('status.PAYMENT_CANCELED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PAYMENT_CANCELED')}
+        </Paragraph>
+      ),
       key: 'PAYMENT_CANCELED',
     },
     {
-      label: t('status.PAYMENT_COMPLETE'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PAYMENT_COMPLETE')}
+        </Paragraph>
+      ),
       key: 'PAYMENT_COMPLETE',
     },
     {
-      label: t('status.CANCELED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.CANCELED')}
+        </Paragraph>
+      ),
       key: 'CANCELED',
     },
     {
-      label: t('status.DEPOSITED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.DEPOSITED')}
+        </Paragraph>
+      ),
       key: 'DEPOSITED',
     },
     {
-      label: t('status.CONTRACT_UPLOADED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.CONTRACT_UPLOADED')}
+        </Paragraph>
+      ),
       key: 'CONTRACT_UPLOADED',
     },
   ];
   const contractStatuses = [
     {
-      label: t('status.all'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.all')}
+        </Paragraph>
+      ),
       key: 'ALL',
     },
     {
-      label: t('status.ACTIVE'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.ACTIVE')}
+        </Paragraph>
+      ),
       key: 'ACTIVE',
     },
     {
-      label: t('status.EXPIRED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.EXPIRED')}
+        </Paragraph>
+      ),
       key: 'EXPIRED',
     },
     {
-      label: t('status.CANCELED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.CANCELED')}
+        </Paragraph>
+      ),
       key: 'CANCELED',
     },
     {
-      label: t('status.PENDING_CANCELATION_APPROVAL'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PENDING_CANCELATION_APPROVAL')}
+        </Paragraph>
+      ),
       key: 'PENDING_CANCELATION_APPROVAL',
     },
   ];
 
   const invoiceStatuses = [
     {
-      label: t('status.all'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.all')}
+        </Paragraph>
+      ),
       key: 'ALL',
     },
     {
-      label: t('status.PENDING'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PENDING')}
+        </Paragraph>
+      ),
       key: 'PENDING',
     },
     {
-      label: t('status.PAID'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PAID')}
+        </Paragraph>
+      ),
       key: 'PAID',
     },
     {
-      label: t('status.CANCELED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.CANCELED')}
+        </Paragraph>
+      ),
       key: 'CANCELED',
     },
     {
-      label: t('status.EXPIRED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.EXPIRED')}
+        </Paragraph>
+      ),
       key: 'EXPIRED',
     },
   ];
   const serviceStatuses = [
     {
-      label: t('status.all'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.all')}
+        </Paragraph>
+      ),
       key: 'ALL',
     },
     {
-      label: t('status.UNDER_REVIEW'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.UNDER_REVIEW')}
+        </Paragraph>
+      ),
       key: 'UNDER_REVIEW',
     },
     // {
-    //   label: t('status.IN_PROGRESS'),
+    //   label: <Paragraph className="color-black"  strong>{t('status.IN_PROGRESS')}</Paragraph>,
     //   key: 'IN_PROGRESS',
     // },
     {
-      label: t('status.REJECTED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.REJECTED')}
+        </Paragraph>
+      ),
       key: 'REJECTED',
     },
     {
-      label: t('status.APPROVED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.APPROVED')}
+        </Paragraph>
+      ),
       key: 'APPROVED',
     },
     {
-      label: t('status.CANCELED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.CANCELED')}
+        </Paragraph>
+      ),
       key: 'CANCELED',
     },
   ];
