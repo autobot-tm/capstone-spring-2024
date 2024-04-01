@@ -1,7 +1,7 @@
 import './styles.scss';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { Dropdown, Menu, List, Badge } from 'antd';
+import { Button, Dropdown, Menu, List, Badge } from 'antd';
 import { BellOutlined } from '@ant-design/icons';
 import { Caption, Paragraph, SubHeading } from '../Typography';
 import { useDispatch, useSelector } from 'react-redux';
@@ -194,11 +194,9 @@ const UserNotification = ({ t }) => {
       trigger={['click']}
       visible={visible}
       onOpenChange={handleVisibleChange}>
-      <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-        <Badge count={unreadCount}>
-          <BellOutlined style={{ fontSize: '27px' }} />
-        </Badge>
-      </div>
+      <Badge count={unreadCount}>
+        <Button icon={<BellOutlined />} />
+      </Badge>
     </Dropdown>
   );
 };
