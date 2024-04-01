@@ -9,7 +9,7 @@ import { LogoutOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icon
 import { useDispatch, useSelector } from 'react-redux';
 import { openConfirmLogoutModal, openLoginModal } from '../../../../store/slices/modalSlice';
 import { Paragraph } from '../../../../components/Typography';
-import AVATAR from '../../../../assets/images/avatar.svg';
+import AVATAR from '../../../../assets/images/avatar.png';
 import UserNotification from '../../../../components/UserNotification/UserNotification';
 
 export const LayoutMenu = ({ isInline = false }) => {
@@ -39,7 +39,7 @@ export const LayoutMenu = ({ isInline = false }) => {
   const items = [
     {
       key: 'SubMenu',
-      icon: <Avatar src={user?.avatar_url || AVATAR} alt="avatar" shape="square" size={22} />,
+      label: <Avatar src={user?.avatar_url || AVATAR} alt="avatar" shape="square" size={30} />,
       children: [
         {
           label: <span>{t('profile')}</span>,
@@ -139,7 +139,13 @@ export const LayoutMenu = ({ isInline = false }) => {
           style={{ margin: 0 }}
         />
       </Menu.Item>
-      <Menu.Item key="usermenu" style={{ marginLeft: 'auto', padding: 0, height: '100%' }}>
+      <Menu.Item
+        key="usermenu"
+        style={{
+          marginLeft: 'auto',
+          padding: 0,
+          height: '100%',
+        }}>
         {access_token ? (
           <Menu
             onClick={onItemClick}
@@ -151,7 +157,7 @@ export const LayoutMenu = ({ isInline = false }) => {
           <Button
             type="text"
             style={{ margin: 0 }}
-            icon={<UserOutlined style={{ fontSize: 16 }} />}
+            icon={<UserOutlined style={{ fontSize: '20px' }} />}
             onClick={() => dispatch(openLoginModal())}>
             <Paragraph classNames="color-black" strong>
               {t('join-us').toUpperCase()}

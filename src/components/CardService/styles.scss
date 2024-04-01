@@ -1,0 +1,44 @@
+@import '../../theme/scss/colors.theme.scss';
+.card-item {
+  border: 0.5px solid #ccc;
+  padding: 10px 0;
+
+  .inner-card {
+    display: flex;
+    justify-content: space-between;
+    @media screen and (max-width: 375px) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .es-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: white;
+    font-size: 30px;
+    padding: 0 14px;
+  }
+
+  .es-iconPrimary {
+    background-color: $colors-primary;
+  }
+
+  .es-iconTertiary {
+    background-color: $colors-tertiary;
+  }
+  .es-iconOthers {
+    background-color: #ccc;
+  }
+
+  .name-services {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+  }
+}

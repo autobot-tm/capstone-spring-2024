@@ -36,7 +36,8 @@ import CustomModal from '../../components/Modal/CustomModal';
 
 const ReservationPage = () => {
   const { t } = useTranslation();
-  const { house_id: house_id } = useParams();
+  const dispatch = useDispatch();
+  const { house_id: id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
@@ -51,13 +52,9 @@ const ReservationPage = () => {
   const [checkTerms, setCheckTerms] = useState(false);
   const [opPayment, setOpPayment] = useState(PAYMENT_METHOD.VNPAY);
 
-  const urlStatus = window.location.href + '/payments';
-  console.log('url', urlStatus);
   const handleBack = () => {
-    navigate(`/houses/${house_id}`);
+    navigate(`/houses/${id}`);
   };
-
-  const dispatch = useDispatch();
   const showPopup = () => {
     dispatch(openReservationPolicyModal());
   };
@@ -150,13 +147,14 @@ const ReservationPage = () => {
     if (!opPayment) return errorPaymentNotification();
     if (!selectedNewDate) return errorDateNotification();
     try {
+      const urlCallback = window.location.origin + `/payments/${id}?typeOfPayment=reservation`;
       const response_url = await requestReserveHouse({
-        house_id: house_id,
+        house_id: id,
         pricing_policy_id: idPricingPolicy,
         total_months: selectedNewMonths,
         expected_move_in_date: selectedNewDate,
         gateway_provider: opPayment,
-        callback_base_url: urlStatus,
+        callback_base_url: urlCallback,
       });
       window.location.href = response_url;
     } catch (error) {

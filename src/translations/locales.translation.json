@@ -1,6 +1,6 @@
 {
   "locales": [
     { "value": "ja", "label": "日本語", "emoji": "🇯🇵" },
-    { "value": "en", "label": "English", "emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿" }
+    { "value": "en", "label": "English", "emoji": "🇬🇧" }
   ]
 }

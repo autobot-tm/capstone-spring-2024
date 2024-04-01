@@ -34,7 +34,7 @@ const HouseItemRow = ({ id, house, status, time, type }) => {
         }
       }}>
       <div className={type !== 'service' ? styles.imageContainer : styles.imageContainer2}>
-        <img src={house.image_urls[0]} />
+        <img src={house?.image_urls[0]} />
       </div>
       <div className={type !== 'service' ? styles.contentContainer : styles.contentContainer2}>
         <div className={styles.infoContainer}>
@@ -42,11 +42,11 @@ const HouseItemRow = ({ id, house, status, time, type }) => {
             <img src={locationIcon} alt="" />
             {type !== 'service' ? (
               <Caption size={140} ellipsis>
-                {house.address}
+                {house?.address}
               </Caption>
             ) : (
               <Caption size={110} ellipsis>
-                {house.address}
+                {house?.address}
               </Caption>
             )}
           </div>
@@ -65,29 +65,29 @@ const HouseItemRow = ({ id, house, status, time, type }) => {
         <div className={styles.titleContainer}>
           {type !== 'service' ? (
             <SubHeading size={230} strong ellipsis classNames="color-black">
-              {house.name}
+              {house?.name}
             </SubHeading>
           ) : (
-            <Paragraph strong ellipsis classNames="color-black">
-              {house.name}
-            </Paragraph>
+            <SubHeading strong ellipsis classNames="color-black">
+              {house?.name}
+            </SubHeading>
           )}
         </div>
         <div className={styles.descriptionContainer}>
           {type !== 'service' ? (
             <Paragraph size={160} ellipsis>
-              {house.description}
+              {house?.description}
             </Paragraph>
           ) : (
             <Caption size={140} ellipsis classNames="color-black">
-              {house.description}
+              {house?.description}
             </Caption>
           )}
         </div>
         {type !== 'service' && (
           <div className={styles.priceContainer}>
             <Paragraph size={160} key="price" strong classNames="color-black">
-              {formatCustomCurrency(house.pricing_policies[0].price_per_month)}
+              {formatCustomCurrency(house?.pricing_policies[0]?.price_per_month)}
             </Paragraph>
           </div>
         )}

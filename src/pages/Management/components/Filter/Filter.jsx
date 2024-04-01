@@ -5,88 +5,271 @@ import { setName, setPage, setStatus } from '../../../../store/slices/reservatio
 import { useTranslation } from 'react-i18next';
 import styles from './Filter.module.scss';
 import { setContractPage, setContractStatus } from '../../../../store/slices/contractSlice';
+import { setInvoicePage, setInvoiceStatus } from '../../../../store/slices/invoiceSlice';
+import {
+  setExtraServicesPage,
+  setExtraServicesStatus,
+} from '../../../../store/slices/extraServices.slice';
+import { Paragraph } from '../../../../components/Typography';
 
 const Filter = ({ type }) => {
   const reservationStatus = useSelector(state => state.reservation.status);
   const contractStatus = useSelector(state => state.contract.status);
+  const invoiceStatus = useSelector(state => state.invoice.status);
+  const serviceStatus = useSelector(state => state.extraServices.status);
   const name = useSelector(state => state.reservation.name);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const reservationStatuses = [
     {
-      label: t('status.all'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.all')}
+        </Paragraph>
+      ),
       key: 'ALL',
     },
     {
-      label: t('status.PAYMENT_PENDING'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PAYMENT_PENDING')}
+        </Paragraph>
+      ),
       key: 'PAYMENT_PENDING',
     },
     {
-      label: t('status.PAYMENT_CANCELED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PAYMENT_CANCELED')}
+        </Paragraph>
+      ),
       key: 'PAYMENT_CANCELED',
     },
     {
-      label: t('status.PAYMENT_COMPLETE'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PAYMENT_COMPLETE')}
+        </Paragraph>
+      ),
       key: 'PAYMENT_COMPLETE',
     },
     {
-      label: t('status.CANCELED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.CANCELED')}
+        </Paragraph>
+      ),
       key: 'CANCELED',
     },
     {
-      label: t('status.DEPOSITED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.DEPOSITED')}
+        </Paragraph>
+      ),
       key: 'DEPOSITED',
     },
     {
-      label: t('status.CONTRACT_UPLOADED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.CONTRACT_UPLOADED')}
+        </Paragraph>
+      ),
       key: 'CONTRACT_UPLOADED',
     },
   ];
   const contractStatuses = [
     {
-      label: t('status.all'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.all')}
+        </Paragraph>
+      ),
       key: 'ALL',
     },
     {
-      label: t('status.ACTIVE'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.ACTIVE')}
+        </Paragraph>
+      ),
       key: 'ACTIVE',
     },
     {
-      label: t('status.EXPIRED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.EXPIRED')}
+        </Paragraph>
+      ),
       key: 'EXPIRED',
     },
     {
-      label: t('status.CANCELED'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.CANCELED')}
+        </Paragraph>
+      ),
       key: 'CANCELED',
     },
     {
-      label: t('status.PENDING_CANCELATION_APPROVAL'),
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PENDING_CANCELATION_APPROVAL')}
+        </Paragraph>
+      ),
       key: 'PENDING_CANCELATION_APPROVAL',
+    },
+  ];
+
+  const invoiceStatuses = [
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.all')}
+        </Paragraph>
+      ),
+      key: 'ALL',
+    },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PENDING')}
+        </Paragraph>
+      ),
+      key: 'PENDING',
+    },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.PAID')}
+        </Paragraph>
+      ),
+      key: 'PAID',
+    },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.CANCELED')}
+        </Paragraph>
+      ),
+      key: 'CANCELED',
+    },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.EXPIRED')}
+        </Paragraph>
+      ),
+      key: 'EXPIRED',
+    },
+  ];
+  const serviceStatuses = [
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.all')}
+        </Paragraph>
+      ),
+      key: 'ALL',
+    },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.UNDER_REVIEW')}
+        </Paragraph>
+      ),
+      key: 'UNDER_REVIEW',
+    },
+    // {
+    //   label: <Paragraph className="color-black"  strong>{t('status.IN_PROGRESS')}</Paragraph>,
+    //   key: 'IN_PROGRESS',
+    // },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.REJECTED')}
+        </Paragraph>
+      ),
+      key: 'REJECTED',
+    },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.APPROVED')}
+        </Paragraph>
+      ),
+      key: 'APPROVED',
+    },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.CANCELED')}
+        </Paragraph>
+      ),
+      key: 'CANCELED',
     },
   ];
   const onClick = e => {
     if (type === 'reservation') {
       dispatch(setStatus({ status: e.key }));
       dispatch(setPage({ page: 1 }));
-    } else {
+    } else if (type === 'contract') {
       dispatch(setContractStatus({ status: e.key }));
       dispatch(setContractPage({ page: 1 }));
+    } else if (type === 'service') {
+      dispatch(setExtraServicesStatus({ status: e.key }));
+      dispatch(setExtraServicesPage({ page: 1 }));
+    } else {
+      dispatch(setInvoiceStatus({ status: e.key }));
+      dispatch(setInvoicePage({ page: 1 }));
     }
   };
   return (
     <div>
       <Menu
         onClick={onClick}
-        selectedKeys={type === 'reservation' ? [reservationStatus] : [contractStatus]}
+        selectedKeys={
+          type === 'reservation'
+            ? [reservationStatus]
+            : type === 'contract'
+            ? [contractStatus]
+            : type === 'service'
+            ? [serviceStatus]
+            : [invoiceStatus]
+        }
         mode="horizontal"
-        items={type === 'reservation' ? reservationStatuses : contractStatuses}
+        items={
+          type === 'reservation'
+            ? reservationStatuses
+            : type === 'contract'
+            ? contractStatuses
+            : type === 'service'
+            ? serviceStatuses
+            : invoiceStatuses
+        }
         className={styles.filterMenu}
       />
       <Menu
         onClick={onClick}
-        selectedKeys={type === 'reservation' ? [reservationStatus] : [contractStatus]}
+        selectedKeys={
+          type === 'reservation'
+            ? [reservationStatus]
+            : type === 'contract'
+            ? [contractStatus]
+            : type === 'service'
+            ? [serviceStatus]
+            : [invoiceStatus]
+        }
         mode="inline"
-        items={type === 'reservation' ? reservationStatuses : contractStatuses}
+        items={
+          type === 'reservation'
+            ? reservationStatuses
+            : type === 'contract'
+            ? contractStatuses
+            : type === 'service'
+            ? serviceStatuses
+            : invoiceStatuses
+        }
         className={styles.filterMenu2}
       />
       {type === 'reservation' && (
