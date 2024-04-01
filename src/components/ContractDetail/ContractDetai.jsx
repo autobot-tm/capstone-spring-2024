@@ -25,7 +25,7 @@ import CancellationRequestStatus from '../CancellationRequestStatus/Cancellation
 
 const ContractDetail = () => {
   const { t } = useTranslation();
-  const contractDetailModal = useSelector(state => state.modal.contractDetailModal);
+  const { contractDetailModal, actionType } = useSelector(state => state.modal);
   const leaseId = useSelector(state => state.modal.contractId);
   const [id, setId] = useState('');
   const [status, setStatus] = useState('');
@@ -245,14 +245,16 @@ const ContractDetail = () => {
                       size="large"
                       icon={<CancellationRequestStatus status={request.status} />}
                       type="text"
-                      style={{ cursor: 'pointer', marginTop: '10px' }}
+                      className={styles.itemCancellationContract}
                       onClick={() => {
                         setIsShowRequet(request.id);
                       }}>
                       <Caption strong>
                         {moment(request.created_at).format('H:mm -  DD/MM/YYYY')}
                       </Caption>
-                      <Caption elipsis>{': ' + request.title}</Caption>
+                      <Caption size={140} elipsis strong>
+                        {'(' + request.title + ')'}
+                      </Caption>
                       <CaretDownOutlined />
                     </Button>
                     {isShowRequest === request.id && (
@@ -262,7 +264,7 @@ const ContractDetail = () => {
                         dataSource={[
                           {
                             key: '1',
-                            title: <b>ID</b>,
+                            title: <b>{t('label.id')}</b>,
                             content: request.id,
                           },
                           {
@@ -272,13 +274,18 @@ const ContractDetail = () => {
                           },
                           {
                             key: '3',
-                            title: <b>{t('label.summary')}</b>,
+                            title: <b>{t('label.title')}</b>,
                             content: request.title,
                           },
                           {
                             key: '4',
                             title: <b>{t('label.reason')}</b>,
                             content: request.reason,
+                          },
+                          {
+                            key: '5',
+                            title: <b>{t('label.resolutionNote')}</b>,
+                            content: request.resolution_note,
                           },
                         ]}
                       />
@@ -317,7 +324,10 @@ const ContractDetail = () => {
           <LoadingOutlined size="large" />
         </div>
       ) : (
-        <Tabs defaultActiveKey="1" items={items} />
+        <Tabs
+          defaultActiveKey={actionType === 'LEASE_CANCELATION_REQUEST' ? '2' : '1'}
+          items={items}
+        />
       )}
     </CustomModal>
   );

@@ -31,14 +31,6 @@ export const routePaths = {
       element: <HousesPage />,
     },
     {
-      path: routeNames.Payment,
-      element: <Payment />,
-    },
-    {
-      path: routeNames.OrderSuccess,
-      element: <OrderSuccessView />,
-    },
-    {
       path: routeNames.ExtraServices,
       element: <ExtraServices />,
     },
@@ -51,6 +43,10 @@ export const routePaths = {
     {
       path: routeNames.UserDashboard,
       element: <UserDashboard />,
+    },
+    {
+      path: routeNames.Payment,
+      element: <Payment />,
     },
     {
       path: routeNames.Reservation,

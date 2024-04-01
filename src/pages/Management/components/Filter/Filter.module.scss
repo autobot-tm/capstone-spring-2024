@@ -5,6 +5,11 @@
   padding: 10px 25px;
 }
 
+.filterMenu {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 @media (max-width: 1024px) {
   .filterMenu {
     display: none;

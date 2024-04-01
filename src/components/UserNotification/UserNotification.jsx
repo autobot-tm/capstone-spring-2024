@@ -1,7 +1,7 @@
 import './styles.scss';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { Button, Dropdown, Menu, List, Badge } from 'antd';
+import { Dropdown, Menu, List, Badge } from 'antd';
 import { BellOutlined } from '@ant-design/icons';
 import { Caption, Paragraph, SubHeading } from '../Typography';
 import { useDispatch, useSelector } from 'react-redux';
@@ -71,25 +71,6 @@ const UserNotification = ({ t }) => {
   const unreadCount = useSelector(state => state.notification.unreadCount);
   const notificationState = useSelector(state => state.notification.notifications);
   const [visible, setVisible] = useState(false);
-  // const eventSourceRef = useRef(null);
-
-  // useEffect(() => {
-  //   eventSourceRef.current = new EventSource(
-  //     'https://dev.lotus.ttq186.dev/notifications/me/realtime',
-  //   );
-  //   eventSourceRef.current.onmessage = event => {
-  //     const newNotification = JSON.parse(event.data);
-  //     console.log('data', JSON.parse(event.data));
-  //     dispatch(setNotifications(prevState => [...prevState, newNotification]));
-  //     // dispatch(markAllAsRead(prevCount => prevCount + 1));
-  //   };
-
-  //   return () => {
-  //     if (eventSourceRef.current) {
-  //       eventSourceRef.current.close();
-  //     }
-  //   };
-  // }, []);
 
   const { data: notifications } = useSWR('/api/notifications', async () => {
     try {
@@ -122,12 +103,13 @@ const UserNotification = ({ t }) => {
         const contextOfNoti = noti.context;
         setVisible(false);
         dispatch(markAsRead(id));
-        updateNotiHasReadService(id);
+        await updateNotiHasReadService(id);
 
         if (ACTION_TYPE === 'LEASE_CANCELATION_REQUEST') {
           const { lease_id, cancelation_request_id } = contextOfNoti;
           dispatch(
             openContractDetailModal({
+              actionType: ACTION_TYPE,
               contractId: lease_id,
               cancelation_request_id: cancelation_request_id,
             }),
@@ -138,14 +120,11 @@ const UserNotification = ({ t }) => {
         }
 
         if (ACTION_TYPE === 'EXTRA_SERVICE_REQUEST') {
-          const { extra_service_id, extra_service_request_id } = contextOfNoti;
-          console.log(
-            'extra_service_id, extra_service_request_id',
-            extra_service_id,
-            extra_service_request_id,
-          );
+          // const { extra_service_id, extra_service_request_id } = contextOfNoti;
+          // dispatch(setTypeNavigate({ typeNavigate: 'EXTRA_SERVICE_REQUEST' }));
+
           dispatch(markAllAsRead());
-          return navigate('/extra-services');
+          return navigate('/management');
         }
       } catch (error) {
         console.error('Error handling notification click:', error);
@@ -194,9 +173,11 @@ const UserNotification = ({ t }) => {
       trigger={['click']}
       visible={visible}
       onOpenChange={handleVisibleChange}>
-      <Badge count={unreadCount}>
-        <Button icon={<BellOutlined />} />
-      </Badge>
+      <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
+        <Badge count={unreadCount}>
+          <BellOutlined style={{ fontSize: '27px' }} />
+        </Badge>
+      </div>
     </Dropdown>
   );
 };
