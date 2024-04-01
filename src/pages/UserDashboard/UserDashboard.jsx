@@ -33,13 +33,12 @@ const UserDashboard = () => {
   const { actions: userActions } = useUserSlice();
   const [activeTabKey, setActiveTabKey] = useState('1');
 
-  console.log(user);
-
   useEffect(() => {
-    if (access_token) {
-      dispatch(userActions.getUserProfile());
+    if (!access_token) {
+      return;
     }
-  }, [access_token]);
+    dispatch(userActions.getUserProfile());
+  }, [access_token, dispatch]);
 
   const handleTabChange = key => {
     setActiveTabKey(key);

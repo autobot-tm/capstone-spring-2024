@@ -52,4 +52,9 @@ export const ENDPOINTS = {
     base: '/invoices',
     paying: id => `/invoices/${id}/pay`,
   },
+  contactRequest: {
+    base: '/contact-requests',
+    requestId: id => `/contact-requests/${id}`,
+    cancel: id => `/contact-requests/${id}/resolve`,
+  },
 };

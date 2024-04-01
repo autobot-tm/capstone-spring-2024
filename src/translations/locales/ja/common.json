@@ -456,6 +456,24 @@
     "des-residence-be": "お役所仕事ではなく、滞在に集中しましょう。私たちの一時滞在登録サポートサービスは、ベトナムでの合法的なステータスを確保するためのストレスを軽減します。"
   },
 
+  "CONTACT-US": {
+    "contact-us": "お問い合わせ",
+    "main-office": "本社",
+    "second-office": "セカンドオフィス",
+    "send-us-a-message": "メッセージを送る",
+    "invoice-issue": "請求書発行",
+    "living-issue": "リビング問題",
+    "homeowner-lease-inquiry": "賃貸住宅に関するお問い合わせ",
+    "other": "その他",
+    "placeholder-your-house": "家を選ぶ",
+    "placeholder-message": "メッセージ",
+    "placeholder-your-category": "カテゴリーを選択",
+    "error-your-house": "ご希望のハウスをお選びください！",
+    "error-your-message": "メッセージを入力してください！",
+    "error-your-category": "カテゴリーを選択してください！",
+    "send-a-message-btn": "メッセージを送る"
+  },
+
   "NOT-FOUND": {
     "title": "おっと... ページが見つかりません！",
     "description": "Tお探しのページは存在しません。移動または削除された可能性があります。",

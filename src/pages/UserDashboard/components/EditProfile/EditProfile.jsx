@@ -183,7 +183,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
 
           {user?.auth_method === 'NORMAL' && (
             <>
-              <Col xs={24} style={{ display: 'flex', alignItems: 'center' }}>
+              <Col xs={24} style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
                 <BaseButton
                   size="medium"
                   style={{ width: 'fit-content' }}

@@ -88,7 +88,7 @@ export const LayoutMenu = ({ isInline = false }) => {
           key: '/extra-services',
         },
         {
-          label: <span>{t('contactUs').toUpperCase()}</span>,
+          label: <span>{t('CONTACT-US.contact-us').toUpperCase()}</span>,
           key: '/contact-us',
         },
         {

@@ -13,14 +13,21 @@ const UploadFile = ({ acceptTypes, multiple, onChange }) => {
   const handleUpload = async () => {
     setUploading(true);
     const presignedURLs = await getPresignedURLs(fileList);
-    const firstPresignedURL = multiple ? presignedURLs : [presignedURLs[0]];
     await mediaUploadService(presignedURLs);
+    console.log('presignedURLs', presignedURLs);
+    const firstPresignedURL = multiple ? presignedURLs : [presignedURLs[0]];
 
-    for (const url of firstPresignedURL) {
-      const uploadUrl = url.presignedURL.cdn_url;
-      const avatarUrl = `https://${uploadUrl}`;
-      onChange(avatarUrl);
+    if (multiple) {
+      const fileUrls = firstPresignedURL?.map(url => `https://${url.presignedURL.cdn_url}`);
+      onChange(fileUrls);
+    } else {
+      for (const url of firstPresignedURL) {
+        const uploadUrl = url.presignedURL.cdn_url;
+        const avatarUrl = `https://${uploadUrl}`;
+        onChange(avatarUrl);
+      }
     }
+
     setFileList([]);
     setUploading(false);
   };

@@ -459,6 +459,24 @@
     "des-residence-be": "Focus on your stay, not the red tape. Our Temporary Residence Registration Support Service takes the stress out of ensuring your legal status in Vietnam."
   },
 
+  "CONTACT-US": {
+    "contact-us": "Contact Us",
+    "main-office": "Main office",
+    "second-office": "Second office",
+    "send-us-a-message": "Send Us a Message",
+    "invoice-issue": "INVOICE ISSUE",
+    "living-issue": "LIVING ISSUE",
+    "homeowner-lease-inquiry": "HOMEOWNER LEASE INQUIRY",
+    "other": "OTHER",
+    "placeholder-your-house": "Select your house",
+    "placeholder-message": "Message",
+    "placeholder-your-category": "Select category",
+    "error-your-house": "Please select your house you want!",
+    "error-your-message": "Please enter your message!",
+    "error-your-category": "Please select category!",
+    "send-a-message-btn": "Send a Message"
+  },
+
   "NOT-FOUND": {
     "title": "Oops... Page Not Found!",
     "description": "The page you are looking for does not exist. It might have been moved or deleted.",
