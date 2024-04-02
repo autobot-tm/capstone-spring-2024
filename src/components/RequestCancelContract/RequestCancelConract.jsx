@@ -196,7 +196,7 @@ const RequestCancelConract = () => {
                 }}>
                 {t('button.back')}
               </BaseButton>
-              {requestInprogress?.progresses[0].status !== 'IN_PROGRESS' && (
+              {requestInprogress?.progresses[0]?.status !== 'IN_PROGRESS' && (
                 <Popconfirm
                   title={t('cancel.confirm')}
                   onConfirm={handleCancelRequestService}

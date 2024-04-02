@@ -111,7 +111,6 @@ const UserNotification = ({ t }) => {
           dispatch(
             openContractDetailModal({
               actionType: ACTION_TYPE,
-              actionType: ACTION_TYPE,
               contractId: lease_id,
               cancelation_request_id: cancelation_request_id,
             }),
