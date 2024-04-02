@@ -15,4 +15,6 @@ export const routeNames = {
   Support: '/support',
   Management: '/management',
   ExtraServices: '/extra-services',
+  ContactUs: '/contact-us',
+  PaymentHistory: 'payment-history',
 };

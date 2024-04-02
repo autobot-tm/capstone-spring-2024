@@ -84,7 +84,6 @@ const InvoiceDetail = () => {
       }
     }
   };
-  console.log(data);
 
   return (
     <CustomModal

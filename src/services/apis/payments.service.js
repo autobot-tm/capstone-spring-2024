@@ -29,3 +29,7 @@ export const getReservationIdByHouseIdService = async ({ house_id, status }) => 
 export const getReservationById = async reservation_id => {
   return apiCaller.get(ENDPOINTS.payments.reservation(reservation_id));
 };
+
+export const getPaymentsService = ({ offset, limit }) => {
+  return apiCaller.get(ENDPOINTS.payments.base + `?offset=${offset}&limit=${limit}`);
+};
