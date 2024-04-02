@@ -9,7 +9,7 @@ const HomeCarousel = ({ images, limit }) => {
 
   return (
     <div className={styles.carouselContainer}>
-      <Carousel autoplay>
+      <Carousel autoplay effect="fade">
         {images.slice(0, limit).map((image, index) => {
           return (
             <div key={index} className={styles.imagesContainer}>

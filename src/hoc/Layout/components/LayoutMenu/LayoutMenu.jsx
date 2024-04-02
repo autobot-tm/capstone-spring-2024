@@ -5,7 +5,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './styles.scss';
 import { TranslationSelector } from '../TranslationSelector';
 import { useTranslation } from 'react-i18next';
-import { LogoutOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  CreditCardOutlined,
+  LogoutOutlined,
+  SolutionOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConfirmLogoutModal, openLoginModal } from '../../../../store/slices/modalSlice';
 import { Paragraph } from '../../../../components/Typography';
@@ -60,6 +65,15 @@ export const LayoutMenu = ({ isInline = false }) => {
           key: '/management',
         },
         {
+          label: <span>{t('payments')}</span>,
+          icon: (
+            <span>
+              <CreditCardOutlined />
+            </span>
+          ),
+          key: '/payment-history',
+        },
+        {
           label: <span style={{ color: 'red' }}>{t('logout')}</span>,
           icon: (
             <span style={{ color: 'red' }}>
@@ -85,20 +99,14 @@ export const LayoutMenu = ({ isInline = false }) => {
       children: [
         {
           label: <span>{t('services').toUpperCase()}</span>,
-          // icon: (
-          //   <span>
-          //     <CustomerServiceOutlined />{' '}
-          //   </span>
-          // ),
           key: '/extra-services',
         },
         {
+          label: <span>{t('contactUs').toUpperCase()}</span>,
+          key: '/contact-us',
+        },
+        {
           label: <span>{t('faq').toUpperCase()}</span>,
-          // icon: (
-          //   <span>
-          //     <QuestionCircleOutlined />
-          //   </span>
-          // ),
           key: '/faqs',
         },
       ],
