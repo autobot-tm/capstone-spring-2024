@@ -234,7 +234,7 @@ const ContractDetail = () => {
       label: t('label.viewYourCancellationRequest'),
       children: (
         <>
-          {requests.length > 0 ? (
+          {requests?.length > 0 ? (
             requests
               .slice()
               .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))

@@ -22,7 +22,9 @@ const notificationSlice = createSlice({
       const notification = state.notifications.find(item => item.id === notificationId);
       if (notification && !notification.current_user_has_read) {
         notification.current_user_has_read = true;
-        state.unreadCount -= 1;
+        if (state.unreadCount > 0) {
+          state.unreadCount -= 1;
+        }
       }
     },
     markAllAsRead(state) {

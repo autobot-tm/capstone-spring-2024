@@ -11,20 +11,20 @@ import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import ServiceStatus from '../../pages/ExtraServices/components/ServiceStatus/ServiceStatus';
 import { mutate } from 'swr';
 import { getLeaseByIdService } from '../../services/apis/contracts.service';
-import { Caption, Paragraph } from '../Typography';
+import { Caption, Paragraph, SubHeading } from '../Typography';
 import { setExtraServicesLoading } from '../../store/slices/extraServices.slice';
-import { LoadingOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, LoadingOutlined } from '@ant-design/icons';
+import moment from 'moment';
 
 const ExtraServiceDetailModal = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [houseService, setHouseService] = useState({});
-
+  const [selectedId, setSelectedId] = useState('');
   const { extraServiceRequestDetailModal, extraServiceRequestDetail } = useSelector(
     state => state.modal,
   );
   const loading = useSelector(state => state.extraServices.loading);
-
   const [api, contextHolder] = notification.useNotification();
 
   const openNotificationWithIcon = (type, message) => {
@@ -96,14 +96,27 @@ const ExtraServiceDetailModal = () => {
           {
             key: '5',
             title: <b>{t('label.resolutionNote')}</b>,
-            content: extraServiceRequestDetail?.resolution_note,
+            content: extraServiceRequestDetail?.resolution_note || '-',
           },
         ]
       : []),
   ];
 
+  const infoProgressesHead = [
+    {
+      title: t('label.title'),
+      dataIndex: 'title',
+      key: 'title',
+    },
+    {
+      title: t('label.content'),
+      dataIndex: 'content',
+      key: 'content',
+    },
+  ];
+
+  const { status, progresses } = extraServiceRequestDetail;
   const isCancelDisabled = () => {
-    const { status, progresses } = extraServiceRequestDetail;
     if (status === 'UNDER_REVIEW') {
       return true;
     }
@@ -114,6 +127,92 @@ const ExtraServiceDetailModal = () => {
       return true;
     }
     return false;
+  };
+
+  const isShowProgresses = status !== 'IN_PROGRESS' && progresses && progresses.length > 0;
+
+  const renderProgressesOfESR = () => {
+    return (
+      isShowProgresses && (
+        <>
+          <SubHeading strong>{t('progresses')}</SubHeading>
+          {progresses
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            .map(progress => {
+              return (
+                <div key={progress.id}>
+                  <BaseButton
+                    onClick={() => setSelectedId(progress?.id)}
+                    icon={<ServiceStatus status={progress?.status} />}
+                    style={{
+                      border: '0.5px dashed #ccc',
+                      display: 'flex',
+                      justifyContent: 'space-around',
+                    }}>
+                    <Caption strong>
+                      {moment(progress.created_at).format('H:mm -  DD/MM/YYYY')}
+                    </Caption>
+                    <CaretDownOutlined />
+                  </BaseButton>
+                  {selectedId === progress?.id && (
+                    <Table
+                      pagination={false}
+                      columns={infoProgressesHead}
+                      dataSource={[
+                        {
+                          key: '1',
+                          title: <b>ID</b>,
+                          content: progress?.id,
+                        },
+                        {
+                          key: '2',
+                          title: <b>{t('label.description')}</b>,
+                          content: progress?.description,
+                        },
+                        ...(progress?.status !== 'IN_PROGRESS'
+                          ? [
+                              {
+                                key: '3',
+                                title: <b>{t('label.note')}</b>,
+                                content: progress?.note || '-',
+                              },
+                              {
+                                key: '4',
+                                title: <b>{t('RESERVATION.total-fee')}</b>,
+                                content: progress?.total_fee || '-',
+                              },
+                              {
+                                key: '5',
+                                title: <b>{t('assigned-at')}</b>,
+                                content:
+                                  progress?.assigned_at && moment(progress.assigned_at).isValid()
+                                    ? moment(progress.assigned_at).format('H:mm - DD/MM/YYYY')
+                                    : '-',
+                              },
+                              {
+                                key: '6',
+                                title: <b>{t('completed-at')}</b>,
+                                content:
+                                  progress?.assigned_at && moment(progress.assigned_at).isValid()
+                                    ? moment(progress.completed_at).format('H:mm - DD/MM/YYYY')
+                                    : '-',
+                              },
+                              {
+                                key: '7',
+                                title: <b>{t('handled-by-user')}</b>,
+                                content: progress?.handled_by_user?.email || '-',
+                              },
+                            ]
+                          : []),
+                      ]}
+                    />
+                  )}
+                </div>
+              );
+            })}
+        </>
+      )
+    );
   };
 
   return (
@@ -152,7 +251,7 @@ const ExtraServiceDetailModal = () => {
         {loading ? (
           <div
             style={{
-              height: '441px',
+              height: 440,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -160,7 +259,7 @@ const ExtraServiceDetailModal = () => {
             <LoadingOutlined size="large" />
           </div>
         ) : (
-          <>
+          <div className="es-detail-modal">
             <Table dataSource={infoRequest} columns={infoRequestHead} pagination={false} />
             {houseService && (
               <>
@@ -178,7 +277,8 @@ const ExtraServiceDetailModal = () => {
                 </div>
               </>
             )}
-          </>
+            {renderProgressesOfESR()}
+          </div>
         )}
       </CustomModal>
     </>

@@ -7,7 +7,6 @@ import TextArea from 'antd/es/input/TextArea';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLeasesService } from '../../../../services/apis/contracts.service';
 import { requestContact } from '../../../../services/apis/contact.service';
-import { getInvoicesService } from '../../../../services/apis/invoices.service';
 import UploadFile from '../../../../components/UploadFile/UploadFile';
 import { useTranslation } from 'react-i18next';
 import useSWR from 'swr';
@@ -20,7 +19,7 @@ const ContactForm = () => {
   const { access_token } = useSelector(state => state.auth);
   const [form] = Form.useForm();
   const [leaseOptions, setLeaseOptions] = useState([]);
-  const [invoiceOptions, setInvoiceOptions] = useState([]);
+  // const [invoiceOptions, setInvoiceOptions] = useState([]);
   const [attachmentUrls, setAttachmentUrls] = useState([]);
   const [category, setCategory] = useState(null);
   const [api, contextHolder] = notification.useNotification();
@@ -54,21 +53,21 @@ const ContactForm = () => {
     },
   );
 
-  const { data: invoiceData, error: invoiceError } = useSWR(
-    user?.email ? ['/invoices', user.email] : null,
-    async (_, email) => {
-      if (user?.email) {
-        const response = await getInvoicesService({
-          renter_email: email,
-          status: 'PENDING',
-          type: 'RENTAL_FEE',
-          limit: 30,
-          offset: 0,
-        });
-        return response.invoices;
-      }
-    },
-  );
+  // const { data: invoiceData, error: invoiceError } = useSWR(
+  //   user?.email ? ['/invoices', user.email] : null,
+  //   async (_, email) => {
+  //     if (user?.email) {
+  //       const response = await getInvoicesService({
+  //         renter_email: email,
+  //         status: 'PENDING',
+  //         type: 'RENTAL_FEE',
+  //         limit: 30,
+  //         offset: 0,
+  //       });
+  //       return response.invoices;
+  //     }
+  //   },
+  // );
 
   useEffect(() => {
     if (leaseData) {
@@ -80,20 +79,18 @@ const ContactForm = () => {
     }
   }, [leaseData]);
 
-  console.log('leaseData', leaseData);
-  console.log('invoiceData', invoiceData);
-  useEffect(() => {
-    if (invoiceData) {
-      const pendingInvoice = invoiceData.map(invoice => ({
-        label: invoice?.lease?.reservation?.house?.name,
-        value: invoice.id,
-      }));
-      setInvoiceOptions(pendingInvoice);
-    }
-  }, [invoiceData]);
+  // useEffect(() => {
+  //   if (invoiceData) {
+  //     const pendingInvoice = invoiceData.map(invoice => ({
+  //       label: invoice?.lease?.reservation?.house?.name,
+  //       value: invoice.id,
+  //     }));
+  //     setInvoiceOptions(pendingInvoice);
+  //   }
+  // }, [invoiceData]);
 
-  if (leaseError || invoiceError) {
-    console.error('Error fetching data:', leaseError || invoiceError);
+  if (leaseError) {
+    console.error('Error fetching data:', leaseError);
   }
 
   const onFinish = async values => {
@@ -139,9 +136,9 @@ const ContactForm = () => {
               {access_token && (
                 <>
                   {' '}
-                  <Select.Option value="INVOICE_ISSUE">
+                  {/* <Select.Option value="INVOICE_ISSUE">
                     {t('CONTACT-US.invoice-issue')}
-                  </Select.Option>
+                  </Select.Option> */}
                   <Select.Option value="LIVING_ISSUE">{t('CONTACT-US.living-issue')}</Select.Option>{' '}
                 </>
               )}
@@ -151,7 +148,7 @@ const ContactForm = () => {
               <Select.Option value="OTHER">{t('CONTACT-US.other')}</Select.Option>
             </Select>
           </Form.Item>
-
+          {/* 
           {category === 'INVOICE_ISSUE' && (
             <Form.Item
               name="invoice_id"
@@ -161,7 +158,7 @@ const ContactForm = () => {
                 placeholder={t('CONTACT-US.placeholder-your-house')}
               />
             </Form.Item>
-          )}
+          )} */}
 
           {category === 'LIVING_ISSUE' && (
             <Form.Item

@@ -196,16 +196,18 @@ const RequestCancelConract = () => {
                 }}>
                 {t('button.back')}
               </BaseButton>
-              <Popconfirm
-                title={t('cancel.confirm')}
-                onConfirm={handleCancelRequestService}
-                okText={t('yes')}
-                cancelText={t('no')}
-                placement="bottom">
-                <BaseButton style={{ width: 'auto' }} type="primary">
-                  {t('button.cancel-request')}
-                </BaseButton>
-              </Popconfirm>
+              {requestInprogress?.progresses[0].status !== 'IN_PROGRESS' && (
+                <Popconfirm
+                  title={t('cancel.confirm')}
+                  onConfirm={handleCancelRequestService}
+                  okText={t('yes')}
+                  cancelText={t('no')}
+                  placement="bottom">
+                  <BaseButton style={{ width: 'auto' }} type="primary">
+                    {t('button.cancel-request')}
+                  </BaseButton>
+                </Popconfirm>
+              )}
             </div>,
           ]}>
           <Table dataSource={dataSource} columns={columns} pagination={false} />

@@ -1,0 +1,21 @@
+.contact-us-fee-modal {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+
+  .btn-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    @media screen and (max-width: 375px) {
+      display: flex;
+      width: 100%;
+      padding: 20px;
+    }
+  }
+
+  .file-upload-container {
+    width: 100%;
+  }
+}

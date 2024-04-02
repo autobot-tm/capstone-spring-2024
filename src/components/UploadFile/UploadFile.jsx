@@ -58,7 +58,9 @@ const UploadFile = ({ acceptTypes, multiple, onChange }) => {
   return (
     <div id="upload-file-container">
       <Upload {...props}>
-        <Button icon={<UploadOutlined />}>{t('select-file')}</Button>
+        <Button className="custom-upload-button" icon={<UploadOutlined />}>
+          {t('select-file')}
+        </Button>
       </Upload>
       <Button type="primary" onClick={handleUpload} disabled={fileList.length === 0}>
         {uploading ? `${t('uploading-status')}` : `${t('upload-status')}`}

@@ -28,6 +28,10 @@ const ServiceStatus = ({ status }) => {
         <Caption strong>
           <Tag color="cyan">{t('status.' + status)}</Tag>
         </Caption>
+      ) : status === 'COMPLETED' ? (
+        <Caption strong>
+          <Tag color="cyan">{t('status.' + status)}</Tag>
+        </Caption>
       ) : (
         <Caption strong>
           <Tag>{t('status.' + status)}</Tag>

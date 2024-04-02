@@ -86,7 +86,7 @@ const UserNotification = ({ t }) => {
     if (notifications) {
       dispatch(setNotifications(notifications));
     }
-  }, [notifications]);
+  }, [notifications, dispatch]);
 
   const handleVisibleChange = flag => {
     setVisible(flag);
@@ -117,12 +117,7 @@ const UserNotification = ({ t }) => {
           dispatch(setContractLoading({ loading: true }));
           dispatch(markAllAsRead());
           return navigate('/management');
-        }
-
-        if (ACTION_TYPE === 'EXTRA_SERVICE_REQUEST') {
-          // const { extra_service_id, extra_service_request_id } = contextOfNoti;
-          // dispatch(setTypeNavigate({ typeNavigate: 'EXTRA_SERVICE_REQUEST' }));
-
+        } else {
           dispatch(markAllAsRead());
           return navigate('/management');
         }
