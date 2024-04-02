@@ -8,6 +8,8 @@
   "userprofile": "ユーザー名",
   "profile": "プロフィール",
   "contract": "契約",
+  "payments": "支払い",
+
   "utilityFees": "公共料金",
   "reservation": "予約",
   "extra-service": "追加サービス",
@@ -58,6 +60,8 @@
   "button.reset": "リセット",
   "button.browseMore": "さらに物件を閲覧する",
   "button.cancel": "キャンセル",
+  "button.cancel-service": "サービスのキャンセル",
+  "button.cancel-request": "キャンセル",
   "button.cancel-service": "サービスのキャンセル",
   "button.cancel-request": "キャンセル",
   "button.ok": "わかりました",

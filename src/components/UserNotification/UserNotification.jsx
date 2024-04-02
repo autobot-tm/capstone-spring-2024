@@ -104,11 +104,13 @@ const UserNotification = ({ t }) => {
         setVisible(false);
         dispatch(markAsRead(id));
         await updateNotiHasReadService(id);
+        await updateNotiHasReadService(id);
 
         if (ACTION_TYPE === 'LEASE_CANCELATION_REQUEST') {
           const { lease_id, cancelation_request_id } = contextOfNoti;
           dispatch(
             openContractDetailModal({
+              actionType: ACTION_TYPE,
               actionType: ACTION_TYPE,
               contractId: lease_id,
               cancelation_request_id: cancelation_request_id,

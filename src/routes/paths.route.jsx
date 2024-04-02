@@ -12,6 +12,7 @@ import ReportLivingIssues from '../pages/ReportLivingIssues/ReportLivingIssues';
 import Management from '../pages/Management/Management';
 import ExtraServices from '../pages/ExtraServices/ExtraServices';
 import ContactUs from '../pages/ContactUs/ContactUs';
+import PaymentHistory from '../pages/PaymentHistory/PaymentHistory';
 
 export const routePaths = {
   public: [
@@ -64,6 +65,10 @@ export const routePaths = {
     {
       path: routeNames.Management,
       element: <Management />,
+    },
+    {
+      path: routeNames.PaymentHistory,
+      element: <PaymentHistory />,
     },
   ],
 };

@@ -17,6 +17,7 @@ export const ENDPOINTS = {
     metadata: '/houses/metadata',
   },
   payments: {
+    base: '/payments',
     demo: '/payments/demo-checkout-url',
     //other folder
     reservation: reservation_id => `/reservations/${reservation_id}`,
