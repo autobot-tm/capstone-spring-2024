@@ -57,5 +57,6 @@ export const ENDPOINTS = {
     base: '/contact-requests',
     requestId: id => `/contact-requests/${id}`,
     cancel: id => `/contact-requests/${id}/resolve`,
+    issues: '/issues',
   },
 };

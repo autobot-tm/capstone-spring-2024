@@ -8,7 +8,7 @@ import { Form, notification } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import UploadFile from '../UploadFile/UploadFile';
 import { useTranslation } from 'react-i18next';
-import { requestContact } from '../../services/apis/contact.service';
+import { requestIssues } from '../../services/apis/contact.service';
 const ContactUsAboutFeeModal = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -47,7 +47,7 @@ const ContactUsAboutFeeModal = () => {
           attachment_urls: values.attachment_urls ? attachmentUrls : [],
           category: 'INVOICE_ISSUE',
         };
-        await requestContact(formData);
+        await requestIssues(formData);
         dispatch(closeContactUsAboutFeeModal());
         openNotificationWithIcon('success', t('notification.submittedSuccessfully'));
         form.resetFields();

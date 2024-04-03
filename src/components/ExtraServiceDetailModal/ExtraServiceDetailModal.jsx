@@ -15,15 +15,14 @@ import { Caption, Paragraph, SubHeading } from '../Typography';
 import { setExtraServicesLoading } from '../../store/slices/extraServices.slice';
 import { CaretDownOutlined, LoadingOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import { formatCustomCurrency } from '../../utils/number-seperator';
 
 const ExtraServiceDetailModal = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [houseService, setHouseService] = useState({});
   const [selectedId, setSelectedId] = useState('');
-  const { extraServiceRequestDetailModal, extraServiceRequestDetail } = useSelector(
-    state => state.modal,
-  );
+  const { extraServiceRequestDetailModal, extraServiceRequestDetail } = useSelector(state => state.modal);
   const loading = useSelector(state => state.extraServices.loading);
   const [api, contextHolder] = notification.useNotification();
 
@@ -136,80 +135,83 @@ const ExtraServiceDetailModal = () => {
       isShowProgresses && (
         <>
           <SubHeading strong>{t('progresses')}</SubHeading>
-          {progresses
-            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-            .map(progress => {
-              return (
-                <div key={progress.id}>
-                  <BaseButton
-                    onClick={() => setSelectedId(progress?.id)}
-                    icon={<ServiceStatus status={progress?.status} />}
-                    style={{
-                      border: '0.5px dashed #ccc',
-                      display: 'flex',
-                      justifyContent: 'space-around',
-                    }}>
-                    <Caption strong>
-                      {moment(progress.created_at).format('H:mm -  DD/MM/YYYY')}
-                    </Caption>
-                    <CaretDownOutlined />
-                  </BaseButton>
-                  {selectedId === progress?.id && (
-                    <Table
-                      pagination={false}
-                      columns={infoProgressesHead}
-                      dataSource={[
-                        {
-                          key: '1',
-                          title: <b>ID</b>,
-                          content: progress?.id,
-                        },
-                        {
-                          key: '2',
-                          title: <b>{t('label.description')}</b>,
-                          content: progress?.description,
-                        },
-                        ...(progress?.status !== 'IN_PROGRESS'
-                          ? [
-                              {
-                                key: '3',
-                                title: <b>{t('label.note')}</b>,
-                                content: progress?.note || '-',
-                              },
-                              {
-                                key: '4',
-                                title: <b>{t('RESERVATION.total-fee')}</b>,
-                                content: progress?.total_fee || '-',
-                              },
-                              {
-                                key: '5',
-                                title: <b>{t('assigned-at')}</b>,
-                                content:
-                                  progress?.assigned_at && moment(progress.assigned_at).isValid()
-                                    ? moment(progress.assigned_at).format('H:mm - DD/MM/YYYY')
-                                    : '-',
-                              },
-                              {
-                                key: '6',
-                                title: <b>{t('completed-at')}</b>,
-                                content:
-                                  progress?.assigned_at && moment(progress.assigned_at).isValid()
-                                    ? moment(progress.completed_at).format('H:mm - DD/MM/YYYY')
-                                    : '-',
-                              },
-                              {
-                                key: '7',
-                                title: <b>{t('handled-by-user')}</b>,
-                                content: progress?.handled_by_user?.email || '-',
-                              },
-                            ]
-                          : []),
-                      ]}
-                    />
-                  )}
-                </div>
-              );
-            })}
+          {progresses && progresses.length > 0 ? (
+            progresses
+              .slice()
+              .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+              .map(progress => {
+                return (
+                  <div key={progress.id}>
+                    <BaseButton
+                      onClick={() => setSelectedId(progress?.id)}
+                      icon={<ServiceStatus status={progress?.status} />}
+                      style={{
+                        border: '0.5px dashed #ccc',
+                        display: 'flex',
+                        justifyContent: 'space-around',
+                      }}>
+                      <Caption strong>{moment(progress.created_at).format('H:mm -  DD/MM/YYYY')}</Caption>
+                      <CaretDownOutlined />
+                    </BaseButton>
+                    {selectedId === progress?.id && (
+                      <Table
+                        pagination={false}
+                        columns={infoProgressesHead}
+                        dataSource={[
+                          {
+                            key: '1',
+                            title: <b>ID</b>,
+                            content: progress?.id,
+                          },
+                          {
+                            key: '2',
+                            title: <b>{t('label.description')}</b>,
+                            content: progress?.description,
+                          },
+                          ...(progress?.status !== 'IN_PROGRESS'
+                            ? [
+                                {
+                                  key: '3',
+                                  title: <b>{t('label.note')}</b>,
+                                  content: progress?.note || '-',
+                                },
+                                {
+                                  key: '4',
+                                  title: <b>{t('RESERVATION.total-fee')}</b>,
+                                  content: formatCustomCurrency(progress?.total_fee) || '-',
+                                },
+                                {
+                                  key: '5',
+                                  title: <b>{t('assigned-at')}</b>,
+                                  content:
+                                    progress?.assigned_at && moment(progress.assigned_at).isValid()
+                                      ? moment(progress.assigned_at).format('H:mm - DD/MM/YYYY')
+                                      : '-',
+                                },
+                                {
+                                  key: '6',
+                                  title: <b>{t('completed-at')}</b>,
+                                  content:
+                                    progress?.assigned_at && moment(progress.assigned_at).isValid()
+                                      ? moment(progress.completed_at).format('H:mm - DD/MM/YYYY')
+                                      : '-',
+                                },
+                                {
+                                  key: '7',
+                                  title: <b>{t('handled-by-user')}</b>,
+                                  content: progress?.handled_by_user?.email || '-',
+                                },
+                              ]
+                            : []),
+                        ]}
+                      />
+                    )}
+                  </div>
+                );
+              })
+          ) : (
+            <p>No progresses available</p>
+          )}
         </>
       )
     );

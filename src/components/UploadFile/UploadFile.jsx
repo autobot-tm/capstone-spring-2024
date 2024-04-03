@@ -4,27 +4,31 @@ import { UploadOutlined } from '@ant-design/icons';
 import { getPresignedURLs, mediaUploadService } from '../../services/media';
 import './style.scss';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 const UploadFile = ({ acceptTypes, multiple, onChange }) => {
   const { t } = useTranslation();
+  const { access_token } = useSelector(state => state.auth);
   const [fileList, setFileList] = useState([]);
   const [uploading, setUploading] = useState(false);
 
   const handleUpload = async () => {
-    setUploading(true);
-    const presignedURLs = await getPresignedURLs(fileList);
-    await mediaUploadService(presignedURLs);
-    console.log('presignedURLs', presignedURLs);
-    const firstPresignedURL = multiple ? presignedURLs : [presignedURLs[0]];
+    if (access_token) {
+      setUploading(true);
+      const presignedURLs = await getPresignedURLs(fileList);
+      await mediaUploadService(presignedURLs);
+      console.log('presignedURLs', presignedURLs);
 
-    if (multiple) {
-      const fileUrls = firstPresignedURL?.map(url => `https://${url.presignedURL.cdn_url}`);
-      onChange(fileUrls);
-    } else {
-      for (const url of firstPresignedURL) {
-        const uploadUrl = url.presignedURL.cdn_url;
-        const avatarUrl = `https://${uploadUrl}`;
-        onChange(avatarUrl);
+      const firstPresignedURL = multiple ? presignedURLs : [presignedURLs[0]];
+      if (multiple) {
+        const fileUrls = firstPresignedURL?.map(url => `https://${url.presignedURL.cdn_url}`);
+        onChange(fileUrls);
+      } else {
+        for (const url of firstPresignedURL) {
+          const uploadUrl = url.presignedURL.cdn_url;
+          const avatarUrl = `https://${uploadUrl}`;
+          onChange(avatarUrl);
+        }
       }
     }
 

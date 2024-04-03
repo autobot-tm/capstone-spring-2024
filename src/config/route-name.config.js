@@ -6,7 +6,7 @@ export const routeNames = {
   SignIn: '/auth/sign-in',
   Houses: '/houses',
   Reservation: '/reservation/:house_id',
-  Payment: '/reservation/:house_id/payments',
+  Payment: '/payments/:id',
   DetailHouse: '/houses/:house_id',
   OrderSuccess: '/orders',
   UserDashboard: '/user-dashboard/:user_id',
