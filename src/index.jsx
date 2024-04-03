@@ -26,6 +26,7 @@ import ShowAllImage from './components/ShowAllImage/ShowAllImage';
 import ShowLeaseModal from './pages/ExtraServices/components/ShowLeaseModal/ShowLeaseModal';
 import InvoiceDetail from './components/InvoiceDetail/InvoiceDetail';
 import ExtraServiceDetailModal from './components/ExtraServiceDetailModal/ExtraServiceDetailModal';
+import ContactRequestDetail from './pages/Management/components/ContactRequests/components/ContactRequestDetail/ContactRequestDetail';
 
 initTranslations();
 configureApiCaller(store);
@@ -69,6 +70,7 @@ root.render(
           <ShowLeaseModal />
           <InvoiceDetail />
           <ExtraServiceDetailModal />
+          <ContactRequestDetail />
         </BrowserRouter>
       </ConfigProvider>
     </GoogleOAuthProvider>

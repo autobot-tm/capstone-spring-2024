@@ -30,7 +30,7 @@ const Fee = () => {
 
   return (
     <div className={styles.feeContainer}>
-      <Filter />
+      <Filter type="invoice" />
       <div style={{ marginTop: '26px', marginBottom: '16px' }}>
         <SubHeading strong>{t('label.rentalFee')}</SubHeading>
       </div>

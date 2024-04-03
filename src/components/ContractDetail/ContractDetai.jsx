@@ -147,7 +147,7 @@ const ContractDetail = () => {
                     alignItems: 'center',
                     gap: '8px',
                   }}>
-                  <div style={{ marginBottom: '5px' }}>{`Contract file ${index + 1}`}</div>
+                  <div style={{ marginBottom: '5px' }}>{file.slice(73)}</div>
                   <Button
                     size="small"
                     icon={<DownloadOutlined />}

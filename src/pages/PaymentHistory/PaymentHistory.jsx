@@ -59,6 +59,7 @@ const PaymentHistory = () => {
       render: date => moment(date).format('H:mm -  DD/MM/YYYY'),
       sorter: (a, b) => moment(a.date).unix() - moment(b.date).unix(),
     },
+    { title: t('label.content'), dataIndex: 'content', key: 'content', render: content => content },
     {
       title: t('label.paymentMethod'),
       dataIndex: 'method',
@@ -128,6 +129,7 @@ const PaymentHistory = () => {
     method: item.method,
     gatewayProvider: item.gateway_provider,
     amount: item.amount,
+    content: item.content,
   }));
   return (
     <Layout>
