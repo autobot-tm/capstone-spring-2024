@@ -10,6 +10,7 @@ import notificationSlice from './slices/notification.slice';
 import invoiceReducer from './slices/invoiceSlice';
 import extraServicesSlice from './slices/extraServices.slice';
 import paymentSlice from './slices/payment.slice';
+import issueReducer from './slices/issueSlice';
 
 export const store = configureStore({
   reducer: {
@@ -24,5 +25,6 @@ export const store = configureStore({
     invoice: invoiceReducer,
     extraServices: extraServicesSlice,
     payment: paymentSlice,
+    issue: issueReducer,
   },
 });

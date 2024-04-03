@@ -19,8 +19,10 @@ const initialState = {
   reservationId: undefined,
   contractId: undefined,
   invoiceId: undefined,
+  issueId: undefined,
   showAllImageModal: false,
   showLeaseModal: false,
+  contactRequestDetailModal: false,
   leases: [],
   extraServiceId: undefined,
   extraServiceRequestId: undefined,
@@ -28,6 +30,7 @@ const initialState = {
   email: '',
   images: [],
   actionType: null,
+  contactCategory: '',
 };
 
 const modalSlice = createSlice({
@@ -91,7 +94,11 @@ const modalSlice = createSlice({
       state.extraServiceRequestDetailModal = true;
       state.extraServiceRequestDetail = action?.payload?.extraServiceRequestDetail;
     },
-
+    openContactRequestDetailModal: (state, action) => {
+      state.contactRequestDetailModal = true;
+      state.contactCategory = action.payload.category;
+      state.issueId = action.payload.issueId;
+    },
     closeExtraServiceRequestDetailModal: state => {
       state.extraServiceRequestDetailModal = false;
     },
@@ -141,6 +148,9 @@ const modalSlice = createSlice({
     closeInvoiceDetailModal: state => {
       state.invoiceDetailModal = false;
     },
+    closeContactRequestDetailModal: state => {
+      state.contactRequestDetailModal = false;
+    },
   },
 });
 
@@ -160,6 +170,7 @@ export const {
   openShowLeaseModal,
   openInvoiceDetailModal,
   openExtraServiceRequestDetailModal,
+  openContactRequestDetailModal,
   closeExtraServiceRequestDetailModal,
   closeShowLeaseModal,
   closeLoginModal,
@@ -176,4 +187,5 @@ export const {
   closeReservationPolicyModal,
   closeShowAllImageModal,
   closeInvoiceDetailModal,
+  closeContactRequestDetailModal,
 } = modalSlice.actions;

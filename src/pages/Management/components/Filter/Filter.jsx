@@ -11,12 +11,14 @@ import {
   setExtraServicesStatus,
 } from '../../../../store/slices/extraServices.slice';
 import { Paragraph } from '../../../../components/Typography';
+import { setIssuePage, setIssueStatus } from '../../../../store/slices/issueSlice';
 
 const Filter = ({ type }) => {
   const reservationStatus = useSelector(state => state.reservation.status);
   const contractStatus = useSelector(state => state.contract.status);
   const invoiceStatus = useSelector(state => state.invoice.status);
   const serviceStatus = useSelector(state => state.extraServices.status);
+  const issueStatus = useSelector(state => state.issue.status);
   const name = useSelector(state => state.reservation.name);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -209,6 +211,41 @@ const Filter = ({ type }) => {
       key: 'CANCELED',
     },
   ];
+
+  const contactStatuses = [
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.all')}
+        </Paragraph>
+      ),
+      key: 'ALL',
+    },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.UNDER_REVIEW')}
+        </Paragraph>
+      ),
+      key: 'UNDER_REVIEW',
+    },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.REJECTED')}
+        </Paragraph>
+      ),
+      key: 'REJECTED',
+    },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.APPROVED')}
+        </Paragraph>
+      ),
+      key: 'APPROVED',
+    },
+  ];
   const onClick = e => {
     if (type === 'reservation') {
       dispatch(setStatus({ status: e.key }));
@@ -219,9 +256,12 @@ const Filter = ({ type }) => {
     } else if (type === 'service') {
       dispatch(setExtraServicesStatus({ status: e.key }));
       dispatch(setExtraServicesPage({ page: 1 }));
-    } else {
+    } else if (type === 'invoice') {
       dispatch(setInvoiceStatus({ status: e.key }));
       dispatch(setInvoicePage({ page: 1 }));
+    } else {
+      dispatch(setIssueStatus({ status: e.key }));
+      dispatch(setIssuePage({ page: 1 }));
     }
   };
   return (
@@ -235,7 +275,9 @@ const Filter = ({ type }) => {
             ? [contractStatus]
             : type === 'service'
             ? [serviceStatus]
-            : [invoiceStatus]
+            : type === 'invoice'
+            ? [invoiceStatus]
+            : [issueStatus]
         }
         mode="horizontal"
         items={
@@ -245,7 +287,9 @@ const Filter = ({ type }) => {
             ? contractStatuses
             : type === 'service'
             ? serviceStatuses
-            : invoiceStatuses
+            : type === 'invoice'
+            ? invoiceStatuses
+            : contactStatuses
         }
         className={styles.filterMenu}
       />
@@ -258,7 +302,9 @@ const Filter = ({ type }) => {
             ? [contractStatus]
             : type === 'service'
             ? [serviceStatus]
-            : [invoiceStatus]
+            : type === 'invoice'
+            ? [invoiceStatus]
+            : [issueStatus]
         }
         mode="inline"
         items={
@@ -268,7 +314,9 @@ const Filter = ({ type }) => {
             ? contractStatuses
             : type === 'service'
             ? serviceStatuses
-            : invoiceStatuses
+            : type === 'invoice'
+            ? invoiceStatuses
+            : contactStatuses
         }
         className={styles.filterMenu2}
       />

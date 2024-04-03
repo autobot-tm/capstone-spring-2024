@@ -1,0 +1,11 @@
+.contactRequestsContainer {
+  min-height: 50vh;
+  .contactRequests {
+    margin-top: 16px;
+  }
+  .paginationContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
