@@ -9,6 +9,7 @@ export const ENDPOINTS = {
     requestResetPassword: '/auth/users/reset-password/request',
     google: '/auth/tokens/google',
     presignedURL: '/auth/presigned-urls/post',
+    getPresignedURL: '/auth/presigned-urls/get',
   },
   houses: {
     base: '/houses',

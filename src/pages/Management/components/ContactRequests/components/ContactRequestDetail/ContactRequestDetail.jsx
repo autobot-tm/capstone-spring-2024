@@ -3,11 +3,12 @@ import { closeContactRequestDetailModal } from '../../../../../../store/slices/m
 import { useTranslation } from 'react-i18next';
 import CustomModal from '../../../../../../components/Modal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Table } from 'antd';
+import { Col, Image, Row, Table } from 'antd';
 import ContactRequestStatus from '../ContactRequestStatus/ContactRequestStatus';
 import { getIssueByIdService } from '../../../../../../services/apis/issues.service';
 import { setIssueLoading } from '../../../../../../store/slices/issueSlice';
-import { DownloadOutlined, LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
+import { presignedURLForViewingService } from '../../../../../../services/apis/auth.service';
 
 const ContactRequestDetail = () => {
   const { t } = useTranslation();
@@ -21,7 +22,7 @@ const ContactRequestDetail = () => {
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('');
   const [resolutioNote, setResolutionNote] = useState('');
-  const [files, setFiles] = useState([]);
+  const [images, setImages] = useState([]);
   useEffect(() => {
     if (issueId) {
       getIssueByIdService({ issueId }).then(response => {
@@ -29,21 +30,37 @@ const ContactRequestDetail = () => {
         setDescription(response.description);
         setStatus(response.status);
         setResolutionNote(response.resolution_note);
-        setFiles(response.attachment_urls);
-        dispatch(setIssueLoading({ loading: false }));
+        // Create an array to hold the promises
+        const promises = response.attachment_urls.map(url =>
+          presignedURLForViewingService({ url }),
+        );
+
+        // Resolve all promises concurrently
+        Promise.all(promises).then(responses => {
+          // Use functional update to update the images state
+          setImages([...responses]);
+        });
       });
     }
   }, [loading]);
 
-  const handleDownload = file => {
-    const fileUrl = file;
-    const link = document.createElement('a');
-    link.href = 'https://' + fileUrl;
+  useEffect(() => {
+    if (images) {
+      dispatch(setIssueLoading({ loading: false }));
+    }
+  }, [images]);
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  console.log(images);
+
+  // const handleDownload = file => {
+  //   const fileUrl = file;
+  //   const link = document.createElement('a');
+  //   link.href = 'https://' + fileUrl;
+
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // };
 
   const columns = [
     {
@@ -77,22 +94,19 @@ const ContactRequestDetail = () => {
     {
       key: '4',
       title: <b>{t('label.attachments')}</b>,
-      content:
-        files.length > 0
-          ? files.map((file, index) => (
-              <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <div>{file.slice(73)}</div>
-                <Button
-                  size="small"
-                  icon={<DownloadOutlined />}
-                  onClick={() => {
-                    handleDownload(file);
-                  }}>
-                  Download
-                </Button>
-              </div>
+      content: (
+        <Row gutter={[8, 8]}>
+          {images.length > 0 ? (
+            images.map((image, index) => (
+              <Col xs={24} sm={12} key={index}>
+                <Image src={image} />
+              </Col>
             ))
-          : '--',
+          ) : (
+            <Col>--</Col>
+          )}
+        </Row>
+      ),
     },
     {
       key: '5',

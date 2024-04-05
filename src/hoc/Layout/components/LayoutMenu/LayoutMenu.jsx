@@ -90,7 +90,7 @@ export const LayoutMenu = ({ isInline = false }) => {
     {
       key: 'SubMenu2',
       label: (
-        <div className="menuItem">
+        <div className="menuItem" style={{ width: '69px' }}>
           <Paragraph classNames="color-black" strong>
             {t('support').toUpperCase()}
           </Paragraph>
