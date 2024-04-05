@@ -12,7 +12,7 @@ import ContractStatus from '../ContractStatus.jsx/ContractStatus';
 import { CaretDownOutlined, DownloadOutlined, LoadingOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { getLeaseByIdService } from '../../services/apis/contracts.service';
 import { setContractLoading } from '../../store/slices/contractSlice';
-import { Button, Empty, Table, Tabs } from 'antd';
+import { Button, Col, Empty, Row, Table, Tabs } from 'antd';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { Caption, Paragraph } from '../Typography';
 import moment from 'moment';
@@ -303,24 +303,28 @@ const ContractDetail = () => {
       action={closeContractDetailModal}
       footer={
         status === 'ACTIVE' && (
-          <div className="btn-container">
-            <BaseButton
-              style={{ backgroundColor: '#ccc', width: 'auto' }}
-              onClick={() => {
-                dispatch(openReportIssuesModal({ categoryIssue: 'LIVING_ISSUE' }));
-                dispatch(closeContractDetailModal());
-              }}>
-              {t('report')}
-            </BaseButton>
-            <BaseButton
-              style={{ width: 'auto' }}
-              onClick={() => {
-                dispatch(openRequestCancelContractModal({ contractId: leaseId }));
-                dispatch(closeContractDetailModal());
-              }}>
-              {t('button.requestCancelContract')}
-            </BaseButton>
-          </div>
+          <Row gutter={[8, 8]}>
+            <Col sm={2}>
+              <BaseButton
+                style={{ backgroundColor: '#ccc', width: 'auto' }}
+                onClick={() => {
+                  dispatch(openReportIssuesModal({ categoryIssue: 'LIVING_ISSUE' }));
+                  dispatch(closeContractDetailModal());
+                }}>
+                {t('report')}
+              </BaseButton>
+            </Col>
+            <Col sm={22} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <BaseButton
+                style={{ width: 'auto' }}
+                onClick={() => {
+                  dispatch(openRequestCancelContractModal({ contractId: leaseId }));
+                  dispatch(closeContractDetailModal());
+                }}>
+                {t('button.requestCancelContract')}
+              </BaseButton>
+            </Col>
+          </Row>
         )
       }>
       {loading ? (

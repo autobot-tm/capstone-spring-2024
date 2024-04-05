@@ -1,5 +1,5 @@
 import './styles.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CustomModal from '../Modal/CustomModal';
 import { closeReportIssuesModal, openContractDetailModal, openInvoiceDetailModal } from '../../store/slices/modalSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,7 +24,7 @@ const ReportIssuesModal = () => {
   const { access_token } = useSelector(state => state.auth);
   const { reportIssuesModal, invoiceId, categoryIssue, contractId } = useSelector(state => state.modal);
   const [isReport, setIsReport] = useState([]);
-  const [attachmentUrls, setAttachmentUrls] = useState([]);
+  const fileUploadRef = useRef();
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, message) => {
     api[type]({
@@ -70,16 +70,13 @@ const ReportIssuesModal = () => {
     dispatch(closeReportIssuesModal());
   };
 
-  const handleAttachmentChange = urls => {
-    setAttachmentUrls(urls);
-  };
-
   const onFinish = async values => {
     if (!access_token) {
       return;
     }
     try {
       let formData = null;
+      const urls = await fileUploadRef.current?.upload();
       if (values && invoiceId && categoryIssue === 'INVOICE_ISSUE') {
         formData = {
           context: {
@@ -87,7 +84,7 @@ const ReportIssuesModal = () => {
           },
           category: categoryIssue,
           description: values.description,
-          attachment_urls: values.attachment_urls ? attachmentUrls : [],
+          attachment_urls: urls,
         };
       } else {
         formData = {
@@ -96,7 +93,7 @@ const ReportIssuesModal = () => {
           },
           category: categoryIssue,
           description: values.description,
-          attachment_urls: values.attachment_urls ? attachmentUrls : [],
+          attachment_urls: urls,
         };
       }
       await requestIssues(formData);
@@ -118,7 +115,11 @@ const ReportIssuesModal = () => {
       <CustomModal
         width={540}
         nameOfModal={reportIssuesModal}
-        title={t('modal.contact-us-about-rental-fee')}
+        title={
+          categoryIssue === 'LIVING_ISSUE'
+            ? t('modal.contact-us-about-living-issue')
+            : t('modal.contact-us-about-rental-fee')
+        }
         action={closeReportIssuesModal}
         footer={[]}>
         {isReport === null && <SpinLoading />}
@@ -146,7 +147,7 @@ const ReportIssuesModal = () => {
                   {access_token && (
                     <Form.Item name="attachment_urls">
                       <div className="file-upload-container">
-                        <FilesUpload acceptTypes="image/*" multiple={true} onChange={handleAttachmentChange} />
+                        <FilesUpload acceptTypes="image/*" multiple={true} ref={fileUploadRef} />
                       </div>
                     </Form.Item>
                   )}
