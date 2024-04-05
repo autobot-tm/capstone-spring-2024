@@ -45,15 +45,9 @@ const DetailHouse = () => {
   // const wishlist = useSelector(state => state.wishlist.houses);
   // const isClickedWishlist = useSelector(state => state.wishlist.clickedStatus[house_id] || false);
 
-  const { data: house } = useSWR(
-    `getHouseById/${house_id}`,
-    async () => await getHouseById({ house_id }),
-  );
+  const { data: house } = useSWR(`getHouseById/${house_id}`, async () => await getHouseById({ house_id }));
 
-  const { data: reviews } = useSWR(
-    ['getHouseReview', house_id],
-    async () => await getHouseReview({ house_id }),
-  );
+  const { data: reviews } = useSWR(['getHouseReview', house_id], async () => await getHouseReview({ house_id }));
 
   useEffect(() => {
     const fetchHouseAmenities = async () => {
@@ -152,9 +146,7 @@ const DetailHouse = () => {
             {t('detail-house.property-detail-title')}
           </SubHeading>
           <Col className="main-property-features-detail-card" xs={24}>
-            {houseAmenities && houseAmenities.length > 0 && (
-              <HouseAmenities amenities={houseAmenities} />
-            )}
+            {houseAmenities && houseAmenities.length > 0 && <HouseAmenities amenities={houseAmenities} />}
           </Col>
         </Row>
 
@@ -163,9 +155,7 @@ const DetailHouse = () => {
             {t('detail-house.property-utility-title')}
           </SubHeading>
           <Col className="main-property-features-utility-card" xs={24}>
-            {houseUtilities && houseUtilities.length > 0 && (
-              <HouseUtility utilities={houseUtilities} />
-            )}
+            {houseUtilities && houseUtilities.length > 0 && <HouseUtility utilities={houseUtilities} />}
           </Col>
         </Row>
       </>
@@ -326,10 +316,7 @@ const DetailHouse = () => {
             </Col>
             <Col xs={24}>
               {house.status === 'AVAILABLE' ? (
-                <BaseButton
-                  htmlType="submit"
-                  type="primary"
-                  style={{ width: '100%', justifyContent: 'center' }}>
+                <BaseButton htmlType="submit" type="primary" style={{ width: '100%', justifyContent: 'center' }}>
                   {t('detail-house.reserve-now-btn')}
                 </BaseButton>
               ) : (
@@ -414,12 +401,7 @@ const DetailHouse = () => {
                       <Button
                         type="link"
                         size="large"
-                        icon={
-                          <HeartTwoTone
-                            twoToneColor={['#000000', '#ffffff']}
-                            style={{ fontSize: '25px' }}
-                          />
-                        }
+                        icon={<HeartTwoTone twoToneColor={['#000000', '#ffffff']} style={{ fontSize: '25px' }} />}
                         // style={{ backgroundColor: isClickedWishlist ? '#f8a11e' : 'inherit' }}
                         onClick={handleAddWishlist}></Button>
                     </Tooltip>

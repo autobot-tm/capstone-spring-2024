@@ -1,10 +1,7 @@
 import './styles.scss';
 import React, { useState } from 'react';
 import CustomModal from '../Modal/CustomModal';
-import {
-  closeChooseMethodPaymentModal,
-  openInvoiceDetailModal,
-} from '../../store/slices/modalSlice';
+import { closeChooseMethodPaymentModal, openInvoiceDetailModal } from '../../store/slices/modalSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { payInvoiceById } from '../../services/apis/invoices.service';
 import { PAYMENT_METHOD } from '../../constants/payment.constant';

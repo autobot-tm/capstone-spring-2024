@@ -18,17 +18,10 @@ const ResultSuccessfully = ({ t, leadingToHomepage, leadingToOrderSuccessfulRese
       extra={[
         <>
           <div className="flex-btn">
-            <BaseButton
-              style={{ width: 'auto' }}
-              type="primary"
-              key="console"
-              onClick={leadingToHomepage}>
+            <BaseButton style={{ width: 'auto' }} type="primary" key="console" onClick={leadingToHomepage}>
               {t('PAYMENT.back-to-home-btn')}
             </BaseButton>
-            <BaseButton
-              style={{ width: 'auto' }}
-              key="buy"
-              onClick={leadingToOrderSuccessfulReservation}>
+            <BaseButton style={{ width: 'auto' }} key="buy" onClick={leadingToOrderSuccessfulReservation}>
               {t('PAYMENT.view-your-reservation-btn')}
             </BaseButton>
           </div>

@@ -23,8 +23,8 @@ const MyWishlist = () => {
             My Wishlist
           </SubHeading>
           <Paragraph>
-            This page contains all the items you have added to your personal wishlist. Add items to
-            your wishlist by click the &quot;heart&quot; icon while logged in to your account.
+            This page contains all the items you have added to your personal wishlist. Add items to your wishlist by
+            click the &quot;heart&quot; icon while logged in to your account.
           </Paragraph>
         </Col>
       </Row>

@@ -9,17 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setName, setPage, setStatus } from '../../store/slices/reservationSlice';
 import { useTranslation } from 'react-i18next';
 import { setContractPage, setContractStatus } from '../../store/slices/contractSlice';
-import {
-  CarryOutOutlined,
-  FileTextOutlined,
-  PayCircleOutlined,
-  ToolOutlined,
-} from '@ant-design/icons';
+import { CarryOutOutlined, FileTextOutlined, PayCircleOutlined, ToolOutlined } from '@ant-design/icons';
 import { setInvoicePage, setInvoiceStatus } from '../../store/slices/invoiceSlice';
-import {
-  setExtraServicesPage,
-  setExtraServicesStatus,
-} from '../../store/slices/extraServices.slice';
+import { setExtraServicesPage, setExtraServicesStatus } from '../../store/slices/extraServices.slice';
 import ExtraServices from './components/ExtraServices/ExtraServices';
 import { Paragraph } from '../../components/Typography';
 

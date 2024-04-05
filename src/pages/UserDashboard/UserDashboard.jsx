@@ -134,11 +134,7 @@ const UserDashboard = () => {
                 />
               </Col>
               <Col xs={24} style={{ display: 'flex', justifyContent: 'center' }}>
-                <Tabs
-                  activeKey={activeTabKey}
-                  onChange={handleTabChange}
-                  className="tabs-bar"
-                  centered>
+                <Tabs activeKey={activeTabKey} onChange={handleTabChange} className="tabs-bar" centered>
                   {tabPanes.map(pane => (
                     <TabPane
                       tab={
@@ -158,21 +154,11 @@ const UserDashboard = () => {
               <Col xs={24}>
                 {activeTabKey === '1' && <MyProfile user={user} t={t} avatarDefault={AVATAR} />}
                 {activeTabKey === '2' && (
-                  <EditProfile
-                    user={user}
-                    t={t}
-                    avatarDefault={AVATAR}
-                    onUpdate={handleProfileUpdate}
-                  />
+                  <EditProfile user={user} t={t} avatarDefault={AVATAR} onUpdate={handleProfileUpdate} />
                 )}
                 {activeTabKey === '3' && <MyWishlist />}
                 {activeTabKey === '4' && (
-                  <Modal
-                    title="Confirm Logout"
-                    open={showModal}
-                    onOk={handleOk}
-                    onCancel={handleCancel}
-                    centered>
+                  <Modal title="Confirm Logout" open={showModal} onOk={handleOk} onCancel={handleCancel} centered>
                     <p>Are you sure you want to log ousst?</p>
                   </Modal>
                 )}

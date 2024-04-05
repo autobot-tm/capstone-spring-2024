@@ -2,11 +2,7 @@ import { Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  closeRegisterModal,
-  openAuthenticationCodeModal,
-  openLoginModal,
-} from '../../store/slices/modalSlice';
+import { closeRegisterModal, openAuthenticationCodeModal, openLoginModal } from '../../store/slices/modalSlice';
 import styles from './Register.module.scss';
 import CustomModal from '../Modal/CustomModal';
 import { t } from 'i18next';
@@ -114,11 +110,7 @@ const Register = () => {
               },
             }),
           ]}>
-          <Input.Password
-            size="large"
-            placeholder={t('placeholder.repeatpassword')}
-            disabled={loading}
-          />
+          <Input.Password size="large" placeholder={t('placeholder.repeatpassword')} disabled={loading} />
         </Form.Item>
         <Form.Item>
           <Paragraph classNames={styles.message}>{t('registration.disclaimer')}</Paragraph>

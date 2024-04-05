@@ -5,17 +5,10 @@ export const getExtraServices = () => {
   return apiCaller.get(ENDPOINTS.services.base);
 };
 
-export const getExtraServiceRequests = ({
-  renter_email = '',
-  limit = 20,
-  offset = 0,
-  status = 'ALL',
-}) => {
+export const getExtraServiceRequests = ({ renter_email = '', limit = 20, offset = 0, status = 'ALL' }) => {
   return apiCaller.get(
     ENDPOINTS.services.request +
-      `?renter_email=${renter_email}&limit=${limit}&offset=${offset}${
-        status !== 'ALL' ? '&status=' + status : ''
-      }`,
+      `?renter_email=${renter_email}&limit=${limit}&offset=${offset}${status !== 'ALL' ? '&status=' + status : ''}`,
   );
 };
 

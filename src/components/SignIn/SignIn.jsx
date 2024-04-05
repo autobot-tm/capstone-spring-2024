@@ -3,11 +3,7 @@ import { Alert, Form, Input } from 'antd';
 import styles from './SignIn.module.scss';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  closeLoginModal,
-  openRegisterModal,
-  openRequestResetPasswordModal,
-} from '../../store/slices/modalSlice';
+import { closeLoginModal, openRegisterModal, openRequestResetPasswordModal } from '../../store/slices/modalSlice';
 import CustomModal from '../Modal/CustomModal';
 import { useAuthSlice } from '../../store/slices';
 import GoogleSignInButton from '../GoogleSignInButton/GoogleSignInButton';
@@ -31,10 +27,7 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (
-      actionSucceeded === AUTH_ACTIONS.SIGN_IN ||
-      actionSucceeded === AUTH_ACTIONS.SIGN_IN_WITH_GOOGLE
-    ) {
+    if (actionSucceeded === AUTH_ACTIONS.SIGN_IN || actionSucceeded === AUTH_ACTIONS.SIGN_IN_WITH_GOOGLE) {
       dispatch(closeLoginModal());
       dispatch(authActions.clearActionSucceeded());
       dispatch(closeLoginModal());
@@ -64,12 +57,7 @@ const SignIn = () => {
 
   return (
     <div>
-      <CustomModal
-        width={440}
-        nameOfModal={loginModal}
-        title={t('modal.login')}
-        action={closeLoginModal}
-        footer={null}>
+      <CustomModal width={440} nameOfModal={loginModal} title={t('modal.login')} action={closeLoginModal} footer={null}>
         <Form onFinish={handleFinish} form={form}>
           <Form.Item
             name={'email'}
@@ -85,11 +73,7 @@ const SignIn = () => {
               { required: true, message: t('validationRules.required.password') },
               { min: 8, message: t('validationRules.min.password') },
             ]}>
-            <Input.Password
-              placeholder={t('placeholder.password')}
-              size="large"
-              disabled={loading}
-            />
+            <Input.Password placeholder={t('placeholder.password')} size="large" disabled={loading} />
           </Form.Item>
 
           {flag && (

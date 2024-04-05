@@ -18,11 +18,7 @@ const HouseUtility = ({ utilities }) => {
           {firstColumn.map((utility, index) => (
             <div key={index} className="property-detail-item">
               <span className="property-detail-group-1">
-                <img
-                  src={imagesUtility[utility.name.replace(/\s/g, '')]}
-                  alt={utility.name}
-                  className="icon"
-                />
+                <img src={imagesUtility[utility.name.replace(/\s/g, '')]} alt={utility.name} className="icon" />
                 <Paragraph>{t(`detail-house.${utility.name.replace(/\s/g, '')}`)} </Paragraph>
               </span>
               <Paragraph className="property-detail-group-2" classNames="color-black" strong>
@@ -35,11 +31,7 @@ const HouseUtility = ({ utilities }) => {
           {secondColumn.map((utility, index) => (
             <div key={index} className="property-detail-item">
               <span className="property-detail-group-1">
-                <img
-                  src={imagesUtility[utility.name.replace(/\s/g, '')]}
-                  alt={utility.name}
-                  className="icon"
-                />
+                <img src={imagesUtility[utility.name.replace(/\s/g, '')]} alt={utility.name} className="icon" />
                 <Paragraph>{t(`detail-house.${utility.name.replace(/\s/g, '')}`)} </Paragraph>
               </span>
               <Paragraph className="property-detail-group-2" classNames="color-black" strong>

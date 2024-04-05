@@ -3,13 +3,7 @@ import React from 'react';
 import { Result } from 'antd';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 import { Caption, SubHeading } from '../../../../components/Typography';
-const ResultFailed = ({
-  t,
-  leadingToHomepage,
-  leadingToCurrentHouses,
-  typeOfPayment,
-  leadingToCurrentManager,
-}) => (
+const ResultFailed = ({ t, leadingToHomepage, leadingToCurrentHouses, typeOfPayment, leadingToCurrentManager }) => (
   <div className="center-container">
     <Result
       status="error"
@@ -22,11 +16,7 @@ const ResultFailed = ({
       extra={[
         <>
           <div className="flex-btn">
-            <BaseButton
-              style={{ width: 'auto' }}
-              type="primary"
-              key="console"
-              onClick={leadingToHomepage}>
+            <BaseButton style={{ width: 'auto' }} type="primary" key="console" onClick={leadingToHomepage}>
               {t('PAYMENT.back-to-home-btn')}
             </BaseButton>
             {typeOfPayment === 'invoice' ? (

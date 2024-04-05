@@ -58,12 +58,7 @@ const FeedBackCustomer = ({ comment }) => {
                 <SubHeading style={{ marginRight: 14 }} strong>
                   {item.reviewer?.first_name}
                 </SubHeading>
-                <Rate
-                  style={{ color: '#f8a11e', fontSize: 14 }}
-                  disabled
-                  allowHalf
-                  defaultValue={item.rating}
-                />
+                <Rate style={{ color: '#f8a11e', fontSize: 14 }} disabled allowHalf defaultValue={item.rating} />
               </Row>
               <Row className="comment">{renderCommentContent(item.comment, index)}</Row>
             </Col>

@@ -131,11 +131,7 @@ const Houses = () => {
 
       <FloatButton
         icon={<div>{showMap === false ? <img src={MapIcon} /> : <img src={listIcon} />}</div>}
-        tooltip={
-          <Paragraph strong>
-            {showMap === false ? t('button.showMap') : t('button.showList')}
-          </Paragraph>
-        }
+        tooltip={<Paragraph strong>{showMap === false ? t('button.showMap') : t('button.showList')}</Paragraph>}
         shape="circle"
         type="primary"
         style={{

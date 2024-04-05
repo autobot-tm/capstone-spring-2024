@@ -1,16 +1,4 @@
-import {
-  Button,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Popover,
-  Row,
-  Select,
-  Slider,
-  Space,
-} from 'antd';
+import { Button, Checkbox, Col, Form, Input, InputNumber, Popover, Row, Select, Slider, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import styles from './Filter.module.scss';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
@@ -106,17 +94,7 @@ const Filter = () => {
   };
   const handleFinish = values => {
     setLoading(true);
-    const {
-      name,
-      categories,
-      provinces,
-      districts,
-      wards,
-      minArea,
-      maxArea,
-      amenities,
-      utilities,
-    } = values;
+    const { name, categories, provinces, districts, wards, minArea, maxArea, amenities, utilities } = values;
     const minPrice = sliderValue[0];
     const maxPrice = sliderValue[1];
     dispatch(
@@ -220,11 +198,7 @@ const Filter = () => {
                   message: t('validationRules.min'),
                 },
               ]}>
-              <InputNumber
-                placeholder={t('placeholder.minimumSize')}
-                style={{ width: '100%' }}
-                disabled={loading}
-              />
+              <InputNumber placeholder={t('placeholder.minimumSize')} style={{ width: '100%' }} disabled={loading} />
             </Form.Item>
           </Col>
           <Col lg={12} xs={12}>
@@ -239,11 +213,7 @@ const Filter = () => {
                   message: t('validationRules.min'),
                 },
               ]}>
-              <InputNumber
-                placeholder={t('placeholder.maximumSize')}
-                style={{ width: '100%' }}
-                disabled={loading}
-              />
+              <InputNumber placeholder={t('placeholder.maximumSize')} style={{ width: '100%' }} disabled={loading} />
             </Form.Item>
           </Col>
         </Row>

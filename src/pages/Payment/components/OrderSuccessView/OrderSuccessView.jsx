@@ -99,9 +99,7 @@ const OrderSuccessView = () => {
                 </Col>
                 <Col xs={24}>
                   <Paragraph> {t('RESERVATION.total-fee')}: </Paragraph>
-                  <Paragraph strong>
-                    {formatCustomCurrency(dataOrderSuccessfully?.amount)}{' '}
-                  </Paragraph>
+                  <Paragraph strong>{formatCustomCurrency(dataOrderSuccessfully?.amount)} </Paragraph>
                 </Col>
                 <Col xs={24}>
                   <Paragraph> {t('label.dueDate')}: </Paragraph>
