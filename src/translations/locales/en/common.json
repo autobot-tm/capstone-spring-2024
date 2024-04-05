@@ -249,7 +249,8 @@
   "type.RECURRING": "RECURRING",
   "type.ONE_TIME": "ONE TIME",
   "category.UTILITY": "UTILITY",
-
+  "category.invoiceIssue": "Invoice issue",
+  "category.livingIssue": "Living issue",
   "district.District 1": " District 1",
   "district.District 12": " District 12",
   "district.Go Vap District": " Go Vap District",
