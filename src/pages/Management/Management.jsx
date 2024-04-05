@@ -9,24 +9,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setName, setPage, setStatus } from '../../store/slices/reservationSlice';
 import { useTranslation } from 'react-i18next';
 import { setContractPage, setContractStatus } from '../../store/slices/contractSlice';
-import { CarryOutOutlined, FileTextOutlined, PayCircleOutlined, ToolOutlined } from '@ant-design/icons';
+import {
+  CarryOutOutlined,
+  FileTextOutlined,
+  IssuesCloseOutlined,
+  PayCircleOutlined,
+  ToolOutlined,
+} from '@ant-design/icons';
 import { setInvoicePage, setInvoiceStatus } from '../../store/slices/invoiceSlice';
 import { setExtraServicesPage, setExtraServicesStatus } from '../../store/slices/extraServices.slice';
 import ExtraServices from './components/ExtraServices/ExtraServices';
 import { Paragraph } from '../../components/Typography';
+import ContactRequests from './components/ContactRequests/ContactRequests';
+import { setIssueCategory, setIssuePage, setIssueStatus } from '../../store/slices/issueSlice';
 
 const Management = () => {
   const dispatch = useDispatch();
   const page = useSelector(state => state.reservation.page);
   const contractPage = useSelector(state => state.contract.page);
   const invoicePage = useSelector(state => state.invoice.page);
+  const issuePage = useSelector(state => state.issue.page);
 
   const [menuItem, setMenuItem] = useState('contract');
   const { t } = useTranslation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [page, contractPage, invoicePage]);
+  }, [page, contractPage, invoicePage, issuePage]);
 
   const items = [
     {
@@ -65,6 +74,15 @@ const Management = () => {
       ),
       key: 'service',
     },
+    {
+      icon: <IssuesCloseOutlined />,
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('reportedIssues')}
+        </Paragraph>
+      ),
+      key: 'contactRequests',
+    },
   ];
   const onClick = e => {
     setMenuItem(e.key);
@@ -81,6 +99,10 @@ const Management = () => {
 
     dispatch(setInvoicePage({ page: 1 }));
     dispatch(setInvoiceStatus({ status: 'ALL' }));
+
+    dispatch(setIssuePage({ page: 1 }));
+    dispatch(setIssueStatus({ status: 'ALL' }));
+    dispatch(setIssueCategory({ category: 'ALL' }));
   };
 
   return (
@@ -111,8 +133,10 @@ const Management = () => {
                 <Fee />
               ) : menuItem === 'reservation' ? (
                 <Reservation />
-              ) : (
+              ) : menuItem === 'service' ? (
                 <ExtraServices />
+              ) : (
+                <ContactRequests />
               )}
             </Col>
           </Row>

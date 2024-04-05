@@ -58,4 +58,7 @@ export const ENDPOINTS = {
     cancel: id => `/contact-requests/${id}/resolve`,
     issues: '/issues',
   },
+  issues: {
+    base: '/issues',
+  },
 };
