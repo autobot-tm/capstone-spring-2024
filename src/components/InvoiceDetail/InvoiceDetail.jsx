@@ -5,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 import {
   closeInvoiceDetailModal,
   openChooseMethodPaymentModal,
-  openContactUsAboutFeeModal,
+  openReportIssuesModal,
 } from '../../store/slices/modalSlice';
 import { setInvoiceLoading } from '../../store/slices/invoiceSlice';
 import { getInvoiceByIdService } from '../../services/apis/invoices.service';
-import { Col, Image, Popconfirm, Row, Table } from 'antd';
+import { Col, Image, Row, Table } from 'antd';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { Caption, Headline, Paragraph } from '../Typography';
 import { LoadingOutlined, TagsFilled } from '@ant-design/icons';
@@ -37,7 +37,7 @@ const InvoiceDetail = () => {
         dispatch(setInvoiceLoading({ loading: false }));
       });
     }
-  }, [loading]);
+  }, [loading, invoiceId]);
 
   const columns = [
     {
@@ -70,11 +70,11 @@ const InvoiceDetail = () => {
     },
   ];
 
-  const confirm = () => {
-    dispatch(openContactUsAboutFeeModal());
+  const handleReportIssues = () => {
+    dispatch(openReportIssuesModal({ categoryIssue: 'INVOICE_ISSUE' }));
     dispatch(closeInvoiceDetailModal());
   };
-  const cancel = () => {
+  const handlePayFee = () => {
     dispatch(openChooseMethodPaymentModal());
     dispatch(closeInvoiceDetailModal());
   };
@@ -87,24 +87,29 @@ const InvoiceDetail = () => {
       action={closeInvoiceDetailModal}
       footer={[
         statusFee === 'PENDING' && (
-          <Popconfirm
-            placement="top"
-            onConfirm={confirm}
-            onCancel={cancel}
-            title={t('popconfirm.confirmation')}
-            description={t('popconfirm.ques-about-fee')}
-            okText={t('yes')}
-            cancelText={t('no')}>
-            <BaseButton
-              type="primary"
-              key=""
-              block
-              size="large"
-              loading={loading ? true : false}
-              disabled={loading ? true : false}>
-              {!loading && t('button.pay') + ' ' + formatCustomCurrency(amount)}
-            </BaseButton>
-          </Popconfirm>
+          <Row key="" gutter={[8, 8]}>
+            <Col xs={24} sm={19}>
+              <BaseButton
+                type="primary"
+                block
+                size="large"
+                onClick={handlePayFee}
+                loading={loading ? true : false}
+                disabled={loading ? true : false}>
+                {!loading && t('button.pay') + ' ' + formatCustomCurrency(amount)}
+              </BaseButton>
+            </Col>
+            <Col xs={24} sm={5}>
+              <BaseButton
+                type="secondary"
+                block
+                size="large"
+                onClick={handleReportIssues}
+                style={{ backgroundColor: '#ccc' }}>
+                {t('report')}
+              </BaseButton>
+            </Col>
+          </Row>
         ),
       ]}>
       {loading ? (
@@ -175,12 +180,7 @@ const InvoiceDetail = () => {
             </Col>
           </Row>
           <Row className="content-invoice">
-            <Table
-              pagination={false}
-              columns={columns}
-              dataSource={updatedDataSource}
-              style={{ width: '100%' }}
-            />
+            <Table pagination={false} columns={columns} dataSource={updatedDataSource} style={{ width: '100%' }} />
           </Row>
 
           <Row>

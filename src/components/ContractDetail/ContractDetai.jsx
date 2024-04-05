@@ -4,17 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   closeContractDetailModal,
+  openReportIssuesModal,
   openRequestCancelContractModal,
 } from '../../store/slices/modalSlice';
 import styles from './ContractDetail.module.scss';
 import ContractStatus from '../ContractStatus.jsx/ContractStatus';
-import {
-  CaretDownOutlined,
-  DownloadOutlined,
-  LoadingOutlined,
-  MinusOutlined,
-  PlusOutlined,
-} from '@ant-design/icons';
+import { CaretDownOutlined, DownloadOutlined, LoadingOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { getLeaseByIdService } from '../../services/apis/contracts.service';
 import { setContractLoading } from '../../store/slices/contractSlice';
 import { Button, Empty, Table, Tabs } from 'antd';
@@ -22,6 +17,7 @@ import { formatCustomCurrency } from '../../utils/number-seperator';
 import { Caption, Paragraph } from '../Typography';
 import moment from 'moment';
 import CancellationRequestStatus from '../CancellationRequestStatus/CancellationRequestStatus';
+import BaseButton from '../Buttons/BaseButtons/BaseButton';
 
 const ContractDetail = () => {
   const { t } = useTranslation();
@@ -249,9 +245,7 @@ const ContractDetail = () => {
                       onClick={() => {
                         setIsShowRequet(request.id);
                       }}>
-                      <Caption strong>
-                        {moment(request.created_at).format('H:mm -  DD/MM/YYYY')}
-                      </Caption>
+                      <Caption strong>{moment(request.created_at).format('H:mm -  DD/MM/YYYY')}</Caption>
                       <Caption size={140} elipsis strong>
                         {'(' + request.title + ')'}
                       </Caption>
@@ -308,26 +302,33 @@ const ContractDetail = () => {
       title={t('modal.contract')}
       action={closeContractDetailModal}
       footer={
-        status === 'ACTIVE' && [
-          <Button
-            key=""
-            onClick={() => {
-              dispatch(openRequestCancelContractModal({ contractId: leaseId }));
-              dispatch(closeContractDetailModal());
-            }}>
-            {t('button.requestCancelContract')}
-          </Button>,
-        ]
+        status === 'ACTIVE' && (
+          <div className="btn-container">
+            <BaseButton
+              style={{ backgroundColor: '#ccc', width: 'auto' }}
+              onClick={() => {
+                dispatch(openReportIssuesModal({ categoryIssue: 'LIVING_ISSUE' }));
+                dispatch(closeContractDetailModal());
+              }}>
+              {t('report')}
+            </BaseButton>
+            <BaseButton
+              style={{ width: 'auto' }}
+              onClick={() => {
+                dispatch(openRequestCancelContractModal({ contractId: leaseId }));
+                dispatch(closeContractDetailModal());
+              }}>
+              {t('button.requestCancelContract')}
+            </BaseButton>
+          </div>
+        )
       }>
       {loading ? (
         <div className={styles.loadingContainer}>
           <LoadingOutlined size="large" />
         </div>
       ) : (
-        <Tabs
-          defaultActiveKey={actionType === 'LEASE_CANCELATION_REQUEST' ? '2' : '1'}
-          items={items}
-        />
+        <Tabs defaultActiveKey={actionType === 'LEASE_CANCELATION_REQUEST' ? '2' : '1'} items={items} />
       )}
     </CustomModal>
   );

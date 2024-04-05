@@ -6,10 +6,7 @@ import { BellOutlined } from '@ant-design/icons';
 import { Caption, Paragraph, SubHeading } from '../Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { markAsRead, markAllAsRead, setNotifications } from '../../store/slices/notification.slice';
-import {
-  getNotiByIdService,
-  getNotiUserCurrentService,
-} from '../../services/apis/notification.service';
+import { getNotiByIdService, getNotiUserCurrentService } from '../../services/apis/notification.service';
 import { openContractDetailModal } from '../../store/slices/modalSlice';
 import { updateNotiHasReadService } from '../../services/apis/notification.service';
 import { useNavigate } from 'react-router-dom';
@@ -68,17 +65,20 @@ function formatTimeDifference(notificationTime, t) {
 const UserNotification = ({ t }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { access_token } = useSelector(state => state.auth);
   const unreadCount = useSelector(state => state.notification.unreadCount);
   const notificationState = useSelector(state => state.notification.notifications);
   const [visible, setVisible] = useState(false);
 
   const { data: notifications } = useSWR('/api/notifications', async () => {
     try {
-      const res = await getNotiUserCurrentService();
-      return res.notifications;
+      if (access_token) {
+        const res = await getNotiUserCurrentService();
+        return res.notifications;
+      }
     } catch (error) {
-      console.error('Error fetching metadata:', error);
-      throw new Error('Failed to fetch metadata');
+      console.error('Error fetching notification:', error);
+      throw new Error('Failed to fetch notification');
     }
   });
 
@@ -103,7 +103,6 @@ const UserNotification = ({ t }) => {
         const contextOfNoti = noti.context;
         setVisible(false);
         dispatch(markAsRead(id));
-        await updateNotiHasReadService(id);
         await updateNotiHasReadService(id);
 
         if (ACTION_TYPE === 'LEASE_CANCELATION_REQUEST') {

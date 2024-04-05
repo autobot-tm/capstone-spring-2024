@@ -5,12 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './styles.scss';
 import { TranslationSelector } from '../TranslationSelector';
 import { useTranslation } from 'react-i18next';
-import {
-  CreditCardOutlined,
-  LogoutOutlined,
-  SolutionOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { CreditCardOutlined, LogoutOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConfirmLogoutModal, openLoginModal } from '../../../../store/slices/modalSlice';
 import { Paragraph } from '../../../../components/Typography';
@@ -155,12 +150,7 @@ export const LayoutMenu = ({ isInline = false }) => {
           height: '100%',
         }}>
         {access_token ? (
-          <Menu
-            onClick={onItemClick}
-            mode={isInline ? 'inline' : 'horizontal'}
-            items={items}
-            style={{ margin: 0 }}
-          />
+          <Menu onClick={onItemClick} mode={isInline ? 'inline' : 'horizontal'} items={items} style={{ margin: 0 }} />
         ) : (
           <Button
             type="text"

@@ -26,8 +26,9 @@ import ShowAllImage from './components/ShowAllImage/ShowAllImage';
 import ShowLeaseModal from './pages/ExtraServices/components/ShowLeaseModal/ShowLeaseModal';
 import InvoiceDetail from './components/InvoiceDetail/InvoiceDetail';
 import ExtraServiceDetailModal from './components/ExtraServiceDetailModal/ExtraServiceDetailModal';
-import ContactUsAboutFeeModal from './components/ContactUsAboutFeeModal/ContactUsAboutFeeModal';
+
 import ChoosePaymentMethodModal from './components/ChoosePaymentMethod/ChoosePaymentMethodModal';
+import ReportIssuesModal from './components/ReportIssues/ReportIssuesModal';
 
 initTranslations();
 configureApiCaller(store);
@@ -71,7 +72,7 @@ root.render(
           <ShowLeaseModal />
           <InvoiceDetail />
           <ExtraServiceDetailModal />
-          <ContactUsAboutFeeModal />
+          <ReportIssuesModal />
           <ChoosePaymentMethodModal />
         </BrowserRouter>
       </ConfigProvider>
