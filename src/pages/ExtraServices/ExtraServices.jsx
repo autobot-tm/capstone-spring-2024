@@ -5,10 +5,7 @@ import { Caption, Headline, Paragraph } from '../../components/Typography';
 import { useTranslation } from 'react-i18next';
 import { HomeOutlined } from '@ant-design/icons';
 import { Layout } from '../../hoc/Layout/Layout';
-import {
-  getExtraServiceRequests,
-  getExtraServices,
-} from '../../services/apis/extra-services.service';
+import { getExtraServiceRequests, getExtraServices } from '../../services/apis/extra-services.service';
 import useSWR from 'swr';
 import { useDispatch, useSelector } from 'react-redux';
 import { openLoginModal, openShowLeaseModal } from '../../store/slices/modalSlice';
@@ -133,30 +130,14 @@ const ExtraServices = () => {
             <Paragraph classNames="right-text"> {t('EXTRA-SERVICES.des-electricity-be')}</Paragraph>
           </Col>
           <Col xs={24} sm={14} md={12} xl={8}>
-            <CardRequest
-              color="#f8a11e"
-              type="electricity"
-              onClickRequest={handleCardClick}
-              t={t}
-            />
+            <CardRequest color="#f8a11e" type="electricity" onClickRequest={handleCardClick} t={t} />
           </Col>
         </Row>
         <Row justify="center" gutter={[40, 12]}>
-          <Col
-            xs={24}
-            sm={14}
-            md={12}
-            xl={8}
-            style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Col xs={24} sm={14} md={12} xl={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <CardRequest color="#28aae1" type="water" onClickRequest={handleCardClick} t={t} />
           </Col>
-          <Col
-            xs={24}
-            sm={10}
-            md={12}
-            xl={16}
-            className="des-services"
-            style={{ justifyContent: 'flex-start' }}>
+          <Col xs={24} sm={10} md={12} xl={16} className="des-services" style={{ justifyContent: 'flex-start' }}>
             <Paragraph> {t('EXTRA-SERVICES.des-water-be')}</Paragraph>
           </Col>
         </Row>

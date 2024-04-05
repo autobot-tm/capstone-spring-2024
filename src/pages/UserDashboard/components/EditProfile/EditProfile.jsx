@@ -4,12 +4,12 @@ import React, { useState } from 'react';
 import { Paragraph, SubHeading } from '../../../../components/Typography';
 import { InfoCircleOutlined, UserOutlined } from '@ant-design/icons';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
-import UploadFile from '../../../../components/UploadFile/UploadFile';
 import { updateUserCurrentService } from '../../../../services/apis/users.service';
 import { PASSWORD_REGEX, PHONE_NUMBER } from '../../../../constants/auth.constant';
 import { ERROR_TRANS_KEYS } from '../../../../constants/error.constant';
 import { useDispatch } from 'react-redux';
 import { useUserSlice } from '../../../../store/slices/user.slice';
+import UploadAvatar from '../../../../components/UploadFile/UploadAvatar';
 
 const { Option } = Select;
 const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
@@ -30,11 +30,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
   };
 
   const handleInputChange = (fieldName, value) => {
-    if (
-      fieldName === 'current_password' ||
-      fieldName === 'new_password' ||
-      fieldName === 'repeat_password'
-    ) {
+    if (fieldName === 'current_password' || fieldName === 'new_password' || fieldName === 'repeat_password') {
       if (!value.trim()) {
         value = null;
       }
@@ -129,29 +125,16 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                   {t('USER-DASHBOARD.profile-img')}
                 </Paragraph>
               }>
-              <Avatar
-                src={user?.avatar_url ? formUser?.avatar_url : avatarDefault}
-                shape="square"
-                size={100}
-              />
+              <Avatar src={user?.avatar_url ? formUser?.avatar_url : avatarDefault} shape="square" size={100} />
             </Form.Item>
             <Form.Item>
-              <UploadFile
+              <UploadAvatar
                 acceptTypes="image/*"
                 multiple={false}
                 onChange={value => debouncedInputChange('avatar_url', value)}
               />
             </Form.Item>
           </Col>
-
-          {/* <Col xs={24} sm={8} md={12} style={{ display: 'flex', alignItems: 'center' }}>
-            <BaseButton
-              size="medium"
-              style={{ width: 'fit-content' }}
-              onClick={() => setShowPasswordBtn(!showPasswordBtn)}>
-              <Paragraph classNames="color-black">{t('USER-DASHBOARD.change-password')}</Paragraph>
-            </BaseButton>
-          </Col> */}
           <Col xs={24} md={12}>
             <Form.Item
               label={
@@ -183,14 +166,12 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
 
           {user?.auth_method === 'NORMAL' && (
             <>
-              <Col xs={24} style={{ display: 'flex', alignItems: 'center' }}>
+              <Col xs={24} style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
                 <BaseButton
                   size="medium"
                   style={{ width: 'fit-content' }}
                   onClick={() => setShowPasswordBtn(!showPasswordBtn)}>
-                  <Paragraph classNames="color-black">
-                    {t('USER-DASHBOARD.change-password')}
-                  </Paragraph>
+                  <Paragraph classNames="color-black">{t('USER-DASHBOARD.change-password')}</Paragraph>
                 </BaseButton>
               </Col>
             </>

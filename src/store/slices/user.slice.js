@@ -10,70 +10,58 @@ const createInitialState = () => {
 };
 export const initialState = createInitialState();
 
-export const getUserProfile = createAsyncThunk(
-  'user/getUserProfile',
-  async (_, { rejectWithValue, getState }) => {
-    try {
-      const { auth } = getState();
-      const { id_token } = auth;
-      const decodedToken = jwtDecode(id_token);
-      const { id, sub } = decodedToken;
-      const response = await getUserByIdService(id ?? sub);
-      return {
-        ...response,
-        actionSucceeded: 'getUserProfile',
-      };
-    } catch (error) {
-      console.warn('🚀 ~ file: user.slice. getUserProfile ~ error:', error);
-      return rejectWithValue(error);
-    }
-  },
-);
-export const updateUserProfile = createAsyncThunk(
-  'user/updateUserProfile',
-  async (input, { rejectWithValue }) => {
-    try {
-      const response = await updateUserCurrentService(input);
-      return {
-        ...response,
-        actionSucceeded: 'updateUserProfile',
-      };
-    } catch (error) {
-      console.warn('🚀 ~ file: user.slice. updateUserProfile ~ error:', error);
-      return rejectWithValue(error);
-    }
-  },
-);
-export const changePassword = createAsyncThunk(
-  'user/changePassword',
-  async (input, { rejectWithValue }) => {
-    try {
-      const response = await updateUserCurrentService(input);
-      return {
-        ...response,
-        actionSucceeded: 'changePassword',
-      };
-    } catch (error) {
-      console.warn('🚀 ~ file: user.slice. changePassword ~ error:', error);
-      return rejectWithValue(error);
-    }
-  },
-);
-export const changeAvatar = createAsyncThunk(
-  'user/changeAvatar',
-  async (input, { rejectWithValue }) => {
-    try {
-      const response = await updateUserCurrentService(input);
-      return {
-        ...response,
-        actionSucceeded: 'changeAvatar',
-      };
-    } catch (error) {
-      console.warn('🚀 ~ file: user.slice. changeAvatar ~ error:', error);
-      return rejectWithValue(error);
-    }
-  },
-);
+export const getUserProfile = createAsyncThunk('user/getUserProfile', async (_, { rejectWithValue, getState }) => {
+  try {
+    const { auth } = getState();
+    const { id_token } = auth;
+    const decodedToken = jwtDecode(id_token);
+    const { id, sub } = decodedToken;
+    const response = await getUserByIdService(id ?? sub);
+    return {
+      ...response,
+      actionSucceeded: 'getUserProfile',
+    };
+  } catch (error) {
+    console.warn('🚀 ~ file: user.slice. getUserProfile ~ error:', error);
+    return rejectWithValue(error);
+  }
+});
+export const updateUserProfile = createAsyncThunk('user/updateUserProfile', async (input, { rejectWithValue }) => {
+  try {
+    const response = await updateUserCurrentService(input);
+    return {
+      ...response,
+      actionSucceeded: 'updateUserProfile',
+    };
+  } catch (error) {
+    console.warn('🚀 ~ file: user.slice. updateUserProfile ~ error:', error);
+    return rejectWithValue(error);
+  }
+});
+export const changePassword = createAsyncThunk('user/changePassword', async (input, { rejectWithValue }) => {
+  try {
+    const response = await updateUserCurrentService(input);
+    return {
+      ...response,
+      actionSucceeded: 'changePassword',
+    };
+  } catch (error) {
+    console.warn('🚀 ~ file: user.slice. changePassword ~ error:', error);
+    return rejectWithValue(error);
+  }
+});
+export const changeAvatar = createAsyncThunk('user/changeAvatar', async (input, { rejectWithValue }) => {
+  try {
+    const response = await updateUserCurrentService(input);
+    return {
+      ...response,
+      actionSucceeded: 'changeAvatar',
+    };
+  } catch (error) {
+    console.warn('🚀 ~ file: user.slice. changeAvatar ~ error:', error);
+    return rejectWithValue(error);
+  }
+});
 export const userSlice = createSlice({
   name: 'user',
   initialState,

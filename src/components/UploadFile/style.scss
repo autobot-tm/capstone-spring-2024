@@ -2,8 +2,16 @@
   display: flex;
   gap: 4px;
   flex-direction: column;
-  width: fit-content;
+  width: 100%;
   @media screen and (max-width: 554px) {
     width: 100%;
   }
+}
+
+.custom-upload-button {
+  width: 100%;
+}
+
+.ant-upload-list-item .ant-upload-list-item-undefined {
+  height: 40px !important;
 }

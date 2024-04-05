@@ -25,14 +25,7 @@ const CardCarousel = ({ images, limit, isHovered }) => {
         }}>
         {images.slice(0, limit).map((image, index) => {
           return (
-            <LazyLoadImage
-              key={index}
-              effect="blur"
-              src={image}
-              width="100%"
-              height="290px"
-              className={styles.image}
-            />
+            <LazyLoadImage key={index} effect="blur" src={image} width="100%" height="290px" className={styles.image} />
           );
         })}
       </Carousel>

@@ -2,15 +2,19 @@ import React, { useEffect, useState } from 'react';
 import CustomModal from '../Modal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { closeInvoiceDetailModal } from '../../store/slices/modalSlice';
+import {
+  closeInvoiceDetailModal,
+  openChooseMethodPaymentModal,
+  openReportIssuesModal,
+} from '../../store/slices/modalSlice';
 import { setInvoiceLoading } from '../../store/slices/invoiceSlice';
-import { getInvoiceByIdService, payInvoiceById } from '../../services/apis/invoices.service';
-import { Button, Col, Image, Row, Table } from 'antd';
+import { getInvoiceByIdService } from '../../services/apis/invoices.service';
+import { Col, Image, Row, Table } from 'antd';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { Caption, Headline, Paragraph } from '../Typography';
 import { LoadingOutlined, TagsFilled } from '@ant-design/icons';
 import './styles.scss';
-import { PAYMENT_METHOD } from '../../constants/payment.constant';
+import BaseButton from '../Buttons/BaseButtons/BaseButton';
 
 const InvoiceDetail = () => {
   const { t } = useTranslation();
@@ -18,7 +22,6 @@ const InvoiceDetail = () => {
   const invoiceId = useSelector(state => state.modal.invoiceId);
   const loading = useSelector(state => state.invoice.loading);
   const dispatch = useDispatch();
-  // const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [statusFee, setStatusFee] = useState('');
   const [items, setItems] = useState([]);
@@ -27,7 +30,6 @@ const InvoiceDetail = () => {
   useEffect(() => {
     if (invoiceId) {
       getInvoiceByIdService({ invoiceId }).then(response => {
-        // setDescription(response.description);
         setData(response);
         setAmount(response.amount);
         setItems(response.items);
@@ -35,7 +37,7 @@ const InvoiceDetail = () => {
         dispatch(setInvoiceLoading({ loading: false }));
       });
     }
-  }, [loading]);
+  }, [loading, invoiceId]);
 
   const columns = [
     {
@@ -68,21 +70,13 @@ const InvoiceDetail = () => {
     },
   ];
 
-  const handlePayFees = async () => {
-    if (invoiceId) {
-      try {
-        const urlCallback = window.location.origin + `/payments/${invoiceId}?typeOfPayment=invoice`;
-        console.log('urlCallback INVOICE', urlCallback);
-        const response_url = await payInvoiceById({
-          id: invoiceId,
-          gateway_provider: PAYMENT_METHOD.VNPAY,
-          callback_base_url: urlCallback,
-        });
-        return (window.location.href = response_url);
-      } catch (error) {
-        console.warn('Error at handle pay fees', error);
-      }
-    }
+  const handleReportIssues = () => {
+    dispatch(openReportIssuesModal({ categoryIssue: 'INVOICE_ISSUE' }));
+    dispatch(closeInvoiceDetailModal());
+  };
+  const handlePayFee = () => {
+    dispatch(openChooseMethodPaymentModal());
+    dispatch(closeInvoiceDetailModal());
   };
 
   return (
@@ -93,18 +87,29 @@ const InvoiceDetail = () => {
       action={closeInvoiceDetailModal}
       footer={[
         statusFee === 'PENDING' && (
-          <Button
-            type="primary"
-            key=""
-            onClick={handlePayFees}
-            block
-            size="large"
-            loading={loading ? true : false}
-            disabled={loading ? true : false}>
-            <Paragraph strong style={{ color: 'white' }}>
-              {!loading && t('button.pay') + ' ' + formatCustomCurrency(amount)}
-            </Paragraph>
-          </Button>
+          <Row key="" gutter={[8, 8]}>
+            <Col xs={24} sm={19}>
+              <BaseButton
+                type="primary"
+                block
+                size="large"
+                onClick={handlePayFee}
+                loading={loading ? true : false}
+                disabled={loading ? true : false}>
+                {!loading && t('button.pay') + ' ' + formatCustomCurrency(amount)}
+              </BaseButton>
+            </Col>
+            <Col xs={24} sm={5}>
+              <BaseButton
+                type="secondary"
+                block
+                size="large"
+                onClick={handleReportIssues}
+                style={{ backgroundColor: '#ccc' }}>
+                {t('report')}
+              </BaseButton>
+            </Col>
+          </Row>
         ),
       ]}>
       {loading ? (
@@ -114,16 +119,16 @@ const InvoiceDetail = () => {
       ) : (
         <div className="invoice-container">
           <Row className="title-invoice">
-            <Col xs={24} sm={16}>
+            <Col xs={24} sm={18}>
               <Headline classNames="d-block" strong>
                 {t('invoice').toUpperCase()}
               </Headline>
 
-              <Paragraph>#{data?.id}</Paragraph>
+              <Caption size={140}>#{data?.id}</Caption>
               <Paragraph classNames="d-block color-black">{data?.description}</Paragraph>
             </Col>
 
-            <Col xs={24} sm={8} style={{ textAlign: 'end' }}>
+            <Col xs={24} sm={6} style={{ textAlign: 'end' }}>
               <Image
                 width={100}
                 src="https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/logo-main.png"></Image>
@@ -157,7 +162,8 @@ const InvoiceDetail = () => {
               </Caption>
               <Paragraph classNames="d-block">
                 {' '}
-                {data?.lease?.reservation?.house?.category}
+                {t(`detail-house.${data?.lease?.reservation?.house?.category.replace(/\s/g, '')}`)}
+                {/* {data?.lease?.reservation?.house?.category} */}
               </Paragraph>
             </Col>
             <Col xs={24} sm={8} className="info-invoice-inner">
@@ -170,16 +176,11 @@ const InvoiceDetail = () => {
               <Caption strong classNames="d-block" style={{ marginBottom: 10 }}>
                 8F Miss Aodai Building, 21 Nguyen Trung Ngan, HCM City
               </Caption>
-              <Paragraph classNames="d-block">+028-3827-5068</Paragraph>
+              <Paragraph classNames="d-block">+028 3827 5068</Paragraph>
             </Col>
           </Row>
           <Row className="content-invoice">
-            <Table
-              pagination={false}
-              columns={columns}
-              dataSource={updatedDataSource}
-              style={{ width: '100%' }}
-            />
+            <Table pagination={false} columns={columns} dataSource={updatedDataSource} style={{ width: '100%' }} />
           </Row>
 
           <Row>
@@ -194,7 +195,7 @@ const InvoiceDetail = () => {
             <Col xs={24} className="footer-invoice">
               <Paragraph strong>Lotus | {t('invoice.houseForRent')}</Paragraph>
 
-              <Paragraph strong>+028-3827-5068</Paragraph>
+              <Paragraph strong>+028 3827 5068</Paragraph>
               <Paragraph strong classNames="color-black">
                 info@aodaihousing.com{' '}
               </Paragraph>

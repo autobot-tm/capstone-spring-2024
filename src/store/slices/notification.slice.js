@@ -15,14 +15,16 @@ const notificationSlice = createSlice({
     },
     setNotifications(state, action) {
       state.notifications = action.payload;
-      state.unreadCount = action.payload.filter(item => !item.current_user_has_read).length;
+      state.unreadCount = action?.payload?.filter(item => !item.current_user_has_read).length;
     },
     markAsRead(state, action) {
       const notificationId = action.payload;
       const notification = state.notifications.find(item => item.id === notificationId);
       if (notification && !notification.current_user_has_read) {
         notification.current_user_has_read = true;
-        state.unreadCount -= 1;
+        if (state.unreadCount > 0) {
+          state.unreadCount -= 1;
+        }
       }
     },
     markAllAsRead(state) {
@@ -40,13 +42,7 @@ const notificationSlice = createSlice({
   },
 });
 
-export const {
-  setLoading,
-  setNotifications,
-  clearNotifications,
-  removeNotification,
-  markAsRead,
-  markAllAsRead,
-} = notificationSlice.actions;
+export const { setLoading, setNotifications, clearNotifications, removeNotification, markAsRead, markAllAsRead } =
+  notificationSlice.actions;
 
 export default notificationSlice.reducer;

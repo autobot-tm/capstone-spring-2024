@@ -2,19 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CustomModal from '../Modal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeAdvanceSearchModal } from '../../store/slices/modalSlice';
-import {
-  Button,
-  Checkbox,
-  Col,
-  Divider,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-  Slider,
-  Space,
-} from 'antd';
+import { Button, Checkbox, Col, Divider, Form, Input, InputNumber, Row, Select, Slider, Space } from 'antd';
 import { Caption, Paragraph } from '../Typography';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { t } from 'i18next';
@@ -64,17 +52,7 @@ const AdvanceSearch = () => {
   };
   const handleFinish = values => {
     setLoading(true);
-    const {
-      name,
-      categories,
-      provinces,
-      districts,
-      wards,
-      minArea,
-      maxArea,
-      amenities,
-      utilities,
-    } = values;
+    const { name, categories, provinces, districts, wards, minArea, maxArea, amenities, utilities } = values;
     const minPrice = sliderValue[0];
     const maxPrice = sliderValue[1];
     dispatch(

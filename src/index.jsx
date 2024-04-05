@@ -26,6 +26,9 @@ import ShowAllImage from './components/ShowAllImage/ShowAllImage';
 import ShowLeaseModal from './pages/ExtraServices/components/ShowLeaseModal/ShowLeaseModal';
 import InvoiceDetail from './components/InvoiceDetail/InvoiceDetail';
 import ExtraServiceDetailModal from './components/ExtraServiceDetailModal/ExtraServiceDetailModal';
+
+import ChoosePaymentMethodModal from './components/ChoosePaymentMethod/ChoosePaymentMethodModal';
+import ReportIssuesModal from './components/ReportIssues/ReportIssuesModal';
 import ContactRequestDetail from './pages/Management/components/ContactRequests/components/ContactRequestDetail/ContactRequestDetail';
 
 initTranslations();
@@ -70,6 +73,8 @@ root.render(
           <ShowLeaseModal />
           <InvoiceDetail />
           <ExtraServiceDetailModal />
+          <ReportIssuesModal />
+          <ChoosePaymentMethodModal />
           <ContactRequestDetail />
         </BrowserRouter>
       </ConfigProvider>

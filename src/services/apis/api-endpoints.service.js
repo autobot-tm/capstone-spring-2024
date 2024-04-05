@@ -46,12 +46,17 @@ export const ENDPOINTS = {
   services: {
     base: '/extra-services',
     request: '/extra-service-requests',
-    cancel: extra_service_requests_id =>
-      `/extra-service-requests/${extra_service_requests_id}/cancel`,
+    cancel: extra_service_requests_id => `/extra-service-requests/${extra_service_requests_id}/cancel`,
   },
   invoices: {
     base: '/invoices',
     paying: id => `/invoices/${id}/pay`,
+  },
+  contactRequest: {
+    base: '/contact-requests',
+    requestId: id => `/contact-requests/${id}`,
+    cancel: id => `/contact-requests/${id}/resolve`,
+    issues: '/issues',
   },
   issues: {
     base: '/issues',

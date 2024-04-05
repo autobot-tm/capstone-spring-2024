@@ -117,9 +117,7 @@ const AuthenticationCode = () => {
               }}
             />
             {debounceTime > 0 && (
-              <Paragraph
-                strong
-                classNames={`${styles.actionText} ${debounceTime && styles.actionTextDisabled}`}>
+              <Paragraph strong classNames={`${styles.actionText} ${debounceTime && styles.actionTextDisabled}`}>
                 {debounceTime}s
               </Paragraph>
             )}

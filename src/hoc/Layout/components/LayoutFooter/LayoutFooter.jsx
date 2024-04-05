@@ -34,9 +34,8 @@ export const LayoutFooter = () => {
                   </SubHeading>
                 </div>
                 <Caption size={110} classNames="color-black">
-                  A contemporary theme we designed specifically for real estate and property
-                  showcase websites, equipped with every option, element and feature your site may
-                  need.
+                  A contemporary theme we designed specifically for real estate and property showcase websites, equipped
+                  with every option, element and feature your site may need.
                 </Caption>
               </div>
             </Col>
@@ -107,8 +106,7 @@ export const LayoutFooter = () => {
                   <HomeOutlined style={{ marginTop: '4px' }} />
 
                   <Caption size={140}>
-                    8F Miss Aodai Building, 21 Nguyen Trung Ngan, Ben Nghe Ward, District 1, Ho Chi
-                    Minh City, Vietnam
+                    8F Miss Aodai Building, 21 Nguyen Trung Ngan, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam
                   </Caption>
                 </li>
 

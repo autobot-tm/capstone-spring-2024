@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Fee.module.scss';
 import InvoiceItem from './components/InvoiceItem';
 import { Col, Pagination, Result, Row } from 'antd';
@@ -14,18 +14,31 @@ import InvoiceItemSkeleton from './components/InvoiceItemSkeleton';
 const Fee = () => {
   const { t } = useTranslation();
   const LIMIT = 6;
-
   const status = useSelector(state => state.invoice.status);
   const page = useSelector(state => state.invoice.page);
   const dispatch = useDispatch();
+  const { access_token } = useSelector(state => state.auth);
+  const [shouldFetchData, setShouldFetchData] = useState(false);
 
-  const { data, isLoading } = useSWR(`getInvoicesService/${page}${status}`, async () => {
-    return await getInvoicesService({
-      offset: LIMIT * (page - 1),
-      limit: LIMIT,
-      status: status,
-      type: 'RENTAL_FEE',
-    });
+  useEffect(() => {
+    if (access_token && !shouldFetchData) {
+      setShouldFetchData(true);
+    }
+  }, []);
+
+  const { data, isLoading } = useSWR(shouldFetchData ? `getInvoicesService/${page}${status}` : null, async () => {
+    try {
+      const result = await getInvoicesService({
+        offset: LIMIT * (page - 1),
+        limit: LIMIT,
+        status: status,
+        type: 'RENTAL_FEE',
+      });
+      return result;
+    } catch (error) {
+      console.error('Error fetching invoices:', error);
+      throw error;
+    }
   });
 
   return (

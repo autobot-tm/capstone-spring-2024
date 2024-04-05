@@ -7,11 +7,7 @@ const MyProfile = ({ user, t, avatarDefault }) => {
   return (
     <Row gutter={[0, 24]} id="mp-container">
       <Col xs={24} sm={10} style={{ display: 'flex', justifyContent: 'center' }}>
-        <Avatar
-          src={user?.avatar_url || avatarDefault}
-          shape="square"
-          size={220 | { xs: 100, sm: 150, md: 200 }}
-        />
+        <Avatar src={user?.avatar_url || avatarDefault} shape="square" size={220 | { xs: 100, sm: 150, md: 200 }} />
       </Col>
       <Col xs={24} sm={10}>
         <SubHeading size={230} strong>
@@ -22,17 +18,13 @@ const MyProfile = ({ user, t, avatarDefault }) => {
             <div className="attr-user">
               <span className="attr-user-gap">
                 <Paragraph>{t('USER-DASHBOARD.mobile-phone')}:</Paragraph>
-                <Paragraph classNames="color-black">
-                  {user?.phone_number ? user?.phone_number : '-'}
-                </Paragraph>
+                <Paragraph classNames="color-black">{user?.phone_number ? user?.phone_number : '-'}</Paragraph>
               </span>
             </div>
             <div className="attr-user">
               <span className="attr-user-gap">
                 <Paragraph>{t('USER-DASHBOARD.country')}:</Paragraph>
-                <Paragraph classNames="color-black">
-                  {user?.country ? user?.country : '-'}
-                </Paragraph>
+                <Paragraph classNames="color-black">{user?.country ? user?.country : '-'}</Paragraph>
               </span>
             </div>
             <div className="attr-user">

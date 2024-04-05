@@ -10,8 +10,6 @@ const { Text } = Typography;
  * @param {(230|260)} props.size - The size of the text. Should be either '110' or '140'
  */
 export const SubHeading = ({ classNames, size = 230, ...props }) => {
-  const classes = classNames
-    ? `subHeading subHeading-${size} ${classNames}`
-    : `subHeading subHeading-${size}`;
+  const classes = classNames ? `subHeading subHeading-${size} ${classNames}` : `subHeading subHeading-${size}`;
   return <Text {...props} className={classes} />;
 };

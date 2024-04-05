@@ -4,7 +4,8 @@
   padding: 0 20px;
 
   @media screen and (max-width: 375px) {
-    display: flexbox;
+    display: flex;
+    justify-content: center;
     width: 100%;
     padding: 20px;
   }
@@ -28,4 +29,12 @@
   @media screen and (max-width: 600px) {
     display: block;
   }
+}
+
+.es-detail-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: center;
+  padding-bottom: 30px;
 }

@@ -29,7 +29,7 @@ function App() {
     if (access_token) {
       dispatch(userActions.getUserProfile());
     }
-  }, [access_token]);
+  }, [access_token, dispatch]);
 
   useEffect(() => {
     const isAccessTokenExpired = isTimeExpired(access_token_expires_at, REQUEST_TIME_OUT);

@@ -57,9 +57,7 @@ const HouseItemRow = ({ id, house, status, time, type }) => {
             ) : type === 'reservation' ? (
               <ReservationStatus status={status} />
             ) : null}
-            {type !== 'service' && (
-              <Caption size={110}>{moment(time).format('H:mm -  DD/MM/YYYY')}</Caption>
-            )}
+            {type !== 'service' && <Caption size={110}>{moment(time).format('H:mm -  DD/MM/YYYY')}</Caption>}
           </div>
         </div>
         <div className={styles.titleContainer}>

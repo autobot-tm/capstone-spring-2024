@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   typeOfPayment: '',
+  methodOfPayment: '',
   loading: false,
   dataOrderSuccessfully: {},
 };
@@ -18,8 +19,12 @@ const paymentSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload.loading;
     },
+
+    setMethodOfPayment: (state, action) => {
+      state.methodOfPayment = action.payload.methodOfPayment;
+    },
   },
 });
 
 export default paymentSlice.reducer;
-export const { setOrderSuccessfully, setLoading } = paymentSlice.actions;
+export const { setOrderSuccessfully, setLoading, setMethodOfPayment } = paymentSlice.actions;

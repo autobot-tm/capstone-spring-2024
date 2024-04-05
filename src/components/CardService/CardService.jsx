@@ -23,12 +23,8 @@ const CardService = ({ data, onClickDetail, t }) => {
                     <ThunderboltOutlined className="es-icon es-iconPrimary" />
                     <SubHeading size={230} strong style={{ width: '100%' }}>
                       {t('EXTRA-SERVICES.electricity-card')}
-                      <Caption
-                        size={140}
-                        style={{ padding: '4px' }}
-                        classNames="d-block color-black">
-                        {t('placeholder.type')}:{' '}
-                        <b>{t(`type.${data?.extra_service?.type.replace(/\s/g, '')}`)}</b> -{' '}
+                      <Caption size={140} style={{ padding: '4px' }} classNames="d-block color-black">
+                        {t('placeholder.type')}: <b>{t(`type.${data?.extra_service?.type.replace(/\s/g, '')}`)}</b> -{' '}
                         {t('label.category')}:{' '}
                         <b>{t(`category.${data?.extra_service?.category.replace(/\s/g, '')}`)}</b>
                       </Caption>
@@ -46,12 +42,8 @@ const CardService = ({ data, onClickDetail, t }) => {
                     <DotChartOutlined className="es-icon es-iconTertiary" />
                     <SubHeading size={230} strong style={{ width: '100%' }}>
                       {t('EXTRA-SERVICES.water-card')}
-                      <Caption
-                        size={140}
-                        style={{ padding: '4px' }}
-                        classNames="d-block color-black">
-                        {t('placeholder.type')}:{' '}
-                        <b>{t(`type.${data?.extra_service?.type.replace(/\s/g, '')}`)}</b> -{' '}
+                      <Caption size={140} style={{ padding: '4px' }} classNames="d-block color-black">
+                        {t('placeholder.type')}: <b>{t(`type.${data?.extra_service?.type.replace(/\s/g, '')}`)}</b> -{' '}
                         {t('label.category')}:{' '}
                         <b>{t(`category.${data?.extra_service?.category.replace(/\s/g, '')}`)}</b>
                       </Caption>
@@ -69,12 +61,8 @@ const CardService = ({ data, onClickDetail, t }) => {
                     <FileProtectOutlined className="es-icon es-iconOthers" />
                     <SubHeading size={230} strong style={{ width: '100%' }}>
                       {t('EXTRA-SERVICES.residence-card')}
-                      <Caption
-                        size={140}
-                        style={{ padding: '4px' }}
-                        classNames="d-block color-black">
-                        {t('placeholder.type')}:{' '}
-                        <b>{t(`type.${data?.extra_service?.type.replace(/\s/g, '')}`)}</b> -{' '}
+                      <Caption size={140} style={{ padding: '4px' }} classNames="d-block color-black">
+                        {t('placeholder.type')}: <b>{t(`type.${data?.extra_service?.type.replace(/\s/g, '')}`)}</b> -{' '}
                         {t('label.category')}:{' '}
                         <b>{t(`category.${data?.extra_service?.category.replace(/\s/g, '')}`)}</b>
                       </Caption>

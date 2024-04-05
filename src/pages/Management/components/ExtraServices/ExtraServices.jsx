@@ -9,10 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { Pagination, Result } from 'antd';
 import RowCardSkeleton from '../../../../components/RowCardSkeleton/RowCardSkeleton';
 import { getExtraServiceRequests } from '../../../../services/apis/extra-services.service';
-import {
-  setExtraServicesLoading,
-  setExtraServicesPage,
-} from '../../../../store/slices/extraServices.slice';
+import { setExtraServicesLoading, setExtraServicesPage } from '../../../../store/slices/extraServices.slice';
 import { openExtraServiceRequestDetailModal } from '../../../../store/slices/modalSlice';
 import CardService from '../../../../components/CardService/CardService';
 
@@ -23,17 +20,14 @@ const ExtraServices = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
-  const { data, isLoading } = useSWR(
-    `getExtraServiceRequests?page=${page}&status=${status}`,
-    async () => {
-      return await getExtraServiceRequests({
-        renter_email: user?.email,
-        offset: LIMIT * (page - 1),
-        limit: LIMIT,
-        status: status,
-      });
-    },
-  );
+  const { data, isLoading } = useSWR(`getExtraServiceRequests?page=${page}&status=${status}`, async () => {
+    return await getExtraServiceRequests({
+      renter_email: user?.email,
+      offset: LIMIT * (page - 1),
+      limit: LIMIT,
+      status: status,
+    });
+  });
 
   const handleCardClick = service => {
     dispatch(setExtraServicesLoading({ loading: true }));
@@ -53,12 +47,7 @@ const ExtraServices = () => {
           ))
         ) : data?.extra_service_requests.length !== 0 ? (
           data?.extra_service_requests?.map(service => (
-            <CardService
-              key={service?.id}
-              data={service}
-              onClickDetail={() => handleCardClick(service)}
-              t={t}
-            />
+            <CardService key={service?.id} data={service} onClickDetail={() => handleCardClick(service)} t={t} />
           ))
         ) : (
           <div

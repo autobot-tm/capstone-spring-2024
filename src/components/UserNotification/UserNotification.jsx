@@ -6,10 +6,7 @@ import { BellOutlined } from '@ant-design/icons';
 import { Caption, Paragraph, SubHeading } from '../Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { markAsRead, markAllAsRead, setNotifications } from '../../store/slices/notification.slice';
-import {
-  getNotiByIdService,
-  getNotiUserCurrentService,
-} from '../../services/apis/notification.service';
+import { getNotiByIdService, getNotiUserCurrentService } from '../../services/apis/notification.service';
 import { openContractDetailModal } from '../../store/slices/modalSlice';
 import { updateNotiHasReadService } from '../../services/apis/notification.service';
 import { useNavigate } from 'react-router-dom';
@@ -68,17 +65,20 @@ function formatTimeDifference(notificationTime, t) {
 const UserNotification = ({ t }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { access_token } = useSelector(state => state.auth);
   const unreadCount = useSelector(state => state.notification.unreadCount);
   const notificationState = useSelector(state => state.notification.notifications);
   const [visible, setVisible] = useState(false);
 
   const { data: notifications } = useSWR('/api/notifications', async () => {
     try {
-      const res = await getNotiUserCurrentService();
-      return res.notifications;
+      if (access_token) {
+        const res = await getNotiUserCurrentService();
+        return res.notifications;
+      }
     } catch (error) {
-      console.error('Error fetching metadata:', error);
-      throw new Error('Failed to fetch metadata');
+      console.error('Error fetching notification:', error);
+      throw new Error('Failed to fetch notification');
     }
   });
 
@@ -86,7 +86,7 @@ const UserNotification = ({ t }) => {
     if (notifications) {
       dispatch(setNotifications(notifications));
     }
-  }, [notifications]);
+  }, [notifications, dispatch]);
 
   const handleVisibleChange = flag => {
     setVisible(flag);
@@ -117,12 +117,7 @@ const UserNotification = ({ t }) => {
           dispatch(setContractLoading({ loading: true }));
           dispatch(markAllAsRead());
           return navigate('/management');
-        }
-
-        if (ACTION_TYPE === 'EXTRA_SERVICE_REQUEST') {
-          // const { extra_service_id, extra_service_request_id } = contextOfNoti;
-          // dispatch(setTypeNavigate({ typeNavigate: 'EXTRA_SERVICE_REQUEST' }));
-
+        } else {
           dispatch(markAllAsRead());
           return navigate('/management');
         }

@@ -27,10 +27,7 @@ import Selection from '../DetailHouse/components/Selection/Selection';
 import DatePickerAnt from '../DetailHouse/components/DatePickerComponent/DatePickerAnt';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
-import {
-  closeReservationPolicyModal,
-  openReservationPolicyModal,
-} from '../../store/slices/modalSlice';
+import { closeReservationPolicyModal, openReservationPolicyModal } from '../../store/slices/modalSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomModal from '../../components/Modal/CustomModal';
 
@@ -90,9 +87,7 @@ const ReservationPage = () => {
           return { id: null, price_per_month: null };
         }
       } else {
-        const selectedPolicy = house?.pricing_policies.find(
-          policy => parseInt(policy.total_months) === 1,
-        );
+        const selectedPolicy = house?.pricing_policies.find(policy => parseInt(policy.total_months) === 1);
         if (selectedPolicy) {
           const { id, price_per_month } = selectedPolicy;
           return { id, price_per_month };
@@ -233,10 +228,7 @@ const ReservationPage = () => {
                       <span>
                         {selectedNewMonths} {t('RESERVATION.month')}
                       </span>
-                      <Button
-                        className="edit-date"
-                        type="link"
-                        onClick={() => setIsEditingMonths(!isEditingMonths)}>
+                      <Button className="edit-date" type="link" onClick={() => setIsEditingMonths(!isEditingMonths)}>
                         {t('RESERVATION.edit')}
                       </Button>
                     </>
@@ -253,10 +245,7 @@ const ReservationPage = () => {
                   ) : (
                     <>
                       <span>{selectedNewDate}</span>
-                      <Button
-                        className="edit-date"
-                        type="link"
-                        onClick={() => setIsEditingDate(!isEditingDate)}>
+                      <Button className="edit-date" type="link" onClick={() => setIsEditingDate(!isEditingDate)}>
                         {t('RESERVATION.edit')}
                       </Button>
                     </>
@@ -315,10 +304,7 @@ const ReservationPage = () => {
                 <div className="fee-table-section-1">
                   <Avatar src={house?.image_urls?.[0]} className="img-fee" alt={house?.name} />
                   <div className="fee-table-section-1-description">
-                    <Caption size={120}>
-                      {' '}
-                      {t(`detail-house.${house?.category.replace(/\s/g, '')}`)}
-                    </Caption>
+                    <Caption size={120}> {t(`detail-house.${house?.category.replace(/\s/g, '')}`)}</Caption>
                     <Row align="middle">
                       <SubHeading size={260} classNames="number-price" strong>
                         {formatCustomCurrency(priceOfMonths)}

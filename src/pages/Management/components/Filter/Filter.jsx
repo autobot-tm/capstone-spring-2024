@@ -6,10 +6,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './Filter.module.scss';
 import { setContractPage, setContractStatus } from '../../../../store/slices/contractSlice';
 import { setInvoicePage, setInvoiceStatus } from '../../../../store/slices/invoiceSlice';
-import {
-  setExtraServicesPage,
-  setExtraServicesStatus,
-} from '../../../../store/slices/extraServices.slice';
+import { setExtraServicesPage, setExtraServicesStatus } from '../../../../store/slices/extraServices.slice';
 import { Paragraph } from '../../../../components/Typography';
 import { setIssuePage, setIssueStatus } from '../../../../store/slices/issueSlice';
 

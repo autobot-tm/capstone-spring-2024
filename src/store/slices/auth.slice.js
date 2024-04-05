@@ -40,20 +40,17 @@ export const signIn = createAsyncThunk('auth/signIn', async (input, { rejectWith
   }
 });
 
-export const signInWithGoogle = createAsyncThunk(
-  'auth/signInWithGoogle',
-  async ({ idToken }, { rejectWithValue }) => {
-    try {
-      console.log('🚀 ~ idToken:', idToken);
-      const response = await signInWithGoogleService({ id_token: idToken ?? '' });
-      save(STORAGE_KEYS.AUTH, response);
-      return { ...response, actionSucceeded: AUTH_ACTIONS.SIGN_IN_WITH_GOOGLE };
-    } catch (error) {
-      console.warn('🚀 ~ file: auth.slice.ts:11 ~ error:', error);
-      return rejectWithValue(error);
-    }
-  },
-);
+export const signInWithGoogle = createAsyncThunk('auth/signInWithGoogle', async ({ idToken }, { rejectWithValue }) => {
+  try {
+    console.log('🚀 ~ idToken:', idToken);
+    const response = await signInWithGoogleService({ id_token: idToken ?? '' });
+    save(STORAGE_KEYS.AUTH, response);
+    return { ...response, actionSucceeded: AUTH_ACTIONS.SIGN_IN_WITH_GOOGLE };
+  } catch (error) {
+    console.warn('🚀 ~ file: auth.slice.ts:11 ~ error:', error);
+    return rejectWithValue(error);
+  }
+});
 
 export const signUp = createAsyncThunk('auth/signUp', async (input, { rejectWithValue }) => {
   try {
@@ -64,56 +61,47 @@ export const signUp = createAsyncThunk('auth/signUp', async (input, { rejectWith
     return rejectWithValue(error);
   }
 });
-export const refreshToken = createAsyncThunk(
-  'auth/refreshToken',
-  async (_, { rejectWithValue, getState }) => {
+export const refreshToken = createAsyncThunk('auth/refreshToken', async (_, { rejectWithValue, getState }) => {
+  try {
+    console.log('🚀 refreshToken');
+    const state = getState();
+    const { auth } = state;
+    const { refresh_token } = auth;
+    const response = await refreshTokenService(refresh_token);
+    save(STORAGE_KEYS.AUTH, response);
+    return { ...response, actionSucceeded: AUTH_ACTIONS.REFRESH_TOKEN };
+  } catch (error) {
+    console.warn('🚀 ~ file: auth.slice.tsx:42 ~ error:', error);
+    return rejectWithValue(error);
+  }
+});
+export const signOut = createAsyncThunk('auth/signOut', async (_, { rejectWithValue, getState }) => {
+  try {
+    const state = getState();
+    const { auth } = state;
+    const { refresh_token } = auth;
+    remove(STORAGE_KEYS.AUTH);
     try {
-      console.log('🚀 refreshToken');
-      const state = getState();
-      const { auth } = state;
-      const { refresh_token } = auth;
-      const response = await refreshTokenService(refresh_token);
-      save(STORAGE_KEYS.AUTH, response);
-      return { ...response, actionSucceeded: AUTH_ACTIONS.REFRESH_TOKEN };
+      googleLogout();
+      await signOutService(refresh_token);
     } catch (error) {
-      console.warn('🚀 ~ file: auth.slice.tsx:42 ~ error:', error);
-      return rejectWithValue(error);
+      console.warn('🚀 ~ remove refreshToken error: :', error);
     }
-  },
-);
-export const signOut = createAsyncThunk(
-  'auth/signOut',
-  async (_, { rejectWithValue, getState }) => {
-    try {
-      const state = getState();
-      const { auth } = state;
-      const { refresh_token } = auth;
-      remove(STORAGE_KEYS.AUTH);
-      try {
-        googleLogout();
-        await signOutService(refresh_token);
-      } catch (error) {
-        console.warn('🚀 ~ remove refreshToken error: :', error);
-      }
-      return { actionSucceeded: AUTH_ACTIONS.SIGN_OUT };
-    } catch (error) {
-      console.warn('🚀 ~ file: auth.slice.tsx:42 ~ error:', error);
-      return rejectWithValue(error);
-    }
-  },
-);
-export const resetPassword = createAsyncThunk(
-  'auth/resetPassword',
-  async (input, { rejectWithValue }) => {
-    try {
-      await resetPasswordService(input);
-      return { actionSucceeded: AUTH_ACTIONS.RESET_PASSWORD };
-    } catch (error) {
-      console.warn('🚀 ~ file: auth.slice.tsx:42 ~ error:', error);
-      return rejectWithValue(error);
-    }
-  },
-);
+    return { actionSucceeded: AUTH_ACTIONS.SIGN_OUT };
+  } catch (error) {
+    console.warn('🚀 ~ file: auth.slice.tsx:42 ~ error:', error);
+    return rejectWithValue(error);
+  }
+});
+export const resetPassword = createAsyncThunk('auth/resetPassword', async (input, { rejectWithValue }) => {
+  try {
+    await resetPasswordService(input);
+    return { actionSucceeded: AUTH_ACTIONS.RESET_PASSWORD };
+  } catch (error) {
+    console.warn('🚀 ~ file: auth.slice.tsx:42 ~ error:', error);
+    return rejectWithValue(error);
+  }
+});
 export const requestResetPassword = createAsyncThunk(
   'auth/requestResetPassword',
   async (input, { rejectWithValue }) => {
@@ -126,18 +114,15 @@ export const requestResetPassword = createAsyncThunk(
     }
   },
 );
-export const activateAccount = createAsyncThunk(
-  'auth/activateAccount',
-  async (input, { rejectWithValue }) => {
-    try {
-      await activateAccountService(input);
-      return { actionSucceeded: AUTH_ACTIONS.ACTIVATE_ACCOUNT };
-    } catch (error) {
-      console.warn('🚀 ~ file: auth.slice.tsx:42 ~ error:', error);
-      return rejectWithValue(error);
-    }
-  },
-);
+export const activateAccount = createAsyncThunk('auth/activateAccount', async (input, { rejectWithValue }) => {
+  try {
+    await activateAccountService(input);
+    return { actionSucceeded: AUTH_ACTIONS.ACTIVATE_ACCOUNT };
+  } catch (error) {
+    console.warn('🚀 ~ file: auth.slice.tsx:42 ~ error:', error);
+    return rejectWithValue(error);
+  }
+});
 export const requestActivateAccount = createAsyncThunk(
   'auth/requestActivateAccount',
   async (input, { rejectWithValue }) => {

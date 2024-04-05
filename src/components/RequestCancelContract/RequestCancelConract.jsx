@@ -11,10 +11,7 @@ import {
 import { Alert, Form, Input, Popconfirm, Select, Table, notification } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { requestCancelContractService } from '../../services/apis/contracts.service';
-import {
-  requestCancelExtraServices,
-  requestExtraServices,
-} from '../../services/apis/extra-services.service';
+import { requestCancelExtraServices, requestExtraServices } from '../../services/apis/extra-services.service';
 import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
 import ServiceStatus from '../../pages/ExtraServices/components/ServiceStatus/ServiceStatus';
 import { mutate } from 'swr';
@@ -23,8 +20,9 @@ import BaseButton from '../Buttons/BaseButtons/BaseButton';
 const RequestCancelConract = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { requestCancelContractModal, typeOfRequest, contractId, extraServiceId, leases } =
-    useSelector(state => state.modal);
+  const { requestCancelContractModal, typeOfRequest, contractId, extraServiceId, leases } = useSelector(
+    state => state.modal,
+  );
   const { extraServicesRequests } = useSelector(state => state.extraServices);
   const [error, setError] = useState(false);
   const [isRequestCancel, setIsRequestCancel] = useState(false);
@@ -196,16 +194,18 @@ const RequestCancelConract = () => {
                 }}>
                 {t('button.back')}
               </BaseButton>
-              <Popconfirm
-                title={t('cancel.confirm')}
-                onConfirm={handleCancelRequestService}
-                okText={t('yes')}
-                cancelText={t('no')}
-                placement="bottom">
-                <BaseButton style={{ width: 'auto' }} type="primary">
-                  {t('button.cancel-request')}
-                </BaseButton>
-              </Popconfirm>
+              {requestInprogress?.progresses[0]?.status !== 'IN_PROGRESS' && (
+                <Popconfirm
+                  title={t('cancel.confirm')}
+                  onConfirm={handleCancelRequestService}
+                  okText={t('yes')}
+                  cancelText={t('no')}
+                  placement="bottom">
+                  <BaseButton style={{ width: 'auto' }} type="primary">
+                    {t('button.cancel-request')}
+                  </BaseButton>
+                </Popconfirm>
+              )}
             </div>,
           ]}>
           <Table dataSource={dataSource} columns={columns} pagination={false} />
@@ -214,11 +214,7 @@ const RequestCancelConract = () => {
         <CustomModal
           width={600}
           nameOfModal={requestCancelContractModal}
-          title={
-            typeOfRequest === 'service'
-              ? t('modal.extraServiceRequest')
-              : t('modal.requestCancelContract')
-          }
+          title={typeOfRequest === 'service' ? t('modal.extraServiceRequest') : t('modal.requestCancelContract')}
           action={closeRequestCancelContractModal}
           footer={[
             <div className="btn-container" key="">
@@ -228,9 +224,7 @@ const RequestCancelConract = () => {
                 onClick={() => {
                   if (typeOfRequest === 'service') {
                     dispatch(closeRequestCancelContractModal());
-                    dispatch(
-                      openShowLeaseModal({ extraServiceId: extraServiceId, leases: leases }),
-                    );
+                    dispatch(openShowLeaseModal({ extraServiceId: extraServiceId, leases: leases }));
                   } else {
                     dispatch(closeRequestCancelContractModal());
                     dispatch(openContractDetailModal({ contractId: contractId }));
@@ -244,33 +238,21 @@ const RequestCancelConract = () => {
                 htmlType="submit"
                 type="primary"
                 onClick={() => form.submit()}>
-                {typeOfRequest === 'service'
-                  ? t('button.request')
-                  : t('button.requestCancelContract')}
+                {typeOfRequest === 'service' ? t('button.request') : t('button.requestCancelContract')}
               </BaseButton>
             </div>,
           ]}>
           <Form onFinish={handleFinish} form={form}>
             {typeOfRequest !== 'service' && (
-              <Form.Item
-                name={'type'}
-                rules={[{ required: true, message: t('validationRules.required.type') }]}>
-                <Select
-                  style={{ width: '100%' }}
-                  placeholder={t('placeholder.type')}
-                  options={options}
-                />
+              <Form.Item name={'type'} rules={[{ required: true, message: t('validationRules.required.type') }]}>
+                <Select style={{ width: '100%' }} placeholder={t('placeholder.type')} options={options} />
               </Form.Item>
             )}
-            <Form.Item
-              name={'title'}
-              rules={[{ required: true, message: t('validationRules.required.title') }]}>
+            <Form.Item name={'title'} rules={[{ required: true, message: t('validationRules.required.title') }]}>
               <Input placeholder={t('placeholder.title')} />
             </Form.Item>
             {typeOfRequest !== 'service' ? (
-              <Form.Item
-                name={'reason'}
-                rules={[{ required: true, message: t('validationRules.required.reason') }]}>
+              <Form.Item name={'reason'} rules={[{ required: true, message: t('validationRules.required.reason') }]}>
                 <TextArea rows={4} placeholder={t('placeholder.reason')} maxLength={200} />
               </Form.Item>
             ) : (

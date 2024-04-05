@@ -17,10 +17,7 @@ import {
   ToolOutlined,
 } from '@ant-design/icons';
 import { setInvoicePage, setInvoiceStatus } from '../../store/slices/invoiceSlice';
-import {
-  setExtraServicesPage,
-  setExtraServicesStatus,
-} from '../../store/slices/extraServices.slice';
+import { setExtraServicesPage, setExtraServicesStatus } from '../../store/slices/extraServices.slice';
 import ExtraServices from './components/ExtraServices/ExtraServices';
 import { Paragraph } from '../../components/Typography';
 import ContactRequests from './components/ContactRequests/ContactRequests';

@@ -30,8 +30,7 @@ export const Layout = ({ children }) => {
               <div onClick={() => navigate('/')}>
                 <h2 style={{ margin: 0 }}>Logo</h2>
               </div>
-              <div
-                style={{ marginLeft: 'auto', display: 'flex', gap: '4px', alignItems: 'center' }}>
+              <div style={{ marginLeft: 'auto', display: 'flex', gap: '4px', alignItems: 'center' }}>
                 <TranslationSelector />
                 {access_token && <UserNotification t={t} />}
               </div>

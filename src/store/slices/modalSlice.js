@@ -15,9 +15,12 @@ const initialState = {
   notificationDetailModal: false,
   invoiceDetailModal: false,
   extraServiceRequestDetailModal: false,
+  reportIssuesModal: false,
+  chooseMethodPaymentModal: false,
+  categoryIssue: undefined,
   extraServiceRequestDetail: '',
   reservationId: undefined,
-  contractId: undefined,
+  contractId: '',
   invoiceId: undefined,
   issueId: undefined,
   showAllImageModal: false,
@@ -93,6 +96,21 @@ const modalSlice = createSlice({
     openExtraServiceRequestDetailModal: (state, action) => {
       state.extraServiceRequestDetailModal = true;
       state.extraServiceRequestDetail = action?.payload?.extraServiceRequestDetail;
+    },
+    openReportIssuesModal: (state, action) => {
+      state.reportIssuesModal = true;
+      state.categoryIssue = action.payload.categoryIssue;
+    },
+
+    openChooseMethodPaymentModal: state => {
+      state.chooseMethodPaymentModal = true;
+    },
+
+    closeChooseMethodPaymentModal: state => {
+      state.chooseMethodPaymentModal = false;
+    },
+    closeReportIssuesModal: state => {
+      state.reportIssuesModal = false;
     },
     openContactRequestDetailModal: (state, action) => {
       state.contactRequestDetailModal = true;
@@ -170,6 +188,10 @@ export const {
   openShowLeaseModal,
   openInvoiceDetailModal,
   openExtraServiceRequestDetailModal,
+  openChooseMethodPaymentModal,
+  openReportIssuesModal,
+  closeReportIssuesModal,
+  closeChooseMethodPaymentModal,
   openContactRequestDetailModal,
   closeExtraServiceRequestDetailModal,
   closeShowLeaseModal,

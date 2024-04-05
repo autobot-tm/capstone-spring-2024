@@ -19,6 +19,12 @@ const InvoiceStatus = ({ status }) => {
             {t('status.' + status)}
           </Tag>
         </Caption>
+      ) : status === 'VOIDED' ? (
+        <Caption strong>
+          <Tag style={{ margin: 0 }} color="magenta">
+            {t('status.' + status)}
+          </Tag>
+        </Caption>
       ) : (
         <Caption strong>
           <Tag style={{ margin: 0 }} color="orange">
