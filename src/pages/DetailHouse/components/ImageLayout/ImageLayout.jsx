@@ -1,4 +1,4 @@
-import { Button, Col, Row } from 'antd';
+import { Button, Col, Image, Row } from 'antd';
 import React from 'react';
 import styles from './ImageLayout.module.scss';
 import { CompressOutlined } from '@ant-design/icons';
@@ -14,7 +14,7 @@ const ImageLayout = ({ images }) => {
         {images.slice(0, 1).map((image, index) => {
           return (
             <Col md={12} xs={24} style={{ height: '100%' }} key={index}>
-              <img src={image} alt="" className={styles.image} />
+              <Image src={image} alt="" width="100%" height="100%" style={{ objectFit: 'cover' }} />
             </Col>
           );
         })}
@@ -24,7 +24,13 @@ const ImageLayout = ({ images }) => {
             {images.slice(1, 5).map((image, index) => {
               return (
                 <Col key={index} md={12} style={{ height: '50%' }}>
-                  <img src={image} alt="" className={styles.image} />
+                  <Image
+                    src={image}
+                    alt=""
+                    width="100%"
+                    height="100%"
+                    style={{ objectFit: 'cover' }}
+                  />
                 </Col>
               );
             })}
