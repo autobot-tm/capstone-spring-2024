@@ -7,8 +7,8 @@ import { signOut, useAuthSlice } from './store/slices';
 import { isTimeExpired } from './utils/time';
 import { REQUEST_TIME_OUT } from './constants/api.constant';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop'; // Import ScrollToTop
-import { getMetaData } from './services/apis/houses.service';
-import { setMetaData } from './store/slices/houseSlice';
+import { getMetaData, getWishlist } from './services/apis/houses.service';
+import { setIds, setMetaData } from './store/slices/houseSlice';
 import NotFoundPage from './pages/NotFound/NotFoundPage';
 import { useUserSlice } from './store/slices/user.slice';
 import { ERROR_TRANS_KEYS } from './constants/error.constant';
@@ -54,6 +54,17 @@ function App() {
       })
       .then(setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (access_token) {
+      getWishlist().then(response => {
+        const idArray = response.map(item => item.house.id);
+        dispatch(setIds({ ids: idArray }));
+      });
+    } else {
+      dispatch(setIds({ ids: [] }));
+    }
+  }, [access_token]);
 
   return (
     !loading && (

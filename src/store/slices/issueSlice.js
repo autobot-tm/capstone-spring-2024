@@ -28,5 +28,4 @@ const issueSlice = createSlice({
 });
 
 export default issueSlice.reducer;
-export const { setIssueStatus, setIssueCategory, setIssuePage, setIssueLoading } =
-  issueSlice.actions;
+export const { setIssueStatus, setIssueCategory, setIssuePage, setIssueLoading } = issueSlice.actions;

@@ -24,13 +24,7 @@ const ImageLayout = ({ images }) => {
             {images.slice(1, 5).map((image, index) => {
               return (
                 <Col key={index} md={12} style={{ height: '50%' }}>
-                  <Image
-                    src={image}
-                    alt=""
-                    width="100%"
-                    height="100%"
-                    style={{ objectFit: 'cover' }}
-                  />
+                  <Image src={image} alt="" width="100%" height="100%" style={{ objectFit: 'cover' }} />
                 </Col>
               );
             })}

@@ -14,6 +14,8 @@ const initialState = {
   utilities: undefined,
   metadata: undefined,
   page: 1,
+  ids: [],
+  isWishlist: false,
 };
 const houseSlice = createSlice({
   name: 'house',
@@ -51,8 +53,18 @@ const houseSlice = createSlice({
     setPage: (state, action) => {
       state.page = action.payload.page;
     },
+    setIds: (state, action) => {
+      state.ids = action.payload.ids;
+    },
+    addToWishlist: (state, action) => {
+      state.ids.push(action.payload);
+    },
+    removeFromWishlist: (state, action) => {
+      state.ids = state.ids.filter(id => id !== action.payload);
+    },
   },
 });
 
 export default houseSlice.reducer;
-export const { setFilter, setInitialState, setMetaData, setPage } = houseSlice.actions;
+export const { setFilter, setInitialState, setMetaData, setPage, setIds, addToWishlist, removeFromWishlist } =
+  houseSlice.actions;

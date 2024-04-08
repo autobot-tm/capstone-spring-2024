@@ -26,7 +26,7 @@ const HouseItem = ({ house }) => {
       }}
       className={styles.card}
       hoverable
-      cover={<CardCarousel isHovered={isHovered} images={house.image_urls} limit={LIMIT_IMAGES} />}
+      cover={<CardCarousel isHovered={isHovered} images={house.image_urls} limit={LIMIT_IMAGES} houseId={house.id} />}
       actions={[
         <div key="houseInfo" className={styles.houseInfo}>
           <div className={styles.price}>

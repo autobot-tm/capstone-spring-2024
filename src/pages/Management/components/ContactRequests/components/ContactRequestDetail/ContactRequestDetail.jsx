@@ -31,9 +31,7 @@ const ContactRequestDetail = () => {
         setStatus(response.status);
         setResolutionNote(response.resolution_note);
         // Create an array to hold the promises
-        const promises = response.attachment_urls.map(url =>
-          presignedURLForViewingService({ url }),
-        );
+        const promises = response.attachment_urls.map(url => presignedURLForViewingService({ url }));
 
         // Resolve all promises concurrently
         Promise.all(promises).then(responses => {
