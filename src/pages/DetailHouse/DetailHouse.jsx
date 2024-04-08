@@ -9,7 +9,7 @@ import { Button, Row, Col, Form, Tooltip } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { notification } from 'antd';
-import { getHouseById, getHouseReview } from '../../services/apis/houses.service';
+import { getHouseById, getHouseReview, updateWishlist } from '../../services/apis/houses.service';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { formatCustomCurrency } from '../../utils/number-seperator';
@@ -30,6 +30,7 @@ import HousesMap from '../../components/HousesMap/HousesMap';
 import { openLoginModal } from '../../store/slices/modalSlice';
 import { Helmet } from 'react-helmet';
 import ImageLayout from './components/ImageLayout/ImageLayout';
+import { addToWishlist, removeFromWishlist } from '../../store/slices/houseSlice';
 
 const DetailHouse = () => {
   const { t } = useTranslation();
@@ -48,6 +49,32 @@ const DetailHouse = () => {
   const { data: house } = useSWR(`getHouseById/${house_id}`, async () => await getHouseById({ house_id }));
 
   const { data: reviews } = useSWR(['getHouseReview', house_id], async () => await getHouseReview({ house_id }));
+  const [isWishList, setIsWishList] = useState(false);
+  const ids = useSelector(state => state.house.ids);
+
+  useEffect(() => {
+    if (access_token) {
+      setIsWishList(ids.includes(house_id));
+    } else {
+      setIsWishList(false);
+    }
+  }, [ids, house_id]);
+
+  const handleAddWishlist = async () => {
+    await updateWishlist({
+      added_house_ids: [house_id],
+      removed_house_ids: [],
+    });
+    dispatch(addToWishlist(house_id)); // Dispatch action to update Redux store
+  };
+
+  const handleRemoveWishlist = async () => {
+    await updateWishlist({
+      added_house_ids: [],
+      removed_house_ids: [house_id],
+    });
+    dispatch(removeFromWishlist(house_id)); // Dispatch action to update Redux store
+  };
 
   useEffect(() => {
     const fetchHouseAmenities = async () => {
@@ -66,19 +93,6 @@ const DetailHouse = () => {
 
     fetchHouseAmenities();
   }, [house, reviews]);
-
-  const handleAddWishlist = () => {
-    // if (!access_token) {
-    //   return dispatch(openLoginModal());
-    // }
-    // const isHouseInWishlist = wishlist.some(item => item.id === house.id);
-    // if (!isHouseInWishlist) {
-    //   dispatch(addToWishlist({ house }));
-    // } else {
-    //   dispatch(removeFromWishlist({ id: house.id }));
-    // }
-    alert('Comming soon!');
-  };
 
   function errorDateNotification() {
     return notification.error({
@@ -397,14 +411,30 @@ const DetailHouse = () => {
                 </Col>
                 <Col className="side" xs={24} xl={8}>
                   <Row className="side-form-wishlist-section">
-                    <Tooltip placement="right" title={t('detail-house.add-to-wishlist')}>
+                    {isWishList ? (
                       <Button
-                        type="link"
+                        type="text"
+                        size="large"
+                        icon={<HeartTwoTone twoToneColor={['#ffffff', '#ff395c']} style={{ fontSize: '25px' }} />}
+                        onClick={() => handleRemoveWishlist()}>
+                        Added to wishlist
+                      </Button>
+                    ) : (
+                      <Button
+                        type="text"
                         size="large"
                         icon={<HeartTwoTone twoToneColor={['#000000', '#ffffff']} style={{ fontSize: '25px' }} />}
-                        // style={{ backgroundColor: isClickedWishlist ? '#f8a11e' : 'inherit' }}
-                        onClick={handleAddWishlist}></Button>
-                    </Tooltip>
+                        onClick={() => {
+                          if (access_token) {
+                            handleAddWishlist();
+                          } else {
+                            dispatch(openLoginModal());
+                          }
+                        }}>
+                        {' '}
+                        Add to wishlist
+                      </Button>
+                    )}
                   </Row>
                   <Row className="side-form">
                     <Col xs={24}>

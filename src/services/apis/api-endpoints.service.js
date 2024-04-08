@@ -16,6 +16,7 @@ export const ENDPOINTS = {
     houses: '/houses/filter',
     reviews: house_id => `/houses/${house_id}/reviews`,
     metadata: '/houses/metadata',
+    wishlist: '/wishlist/me',
   },
   payments: {
     base: '/payments',

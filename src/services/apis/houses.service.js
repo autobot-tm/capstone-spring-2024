@@ -52,3 +52,14 @@ export const getHouseReview = async ({ house_id }) => {
   const endpoint = ENDPOINTS.houses.reviews(house_id);
   return apiCaller.get(endpoint);
 };
+
+export const updateWishlist = async ({ added_house_ids, removed_house_ids }) => {
+  return apiCaller.patch(ENDPOINTS.houses.wishlist, {
+    added_house_ids,
+    removed_house_ids,
+  });
+};
+
+export const getWishlist = async () => {
+  return apiCaller.get(ENDPOINTS.houses.wishlist);
+};

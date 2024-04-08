@@ -3,7 +3,7 @@ import './style.scss';
 import { Breadcrumb, Col, Modal, Row, Tabs } from 'antd';
 import { Headline, Paragraph } from '../../components/Typography';
 import {
-  // HeartOutlined,
+  HeartOutlined,
   HomeOutlined,
   // LogoutOutlined,
   SettingOutlined,
@@ -77,17 +77,17 @@ const UserDashboard = () => {
       ),
       key: '2',
     },
-    // {
-    //   title: (
-    //     <>
-    //       <Row justify="center">
-    //         <HeartOutlined className="icon-tab-item" />
-    //       </Row>
-    //       <Row>{t('USER-DASHBOARD.my-wishlist')}</Row>
-    //     </>
-    //   ),
-    //   key: '3',
-    // },
+    {
+      title: (
+        <>
+          <Row justify="center">
+            <HeartOutlined className="icon-tab-item" />
+          </Row>
+          <Row>{t('USER-DASHBOARD.my-wishlist')}</Row>
+        </>
+      ),
+      key: '3',
+    },
     // {
     //   title: (
     //     <div onClick={() => dispatch(openConfirmLogoutModal())}>

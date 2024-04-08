@@ -62,9 +62,7 @@ const ContactRequests = () => {
               </div>
             ))
           ) : data?.issues.length !== 0 ? (
-            data?.issues.map((issue, index) => (
-              <ContactRequestItem key={index} id={issue.id} issue={issue} />
-            ))
+            data?.issues.map((issue, index) => <ContactRequestItem key={index} id={issue.id} issue={issue} />)
           ) : (
             <div
               style={{

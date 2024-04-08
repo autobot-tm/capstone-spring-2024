@@ -11,7 +11,6 @@ export const routeNames = {
   OrderSuccess: '/orders',
   UserDashboard: '/user-dashboard/:user_id',
   ReportLivingIssues: '/living-issues',
-  Wishlist: '/wishlist',
   Support: '/support',
   Management: '/management',
   ExtraServices: '/extra-services',
