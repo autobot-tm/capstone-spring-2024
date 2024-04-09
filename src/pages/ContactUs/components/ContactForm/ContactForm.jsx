@@ -32,6 +32,7 @@ const ContactForm = () => {
         const urls = await fileUploadRef.current?.upload();
         const formData = {
           ...values,
+          sender_email: user?.email,
           attachment_urls: urls,
         };
         await requestContact(formData);
@@ -63,7 +64,7 @@ const ContactForm = () => {
       <Headline strong>{t('CONTACT-US.send-us-a-message')}</Headline>
       <div className="contact-form-container">
         <Form form={form} onFinish={onFinish} layout="vertical" initialValues={getInitialValues()}>
-          <Row align="center" gutter={[16, 0]}>
+          <Row align="center" gutter={[10, 10]}>
             {!access_token && <NotLogged t={t} />}
             {access_token && (
               <>

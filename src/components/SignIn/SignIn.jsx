@@ -9,11 +9,14 @@ import { useAuthSlice } from '../../store/slices';
 import GoogleSignInButton from '../GoogleSignInButton/GoogleSignInButton';
 import { AUTH_ACTIONS } from '../../store/constants/action-name.constant';
 import { Paragraph } from '../Typography';
+import { useNavigate } from 'react-router-dom';
 import { Trans, useTranslation } from 'react-i18next';
 import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
+
 const SignIn = () => {
   const loginModal = useSelector(state => state.modal.loginModal);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { actions: authActions } = useAuthSlice();
   const { actionSucceeded, loading, errorTranslationKey } = useSelector(state => state.auth);
@@ -31,6 +34,7 @@ const SignIn = () => {
       dispatch(closeLoginModal());
       dispatch(authActions.clearActionSucceeded());
       dispatch(closeLoginModal());
+      navigate('/');
     }
   }, [actionSucceeded]);
 
