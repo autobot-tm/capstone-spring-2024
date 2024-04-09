@@ -34,7 +34,10 @@ export const configureApiCaller = store => {
 
       if (errorTranslationKey === ERROR_TRANS_KEYS.INVALID_JWT_TOKEN) {
         originalRequest._retry = true;
-
+        const { isRefreshing } = store.getState().auth;
+        if (isRefreshing) {
+          await new Promise(resolve => setTimeout(resolve, 1500));
+        }
         try {
           const dispatch = store.dispatch;
           const payload = await dispatch(refreshToken()).unwrap();

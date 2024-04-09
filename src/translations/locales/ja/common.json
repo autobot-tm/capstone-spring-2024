@@ -1,5 +1,10 @@
 {
-  "title-tab-main": "ロータス｜貸別荘。",
+  "title-tab-main": "ロータス｜貸別荘",
+  "title-tab-ourService": "サービ",
+  "title-tab-contactUs": "お問い合わせ",
+  "title-tab-faq": "よくある質問",
+  "title-tab-userManagement": "ユーザー管理",
+  "title-tab-checkout": "チェックアウト",
   "home": "ホーム",
   "about": "会社概要",
   "support": "サポート",
@@ -285,6 +290,7 @@
   "api.error.invalidOtpCode": "無効なOTPコードです",
   "api.error.accountSuspended": "あなたのアカウントは停止されました",
   "api.error.waitForServiceConfirmation": "リクエストを確認中です。",
+  "api.error.invoiceNotExist": "指定された請求書が存在しない",
 
   "invoice": "インボイス",
   "invoice.issued": "発行",

@@ -303,10 +303,10 @@ const ContractDetail = () => {
       action={closeContractDetailModal}
       footer={
         status === 'ACTIVE' && (
-          <Row gutter={[8, 8]}>
-            <Col sm={2}>
+          <Row gutter={[8, 8]} align="center">
+            <Col xs={24} sm={8}>
               <BaseButton
-                style={{ backgroundColor: '#ccc', width: 'auto' }}
+                style={{ backgroundColor: '#ccc' }}
                 onClick={() => {
                   dispatch(openReportIssuesModal({ categoryIssue: 'LIVING_ISSUE' }));
                   dispatch(closeContractDetailModal());
@@ -314,9 +314,8 @@ const ContractDetail = () => {
                 {t('report')}
               </BaseButton>
             </Col>
-            <Col sm={22} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Col xs={24} sm={16} style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <BaseButton
-                style={{ width: 'auto' }}
                 onClick={() => {
                   dispatch(openRequestCancelContractModal({ contractId: leaseId }));
                   dispatch(closeContractDetailModal());

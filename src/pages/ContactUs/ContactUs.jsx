@@ -5,11 +5,15 @@ import { Col, Row } from 'antd';
 import { Headline, Paragraph, SubHeading } from '../../components/Typography';
 import { useTranslation } from 'react-i18next';
 import ContactForm from './components/ContactForm/ContactForm';
+import { Helmet } from 'react-helmet';
 
 const ContactUs = () => {
   const { t } = useTranslation();
   return (
     <Layout>
+      <Helmet>
+        <title>{t('title-tab-contactUs')}</title>
+      </Helmet>
       <header id="header-contact-us">
         <Row className="header-row" align="middle">
           <Headline size={600} classNames="title-page" strong>

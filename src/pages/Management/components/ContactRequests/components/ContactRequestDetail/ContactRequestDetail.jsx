@@ -25,20 +25,25 @@ const ContactRequestDetail = () => {
   const [images, setImages] = useState([]);
   useEffect(() => {
     if (issueId) {
-      getIssueByIdService({ issueId }).then(response => {
-        setId(response.id);
-        setDescription(response.description);
-        setStatus(response.status);
-        setResolutionNote(response.resolution_note);
-        // Create an array to hold the promises
-        const promises = response.attachment_urls.map(url => presignedURLForViewingService({ url }));
+      getIssueByIdService({ issueId })
+        .then(response => {
+          setId(response.id);
+          setDescription(response.description);
+          setStatus(response.status);
+          setResolutionNote(response.resolution_note);
+          // Create an array to hold the promises
+          const promises = response.attachment_urls.map(url => presignedURLForViewingService({ url }));
 
-        // Resolve all promises concurrently
-        Promise.all(promises).then(responses => {
-          // Use functional update to update the images state
-          setImages([...responses]);
+          // Resolve all promises concurrently
+          Promise.all(promises).then(responses => {
+            // Use functional update to update the images state
+            setImages([...responses]);
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching issue details:', error);
+          // Handle the error here
         });
-      });
     }
   }, [loading]);
 
@@ -47,8 +52,6 @@ const ContactRequestDetail = () => {
       dispatch(setIssueLoading({ loading: false }));
     }
   }, [images]);
-
-  console.log(images);
 
   // const handleDownload = file => {
   //   const fileUrl = file;
@@ -120,7 +123,7 @@ const ContactRequestDetail = () => {
           ? t('category.invoiceIssue')
           : contactCategory === 'LIVING_ISSUE'
           ? t('category.livingIssue')
-          : 'Other'
+          : contactCategory
       }
       nameOfModal={contactRequestDetailModal}
       action={closeContactRequestDetailModal}

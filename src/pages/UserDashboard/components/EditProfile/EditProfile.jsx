@@ -98,6 +98,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
         </Paragraph>
       }>
       <Select
+        size="large"
         placeholder={user?.country || t(`USER-DASHBOARD.placeholder-country`)}
         onChange={value => handleInputChange(fieldName, value)}
         style={{ width: '100%' }}>
@@ -143,6 +144,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                 </Paragraph>
               }>
               <Input
+                size="large"
                 defaultValue={user?.first_name}
                 onChange={e => debouncedInputChange('first_name', e.target.value)}
                 placeholder={t('USER-DASHBOARD.placeholder-first-name')}
@@ -157,6 +159,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                 </Paragraph>
               }>
               <Input
+                size="large"
                 defaultValue={user?.last_name}
                 onChange={e => debouncedInputChange('last_name', e.target.value)}
                 placeholder={t('USER-DASHBOARD.placeholder-last-name')}
@@ -190,6 +193,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                   validateStatus={currentPasswordError ? 'error' : ''}
                   help={currentPasswordError}>
                   <Input.Password
+                    size="large"
                     onChange={e => debouncedInputChange('current_password', e.target.value)}
                     type="password"
                     autoComplete="true"
@@ -231,6 +235,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                     },
                   ]}>
                   <Input.Password
+                    size="large"
                     type="password"
                     onChange={e => debouncedInputChange('new_password', e.target.value)}
                     autoComplete="true"
@@ -282,6 +287,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                     }),
                   ]}>
                   <Input.Password
+                    size="large"
                     type="password"
                     onChange={e => debouncedInputChange('repeat_password', e.target.value)}
                     autoComplete="true"
@@ -312,6 +318,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                 },
               ]}>
               <Input
+                size="large"
                 defaultValue={formUser?.phone_number}
                 onChange={e => debouncedInputChange('phone_number', e.target.value)}
                 type="tel"
@@ -330,7 +337,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                   {t('USER-DASHBOARD.email')}
                 </Paragraph>
               }>
-              <Input placeholder={user?.email} disabled />
+              <Input size="large" placeholder={user?.email} disabled />
             </Form.Item>
           </Col>
         </Row>

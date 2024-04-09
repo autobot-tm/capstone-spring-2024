@@ -12,6 +12,7 @@ import { openLoginModal, openShowLeaseModal } from '../../store/slices/modalSlic
 import CardRequest from './components/CardRequest/CardRequest';
 import { setExtraServicesRequest } from '../../store/slices/extraServices.slice';
 import { getLeasesService } from '../../services/apis/contracts.service';
+import { Helmet } from 'react-helmet';
 
 const ExtraServices = () => {
   const dispatch = useDispatch();
@@ -90,6 +91,9 @@ const ExtraServices = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>{t('title-tab-ourService')}</title>
+      </Helmet>
       <header id="header-extra-services">
         <Row className="header-row" align="middle">
           <Col xs={24} sm={12}>

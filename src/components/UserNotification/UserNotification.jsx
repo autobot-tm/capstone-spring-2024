@@ -5,12 +5,21 @@ import { Dropdown, Menu, List, Badge } from 'antd';
 import { BellOutlined } from '@ant-design/icons';
 import { Caption, Paragraph, SubHeading } from '../Typography';
 import { useDispatch, useSelector } from 'react-redux';
-import { markAsRead, markAllAsRead, setNotifications } from '../../store/slices/notification.slice';
+import { setNotifications, setLimit, setUnreadCount } from '../../store/slices/notification.slice';
 import { getNotiByIdService, getNotiUserCurrentService } from '../../services/apis/notification.service';
-import { openContractDetailModal } from '../../store/slices/modalSlice';
+import {
+  openContactRequestDetailModal,
+  openContractDetailModal,
+  openExtraServiceRequestDetailModal,
+  openInvoiceDetailModal,
+} from '../../store/slices/modalSlice';
 import { updateNotiHasReadService } from '../../services/apis/notification.service';
 import { useNavigate } from 'react-router-dom';
 import { setContractLoading } from '../../store/slices/contractSlice';
+import { getExtraServiceRequestsById } from '../../services/apis/extra-services.service';
+import { setIssueLoading } from '../../store/slices/issueSlice';
+import { setInvoiceLoading } from '../../store/slices/invoiceSlice';
+// import { APP_CONFIG } from '../../config/app.config';
 
 const NotificationItem = ({ isRead, onClick, title, description, time, t }) => {
   const notificationTime = new Date(time);
@@ -66,15 +75,34 @@ const UserNotification = ({ t }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { access_token } = useSelector(state => state.auth);
-  const unreadCount = useSelector(state => state.notification.unreadCount);
-  const notificationState = useSelector(state => state.notification.notifications);
+  const { unreadCount, limit, notifications } = useSelector(state => state.notification);
   const [visible, setVisible] = useState(false);
+  const [showLoadMore, setShowLoadMore] = useState(false);
+  // const [messages, setMessages] = useState([]);
 
-  const { data: notifications } = useSWR('/api/notifications', async () => {
+  // useEffect(() => {
+  //   const eventSource = new EventSource(APP_CONFIG.BACKEND_URL + '/notifications/me/realtime');
+
+  //   eventSource.onmessage = event => {
+  //     const newMessage = JSON.parse(event.data);
+  //     setMessages(prevMessages => [...prevMessages, newMessage]);
+  //   };
+
+  //   eventSource.onerror = error => {
+  //     console.error('SSE Error:', error);
+  //   };
+
+  //   return () => {
+  //     eventSource.close();
+  //   };
+  // }, []);
+  // console.log(APP_CONFIG.BACKEND_URL, messages);
+
+  const { data, isLoading } = useSWR(limit, async key => {
     try {
       if (access_token) {
-        const res = await getNotiUserCurrentService();
-        return res.notifications;
+        const res = await getNotiUserCurrentService({ limit: key });
+        return res;
       }
     } catch (error) {
       console.error('Error fetching notification:', error);
@@ -83,43 +111,97 @@ const UserNotification = ({ t }) => {
   });
 
   useEffect(() => {
-    if (notifications) {
-      dispatch(setNotifications(notifications));
+    if (data && !isLoading) {
+      const newNotifications = data.notifications;
+      const unreadCount = newNotifications.reduce((count, item) => {
+        return count + (item.current_user_has_read ? 0 : 1);
+      }, 0);
+      dispatch(setUnreadCount(unreadCount));
+      dispatch(setNotifications(newNotifications));
+      if (data?.total_rows > newNotifications?.length) {
+        setShowLoadMore(true);
+      }
     }
-  }, [notifications, dispatch]);
+  }, [data, isLoading]);
+
+  const handleLoadMore = () => {
+    if (!data) {
+      return;
+    }
+    const dataShow = notifications?.length;
+    const dataCurrent = data?.total_rows;
+    if (dataCurrent > dataShow) {
+      const newLimit = limit + 10;
+      dispatch(setLimit({ limit: newLimit }));
+    } else {
+      setShowLoadMore(false);
+    }
+  };
 
   const handleVisibleChange = flag => {
     setVisible(flag);
-    if (!flag) {
-      dispatch(markAllAsRead());
-    }
   };
 
   const handleNotificationClick = async id => {
     if (id) {
       try {
+        setVisible(false);
         const noti = await getNotiByIdService(id);
         const ACTION_TYPE = noti.action_type;
-        const contextOfNoti = noti.context;
-        setVisible(false);
-        dispatch(markAsRead(id));
+        const context = noti.context;
+        const { lease_id, cancelation_request_id, extra_service_request_id, issue_id, invoice_id } = context;
         await updateNotiHasReadService(id);
 
-        if (ACTION_TYPE === 'LEASE_CANCELATION_REQUEST') {
-          const { lease_id, cancelation_request_id } = contextOfNoti;
-          dispatch(
-            openContractDetailModal({
-              actionType: ACTION_TYPE,
-              contractId: lease_id,
-              cancelation_request_id: cancelation_request_id,
-            }),
-          );
-          dispatch(setContractLoading({ loading: true }));
-          dispatch(markAllAsRead());
-          return navigate('/management');
-        } else {
-          dispatch(markAllAsRead());
-          return navigate('/management');
+        switch (ACTION_TYPE) {
+          case 'LEASE_CANCELATION_REQUEST':
+            dispatch(
+              openContractDetailModal({
+                actionType: ACTION_TYPE,
+                contractId: lease_id,
+                cancelation_request_id: cancelation_request_id,
+              }),
+            );
+            dispatch(setContractLoading({ loading: true }));
+            navigate('/management');
+            break;
+          case 'EXTRA_SERVICE_REQUEST':
+            getExtraServiceRequestsById(extra_service_request_id)
+              .then(response => {
+                dispatch(
+                  openExtraServiceRequestDetailModal({
+                    actionType: ACTION_TYPE,
+                    extraServiceRequestDetail: response,
+                  }),
+                );
+                navigate('/management');
+              })
+              .catch(error => {
+                console.error('Error fetching extra service request:', error);
+              });
+            break;
+          case 'ISSUE_RESOLUTION':
+            dispatch(
+              openContactRequestDetailModal({
+                actionType: ACTION_TYPE,
+                issueId: issue_id,
+                category: noti.title,
+              }),
+            );
+            dispatch(setIssueLoading({ loading: true }));
+            navigate('/management');
+            break;
+          case 'INVOICE_CREATION':
+            dispatch(
+              openInvoiceDetailModal({
+                actionType: ACTION_TYPE,
+                invoiceId: invoice_id,
+              }),
+            );
+            dispatch(setInvoiceLoading({ loading: true }));
+            navigate('/management');
+            break;
+          default:
+            break;
         }
       } catch (error) {
         console.error('Error handling notification click:', error);
@@ -142,7 +224,7 @@ const UserNotification = ({ t }) => {
         </div>
         <List
           className="noti-list"
-          dataSource={notificationState}
+          dataSource={notifications}
           renderItem={item => (
             <>
               <NotificationItem
@@ -157,6 +239,10 @@ const UserNotification = ({ t }) => {
             </>
           )}
         />
+
+        <div className="see-more-container">
+          {showLoadMore && <a onClick={handleLoadMore}>{t('label.showMore')}</a>}
+        </div>
       </div>
     </Menu>
   );
@@ -169,7 +255,7 @@ const UserNotification = ({ t }) => {
       visible={visible}
       onOpenChange={handleVisibleChange}>
       <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-        <Badge count={unreadCount}>
+        <Badge count={!isLoading && unreadCount}>
           <BellOutlined style={{ fontSize: '27px' }} />
         </Badge>
       </div>

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   loading: false,
   notifications: [],
+  limit: 10,
   unreadCount: 0,
 };
 
@@ -15,34 +16,16 @@ const notificationSlice = createSlice({
     },
     setNotifications(state, action) {
       state.notifications = action.payload;
-      state.unreadCount = action?.payload?.filter(item => !item.current_user_has_read).length;
     },
-    markAsRead(state, action) {
-      const notificationId = action.payload;
-      const notification = state.notifications.find(item => item.id === notificationId);
-      if (notification && !notification.current_user_has_read) {
-        notification.current_user_has_read = true;
-        if (state.unreadCount > 0) {
-          state.unreadCount -= 1;
-        }
-      }
+    setUnreadCount(state, action) {
+      state.unreadCount = action.payload;
     },
-    markAllAsRead(state) {
-      state.unreadCount = 0;
-    },
-
-    clearNotifications(state) {
-      state.notifications = [];
-      state.unreadCount = 0;
-    },
-    removeNotification(state, action) {
-      state.notifications = state.notifications.filter(item => item.id !== action.payload);
-      state.unreadCount -= 1;
+    setLimit(state, action) {
+      state.limit = action.payload.limit;
     },
   },
 });
 
-export const { setLoading, setNotifications, clearNotifications, removeNotification, markAsRead, markAllAsRead } =
-  notificationSlice.actions;
+export const { setLoading, setNotifications, setUnreadCount, setLimit } = notificationSlice.actions;
 
 export default notificationSlice.reducer;
