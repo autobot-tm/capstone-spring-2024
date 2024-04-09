@@ -182,6 +182,10 @@ const NotLogged = ({ t }) => {
               required: true,
               message: t('error-phone-number'),
             },
+            {
+              pattern: PHONE_NUMBER.VALID_LENGTH,
+              message: t('USER-DASHBOARD.mobile-phone-error-valid-length'),
+            },
           ]}>
           <Input placeholder={t('USER-DASHBOARD.placeholder-mobile-phone')} />
         </Form.Item>
