@@ -27,12 +27,12 @@ const ContactUs = () => {
             <ContactForm />
           </Col>
           <Col xs={24} md={12}>
-            <SubHeading size={260} style={{ paddingLeft: 20 }} strong>
+            <Headline size={450} style={{ paddingLeft: 20 }} strong>
               {t('CONTACT-US.contact-us')}
-            </SubHeading>
+            </Headline>
             <Row className="contactUs-info" gutter={[32, 16]} align="center">
               <Col xs={24} sm={12}>
-                <SubHeading size={230} classNames="d-block" strong>
+                <SubHeading size={260} classNames="d-block" strong>
                   {t('CONTACT-US.main-office')}
                 </SubHeading>
                 <Paragraph classNames="d-block" strong style={{ marginTop: 20 }}>
@@ -47,7 +47,7 @@ const ContactUs = () => {
                 <Paragraph classNames="d-block">Saturday 09:00 – 18:00 </Paragraph>
               </Col>
               <Col xs={24} sm={12}>
-                <SubHeading size={230} classNames="d-block" strong>
+                <SubHeading size={260} classNames="d-block" strong>
                   {t('CONTACT-US.second-office')}
                 </SubHeading>
                 <Paragraph classNames="d-block" strong style={{ marginTop: 20 }}>
