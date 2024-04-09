@@ -118,7 +118,7 @@ const InvoiceDetail = () => {
                 onClick={handleReportIssues}
                 loading={loading ? true : false}
                 disabled={loading ? true : false}
-                style={{ backgroundColor: '#ccc' }}>
+                style={{ backgroundColor: '#d2dae2' }}>
                 {t('report')}
               </BaseButton>
             </Col>
