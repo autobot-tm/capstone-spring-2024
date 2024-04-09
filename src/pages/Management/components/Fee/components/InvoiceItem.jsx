@@ -27,8 +27,8 @@ const InvoiceItem = ({ invoice, t }) => {
         </div>
         <div className={styles.invoiceContentCard}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Caption ellipsis size={140}>
-              {t('placeholder.type')}: <b> {invoice?.type}</b>
+            <Caption ellipsis classNames="color-black" size={140}>
+              {t('placeholder.type')}: <b> {invoice?.type === 'RENTAL_FEE' ? t('label.rentalFee') : 'Other Fee'}</b>
             </Caption>
             <InvoiceStatus status={invoice?.status} />
           </div>
