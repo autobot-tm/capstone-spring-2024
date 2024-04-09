@@ -205,6 +205,7 @@
   "cancel.confirm": "このリクエストをキャンセルしてもよろしいですか？",
   "yes": "はい",
   "no": "いいえ",
+  "submitting": "提出する...",
   "progresses": "進捗状況",
   "assigned-at": "配属先",
   "completed-at": "で完成",

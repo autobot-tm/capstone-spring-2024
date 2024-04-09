@@ -1,5 +1,5 @@
 import './styles.scss';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { SubHeading } from '../../../../components/Typography';
 import { Col, Form, Input, Row, Select, notification } from 'antd';
 import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
@@ -18,6 +18,7 @@ const ContactForm = () => {
   const [form] = Form.useForm();
   const fileUploadRef = useRef();
   const [api, contextHolder] = notification.useNotification();
+  const [submitting, setSubmitting] = useState(false);
 
   const openNotificationWithIcon = (type, message) => {
     api[type]({
@@ -27,6 +28,7 @@ const ContactForm = () => {
 
   const onFinish = async values => {
     try {
+      setSubmitting(true);
       if (values) {
         let formData = null;
         const urls = await fileUploadRef.current?.upload();
@@ -55,6 +57,8 @@ const ContactForm = () => {
       } else {
         console.error('Error request contact us:', error);
       }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -73,6 +77,7 @@ const ContactForm = () => {
                 <Col xs={12}>
                   <Form.Item name="sender_first_name">
                     <Input
+                      size="large"
                       placeholder={user?.first_name ? user?.first_name : t('USER-DASHBOARD.first-name')}
                       disabled
                     />
@@ -80,12 +85,16 @@ const ContactForm = () => {
                 </Col>
                 <Col xs={12}>
                   <Form.Item name="sender_last_name">
-                    <Input placeholder={user?.last_name ? user?.last_name : t('USER-DASHBOARD.last-name')} disabled />
+                    <Input
+                      size="large"
+                      placeholder={user?.last_name ? user?.last_name : t('USER-DASHBOARD.last-name')}
+                      disabled
+                    />
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
                   <Form.Item name="sender_email">
-                    <Input placeholder={user?.email} disabled />
+                    <Input size="large" placeholder={user?.email} disabled />
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
@@ -101,7 +110,7 @@ const ContactForm = () => {
                         message: t('USER-DASHBOARD.mobile-phone-error-valid-length'),
                       },
                     ]}>
-                    <Input placeholder={t('USER-DASHBOARD.placeholder-mobile-phone')} />
+                    <Input size="large" placeholder={t('USER-DASHBOARD.placeholder-mobile-phone')} />
                   </Form.Item>
                 </Col>
               </>
@@ -109,7 +118,7 @@ const ContactForm = () => {
 
             <Col xs={24}>
               <Form.Item name="category" rules={[{ required: true, message: t('CONTACT-US.error-your-category') }]}>
-                <Select placeholder={t('CONTACT-US.placeholder-your-category')}>
+                <Select size="large" placeholder={t('CONTACT-US.placeholder-your-category')}>
                   <Select.Option value="HOMEOWNER_LEASE_INQUIRY">
                     {t('CONTACT-US.homeowner-lease-inquiry')}
                   </Select.Option>
@@ -132,7 +141,7 @@ const ContactForm = () => {
             <Col xs={24}>
               <Form.Item>
                 <BaseButton style={{ width: 'auto' }} type="primary" htmlType="submit">
-                  {t('CONTACT-US.send-a-message-btn')}
+                  {submitting ? t('submitting') : t('CONTACT-US.send-a-message-btn')}
                 </BaseButton>
               </Form.Item>
             </Col>
@@ -150,12 +159,12 @@ const NotLogged = ({ t }) => {
     <>
       <Col xs={12}>
         <Form.Item rules={[{ required: true, message: t('error-first-name') }]} name="sender_first_name">
-          <Input placeholder={t('USER-DASHBOARD.placeholder-first-name')} />
+          <Input size="large" placeholder={t('USER-DASHBOARD.placeholder-first-name')} />
         </Form.Item>
       </Col>
       <Col xs={12}>
         <Form.Item rules={[{ required: true, message: t('error-last-name') }]} name="sender_last_name">
-          <Input placeholder={t('USER-DASHBOARD.placeholder-last-name')} />
+          <Input size="large" placeholder={t('USER-DASHBOARD.placeholder-last-name')} />
         </Form.Item>
       </Col>
       <Col xs={12}>
@@ -171,7 +180,7 @@ const NotLogged = ({ t }) => {
               message: t('error-email'),
             },
           ]}>
-          <Input type="email" placeholder={t('USER-DASHBOARD.placeholder-email')} />
+          <Input size="large" type="email" placeholder={t('USER-DASHBOARD.placeholder-email')} />
         </Form.Item>
       </Col>
       <Col xs={12}>
@@ -187,7 +196,7 @@ const NotLogged = ({ t }) => {
               message: t('USER-DASHBOARD.mobile-phone-error-valid-length'),
             },
           ]}>
-          <Input placeholder={t('USER-DASHBOARD.placeholder-mobile-phone')} />
+          <Input size="large" placeholder={t('USER-DASHBOARD.placeholder-mobile-phone')} />
         </Form.Item>
       </Col>
     </>

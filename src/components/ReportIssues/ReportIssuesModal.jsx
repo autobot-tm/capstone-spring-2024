@@ -24,6 +24,7 @@ const ReportIssuesModal = () => {
   const { access_token } = useSelector(state => state.auth);
   const { reportIssuesModal, invoiceId, categoryIssue, contractId } = useSelector(state => state.modal);
   const [isReport, setIsReport] = useState([]);
+  const [submitting, setSubmitting] = useState(false);
   const fileUploadRef = useRef();
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, message) => {
@@ -75,6 +76,7 @@ const ReportIssuesModal = () => {
       return;
     }
     try {
+      setSubmitting(true);
       let formData = null;
       const urls = await fileUploadRef.current?.upload();
       if (values && invoiceId && categoryIssue === 'INVOICE_ISSUE') {
@@ -106,6 +108,8 @@ const ReportIssuesModal = () => {
       } else {
         console.error('Error request invoice issues:', error);
       }
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -158,7 +162,7 @@ const ReportIssuesModal = () => {
                         {t('button.back')}
                       </BaseButton>
                       <BaseButton style={{ width: 'auto' }} type="primary" htmlType="submit">
-                        {t('CONTACT-US.send-a-message-btn')}
+                        {submitting ? t('submitting') : t('CONTACT-US.send-a-message-btn')}
                       </BaseButton>
                     </div>
                   </Form.Item>

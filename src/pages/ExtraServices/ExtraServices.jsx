@@ -131,7 +131,9 @@ const ExtraServices = () => {
         </Row>
         <Row justify="center" gutter={[40, 12]}>
           <Col xs={24} sm={10} md={12} xl={16} className="des-services">
-            <Paragraph classNames="right-text"> {t('EXTRA-SERVICES.des-electricity-be')}</Paragraph>
+            <Paragraph classNames="right-text">
+              {t('EXTRA-SERVICES.des-electricity-be')} {extraServices?.type}{' '}
+            </Paragraph>
           </Col>
           <Col xs={24} sm={14} md={12} xl={8}>
             <CardRequest color="#f8a11e" type="electricity" onClickRequest={handleCardClick} t={t} />
