@@ -72,8 +72,6 @@ const modalSlice = createSlice({
       state.contractId = action.payload.contractId;
       state.cancelation_request_id = action.payload.cancelation_request_id;
       state.actionType = action.payload.actionType;
-      // state.extraServiceRequestId = action.payload.extraServiceRequestId;
-      // state.extraServiceId = action.payload.extraServiceId;
     },
     openRequestCancelContractModal: (state, action) => {
       state.requestCancelContractModal = true;
@@ -96,6 +94,7 @@ const modalSlice = createSlice({
     openExtraServiceRequestDetailModal: (state, action) => {
       state.extraServiceRequestDetailModal = true;
       state.extraServiceRequestDetail = action?.payload?.extraServiceRequestDetail;
+      state.actionType = action.payload.actionType;
     },
     openReportIssuesModal: (state, action) => {
       state.reportIssuesModal = true;
@@ -116,12 +115,15 @@ const modalSlice = createSlice({
       state.contactRequestDetailModal = true;
       state.contactCategory = action.payload.category;
       state.issueId = action.payload.issueId;
+      state.actionType = action?.payload?.actionType;
     },
     closeExtraServiceRequestDetailModal: state => {
       state.extraServiceRequestDetailModal = false;
+      state.actionType = null;
     },
     openInvoiceDetailModal: (state, action) => {
       state.invoiceId = action.payload.invoiceId;
+      state.actionType = action?.payload?.actionType;
       state.invoiceDetailModal = true;
     },
     closeShowLeaseModal: state => {
@@ -165,9 +167,11 @@ const modalSlice = createSlice({
     },
     closeInvoiceDetailModal: state => {
       state.invoiceDetailModal = false;
+      state.actionType = null;
     },
     closeContactRequestDetailModal: state => {
       state.contactRequestDetailModal = false;
+      state.actionType = null;
     },
   },
 });

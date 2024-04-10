@@ -15,6 +15,7 @@ import { Caption, Headline, Paragraph } from '../Typography';
 import { LoadingOutlined, TagsFilled } from '@ant-design/icons';
 import './styles.scss';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
+import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
 
 const InvoiceDetail = () => {
   const { t } = useTranslation();
@@ -26,16 +27,26 @@ const InvoiceDetail = () => {
   const [statusFee, setStatusFee] = useState('');
   const [items, setItems] = useState([]);
   const [data, setData] = useState({});
+  const [existError, setExistError] = useState(null);
 
   useEffect(() => {
     if (invoiceId) {
-      getInvoiceByIdService({ invoiceId }).then(response => {
-        setData(response);
-        setAmount(response.amount);
-        setItems(response.items);
-        setStatusFee(response.status);
-        dispatch(setInvoiceLoading({ loading: false }));
-      });
+      getInvoiceByIdService({ invoiceId })
+        .then(response => {
+          setData(response);
+          setAmount(response.amount);
+          setItems(response.items);
+          setStatusFee(response.status);
+          dispatch(setInvoiceLoading({ loading: false }));
+          setExistError(null);
+        })
+        .catch(error => {
+          if (error === ERROR_TRANS_KEYS.INVOICE_NOT_EXIST_OR_NO_PERMISSION) {
+            setExistError(t('api.error.invoiceNotExist'));
+          } else {
+            console.error('Error fetching invoice id:', error);
+          }
+        });
     }
   }, [loading, invoiceId]);
 
@@ -105,13 +116,16 @@ const InvoiceDetail = () => {
                 block
                 size="large"
                 onClick={handleReportIssues}
-                style={{ backgroundColor: '#ccc' }}>
+                loading={loading ? true : false}
+                disabled={loading ? true : false}
+                style={{ backgroundColor: '#d2dae2' }}>
                 {t('report')}
               </BaseButton>
             </Col>
           </Row>
         ),
       ]}>
+      {existError && <div className="error-message">{existError}</div>}
       {loading ? (
         <div className="loading-container">
           <LoadingOutlined size="large" />

@@ -11,6 +11,7 @@ import { AUTH_ACTIONS } from '../../store/constants/action-name.constant';
 import { Paragraph } from '../Typography';
 import { Trans, useTranslation } from 'react-i18next';
 import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
+
 const SignIn = () => {
   const loginModal = useSelector(state => state.modal.loginModal);
   const dispatch = useDispatch();

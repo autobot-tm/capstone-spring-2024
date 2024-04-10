@@ -5,6 +5,10 @@ export const getExtraServices = () => {
   return apiCaller.get(ENDPOINTS.services.base);
 };
 
+export const getExtraServiceRequestsById = id => {
+  return apiCaller.get(ENDPOINTS.services.requestId(id));
+};
+
 export const getExtraServiceRequests = ({ renter_email = '', limit = 20, offset = 0, status = 'ALL' }) => {
   return apiCaller.get(
     ENDPOINTS.services.request +

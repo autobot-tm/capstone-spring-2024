@@ -10,6 +10,7 @@ import { ERROR_TRANS_KEYS } from '../../../../constants/error.constant';
 import { useDispatch } from 'react-redux';
 import { useUserSlice } from '../../../../store/slices/user.slice';
 import UploadAvatar from '../../../../components/UploadFile/UploadAvatar';
+import { formattedCountries } from '../../../../data/country.data';
 
 const { Option } = Select;
 const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
@@ -20,7 +21,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
   const [repeatPasswordError, setRepeatPasswordError] = useState(null);
   const [showPasswordBtn, setShowPasswordBtn] = useState(false);
   const [formUser, setFormUser] = useState(user);
-
+  const countries = formattedCountries;
   const debounce = (func, delay) => {
     let timer;
     return function (...args) {
@@ -98,12 +99,17 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
         </Paragraph>
       }>
       <Select
+        size="large"
+        showSearch
+        optionFilterProp="children"
         placeholder={user?.country || t(`USER-DASHBOARD.placeholder-country`)}
         onChange={value => handleInputChange(fieldName, value)}
         style={{ width: '100%' }}>
-        <Option value="Vietnam">Vietnam</Option>
-        <Option value="Japan">Japan</Option>
-        <Option value="USA">USA</Option>
+        {countries.map(option => (
+          <Option key={option.value} value={option.value}>
+            {option.label}
+          </Option>
+        ))}
       </Select>
     </Form.Item>
   );
@@ -143,6 +149,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                 </Paragraph>
               }>
               <Input
+                size="large"
                 defaultValue={user?.first_name}
                 onChange={e => debouncedInputChange('first_name', e.target.value)}
                 placeholder={t('USER-DASHBOARD.placeholder-first-name')}
@@ -157,6 +164,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                 </Paragraph>
               }>
               <Input
+                size="large"
                 defaultValue={user?.last_name}
                 onChange={e => debouncedInputChange('last_name', e.target.value)}
                 placeholder={t('USER-DASHBOARD.placeholder-last-name')}
@@ -190,6 +198,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                   validateStatus={currentPasswordError ? 'error' : ''}
                   help={currentPasswordError}>
                   <Input.Password
+                    size="large"
                     onChange={e => debouncedInputChange('current_password', e.target.value)}
                     type="password"
                     autoComplete="true"
@@ -231,6 +240,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                     },
                   ]}>
                   <Input.Password
+                    size="large"
                     type="password"
                     onChange={e => debouncedInputChange('new_password', e.target.value)}
                     autoComplete="true"
@@ -282,6 +292,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                     }),
                   ]}>
                   <Input.Password
+                    size="large"
                     type="password"
                     onChange={e => debouncedInputChange('repeat_password', e.target.value)}
                     autoComplete="true"
@@ -312,6 +323,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                 },
               ]}>
               <Input
+                size="large"
                 defaultValue={formUser?.phone_number}
                 onChange={e => debouncedInputChange('phone_number', e.target.value)}
                 type="tel"
@@ -330,7 +342,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
                   {t('USER-DASHBOARD.email')}
                 </Paragraph>
               }>
-              <Input placeholder={user?.email} disabled />
+              <Input size="large" placeholder={user?.email} disabled />
             </Form.Item>
           </Col>
         </Row>

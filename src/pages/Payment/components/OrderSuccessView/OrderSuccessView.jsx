@@ -10,6 +10,7 @@ import { formatCustomCurrency } from '../../../../utils/number-seperator';
 import { routeNames } from '../../../../config';
 import SpinLoading from '../../../../components/SpinLoading/SpinLoading';
 import { useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 const OrderSuccessView = () => {
   const { dataOrderSuccessfully, typeOfPayment } = useSelector(state => state.payment);
@@ -22,6 +23,9 @@ const OrderSuccessView = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>{t('title-tab-checkout')}</title>
+      </Helmet>
       <header id="header-checkout">
         <Row className="header-row" align="middle">
           <Col xs={24} sm={12}>

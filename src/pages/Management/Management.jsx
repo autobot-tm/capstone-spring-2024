@@ -22,6 +22,7 @@ import ExtraServices from './components/ExtraServices/ExtraServices';
 import { Paragraph } from '../../components/Typography';
 import ContactRequests from './components/ContactRequests/ContactRequests';
 import { setIssueCategory, setIssuePage, setIssueStatus } from '../../store/slices/issueSlice';
+import { Helmet } from 'react-helmet';
 
 const Management = () => {
   const dispatch = useDispatch();
@@ -29,13 +30,31 @@ const Management = () => {
   const contractPage = useSelector(state => state.contract.page);
   const invoicePage = useSelector(state => state.invoice.page);
   const issuePage = useSelector(state => state.issue.page);
-
+  const { actionType } = useSelector(state => state.modal);
   const [menuItem, setMenuItem] = useState('contract');
   const { t } = useTranslation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [page, contractPage, invoicePage, issuePage]);
+
+  useEffect(() => {
+    if (actionType) {
+      switch (actionType) {
+        case 'ISSUE_RESOLUTION':
+          setMenuItem('contactRequests');
+          break;
+        case 'INVOICE_CREATION':
+          setMenuItem('fee');
+          break;
+        case 'EXTRA_SERVICE_REQUEST':
+          setMenuItem('service');
+          break;
+        default:
+          break;
+      }
+    }
+  }, [actionType]);
 
   const items = [
     {
@@ -107,6 +126,9 @@ const Management = () => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>{t('title-tab-userManagement')}</title>
+      </Helmet>
       <div className="management-container">
         <div style={{ marginTop: '16px' }}>
           <Row gutter={16}>

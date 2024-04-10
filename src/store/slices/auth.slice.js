@@ -23,6 +23,7 @@ const createInitialState = () => {
     access_token_expires_at: '',
     refresh_token_expires_at: '',
     loading: false,
+    isRefreshing: false,
     errorTranslationKey: undefined,
   };
   return initialState;
@@ -169,6 +170,7 @@ export const authSlice = createSlice({
     builder.addCase(initState.pending, state => ({
       ...state,
       actionSucceeded: undefined,
+      isRefreshing: true,
       loading: true,
     }));
     builder.addCase(initState.fulfilled, (state, { payload }) => ({
@@ -179,12 +181,14 @@ export const authSlice = createSlice({
       access_token_expires_at: payload.access_token_expires_at,
       refresh_token_expires_at: payload.refresh_token_expires_at,
       actionSucceeded: payload.actionSucceeded,
+      isRefreshing: false,
       loading: false,
     }));
     builder.addCase(initState.rejected, (state, { payload }) => ({
       ...state,
       loading: false,
       actionSucceeded: undefined,
+      isRefreshing: false,
       errorTranslationKey: payload,
     }));
     builder.addCase(signIn.pending, state => ({
@@ -252,6 +256,7 @@ export const authSlice = createSlice({
     builder.addCase(refreshToken.pending, state => ({
       ...state,
       actionSucceeded: undefined,
+      isRefreshing: true,
       loading: true,
       errorTranslationKey: '',
     }));
@@ -263,12 +268,14 @@ export const authSlice = createSlice({
       access_token_expires_at: payload.access_token_expires_at,
       refresh_token_expires_at: payload.refresh_token_expires_at,
       actionSucceeded: payload.actionSucceeded,
+      isRefreshing: false,
       loading: false,
     }));
     builder.addCase(refreshToken.rejected, (state, { payload }) => ({
       ...state,
       loading: false,
       actionSucceeded: undefined,
+      isRefreshing: false,
       errorTranslationKey: payload,
     }));
     builder.addCase(signOut.pending, state => ({

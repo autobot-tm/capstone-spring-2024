@@ -43,7 +43,7 @@ const ExtraServiceDetailModal = () => {
     } catch (error) {
       console.warn('Error at get lease by id', error);
     }
-  }, [loading]);
+  }, [loading, extraServiceRequestDetailModal]);
 
   const handleCancelRequestService = async () => {
     try {
