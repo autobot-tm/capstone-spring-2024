@@ -10,6 +10,7 @@ import { ERROR_TRANS_KEYS } from '../../../../constants/error.constant';
 import { useDispatch } from 'react-redux';
 import { useUserSlice } from '../../../../store/slices/user.slice';
 import UploadAvatar from '../../../../components/UploadFile/UploadAvatar';
+import { formattedCountries } from '../../../../data/country.data';
 
 const { Option } = Select;
 const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
@@ -20,7 +21,7 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
   const [repeatPasswordError, setRepeatPasswordError] = useState(null);
   const [showPasswordBtn, setShowPasswordBtn] = useState(false);
   const [formUser, setFormUser] = useState(user);
-
+  const countries = formattedCountries;
   const debounce = (func, delay) => {
     let timer;
     return function (...args) {
@@ -99,12 +100,16 @@ const EditProfile = ({ user, t, avatarDefault, onUpdate }) => {
       }>
       <Select
         size="large"
+        showSearch
+        optionFilterProp="children"
         placeholder={user?.country || t(`USER-DASHBOARD.placeholder-country`)}
         onChange={value => handleInputChange(fieldName, value)}
         style={{ width: '100%' }}>
-        <Option value="Vietnam">Vietnam</Option>
-        <Option value="Japan">Japan</Option>
-        <Option value="USA">USA</Option>
+        {countries.map(option => (
+          <Option key={option.value} value={option.value}>
+            {option.label}
+          </Option>
+        ))}
       </Select>
     </Form.Item>
   );

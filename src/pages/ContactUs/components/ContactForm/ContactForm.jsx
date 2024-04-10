@@ -29,12 +29,20 @@ const ContactForm = () => {
     try {
       setSubmitting(true);
       if (values) {
+        let formData = null;
         const urls = await fileUploadRef.current?.upload();
-        const formData = {
-          ...values,
-          sender_email: user?.email,
-          attachment_urls: urls,
-        };
+        if (access_token) {
+          formData = {
+            ...values,
+            sender_email: user?.email,
+            attachment_urls: urls,
+          };
+        } else {
+          formData = {
+            ...values,
+            attachment_urls: urls,
+          };
+        }
         await requestContact(formData);
       }
       openNotificationWithIcon('success', t('notification.submittedSuccessfully'));
@@ -48,32 +56,36 @@ const ContactForm = () => {
 
   const getInitialValues = () => {
     if (access_token) {
+      form.resetFields(['sender_email']);
       return {
         sender_first_name: user?.first_name,
         sender_last_name: user?.last_name,
-        sender_email: user?.email,
         sender_phone_number: user?.phone_number,
       };
     }
     return {};
   };
 
+  console.log('getInitialValues', getInitialValues());
+
+  console.log('user', user);
   return (
     <>
       {contextHolder}
       <Headline strong>{t('CONTACT-US.send-us-a-message')}</Headline>
       <div className="contact-form-container">
-        <Form form={form} onFinish={onFinish} layout="vertical" initialValues={getInitialValues()}>
-          <Row align="center" gutter={[10, 10]}>
-            {!access_token && <NotLogged t={t} />}
-            {access_token && (
-              <>
+        {!access_token ? (
+          <NotLogged t={t} form={form} onFinish={onFinish} submitting={submitting} />
+        ) : (
+          <>
+            <Form form={form} onFinish={onFinish} layout="vertical" initialValues={getInitialValues()}>
+              <Row align="center" gutter={[10, 10]}>
                 <Col xs={12}>
                   <Form.Item rules={[{ required: true, message: t('error-first-name') }]} name="sender_first_name">
                     <Input
                       size="large"
                       defaultValue={user?.first_name}
-                      placeholder={!user?.first_name && t('USER-DASHBOARD.first-name')}
+                      placeholder={!user?.first_name && t('USER-DASHBOARD.placeholder-first-name')}
                     />
                   </Form.Item>
                 </Col>
@@ -82,13 +94,13 @@ const ContactForm = () => {
                     <Input
                       size="large"
                       defaultValue={user?.last_name}
-                      placeholder={user?.last_name ? user?.last_name : t('USER-DASHBOARD.placeholder-last-name')}
+                      placeholder={!user?.last_name && t('USER-DASHBOARD.placeholder-last-name')}
                     />
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
                   <Form.Item name="sender_email">
-                    <Input size="large" placeholder={user?.email} disabled />
+                    <Input size="large" defaultValue={user?.email} placeholder={user?.email} disabled />
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
@@ -107,46 +119,47 @@ const ContactForm = () => {
                     <Input
                       size="large"
                       defaultValue={user?.phone_number}
-                      placeholder={user?.phone_number && t('USER-DASHBOARD.placeholder-mobile-phone')}
+                      placeholder={!user?.phone_number && t('USER-DASHBOARD.placeholder-mobile-phone')}
                     />
                   </Form.Item>
                 </Col>
-              </>
-            )}
-
-            <Col xs={24}>
-              <Form.Item name="category" rules={[{ required: true, message: t('CONTACT-US.error-your-category') }]}>
-                <Select size="large" placeholder={t('CONTACT-US.placeholder-your-category')}>
-                  <Select.Option style={{ fontSize: 16 }} value="HOMEOWNER_LEASE_INQUIRY">
-                    {t('CONTACT-US.homeowner-lease-inquiry')}
-                  </Select.Option>
-                  <Select.Option style={{ fontSize: 16 }} value="OTHER">
-                    {t('CONTACT-US.other')}
-                  </Select.Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={24}>
-              <Form.Item rules={[{ required: true, message: t('CONTACT-US.error-your-message') }]} name="description">
-                <TextArea size="large" rows={4} placeholder={t('CONTACT-US.placeholder-message')} maxLength={200} />
-              </Form.Item>
-            </Col>
-            {access_token && (
-              <Col xs={24}>
-                <Form.Item name="attachment_urls">
-                  <FilesUpload acceptTypes="image/*" multiple={true} ref={fileUploadRef} />
-                </Form.Item>
-              </Col>
-            )}
-            <Col xs={24}>
-              <Form.Item>
-                <BaseButton style={{ width: 'auto' }} type="primary" htmlType="submit">
-                  {submitting ? t('submitting') : t('CONTACT-US.send-a-message-btn')}
-                </BaseButton>
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
+                <Col xs={24}>
+                  <Form.Item name="category" rules={[{ required: true, message: t('CONTACT-US.error-your-category') }]}>
+                    <Select size="large" placeholder={t('CONTACT-US.placeholder-your-category')}>
+                      <Select.Option style={{ fontSize: 16 }} value="HOMEOWNER_LEASE_INQUIRY">
+                        {t('CONTACT-US.homeowner-lease-inquiry')}
+                      </Select.Option>
+                      <Select.Option style={{ fontSize: 16 }} value="OTHER">
+                        {t('CONTACT-US.other')}
+                      </Select.Option>
+                    </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24}>
+                  <Form.Item
+                    rules={[{ required: true, message: t('CONTACT-US.error-your-message') }]}
+                    name="description">
+                    <TextArea size="large" rows={4} placeholder={t('CONTACT-US.placeholder-message')} maxLength={200} />
+                  </Form.Item>
+                </Col>
+                {access_token && (
+                  <Col xs={24}>
+                    <Form.Item name="attachment_urls">
+                      <FilesUpload acceptTypes="image/*" multiple={true} ref={fileUploadRef} />
+                    </Form.Item>
+                  </Col>
+                )}
+                <Col xs={24}>
+                  <Form.Item>
+                    <BaseButton style={{ width: 'auto' }} type="primary" htmlType="submit">
+                      {submitting ? t('submitting') : t('CONTACT-US.send-a-message-btn')}
+                    </BaseButton>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+          </>
+        )}
       </div>
     </>
   );
@@ -154,51 +167,80 @@ const ContactForm = () => {
 
 export default ContactForm;
 
-const NotLogged = ({ t }) => {
+const NotLogged = ({ t, form, onFinish, submitting }) => {
   return (
     <>
-      <Col xs={12}>
-        <Form.Item rules={[{ required: true, message: t('error-first-name') }]} name="sender_first_name">
-          <Input size="large" placeholder={t('USER-DASHBOARD.placeholder-first-name')} />
-        </Form.Item>
-      </Col>
-      <Col xs={12}>
-        <Form.Item rules={[{ required: true, message: t('error-last-name') }]} name="sender_last_name">
-          <Input size="large" placeholder={t('USER-DASHBOARD.placeholder-last-name')} />
-        </Form.Item>
-      </Col>
-      <Col xs={12}>
-        <Form.Item
-          name="sender_email"
-          rules={[
-            {
-              type: 'email',
-              message: t('error-validate-email'),
-            },
-            {
-              required: true,
-              message: t('error-email'),
-            },
-          ]}>
-          <Input size="large" type="email" placeholder={t('USER-DASHBOARD.placeholder-email')} />
-        </Form.Item>
-      </Col>
-      <Col xs={12}>
-        <Form.Item
-          name="sender_phone_number"
-          rules={[
-            {
-              required: true,
-              message: t('error-phone-number'),
-            },
-            {
-              pattern: PHONE_NUMBER.VALID_LENGTH,
-              message: t('USER-DASHBOARD.mobile-phone-error-valid-length'),
-            },
-          ]}>
-          <Input size="large" placeholder={t('USER-DASHBOARD.placeholder-mobile-phone')} />
-        </Form.Item>
-      </Col>
+      <Form form={form} onFinish={onFinish} layout="vertical">
+        <Row align="center" gutter={[10, 10]}>
+          <Col xs={12}>
+            <Form.Item rules={[{ required: true, message: t('error-first-name') }]} name="sender_first_name">
+              <Input size="large" placeholder={t('USER-DASHBOARD.placeholder-first-name')} />
+            </Form.Item>
+          </Col>
+          <Col xs={12}>
+            <Form.Item rules={[{ required: true, message: t('error-last-name') }]} name="sender_last_name">
+              <Input size="large" placeholder={t('USER-DASHBOARD.placeholder-last-name')} />
+            </Form.Item>
+          </Col>
+          <Col xs={12}>
+            <Form.Item
+              name="sender_email"
+              rules={[
+                {
+                  type: 'email',
+                  message: t('error-validate-email'),
+                },
+                {
+                  required: true,
+                  message: t('error-email'),
+                },
+              ]}>
+              <Input size="large" type="email" placeholder={t('USER-DASHBOARD.placeholder-email')} />
+            </Form.Item>
+          </Col>
+          <Col xs={12}>
+            <Form.Item
+              name="sender_phone_number"
+              rules={[
+                {
+                  required: true,
+                  message: t('error-phone-number'),
+                },
+                {
+                  pattern: PHONE_NUMBER.VALID_LENGTH,
+                  message: t('USER-DASHBOARD.mobile-phone-error-valid-length'),
+                },
+              ]}>
+              <Input size="large" placeholder={t('USER-DASHBOARD.placeholder-mobile-phone')} />
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item name="category" rules={[{ required: true, message: t('CONTACT-US.error-your-category') }]}>
+              <Select size="large" placeholder={t('CONTACT-US.placeholder-your-category')}>
+                <Select.Option style={{ fontSize: 16 }} value="HOMEOWNER_LEASE_INQUIRY">
+                  {t('CONTACT-US.homeowner-lease-inquiry')}
+                </Select.Option>
+                <Select.Option style={{ fontSize: 16 }} value="OTHER">
+                  {t('CONTACT-US.other')}
+                </Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item rules={[{ required: true, message: t('CONTACT-US.error-your-message') }]} name="description">
+              <TextArea size="large" rows={4} placeholder={t('CONTACT-US.placeholder-message')} maxLength={200} />
+            </Form.Item>
+          </Col>
+
+          <Col xs={24}>
+            <Form.Item>
+              <BaseButton style={{ width: 'auto' }} type="primary" htmlType="submit">
+                {submitting ? t('submitting') : t('CONTACT-US.send-a-message-btn')}
+              </BaseButton>
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
     </>
   );
 };
