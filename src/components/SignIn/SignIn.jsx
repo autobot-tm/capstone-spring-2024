@@ -19,7 +19,6 @@ const SignIn = () => {
   const { actions: authActions } = useAuthSlice();
   const { actionSucceeded, loading, errorTranslationKey } = useSelector(state => state.auth);
   const [form] = Form.useForm();
-  const [flag, setFlag] = useState(false);
   const [errorHolder, setErrorHolder] = useState('');
 
   const handleFinish = values => {
@@ -38,10 +37,8 @@ const SignIn = () => {
   useEffect(() => {
     if (!loginModal) {
       form.resetFields();
+      setErrorHolder('');
       dispatch(authActions.clearError());
-      setFlag(false);
-    } else {
-      setFlag(false);
     }
   }, [form, loginModal]);
 
@@ -50,9 +47,11 @@ const SignIn = () => {
       errorTranslationKey === ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS ||
       errorTranslationKey === ERROR_TRANS_KEYS.ACCOUNT_SUSPENDED
     ) {
-      setFlag(true);
       setErrorHolder(errorTranslationKey);
-      console.log(errorTranslationKey);
+      dispatch(authActions.clearError());
+    } else if (errorTranslationKey === 'api.error.unauthorized') {
+      setErrorHolder(errorTranslationKey);
+      dispatch(authActions.clearError());
     }
   }, [errorTranslationKey]);
 
@@ -77,7 +76,7 @@ const SignIn = () => {
             <Input.Password placeholder={t('placeholder.password')} size="large" disabled={loading} />
           </Form.Item>
 
-          {flag && (
+          {errorHolder && (
             <Form.Item>
               <Alert message={t(errorHolder)} type="error" />
             </Form.Item>

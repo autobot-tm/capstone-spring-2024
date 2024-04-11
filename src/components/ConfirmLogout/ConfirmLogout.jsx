@@ -38,7 +38,9 @@ const ConfirmLogout = () => {
           {t('button.ok')}
         </Button>,
       ]}>
-      <Paragraph>{t('logout.disclaimer')}</Paragraph>
+      <div style={{ paddingBottom: 20, textAlign: 'center' }}>
+        <Paragraph>{t('logout.disclaimer')}</Paragraph>
+      </div>
     </CustomModal>
   );
 };

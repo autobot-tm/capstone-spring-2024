@@ -279,7 +279,7 @@
   "footer.contact": "お問い合わせ",
   "notification.submittedSuccessfully": "正常に送信されました",
   "notification.cancelRequestSuccessfully": "キャンセルリクエストを送信しました",
-
+  "api.error.unauthorized": "ロールにアクセスできません。もう一度やり直してください。",
   "api.error.invalidAccountCredentials": "電子メールまたはパスワードが正しくありません",
   "api.error.emailAlreadyExists": "メールが既に存在します",
   "api.error.invalidRefreshToken": "セッションの有効期限が切れています。再度サインインしてください",
