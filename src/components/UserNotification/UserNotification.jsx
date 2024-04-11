@@ -255,7 +255,7 @@ const UserNotification = ({ t }) => {
       visible={visible}
       onOpenChange={handleVisibleChange}>
       <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-        <Badge count={!isLoading && unreadCount}>
+        <Badge count={unreadCount}>
           <BellOutlined style={{ fontSize: '27px' }} />
         </Badge>
       </div>

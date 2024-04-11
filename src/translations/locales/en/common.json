@@ -290,6 +290,7 @@
   "api.error.unknown": "An unknown error has occurred. Please try again later.",
   "network.disconnected.title": "No internet connection",
   "network.disconnected.message": "Please check your internet connection and try again.",
+  "api.error.unauthorized": "Your role can't be accessed, please try again.",
   "api.error.resetPasswordOnlyForNormalAccount": "Reset password only accepted normal sign up account.",
   "api.error.userAlreadyActivated": "User already activated.",
   "api.error.invalidOtpCode": "Invalid OTP code.",

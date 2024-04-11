@@ -13,6 +13,7 @@ import {
 } from '../../services/apis/auth.service';
 import { load, remove, save } from '../../utils/local-storage';
 import { AUTH_ACTIONS } from '../constants/action-name.constant';
+import { jwtDecode } from 'jwt-decode';
 import { googleLogout } from '@react-oauth/google';
 
 const createInitialState = () => {
@@ -33,7 +34,12 @@ export const initialState = createInitialState();
 export const signIn = createAsyncThunk('auth/signIn', async (input, { rejectWithValue }) => {
   try {
     const response = await signInService(input);
-    save(STORAGE_KEYS.AUTH, response);
+    const { id_token } = response;
+    const { role } = jwtDecode(id_token);
+    if (role !== 'RENTER') {
+      return rejectWithValue('api.error.unauthorized');
+    }
+    await save(STORAGE_KEYS.AUTH, response);
     return { ...response, actionSucceeded: AUTH_ACTIONS.SIGN_IN };
   } catch (error) {
     console.warn('🚀 ~ file: auth.slice.ts:11 ~ error:', error);
@@ -45,7 +51,12 @@ export const signInWithGoogle = createAsyncThunk('auth/signInWithGoogle', async 
   try {
     console.log('🚀 ~ idToken:', idToken);
     const response = await signInWithGoogleService({ id_token: idToken ?? '' });
-    save(STORAGE_KEYS.AUTH, response);
+    const { id_token } = response;
+    const { role } = jwtDecode(id_token);
+    if (role !== 'RENTER') {
+      return rejectWithValue('api.error.unauthorized');
+    }
+    await save(STORAGE_KEYS.AUTH, response);
     return { ...response, actionSucceeded: AUTH_ACTIONS.SIGN_IN_WITH_GOOGLE };
   } catch (error) {
     console.warn('🚀 ~ file: auth.slice.ts:11 ~ error:', error);
