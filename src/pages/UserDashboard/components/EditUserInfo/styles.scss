@@ -1,0 +1,18 @@
+.editUserInfo {
+  &-container {
+    max-width: 1400px;
+    padding: 0 24px;
+    margin: 0 auto;
+    padding: 0;
+    .infoItem {
+      .top {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    @media screen and (max-width: 1401px) {
+      max-width: 100%;
+      padding: 0 16px;
+    }
+  }
+}
