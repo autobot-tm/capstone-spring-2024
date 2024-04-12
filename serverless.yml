@@ -23,7 +23,7 @@ custom:
         - '/index.html'
   s3Sync:
     - bucketName: ${self:custom.s3DeploymentBucket}
-      localDir: dist
+      localDir: ./build
 
 resources:
   Resources:
