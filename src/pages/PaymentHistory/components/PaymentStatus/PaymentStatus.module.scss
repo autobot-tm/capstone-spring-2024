@@ -1,0 +1,24 @@
+.statusContainer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: max-content;
+  .greenDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    background: #1dc167;
+  }
+  .redDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    background: #ed4c4d;
+  }
+  .orangeDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    background: #f4db4f;
+  }
+}

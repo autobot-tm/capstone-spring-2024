@@ -1,0 +1,13 @@
+.priceRangeLabelContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 426px) {
+  .priceRangeLabelContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+}

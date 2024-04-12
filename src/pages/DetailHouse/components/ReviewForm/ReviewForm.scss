@@ -1,0 +1,6 @@
+@import '../../../../theme/scss/colors.theme.scss';
+
+.ant-input:hover {
+  border-color: $colors-primary;
+  box-shadow: 0 0 0 2px #f0f5ff;
+}

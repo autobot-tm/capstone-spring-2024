@@ -1,0 +1,37 @@
+@import '../../../../theme/scss/colors.theme.scss';
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.cmt-border {
+  border-bottom: 0.8px solid #ccc;
+  padding: 30px 0;
+  width: 100%;
+}
+
+.frame-1 {
+  width: 100%;
+}
+
+.frame-2 {
+  width: 100%;
+}
+
+.comment {
+  margin-top: 6px;
+}
+
+.see-more-btn {
+  width: 100%;
+  display: flex;
+  margin-top: 30px;
+  text-align: center;
+  justify-content: center;
+}
+
+.star-icon {
+  color: $colors-primary;
+}

@@ -1,0 +1,28 @@
+.supportSignInContainer {
+  display: flex;
+  justify-content: center;
+  a {
+    color: black;
+  }
+  margin-bottom: 20px;
+  span {
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.askMemberContainer {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.loginByGoogleContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.actionText {
+  cursor: pointer;
+  display: inline-block;
+}

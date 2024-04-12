@@ -1,0 +1,162 @@
+@import '../../theme/scss/colors.theme.scss';
+
+#header-checkout {
+  background-image: url('../../assets/images/title-bg-img.jpg');
+  height: 230px;
+  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  .breadcrumb {
+    display: flex;
+    justify-content: end;
+  }
+  .header-row {
+    width: 1400px;
+  }
+}
+
+#reservation-container {
+  max-width: 1400px;
+  margin: auto;
+  padding: 50px 0;
+  .reservation-title {
+    display: flex;
+    margin-bottom: 30px;
+    gap: 6px;
+    .icon-left {
+      font-size: 18px;
+      padding: 16px;
+      &:hover {
+        border-radius: 100%;
+        background-color: #ccc;
+      }
+    }
+  }
+  .main {
+    padding: 0 20px;
+    .field-time-icon {
+      font-size: 44px;
+    }
+    .section {
+      row-gap: 10px;
+      border-bottom: 0.8px solid #ccc;
+      padding: 20px 0;
+    }
+    &-estimated {
+      .edit-date {
+        color: #000;
+        &:hover {
+          color: $colors-primary;
+        }
+      }
+    }
+    &-payment {
+      .banner-container {
+        display: flex;
+        gap: 10px;
+        @media screen and (max-width: 540px) {
+          display: block;
+        }
+      }
+      &-banner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px;
+        width: 100%;
+        margin: 20px 0;
+        height: 100px;
+        background-color: $colors-bg-secondary;
+        //refactor
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        &-inner {
+          display: flex;
+          text-align: center;
+          justify-content: space-between;
+          width: 100%;
+          padding: 0 20px;
+          // @media screen and (max-width: 1200px) {
+          //   width: 500px;
+          // }
+          // @media screen and (max-width: 768px) {
+          //   width: 400px;
+          // }
+          @media screen and (max-width: 686px) {
+            display: block;
+          }
+        }
+        img {
+          height: 50px;
+        }
+      }
+    }
+    &-reservation-required {
+      padding: 20px 0;
+    }
+  }
+  .side {
+    padding: 30px 0;
+    position: sticky;
+    top: 0;
+    height: 40vh;
+    z-index: 900;
+    .fee-table {
+      border: 0.8px solid #ccc;
+      border-radius: 6px;
+      padding: 30px;
+      margin-top: 20px;
+
+      &-section-1 {
+        display: flex;
+        gap: 15px;
+        &-description {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          .number-price {
+            color: $colors-primary;
+          }
+        }
+        .img-fee {
+          height: 90px;
+          width: 140px;
+          object-fit: cover;
+          border-radius: 5px;
+        }
+      }
+
+      &-section-2 {
+        margin: 10px 0;
+        padding: 10px 0;
+        border-top: 0.8px solid #ccc;
+        border-bottom: 0.8px solid #ccc;
+        &-description {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 16px;
+        }
+      }
+      &-section-3 {
+        &-description {
+          display: flex;
+          justify-content: space-between;
+          color: #000;
+        }
+      }
+    }
+    .reservation-btn {
+      margin-top: 20px;
+    }
+  }
+}
+.btn-container-terms {
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (max-width: 992px) {
+  #reservation-container {
+    padding: 50px 10px;
+  }
+}

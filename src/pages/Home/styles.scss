@@ -1,93 +1,13 @@
-#home {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  padding-bottom: 50px;
-  .carousel-content {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-      url('https://i0.wp.com/disruptmagazine.com/wp-content/uploads/2021/02/business-people-in-the-office-working-PBHS2SM.jpg?w=1480&ssl=1');
-    height: 500px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 0 20px;
-
-    .flex {
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      .text-wrapper {
-        color: white;
-        width: 700px;
-        text-align: center;
-        h1 {
-          margin: 0;
-          font-size: 30px;
-        }
-        h2 {
-          margin: 0;
-          margin-top: 20px;
-          font-size: 25px;
-        }
-        p {
-          margin: 0;
-          margin-top: 10px;
-          font-size: 20px;
-        }
-      }
-    }
-  }
-
-  .container {
-    display: flex;
-    max-width: 1140px;
+.home {
+  &-container {
+    max-width: 1400px;
+    padding: 0 24px;
     margin: 0 auto;
-    padding: 24px;
-    gap: 30px;
+    padding: 0;
 
-    .main {
-      .title {
-        display: flex;
-        gap: 15px;
-        font-size: 25px;
-        align-items: center;
-        font-weight: bold;
-        color: #009aac;
-        margin-top: 50px;
-      }
-      .flex {
-        margin-top: 30px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 30px;
-      }
-      hr {
-        border-top: 1px solid lightgray;
-      }
-    }
-
-    .side {
-      h2 {
-        color: #009aac;
-        font-size: 20px;
-        margin: 0;
-      }
-      hr {
-        border-top: 1px solid lightgray;
-        margin-bottom: 15px;
-      }
-      .image {
-        margin-bottom: 20px;
-        img {
-          width: 100%;
-        }
-      }
-    }
-
-    .main,
-    .side {
-      flex: 1; /* Chia tỷ lệ chiều rộng 16:8 */
+    @media screen and (max-width: 1401px) {
+      max-width: 100%;
+      padding: 0 16px;
     }
   }
 }

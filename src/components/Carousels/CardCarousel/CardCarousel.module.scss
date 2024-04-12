@@ -1,0 +1,34 @@
+.carouselContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  .image {
+    object-fit: cover;
+  }
+
+  .prevButtonContainer {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+  }
+  .nextButtonContainer {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+  }
+  .heartContainer {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    .icon {
+      font-size: 25px;
+      transition: 0.1s ease font-size;
+    }
+  }
+  .heartContainer .icon:hover {
+    font-size: 27px;
+  }
+}

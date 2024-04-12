@@ -1,0 +1,36 @@
+#header-contact-us {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('../../assets/images/contact-us-bg.jpg');
+  background-position: top;
+  background-size: cover;
+  height: 350px;
+  opacity: 1;
+  width: auto;
+  .breadcrumb {
+    display: flex;
+    justify-content: end;
+  }
+  .header-row {
+    width: 1400px;
+    padding: 0 20px;
+  }
+  .title-page {
+    color: white !important;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.contactUs {
+  &-container {
+    max-width: 1400px;
+    padding: 0 24px;
+    margin: 0 auto;
+    padding: 100px 20px;
+  }
+
+  &-info {
+    padding: 40px 20px;
+  }
+}

@@ -1,0 +1,19 @@
+@import '../../../theme/scss/colors.theme.scss';
+
+.headline {
+  color: $colors-black;
+  display: block;
+  margin: 0;
+  padding: 0;
+  &-450 {
+    font-size: 45px;
+    line-height: 51px;
+    font-weight: 500;
+  }
+  &-600 {
+    font-size: 60px;
+    line-height: 72px;
+    font-weight: 600;
+    color: white;
+  }
+}

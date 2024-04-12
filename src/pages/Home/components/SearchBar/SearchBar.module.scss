@@ -1,0 +1,28 @@
+.searchBar {
+  background: white;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px;
+  margin-bottom: 60px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  z-index: -1;
+  .button {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+  }
+}
+
+.locationContainer {
+  width: 300px;
+}
+
+@media screen and (max-width: 1401px) {
+  .searchBar {
+    max-width: 100%;
+    margin: 0 16px;
+    margin-bottom: 60px;
+  }
+}

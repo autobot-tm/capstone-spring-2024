@@ -1,0 +1,53 @@
+image: node:18.17.0
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push"
+      when: always
+# Variables set in the GitLab UI are not passed down to service containers.
+variables:
+  ENV: $ENV
+  AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+  AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+  AWS_PROFILE: $AWS_PROFILE
+
+stages:
+  - format-and-lint
+  - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .yarn/cache
+
+before_script:
+  # Install yarn as outlined in (https://yarnpkg.com/lang/en/docs/install/#alternatives-stable)
+  - curl -o- -L https://yarnpkg.com/install.sh | bash
+  # Make available in the current terminal
+  - export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+  - yarn set version 3.5.0
+  - yarn config set -H enableImmutableInstalls false
+
+format_and_lint:
+  stage: format-and-lint
+  script:
+    - echo 'Running format and lint ⚪️ '
+    - yarn
+    - yarn format
+    - yarn lint-fix
+    - echo 'Format and lint completed  🚀'
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to $ENV ⚪️"
+    - npm install -g serverless
+    - serverless config credentials --provider aws --key ${AWS_ACCESS_KEY_ID} --secret ${AWS_SECRET_ACCESS_KEY} --profile ${AWS_PROFILE}
+    - yarn
+    - yarn deploy-$ENV
+    - echo "Deployed to $ENV 🚀"
+  environment:
+    name: $CI_COMMIT_BRANCH
+  only:
+    - master
+    - develop

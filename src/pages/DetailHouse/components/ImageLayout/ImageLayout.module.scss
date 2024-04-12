@@ -1,0 +1,28 @@
+.imageLayoutContainer {
+  width: 100%;
+  height: 500px;
+  margin-bottom: 40px;
+
+  position: relative;
+
+  .button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .imageLayoutContainer {
+    height: 500px;
+    .imageCol {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .imageLayoutContainer {
+    height: 350px;
+  }
+}

@@ -1,0 +1,11 @@
+@import '../../../theme/scss//colors.theme.scss';
+
+.baseButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  color: $colors-black;
+  font-weight: 600;
+  font-size: 16px;
+}
