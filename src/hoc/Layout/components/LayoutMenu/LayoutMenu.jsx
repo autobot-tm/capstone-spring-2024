@@ -11,6 +11,7 @@ import { openConfirmLogoutModal, openLoginModal } from '../../../../store/slices
 import { Paragraph } from '../../../../components/Typography';
 import AVATAR from '../../../../assets/images/avatar.png';
 import UserNotification from '../../../../components/UserNotification/UserNotification';
+import LOGO from '../../../../assets/images/logo-Dub9QTYA.png';
 
 export const LayoutMenu = ({ isInline = false }) => {
   const dispatch = useDispatch();
@@ -119,7 +120,10 @@ export const LayoutMenu = ({ isInline = false }) => {
       }}>
       {!isInline && (
         <Menu.Item onClick={() => navigate('/')} style={{ marginRight: 'auto', padding: 0 }}>
-          <h1>Logo</h1>
+          <div className="logo-container">
+            {' '}
+            <img src={LOGO} style={{ width: 44 }} alt="" />
+          </div>
         </Menu.Item>
       )}
 

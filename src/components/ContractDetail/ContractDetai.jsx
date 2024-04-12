@@ -322,7 +322,7 @@ const ContractDetail = () => {
                 style={{ borderColor: '#c23616' }}
                 size="large"
                 onClick={() => {
-                  dispatch(openRequestCancelContractModal({ contractId: leaseId }));
+                  dispatch(openRequestCancelContractModal({ contractId: leaseId, typeOfRequest: 'contract' }));
                   dispatch(closeContractDetailModal());
                 }}>
                 <Caption size={140} style={{ color: '#c23616' }} strong>

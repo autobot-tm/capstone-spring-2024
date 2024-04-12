@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { SubHeading } from '../../../../components/Typography';
 import { useNavigate } from 'react-router-dom';
+import LOGO from '../../../../assets/images/logo-Dub9QTYA.png';
 
 const { Footer } = Layout;
 export const LayoutFooter = () => {
@@ -27,16 +28,14 @@ export const LayoutFooter = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: '4px',
+                  width: '90%',
+                  textAlign: 'center',
                 }}>
-                <div style={{ width: '150px', height: '50px' }}>
-                  <SubHeading strong size="260">
-                    Logo
-                  </SubHeading>
-                </div>
-                <Caption size={110} classNames="color-black">
-                  A contemporary theme we designed specifically for real estate and property showcase websites, equipped
-                  with every option, element and feature your site may need.
-                </Caption>
+                <SubHeading strong size="260">
+                  <img src={LOGO} style={{ width: 70 }} alt="" />
+                </SubHeading>
+
+                <Caption size={140}>{t('footer.description')}</Caption>
               </div>
             </Col>
 
@@ -44,7 +43,7 @@ export const LayoutFooter = () => {
               <Paragraph strong classNames="color-black">
                 {t('footer.links')}
               </Paragraph>
-              <ul>
+              <ul className="link">
                 <li>
                   <Caption
                     size={140}
@@ -101,7 +100,7 @@ export const LayoutFooter = () => {
               <Paragraph strong classNames="color-black">
                 {t('footer.contact')}
               </Paragraph>
-              <ul>
+              <ul style={{ display: 'grid', rowGap: 6 }}>
                 <li style={{ display: 'flex', gap: '8px', alignItems: 'start' }}>
                   <HomeOutlined style={{ marginTop: '4px' }} />
 
@@ -128,16 +127,18 @@ export const LayoutFooter = () => {
 
         <div className="footer-container footer-bottom-container">
           <div className="footer-logo-container">
-            <Caption size={110}> Copyright © 2024 SZK VIETNAM. All Rights Reserved.</Caption>
+            <Caption size={140}> Copyright © 2024 SZK VIETNAM. All Rights Reserved.</Caption>
           </div>
           <div className="footer-contact-container">
-            <Caption size={110} strong classNames="color-black">
+            <Caption size={140} strong classNames="color-black">
               Follow us:
             </Caption>
-            <Caption size={110}> Instagram, </Caption>
-            <Caption size={110}>Facebook, </Caption>
-            <Caption size={110}>Youtube, </Caption>
-            <Caption size={110}>Twitter</Caption>
+            <Caption size={140} classNames="footer-contact-container-item">
+              <a href="">Instagram</a>
+              <a href="">Facebook</a>
+              <a href="">Youtube</a>
+              <a href="">Twitter</a>
+            </Caption>
           </div>
         </div>
       </div>

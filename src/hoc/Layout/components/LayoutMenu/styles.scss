@@ -11,35 +11,11 @@
     margin: 0;
     font-size: 20px;
   }
-}
-.notification-popup {
-  position: absolute;
-  top: 50px;
-  right: 20px;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 999;
-  width: 300px;
-  max-height: 400px;
-  overflow-y: auto;
-}
 
-.notification-item {
-  padding: 10px;
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-}
-
-.notification-item:last-child {
-  border-bottom: none;
-}
-
-.notification-item:hover {
-  background-color: #f0f0f0;
-}
-
-.notification-icon {
-  margin-right: 10px;
+  .ant-menu-item .logo-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-top: 12px;
+  }
 }

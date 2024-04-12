@@ -161,6 +161,7 @@ const modalSlice = createSlice({
     },
     closeRequestCancelContractModal: state => {
       state.requestCancelContractModal = false;
+      state.typeOfRequest = null;
     },
     closeShowAllImageModal: state => {
       state.showAllImageModal = false;
