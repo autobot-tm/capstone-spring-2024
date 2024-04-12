@@ -8,19 +8,23 @@ provider:
   runtime: nodejs18.x
   custom: ${file(./cicd/serverless-provider.json)}
   stage: ${self:provider.custom.stage}
-  profile: ${self:provider.custom.profile}
+  profile: ${self:custom.profile.${self:provider.stage}}
   region: ${self:provider.custom.region}
 
 custom:
-  s3DeploymentBucket: ${self:service}-deployment-bucket-${self:provider.custom.stage}
+  profile:
+    dev: lotus-webapp-dev
+    prod: lotus-webapp-prod
+  s3DeploymentBucket: ${self:service}-bucket-deploy-${self:provider.custom.stage}
   cloudfrontOriginId: ${self:custom.s3DeploymentBucket}-cloud-front
   cloudfrontInvalidate:
-    - distributionIdKey: 'cloudFrontDistributionId'
+    - distributionIdKey: 'cloudFrontDistributionRef'
       items:
         - '/index.html'
   s3Sync:
     - bucketName: ${self:custom.s3DeploymentBucket}
-      localDir: ./build
+      localDir: dist
+
 resources:
   Resources:
     DeploymentBucket:
@@ -31,12 +35,17 @@ resources:
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: index.html
+        PublicAccessBlockConfiguration:
+          BlockPublicPolicy: false
+          RestrictPublicBuckets: false
+
     DeploymentBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
         Bucket:
           Ref: DeploymentBucket
         PolicyDocument:
+          Version: '2012-10-17' #
           Statement:
             - Sid: PublicReadGetObject
               Action:
@@ -90,6 +99,6 @@ resources:
                 OriginProtocolPolicy: https-only
               Id: ${self:custom.cloudfrontOriginId}
   Outputs:
-    cloudFrontDistributionId:
+    cloudFrontDistributionRef:
       Value:
         Ref: CloudfrontDistribution
