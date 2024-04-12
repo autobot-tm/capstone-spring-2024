@@ -57,10 +57,12 @@ function App() {
 
   useEffect(() => {
     if (access_token) {
-      getWishlist().then(response => {
-        const idArray = response.map(item => item.house.id);
-        dispatch(setIds({ ids: idArray }));
-      });
+      getWishlist()
+        .then(response => {
+          const idArray = response.map(item => item.house.id);
+          dispatch(setIds({ ids: idArray }));
+        })
+        .catch(e => console.log(e));
     } else {
       dispatch(setIds({ ids: [] }));
     }
