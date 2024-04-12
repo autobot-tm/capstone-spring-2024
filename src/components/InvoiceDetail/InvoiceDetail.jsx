@@ -9,12 +9,13 @@ import {
 } from '../../store/slices/modalSlice';
 import { setInvoiceLoading } from '../../store/slices/invoiceSlice';
 import { getInvoiceByIdService } from '../../services/apis/invoices.service';
-import { Col, Image, Row, Table } from 'antd';
+import { Col, Row, Table } from 'antd';
 import { formatCustomCurrency } from '../../utils/number-seperator';
 import { Caption, Headline, Paragraph } from '../Typography';
 import { LoadingOutlined, TagsFilled } from '@ant-design/icons';
 import './styles.scss';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
+import LOGO from '../../assets/images/logo-Dub9QTYA.png';
 import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
 
 const InvoiceDetail = () => {
@@ -143,9 +144,7 @@ const InvoiceDetail = () => {
             </Col>
 
             <Col xs={24} sm={6} style={{ textAlign: 'end' }}>
-              <Image
-                width={100}
-                src="https://newhome.qodeinteractive.com/wp-content/uploads/2023/03/logo-main.png"></Image>
+              <img style={{ width: 100 }} src={LOGO}></img>
             </Col>
           </Row>
           <Row className="info-invoice">
