@@ -1,8 +1,9 @@
 import './styles.scss';
 import React from 'react';
 import { Card } from 'antd'; // Import các component cần thiết
-import { DotChartOutlined, ThunderboltOutlined, FileProtectOutlined } from '@ant-design/icons';
+import { ThunderboltOutlined, FileProtectOutlined } from '@ant-design/icons';
 import { SubHeading } from '../../../../components/Typography';
+import WATER from '../../../../assets/images/water-drop-svgrepo-com.svg';
 
 const CardRequest = ({ type, color, onClickRequest, t }) => {
   return (
@@ -28,7 +29,7 @@ const CardRequest = ({ type, color, onClickRequest, t }) => {
               <SubHeading size={230} strong style={{ width: '60%' }}>
                 {t('EXTRA-SERVICES.water-card')}
               </SubHeading>
-              <DotChartOutlined className="es-icon es-icon-tertiary" style={{ fontSize: 30 }} />
+              <img src={WATER} className="es-icon es-icon-tertiary" alt="" />
             </>
           )}
           {type === 'residence' && (

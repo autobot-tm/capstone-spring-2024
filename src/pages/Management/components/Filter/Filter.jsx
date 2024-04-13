@@ -148,10 +148,10 @@ const Filter = ({ type }) => {
     {
       label: (
         <Paragraph classNames="color-black" strong>
-          {t('status.CANCELED')}
+          {t('status.VOIDED')}
         </Paragraph>
       ),
-      key: 'CANCELED',
+      key: 'VOIDED',
     },
     {
       label: (

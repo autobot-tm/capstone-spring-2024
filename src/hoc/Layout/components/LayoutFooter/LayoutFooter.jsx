@@ -20,7 +20,7 @@ export const LayoutFooter = () => {
     <Footer className="footer">
       <div className="footer-top">
         <div className="footer-container">
-          <Row gutter={[10, 10]}>
+          <Row gutter={[10, 10]} align="center">
             <Col lg={7} xs={24}>
               <div
                 style={{
@@ -34,7 +34,6 @@ export const LayoutFooter = () => {
                 <SubHeading strong size="260">
                   <img src={LOGO} style={{ width: 70 }} alt="" />
                 </SubHeading>
-
                 <Caption size={140}>{t('footer.description')}</Caption>
               </div>
             </Col>
