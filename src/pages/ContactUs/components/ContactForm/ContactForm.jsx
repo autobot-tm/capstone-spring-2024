@@ -34,7 +34,6 @@ const ContactForm = () => {
         if (access_token) {
           formData = {
             ...values,
-            sender_email: user?.email,
             attachment_urls: urls,
           };
         } else {
@@ -56,9 +55,9 @@ const ContactForm = () => {
 
   const getInitialValues = () => {
     if (access_token) {
-      form.resetFields(['sender_email']);
       return {
         sender_first_name: user?.first_name,
+        sender_email: user?.email,
         sender_last_name: user?.last_name,
         sender_phone_number: user?.phone_number,
       };
@@ -99,8 +98,19 @@ const ContactForm = () => {
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
-                  <Form.Item name="sender_email">
-                    <Input size="large" defaultValue={user?.email} placeholder={user?.email} disabled />
+                  <Form.Item
+                    name="sender_email"
+                    rules={[
+                      {
+                        type: 'email',
+                        message: t('error-validate-email'),
+                      },
+                      {
+                        required: true,
+                        message: t('error-email'),
+                      },
+                    ]}>
+                    <Input size="large" defaultValue={user?.email} placeholder={user?.email} />
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
