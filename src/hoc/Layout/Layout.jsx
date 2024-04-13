@@ -48,7 +48,7 @@ export const Layout = ({ children }) => {
             <LayoutMenu isInline />
           </Drawer>
         </Header>
-        <Content>{children}</Content>
+        <Content style={{ background: 'white', paddingBottom: 100 }}>{children}</Content>
         <LayoutFooter />
       </AntdLayout>
     </Space>

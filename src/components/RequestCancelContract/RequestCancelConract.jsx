@@ -175,10 +175,22 @@ const RequestCancelConract = () => {
     }
   };
 
+  const isShowCancelExtraServiceRequest = () => {
+    if (requestInprogress?.status === 'UNDER_REVIEW') {
+      return true;
+    } else if (
+      requestInprogress?.status === 'APPROVED' &&
+      requestInprogress?.progresses?.[0]?.status !== 'IN_PROGRESS'
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <>
       {contextHolder}
-      {isRequestCancel ? (
+      {isRequestCancel && typeOfRequest === 'service' ? (
         <CustomModal
           width={600}
           nameOfModal={requestCancelContractModal}
@@ -194,7 +206,7 @@ const RequestCancelConract = () => {
                 }}>
                 {t('button.back')}
               </BaseButton>
-              {requestInprogress?.progresses[0]?.status !== 'IN_PROGRESS' && (
+              {isShowCancelExtraServiceRequest() && (
                 <Popconfirm
                   title={t('cancel.confirm')}
                   onConfirm={handleCancelRequestService}

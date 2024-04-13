@@ -26,10 +26,10 @@ const SearchBar = () => {
   const metadata = useSelector(state => state.house.metadata);
   useEffect(() => {
     if (metadata) {
-      setCategories(metadata.categories);
-      setProvinces(metadata.location.provinces);
-      setDistricts(metadata.location.districts);
-      setWards(metadata.location.wards);
+      setCategories(metadata?.categories);
+      setProvinces(metadata?.location?.provinces);
+      setDistricts(metadata?.location?.districts);
+      setWards(metadata?.location?.wards);
     }
   }, [metadata]);
 

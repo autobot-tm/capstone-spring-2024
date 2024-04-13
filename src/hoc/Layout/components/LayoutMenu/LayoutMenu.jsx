@@ -5,12 +5,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './styles.scss';
 import { TranslationSelector } from '../TranslationSelector';
 import { useTranslation } from 'react-i18next';
-import { LogoutOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
+import { HeartOutlined, LogoutOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { openConfirmLogoutModal, openLoginModal } from '../../../../store/slices/modalSlice';
 import { Paragraph } from '../../../../components/Typography';
 import AVATAR from '../../../../assets/images/avatar.png';
 import UserNotification from '../../../../components/UserNotification/UserNotification';
+import LOGO from '../../../../assets/images/logo-Dub9QTYA.png';
 
 export const LayoutMenu = ({ isInline = false }) => {
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ export const LayoutMenu = ({ isInline = false }) => {
       label: <Avatar src={user?.avatar_url || AVATAR} alt="avatar" shape="square" size={30} />,
       children: [
         {
-          label: <span>{t('profile')}</span>,
+          label: <span>{t('account')}</span>,
           icon: (
             <span className="color-black">
               <UserOutlined />
@@ -59,15 +60,15 @@ export const LayoutMenu = ({ isInline = false }) => {
           ),
           key: '/management',
         },
-        // {
-        //   label: <span>{t('Wishlist')}</span>,
-        //   icon: (
-        //     <span>
-        //       <HeartOutlined />
-        //     </span>
-        //   ),
-        //   key: '/wishlist',
-        // },
+        {
+          label: <span>{t('wishlist')}</span>,
+          icon: (
+            <span>
+              <HeartOutlined />
+            </span>
+          ),
+          key: '/wishlist',
+        },
         {
           label: <span style={{ color: 'red' }}>{t('logout')}</span>,
           icon: (
@@ -119,7 +120,10 @@ export const LayoutMenu = ({ isInline = false }) => {
       }}>
       {!isInline && (
         <Menu.Item onClick={() => navigate('/')} style={{ marginRight: 'auto', padding: 0 }}>
-          <h1>Logo</h1>
+          <div className="logo-container">
+            {' '}
+            <img src={LOGO} style={{ width: 44 }} alt="" />
+          </div>
         </Menu.Item>
       )}
 

@@ -1,37 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import './style.scss';
-import { Breadcrumb, Col, Modal, Row, Tabs } from 'antd';
-import { Headline, Paragraph } from '../../components/Typography';
-import {
-  HeartOutlined,
-  HomeOutlined,
-  // LogoutOutlined,
-  SettingOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import React, { useEffect } from 'react';
+('@ant-design/icons');
 import { useTranslation } from 'react-i18next';
 import { Layout } from '../../hoc/Layout/Layout';
-import EditProfile from './components/EditProfile/EditProfile';
-import MyWishlist from './components/MyWishlist/MyWishlist';
-import MyProfile from './components/MyProfile/MyProfile';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { closeConfirmLogoutModal } from '../../store/slices/modalSlice';
-import { signOut } from '../../store/slices';
+
 import { Helmet } from 'react-helmet';
-import AVATAR from '../../assets/images/avatar.png';
 import { useUserSlice } from '../../store/slices/user.slice';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
-
-const { TabPane } = Tabs;
+import './styles.scss';
+import { Avatar, Col, Row } from 'antd';
+import AccountItem from './components/AccountItem/AccountItem';
+import { IdcardOutlined, LockOutlined } from '@ant-design/icons';
+import { Paragraph, SubHeading } from '../../components/Typography';
+import AVATAR from '../../assets/images/avatar.png';
 
 const UserDashboard = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const showModal = useSelector(state => state.modal.signOutModal);
   const { access_token } = useSelector(state => state.auth);
+
   const { user, loading } = useSelector(state => state.user);
   const { actions: userActions } = useUserSlice();
-  const [activeTabKey, setActiveTabKey] = useState('1');
 
   useEffect(() => {
     if (!access_token) {
@@ -40,70 +30,6 @@ const UserDashboard = () => {
     dispatch(userActions.getUserProfile());
   }, [access_token, dispatch]);
 
-  const handleTabChange = key => {
-    setActiveTabKey(key);
-  };
-
-  const handleOk = () => {
-    dispatch(closeConfirmLogoutModal());
-    dispatch(signOut());
-  };
-
-  const handleCancel = () => {
-    dispatch(closeConfirmLogoutModal());
-    setActiveTabKey('1');
-  };
-
-  const tabPanes = [
-    {
-      title: (
-        <>
-          <Row justify="center">
-            <UserOutlined className="icon-tab-item" />
-          </Row>
-          <Row>{t('USER-DASHBOARD.my-profile')}</Row>
-        </>
-      ),
-      key: '1',
-    },
-    {
-      title: (
-        <>
-          <Row justify="center">
-            <SettingOutlined className="icon-tab-item" />
-          </Row>
-          <Row>{t('USER-DASHBOARD.edit-profile')}</Row>
-        </>
-      ),
-      key: '2',
-    },
-    {
-      title: (
-        <>
-          <Row justify="center">
-            <HeartOutlined className="icon-tab-item" />
-          </Row>
-          <Row>{t('USER-DASHBOARD.my-wishlist')}</Row>
-        </>
-      ),
-      key: '3',
-    },
-    // {
-    //   title: (
-    //     <div onClick={() => dispatch(openConfirmLogoutModal())}>
-    //       <Row justify="center">
-    //         <LogoutOutlined className="icon-tab-item" />
-    //       </Row>
-    //       <Row>{t('USER-DASHBOARD.log-out')}</Row>
-    //     </div>
-    //   ),
-    //   key: '4',
-    // },
-  ];
-
-  const handleProfileUpdate = async () => {
-    setActiveTabKey('1');
-  };
   return (
     <Layout>
       {loading ? (
@@ -113,58 +39,49 @@ const UserDashboard = () => {
           <Helmet>
             <title>{t('USER-DASHBOARD.user-dashboard')}</title>
           </Helmet>
-          <header id="header-user-dashboard">
-            <Row className="header-row" align="middle" justify="center">
-              <Col xs={24} sm={12}>
-                <Headline size={450} strong>
-                  {t('USER-DASHBOARD.user-dashboard')}
-                </Headline>
+          <div className="account-container">
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                marginTop: '56px',
+              }}>
+              <Avatar src={user?.avatar_url || AVATAR} size={120} />
+              <SubHeading size={260} strong>
+                {user?.first_name ? user?.first_name : `-`} {user?.last_name ? user?.last_name : `-`}
+              </SubHeading>
+              <Paragraph>{user?.email}</Paragraph>
+            </div>
+            <Row gutter={[14, 14]} style={{ marginTop: 56 }} align="center">
+              <Col xs={24} sm={12} lg={8}>
+                {
+                  <AccountItem
+                    title={t('label.personal')}
+                    des={t('personal.disclaimer')}
+                    icon={<IdcardOutlined style={{ fontSize: 30 }} />}
+                    route="edit-user-info"
+                    type="userInfo"
+                  />
+                }
               </Col>
-              <Col xs={24} sm={12} className="breadcrumb">
-                <Breadcrumb
-                  items={[
-                    {
-                      href: '/',
-                      title: <HomeOutlined style={{ color: 'black' }} />,
-                    },
-                    {
-                      title: `${t('USER-DASHBOARD.user-dashboard')}`,
-                    },
-                  ]}
-                />
-              </Col>
-              <Col xs={24} style={{ display: 'flex', justifyContent: 'center' }}>
-                <Tabs activeKey={activeTabKey} onChange={handleTabChange} className="tabs-bar" centered>
-                  {tabPanes.map(pane => (
-                    <TabPane
-                      tab={
-                        <Paragraph classNames="color-black" strong>
-                          {pane.title}
-                        </Paragraph>
-                      }
-                      key={pane.key}
-                    />
-                  ))}
-                </Tabs>
-              </Col>
-            </Row>
-          </header>
-          <main id="container-user-dashboard">
-            <Row justify="center">
-              <Col xs={24}>
-                {activeTabKey === '1' && <MyProfile user={user} t={t} avatarDefault={AVATAR} />}
-                {activeTabKey === '2' && (
-                  <EditProfile user={user} t={t} avatarDefault={AVATAR} onUpdate={handleProfileUpdate} />
-                )}
-                {activeTabKey === '3' && <MyWishlist />}
-                {activeTabKey === '4' && (
-                  <Modal title="Confirm Logout" open={showModal} onOk={handleOk} onCancel={handleCancel} centered>
-                    <p>Are you sure you want to log ousst?</p>
-                  </Modal>
-                )}
+              <Col xs={24} sm={12} lg={8}>
+                {
+                  <AccountItem
+                    title={t('label.password')}
+                    des={t('password.disclaimer')}
+                    icon={<LockOutlined style={{ fontSize: 30 }} />}
+                    route="change-password"
+                    type="password"
+                    auth={user?.auth_method}
+                  />
+                }
               </Col>
             </Row>
-          </main>
+          </div>
         </>
       )}
     </Layout>

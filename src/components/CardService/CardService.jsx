@@ -1,9 +1,10 @@
 import { Card } from 'antd';
 import './styles.scss';
 import React from 'react';
-import { DotChartOutlined, FileProtectOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { FileProtectOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import ServiceStatus from '../../pages/ExtraServices/components/ServiceStatus/ServiceStatus';
 import { Caption, SubHeading } from '../Typography';
+import WATER from '../../assets/images/water-drop-svgrepo-com.svg';
 
 const CardService = ({ data, onClickDetail, t }) => {
   return (
@@ -39,7 +40,7 @@ const CardService = ({ data, onClickDetail, t }) => {
               {data?.extra_service?.name === 'Water bill payment service' && (
                 <>
                   <span className="name-services">
-                    <DotChartOutlined className="es-icon es-iconTertiary" />
+                    <img src={WATER} alt="" className="es-icon es-iconTertiary" />
                     <SubHeading size={230} strong style={{ width: '100%' }}>
                       {t('EXTRA-SERVICES.water-card')}
                       <Caption size={140} style={{ padding: '4px' }} classNames="d-block color-black">
