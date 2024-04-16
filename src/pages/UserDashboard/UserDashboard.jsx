@@ -1,12 +1,8 @@
-import React, { useEffect } from 'react';
-('@ant-design/icons');
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Layout } from '../../hoc/Layout/Layout';
-
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { useUserSlice } from '../../store/slices/user.slice';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import './styles.scss';
 import { Avatar, Col, Row } from 'antd';
@@ -17,19 +13,7 @@ import AVATAR from '../../assets/images/avatar.png';
 
 const UserDashboard = () => {
   const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const { access_token } = useSelector(state => state.auth);
-
   const { user, loading } = useSelector(state => state.user);
-  const { actions: userActions } = useUserSlice();
-
-  useEffect(() => {
-    if (!access_token) {
-      return;
-    }
-    dispatch(userActions.getUserProfile());
-  }, [access_token, dispatch]);
-
   return (
     <Layout>
       {loading ? (

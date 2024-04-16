@@ -129,7 +129,9 @@ const ContractDetail = () => {
             onClick={() => {
               setShowFile(!showFile);
             }}>
-            {!showFile ? `Show ${files.length} files` : `Hide ${files.length} Files`}
+            {!showFile
+              ? `${t('show')} ${files.length} ${t('label.files').toLocaleLowerCase()}`
+              : `${t('label.hide')} ${files.length} ${t('label.files').toLocaleLowerCase()}`}
           </Button>
 
           {showFile && (
@@ -150,7 +152,7 @@ const ContractDetail = () => {
                     onClick={() => {
                       handleDownload(file);
                     }}>
-                    Download
+                    {t('download')}
                   </Button>
                 </div>
               ))}
@@ -297,7 +299,7 @@ const ContractDetail = () => {
 
   return (
     <CustomModal
-      width={650}
+      width={700}
       nameOfModal={contractDetailModal}
       title={t('modal.contract')}
       action={closeContractDetailModal}

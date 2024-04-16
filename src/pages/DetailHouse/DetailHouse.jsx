@@ -13,7 +13,6 @@ import { getHouseById, getHouseReview, updateWishlist } from '../../services/api
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { formatCustomCurrency } from '../../utils/number-seperator';
-// import { addToWishlist, removeFromWishlist } from '../../store/slices/wishlist.slice';
 import { HousePropertyUnit, PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
 import HouseUtility from './components/HouseUtility/HouseUtility';
 import FeedBackCustomer from './components/FeedBackCustomer/FeedBackCustomer';
@@ -22,7 +21,6 @@ import useSWR from 'swr';
 import Selection from './components/Selection/Selection';
 import DatePickerAnt from './components/DatePickerComponent/DatePickerAnt';
 import ReviewForm from './components/ReviewForm/ReviewForm';
-// import CarouselHeader from '../../components/CarouselHeader/CarouselHeader';
 import SizeImg from '../../assets/images/SizeIcon.svg';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
@@ -33,7 +31,7 @@ import ImageLayout from './components/ImageLayout/ImageLayout';
 import { addToWishlist, removeFromWishlist } from '../../store/slices/houseSlice';
 
 const DetailHouse = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { house_id: house_id } = useParams();
@@ -43,15 +41,11 @@ const DetailHouse = () => {
   const [imgHouse, setImgHouse] = useState([]);
   const [comment, setComment] = useState([]);
   const { access_token } = useSelector(state => state.auth);
-  // const wishlist = useSelector(state => state.wishlist.houses);
-  // const isClickedWishlist = useSelector(state => state.wishlist.clickedStatus[house_id] || false);
-
   const { data: house } = useSWR(`getHouseById/${house_id}`, async () => await getHouseById({ house_id }));
-
   const { data: reviews } = useSWR(['getHouseReview', house_id], async () => await getHouseReview({ house_id }));
   const [isWishList, setIsWishList] = useState(false);
   const ids = useSelector(state => state.house.ids);
-
+  console.log('i18n', i18n.language);
   useEffect(() => {
     if (access_token) {
       setIsWishList(ids.includes(house_id));
@@ -59,23 +53,20 @@ const DetailHouse = () => {
       setIsWishList(false);
     }
   }, [ids, house_id]);
-
   const handleAddWishlist = async () => {
     await updateWishlist({
       added_house_ids: [house_id],
       removed_house_ids: [],
     });
-    dispatch(addToWishlist(house_id)); // Dispatch action to update Redux store
+    dispatch(addToWishlist(house_id));
   };
-
   const handleRemoveWishlist = async () => {
     await updateWishlist({
       added_house_ids: [],
       removed_house_ids: [house_id],
     });
-    dispatch(removeFromWishlist(house_id)); // Dispatch action to update Redux store
+    dispatch(removeFromWishlist(house_id));
   };
-
   useEffect(() => {
     const fetchHouseAmenities = async () => {
       try {
@@ -90,10 +81,8 @@ const DetailHouse = () => {
         console.error('Error fetching house amenities:', error);
       }
     };
-
     fetchHouseAmenities();
   }, [house, reviews]);
-
   function errorDateNotification() {
     return notification.error({
       message: t('detail-house.error'),
@@ -138,7 +127,11 @@ const DetailHouse = () => {
             </SubHeading>
           </Col>
           <Col xs={24}>
-            <Paragraph>{house?.description.replace(/<br\s*\/?>/gi, '')}</Paragraph>
+            <Paragraph>
+              {i18n.language === 'en'
+                ? house?.description?.replace(/<br\s*\/?>/gi, '')
+                : house?.description_in_jp?.replace(/<br\s*\/?>/gi, '')}
+            </Paragraph>
           </Col>
         </Row>
       </>
@@ -160,7 +153,7 @@ const DetailHouse = () => {
             {t('detail-house.property-detail-title')}
           </SubHeading>
           <Col className="main-property-features-detail-card" xs={24}>
-            {houseAmenities && houseAmenities.length > 0 && <HouseAmenities amenities={houseAmenities} />}
+            {houseAmenities && houseAmenities?.length > 0 && <HouseAmenities amenities={houseAmenities} />}
           </Col>
         </Row>
 
@@ -169,7 +162,7 @@ const DetailHouse = () => {
             {t('detail-house.property-utility-title')}
           </SubHeading>
           <Col className="main-property-features-utility-card" xs={24}>
-            {houseUtilities && houseUtilities.length > 0 && <HouseUtility utilities={houseUtilities} />}
+            {houseUtilities && houseUtilities?.length > 0 && <HouseUtility utilities={houseUtilities} />}
           </Col>
         </Row>
       </>
@@ -190,13 +183,13 @@ const DetailHouse = () => {
               locations={[
                 {
                   position: {
-                    lat: house.latitude,
-                    lng: house.longitude,
+                    lat: house?.latitude,
+                    lng: house?.longitude,
                   },
                   id: house.id,
-                  name: house.name,
-                  price: house.pricing_policies[0].price_per_month,
-                  image: house.image_urls[0],
+                  name: house?.name,
+                  price: house?.pricing_policies?.[0]?.price_per_month,
+                  image: house?.image_urls?.[0],
                 },
               ]}
             />
@@ -208,7 +201,6 @@ const DetailHouse = () => {
       </>
     );
   };
-  //continue
   const ReviewFormComponent = () => {
     return (
       <>
@@ -244,7 +236,7 @@ const DetailHouse = () => {
         errorDateNotification();
         return;
       }
-      navigate(`/reservation/${house.id}`, {
+      navigate(`/reservation/${house?.id}`, {
         state: { house, selectedDate, selectedMonths, reviews },
       });
     };
@@ -257,12 +249,12 @@ const DetailHouse = () => {
     const renderPrice = () => {
       const selectedMonthsInt = parseInt(selectedMonths);
       const pricePerMonth = house?.pricing_policies?.find(
-        policy => parseInt(policy.total_months) === 1,
+        policy => parseInt(policy?.total_months) === 1,
       )?.price_per_month;
 
       if (PROMOTION_PACKAGE_MONTHS.includes(selectedMonthsInt)) {
         const selectedPrice = house?.pricing_policies?.find(
-          policy => parseInt(policy.total_months) === selectedMonthsInt,
+          policy => parseInt(policy?.total_months) === selectedMonthsInt,
         )?.price_per_month;
         return (
           <Row>
@@ -329,7 +321,7 @@ const DetailHouse = () => {
               </Form.Item>
             </Col>
             <Col xs={24}>
-              {house.status === 'AVAILABLE' ? (
+              {house?.status === 'AVAILABLE' ? (
                 <BaseButton htmlType="submit" type="primary" style={{ width: '100%', justifyContent: 'center' }}>
                   {t('detail-house.reserve-now-btn')}
                 </BaseButton>
@@ -339,7 +331,7 @@ const DetailHouse = () => {
                   type="primary"
                   disabled
                   style={{ width: '100%', justifyContent: 'center' }}>
-                  {t(`detail-house.${house.status.replace(/_/g, '')}`)}
+                  {t(`detail-house.${house?.status?.replace(/_/g, '')}`)}
                 </BaseButton>
               )}
             </Col>
@@ -363,7 +355,7 @@ const DetailHouse = () => {
           </Col>
         </Row>
         <Row style={{ justifyContent: 'center' }}>
-          <h3>updating..</h3>
+          <h3>(coming soon)</h3>
         </Row>
       </>
     );

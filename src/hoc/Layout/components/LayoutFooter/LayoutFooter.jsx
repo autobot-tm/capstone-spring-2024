@@ -130,7 +130,7 @@ export const LayoutFooter = () => {
           </div>
           <div className="footer-contact-container">
             <Caption size={140} strong classNames="color-black">
-              Follow us:
+              {t('footer.follow-us')}:
             </Caption>
             <Caption size={140} classNames="footer-contact-container-item">
               <a href="">Instagram</a>

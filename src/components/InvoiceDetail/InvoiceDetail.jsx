@@ -17,6 +17,7 @@ import './styles.scss';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import LOGO from '../../assets/images/logo-Dub9QTYA.png';
 import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
+import moment from 'moment';
 
 const InvoiceDetail = () => {
   const { t } = useTranslation();
@@ -50,7 +51,6 @@ const InvoiceDetail = () => {
         });
     }
   }, [loading, invoiceId]);
-
   const columns = [
     {
       title: t('label.description'),
@@ -63,12 +63,10 @@ const InvoiceDetail = () => {
       key: 'price',
     },
   ];
-
   const additionalItem = {
     description: <b style={{ color: '#f8a11e' }}>{t('label.total')}</b>,
     price: <b style={{ color: '#f8a11e' }}>{formatCustomCurrency(amount)}</b>,
   };
-
   const updatedDataSource = [
     ...items.map((item, index) => ({
       key: index,
@@ -81,7 +79,6 @@ const InvoiceDetail = () => {
       price: additionalItem.price,
     },
   ];
-
   const handleReportIssues = () => {
     dispatch(openReportIssuesModal({ categoryIssue: 'INVOICE_ISSUE' }));
     dispatch(closeInvoiceDetailModal());
@@ -138,11 +135,9 @@ const InvoiceDetail = () => {
               <Headline classNames="d-block" strong>
                 {t('invoice').toUpperCase()}
               </Headline>
-
               <Caption size={140}>#{data?.id}</Caption>
               <Paragraph classNames="d-block color-black">{data?.description}</Paragraph>
             </Col>
-
             <Col xs={24} sm={6} style={{ textAlign: 'end' }}>
               <img style={{ width: 100 }} src={LOGO}></img>
             </Col>
@@ -153,9 +148,8 @@ const InvoiceDetail = () => {
                 {t('invoice.issued')}
               </Paragraph>
               <Paragraph strong classNames="d-block" style={{ marginBottom: 10 }}>
-                {data?.lease?.move_in_date}
+                {moment(data?.created_at).format('DD/MM/YYYY')}
               </Paragraph>
-
               <Paragraph strong classNames="d-block color-black">
                 {t('invoice.due')}
               </Paragraph>
@@ -174,9 +168,7 @@ const InvoiceDetail = () => {
                 {data?.lease?.reservation?.house?.address}
               </Caption>
               <Paragraph classNames="d-block">
-                {' '}
                 {t(`detail-house.${data?.lease?.reservation?.house?.category.replace(/\s/g, '')}`)}
-                {/* {data?.lease?.reservation?.house?.category} */}
               </Paragraph>
             </Col>
             <Col xs={24} sm={8} className="info-invoice-inner">
@@ -206,9 +198,12 @@ const InvoiceDetail = () => {
               </Paragraph>
             </Col>
             <Col xs={24} className="footer-invoice">
-              <Paragraph strong>Lotus | {t('invoice.houseForRent')}</Paragraph>
-
-              <Paragraph strong>+028 3827 5068</Paragraph>
+              <Paragraph strong classNames="color-black">
+                Lotus | {t('invoice.houseForRent')}
+              </Paragraph>
+              <Paragraph strong classNames="color-black">
+                +028 3827 5068
+              </Paragraph>
               <Paragraph strong classNames="color-black">
                 info@aodaihousing.com{' '}
               </Paragraph>

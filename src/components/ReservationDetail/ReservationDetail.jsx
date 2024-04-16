@@ -96,7 +96,7 @@ const ReservationDetail = () => {
     {
       key: '4',
       title: <b>{t('label.totalMonths')}</b>,
-      content: totalMonths + ' month(s)',
+      content: `${totalMonths} ${t('detail-house.monthS')}`,
     },
     {
       key: '5',
