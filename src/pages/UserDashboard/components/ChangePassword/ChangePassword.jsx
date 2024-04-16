@@ -7,9 +7,14 @@ import { PASSWORD_REGEX } from '../../../../constants/auth.constant';
 import { updateUserCurrentService } from '../../../../services/apis/users.service';
 import { useForm } from 'antd/es/form/Form';
 import { ERROR_TRANS_KEYS } from '../../../../constants/error.constant';
+import { useSelector } from 'react-redux';
+import { LeftOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const ChangePassword = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { user } = useSelector(state => state.user);
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [form] = useForm();
   const [error, setError] = useState(null);
@@ -36,12 +41,22 @@ const ChangePassword = () => {
     form.resetFields();
     setLoadingUpload(false);
   };
+  const handleBack = () => {
+    navigate(`/user-dashboard/${user?.id}`);
+  };
+
   return (
     <Layout>
       <div className="changePassword-container">
         <Row align="center" style={{ marginTop: 40 }}>
           <Col xs={24} md={15} xl={10}>
-            <Card title={t('label.changePassword')}>
+            <Card
+              title={
+                <>
+                  <LeftOutlined className="icon-left" onClick={handleBack} />
+                  {t('label.changePassword')}
+                </>
+              }>
               <Form layout="vertical" onFinish={handleSubmit} form={form}>
                 <Form.Item
                   label={t('label.currentPassword')}

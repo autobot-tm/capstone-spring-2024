@@ -14,9 +14,9 @@ import {
 } from '../../services/apis/contact.service';
 import { Paragraph } from '../Typography';
 import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
-
 import FilesUpload from '../UploadFile/FilesUpload';
-import SpinLoading from '../SpinLoading/SpinLoading';
+import { LoadingOutlined } from '@ant-design/icons';
+
 const ReportIssuesModal = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -25,6 +25,7 @@ const ReportIssuesModal = () => {
   const { reportIssuesModal, invoiceId, categoryIssue, contractId } = useSelector(state => state.modal);
   const [isReport, setIsReport] = useState([]);
   const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
   const fileUploadRef = useRef();
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, message) => {
@@ -32,15 +33,14 @@ const ReportIssuesModal = () => {
       message: message,
     });
   };
-
   const isIssuesReport = async () => {
     try {
+      setLoading(true);
       if (invoiceId && categoryIssue === 'INVOICE_ISSUE') {
         const res = await getIssueByIdInvoiceService({
           invoice_id: invoiceId,
           status: 'UNDER_REVIEW',
         });
-        console.log('run api invoice');
         return setIsReport(res.issues);
       }
       if (contractId && categoryIssue === 'LIVING_ISSUE') {
@@ -48,20 +48,19 @@ const ReportIssuesModal = () => {
           lease_id: contractId,
           status: 'UNDER_REVIEW',
         });
-        console.log('run api lease');
         return setIsReport(res.issues);
       }
     } catch (error) {
       console.error('Error fetching issues:', error);
+    } finally {
+      setLoading(false);
     }
   };
-
   useEffect(() => {
     if (reportIssuesModal && (invoiceId || contractId)) {
       isIssuesReport();
     }
   }, [reportIssuesModal]);
-
   const handleBack = () => {
     if (categoryIssue === 'INVOICE_ISSUE') {
       dispatch(openInvoiceDetailModal({ invoiceId: invoiceId }));
@@ -70,7 +69,6 @@ const ReportIssuesModal = () => {
     }
     dispatch(closeReportIssuesModal());
   };
-
   const onFinish = async values => {
     if (!access_token) {
       return;
@@ -126,10 +124,13 @@ const ReportIssuesModal = () => {
         }
         action={closeReportIssuesModal}
         footer={[]}>
-        {isReport === null && <SpinLoading />}
-        {isReport !== null && (
+        {loading ? (
+          <div className="loading-container">
+            <LoadingOutlined size="large" />
+          </div>
+        ) : (
           <>
-            {isReport.length !== 0 ? (
+            {isReport?.length !== 0 ? (
               <>
                 <Paragraph classNames="d-block" style={{ textAlign: 'center', marginBottom: 40 }}>
                   {t('waitForLatestResponse')}

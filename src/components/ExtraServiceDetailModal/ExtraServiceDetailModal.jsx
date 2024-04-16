@@ -5,7 +5,7 @@ import CustomModal from '../Modal/CustomModal';
 import { closeExtraServiceRequestDetailModal } from '../../store/slices/modalSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestCancelExtraServices } from '../../services/apis/extra-services.service';
-import { Avatar, Popconfirm, Table, notification } from 'antd';
+import { Avatar, Button, Popconfirm, Table, notification } from 'antd';
 import { useTranslation } from 'react-i18next';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import ServiceStatus from '../../pages/ExtraServices/components/ServiceStatus/ServiceStatus';
@@ -13,9 +13,10 @@ import { mutate } from 'swr';
 import { getLeaseByIdService } from '../../services/apis/contracts.service';
 import { Caption, Paragraph, SubHeading } from '../Typography';
 import { setExtraServicesLoading } from '../../store/slices/extraServices.slice';
-import { CaretDownOutlined, LoadingOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, DownloadOutlined, LoadingOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { formatCustomCurrency } from '../../utils/number-seperator';
+import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
 
 const ExtraServiceDetailModal = () => {
   const dispatch = useDispatch();
@@ -24,11 +25,13 @@ const ExtraServiceDetailModal = () => {
   const [selectedId, setSelectedId] = useState('');
   const { extraServiceRequestDetailModal, extraServiceRequestDetail } = useSelector(state => state.modal);
   const loading = useSelector(state => state.extraServices.loading);
+  const [showFile, setShowFile] = useState(false);
   const [api, contextHolder] = notification.useNotification();
 
-  const openNotificationWithIcon = (type, message) => {
+  const openNotificationWithIcon = (type, message, description) => {
     api[type]({
       message: message,
+      description: description,
     });
   };
 
@@ -48,14 +51,29 @@ const ExtraServiceDetailModal = () => {
   const handleCancelRequestService = async () => {
     try {
       await requestCancelExtraServices(extraServiceRequestDetail?.id);
-      openNotificationWithIcon('success', t('notification.cancelRequestSuccessfully'));
+      openNotificationWithIcon('success', t('notification.cancelRequest'), t('notification.cancelRequestSuccessfully'));
       mutate(`getExtraServiceRequests?page=${1}&status=${'ALL'}`);
       dispatch(closeExtraServiceRequestDetailModal());
     } catch (error) {
+      if (error === ERROR_TRANS_KEYS.EXTRA_SERVICE_REQUEST_PROGRESS_NOT_CANCELABLE) {
+        console.warn('ERROR AT CANCEL REQUEST SERVICES', error);
+        return openNotificationWithIcon(
+          'warning',
+          t('notification.cancelRequest'),
+          t('notification.cancelRequestError'),
+        );
+      }
       console.warn('ERROR AT CANCEL REQUEST SERVICES', error);
     }
   };
-
+  const handleDownload = file => {
+    const fileUrl = file;
+    const link = document.createElement('a');
+    link.href = 'https://' + fileUrl;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   const infoRequestHead = [
     {
       title: t('label.infoRequest'),
@@ -68,7 +86,6 @@ const ExtraServiceDetailModal = () => {
       key: 'content',
     },
   ];
-
   const infoRequest = [
     {
       key: '1',
@@ -100,7 +117,6 @@ const ExtraServiceDetailModal = () => {
         ]
       : []),
   ];
-
   const infoProgressesHead = [
     {
       title: t('label.title'),
@@ -113,7 +129,6 @@ const ExtraServiceDetailModal = () => {
       key: 'content',
     },
   ];
-
   const { status, progresses } = extraServiceRequestDetail;
   const isCancelDisabled = () => {
     if (status === 'UNDER_REVIEW') {
@@ -127,9 +142,7 @@ const ExtraServiceDetailModal = () => {
     }
     return false;
   };
-
   const isShowProgresses = status !== 'IN_PROGRESS' && progresses && progresses.length > 0;
-
   const renderProgressesOfESR = () => {
     return (
       isShowProgresses && (
@@ -201,6 +214,53 @@ const ExtraServiceDetailModal = () => {
                                   title: <b>{t('handled-by-user')}</b>,
                                   content: progress?.handled_by_user?.email || '-',
                                 },
+                                {
+                                  key: '8',
+                                  title: <b>{t('label.files')}</b>,
+                                  content: (
+                                    <>
+                                      {progress?.evidence_urls ? (
+                                        <Button
+                                          type="text"
+                                          onClick={() => {
+                                            setShowFile(!showFile);
+                                          }}>
+                                          {!showFile
+                                            ? `${t('show')} ${progress?.evidence_urls?.length} ${t(
+                                                'label.files',
+                                              ).toLocaleLowerCase()}`
+                                            : `${t('label.hide')} ${progress?.evidence_urls?.length} ${t(
+                                                'label.files',
+                                              ).toLocaleLowerCase()}`}
+                                        </Button>
+                                      ) : (
+                                        '-'
+                                      )}
+
+                                      {showFile &&
+                                        progress?.evidence_urls?.map((file, index) => (
+                                          <div
+                                            key={index}
+                                            style={{
+                                              margin: '10px 0 20px 0',
+                                              display: 'flex',
+                                              alignItems: 'center',
+                                              gap: '8px',
+                                            }}>
+                                            <div style={{ marginBottom: '5px' }}>{file.slice(73)}</div>
+                                            <Button
+                                              size="small"
+                                              icon={<DownloadOutlined />}
+                                              onClick={() => {
+                                                handleDownload(file);
+                                              }}>
+                                              {t('download')}
+                                            </Button>
+                                          </div>
+                                        ))}
+                                    </>
+                                  ),
+                                },
                               ]
                             : []),
                         ]}
@@ -210,13 +270,12 @@ const ExtraServiceDetailModal = () => {
                 );
               })
           ) : (
-            <p>No progresses available</p>
+            <p> {t('no-progresses')}</p>
           )}
         </>
       )
     );
   };
-
   return (
     <>
       {contextHolder}
