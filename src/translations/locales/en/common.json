@@ -9,7 +9,7 @@
   "home": "Home",
   "about": "About Us",
   "support": "Support",
-  "management": "Management",
+  "management": "Home Management",
   "wishlist": "Wishlist",
   "userprofile": "username",
   "profile": "Profile",
@@ -230,8 +230,8 @@
   "validationRules.size": "Less than maximum area",
   "validationRules.min": "Minimum number is 1",
   "registration.disclaimer": "Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.",
-  "home.disclaimer": "Our choice of popular real estate",
-  "carousel.disclaimer": "Buy or rent properties with no commission",
+  "home.disclaimer": "Discover Your Ideal Home: Rent with Confidence Today!",
+  "carousel.disclaimer": "Find Your Perfect Home",
   "logout.disclaimer": "Are you sure you want to log out?",
   "cancel.confirm": "Are you sure to cancel this request?",
   "personal.disclaimer": "Providing personal information allows us to contact you",
@@ -343,6 +343,7 @@
     "description": "We are reviewing your extra service request. We will get back to you soon."
   },
   "detail-house": {
+    "reserved": "This house has been reserved",
     "title-tab": "Detail House",
     "STUDIO": "STUDIO",
     "DUPLEX": "DUPLEX",

@@ -9,7 +9,7 @@
   "account": "アカウント",
   "about": "会社概要",
   "support": "サポート",
-  "management": "管理",
+  "management": "家の管理",
   "services": "サービス",
   "wishlist": "ウィッシュリスト",
   "userprofile": "ユーザー名",
@@ -223,9 +223,9 @@
   "validationRules.required.currentPassword": "現在のパスワードが必要です",
   "validationRules.required.repeatNewPassword": "新しいパスワードを再度入力する必要があります",
   "registration.disclaimer": "お客様の個人情報は,当ウェブサイトでのお客様のご利用をサポートするため,お客様のアカウントへのアクセスを管理するため,および当社のプライバシーポリシーに記載されているその他の目的のために使用されます。",
-  "home.disclaimer": "人気の不動産を厳選",
+  "home.disclaimer": "理想的な家を見つけてください。今すぐ自信を持って賃貸しましょう!",
   "logout.disclaimer": "ログアウトしてもよろしいですか?",
-  "carousel.disclaimer": "手数料無料で物件を購入または賃貸",
+  "carousel.disclaimer": "完璧な家を見つけてください",
   "personal.disclaimer": "個人情報を提供していただくことで、当社からお客様に連絡することが可能になります",
   "password.disclaimer": "パスワードを変更してアカウントを保護する",
   "cancel.confirm": "このリクエストをキャンセルしてもよろしいですか？",
@@ -334,6 +334,7 @@
     "description": "追加サービスのリクエストについて検討中です。すぐにご連絡いたします。"
   },
   "detail-house": {
+    "reserved": "この家は予約されています",
     "title-tab": "ディテールハウス",
     "STUDIO": "スタジオ",
     "DUPLEX": "デュプレックス",
