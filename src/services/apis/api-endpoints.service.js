@@ -15,6 +15,7 @@ export const ENDPOINTS = {
     base: '/houses',
     houses: '/houses/filter',
     reviews: house_id => `/houses/${house_id}/reviews`,
+    updateReview: house_id => `/houses/${house_id}/reviews/me`,
     metadata: '/houses/metadata',
     wishlist: '/wishlist/me',
   },

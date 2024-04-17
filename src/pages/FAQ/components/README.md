@@ -1,0 +1,1 @@
+Using to create local component that just belong to this page.
