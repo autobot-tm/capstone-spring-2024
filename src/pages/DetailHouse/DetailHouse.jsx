@@ -282,7 +282,7 @@ const DetailHouse = () => {
           <Row className="side-form-price-section">
             <Col xs={6}>
               <SubHeading size={230} strong>
-                {t('detail-house.price')}:
+                {t('detail-house.price')}
               </SubHeading>
             </Col>
             <Col className="price-group" xs={18}>
@@ -323,7 +323,7 @@ const DetailHouse = () => {
                   type="primary"
                   disabled
                   style={{ width: '100%', justifyContent: 'center' }}>
-                  {t(`detail-house.${house?.status?.replace(/_/g, '')}`)}
+                  {t(`detail-house.reserved`)}
                 </BaseButton>
               )}
             </Col>

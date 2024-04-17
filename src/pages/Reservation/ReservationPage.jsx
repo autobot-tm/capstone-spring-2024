@@ -377,7 +377,7 @@ const ReservationPage = () => {
                 type="primary"
                 htmlType="submit"
                 onClick={handleAgree}>
-                {t('RESERVATION.agree-btn')}
+                {t('button.continue')}
               </BaseButton>
               ,
               <BaseButton size="medium" style={{ width: 'auto' }} key="" onClick={hidePopup}>

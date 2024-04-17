@@ -5,7 +5,7 @@ import { Col, Result, Row } from 'antd';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import HouseItem from '../../components/HouseItem/HouseItem';
 import { getWishlist } from '../../services/apis/houses.service';
-import { SubHeading } from '../../components/Typography';
+import { Headline, SubHeading } from '../../components/Typography';
 import { useTranslation } from 'react-i18next';
 import { FrownTwoTone } from '@ant-design/icons';
 
@@ -25,9 +25,7 @@ const Wishlist = () => {
     <Layout>
       <div className="wishlist-container">
         <div style={{ margin: '40px 0' }}>
-          <SubHeading size={260} strong>
-            {t('wishlist')}
-          </SubHeading>
+          <Headline size={450}>{t('wishlist')}</Headline>
         </div>
 
         <Row gutter={[24, 24]} style={{ marginTop: 40 }}>
