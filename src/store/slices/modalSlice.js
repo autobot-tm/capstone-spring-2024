@@ -34,6 +34,8 @@ const initialState = {
   images: [],
   actionType: null,
   contactCategory: '',
+  reviewHouseModal: false,
+  houseID: undefined,
 };
 
 const modalSlice = createSlice({
@@ -104,7 +106,17 @@ const modalSlice = createSlice({
     openChooseMethodPaymentModal: state => {
       state.chooseMethodPaymentModal = true;
     },
+    //Review
+    //Do Review need action
+    openReviewHouseModal: (state, action) => {
+      state.reviewHouseModal = true;
+      state.houseID = action?.payload?.houseID;
+    },
 
+    closeReviewHouseModal: state => {
+      state.reviewHouseModal = false;
+    },
+    //End Review
     closeChooseMethodPaymentModal: state => {
       state.chooseMethodPaymentModal = false;
     },
@@ -215,4 +227,6 @@ export const {
   closeShowAllImageModal,
   closeInvoiceDetailModal,
   closeContactRequestDetailModal,
+  openReviewHouseModal,
+  closeReviewHouseModal,
 } = modalSlice.actions;

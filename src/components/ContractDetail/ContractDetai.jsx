@@ -6,6 +6,7 @@ import {
   closeContractDetailModal,
   openReportIssuesModal,
   openRequestCancelContractModal,
+  openReviewHouseModal,
 } from '../../store/slices/modalSlice';
 import styles from './ContractDetail.module.scss';
 import ContractStatus from '../ContractStatus.jsx/ContractStatus';
@@ -41,6 +42,7 @@ const ContractDetail = () => {
   const [showHouse, setShowHouse] = useState(false);
   const [showRenter, setShowRenter] = useState(false);
   const [isShowRequest, setIsShowRequet] = useState('');
+  const [houseID, setHouseID] = useState('');
 
   useEffect(() => {
     if (leaseId) {
@@ -57,6 +59,7 @@ const ContractDetail = () => {
         setLastName(response.reservation.renter.last_name);
         setEmail(response.reservation.renter.email);
         setRequests(response.cancelation_requests);
+        setHouseID(response.reservation.house.id);
         dispatch(setContractLoading({ loading: false }));
       });
     }
@@ -304,7 +307,7 @@ const ContractDetail = () => {
       title={t('modal.contract')}
       action={closeContractDetailModal}
       footer={
-        status === 'ACTIVE' && (
+        (status === 'ACTIVE' && (
           <Row style={{ marginTop: 40 }} gutter={[8, 8]} align="center">
             <Col xs={24}>
               <BaseButton
@@ -333,7 +336,25 @@ const ContractDetail = () => {
               </BaseButton>
             </Col>
           </Row>
-        )
+        )) ||
+        ((status === 'EXPIRED' || status === 'CANCELED') && (
+          <Row style={{ marginTop: 40 }} gutter={[8, 8]} align="center">
+            <Col xs={24}>
+              <BaseButton
+                size="large"
+                style={{ backgroundColor: '#f8a01e' }}
+                onClick={() => {
+                  dispatch(openReviewHouseModal({ houseID: houseID }));
+                  console.log('House ID Component: ', houseID);
+                  dispatch(closeContractDetailModal());
+                }}>
+                <Caption size={140} classNames="color-black" strong>
+                  {t('button.addHomeReview')}
+                </Caption>
+              </BaseButton>
+            </Col>
+          </Row>
+        ))
       }>
       {loading ? (
         <div className={styles.loadingContainer}>

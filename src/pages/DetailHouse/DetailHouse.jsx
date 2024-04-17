@@ -20,7 +20,6 @@ import HouseAmenities from './components/HouseAmenities/HouseAmenities';
 import useSWR from 'swr';
 import Selection from './components/Selection/Selection';
 import DatePickerAnt from './components/DatePickerComponent/DatePickerAnt';
-import ReviewForm from './components/ReviewForm/ReviewForm';
 import SizeImg from '../../assets/images/SizeIcon.svg';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
@@ -201,27 +200,20 @@ const DetailHouse = () => {
       </>
     );
   };
-  const ReviewFormComponent = () => {
-    return (
-      <>
-        <Col className="main-frame-review-form" xs={24}>
-          <SubHeading size={260} strong>
-            {t('detail-house.leave-title')}
-          </SubHeading>
-          <Paragraph>{t('detail-house.leave-des-1')}</Paragraph>
-          <Paragraph>{t('detail-house.leave-des-2')}</Paragraph>
-          <span style={{ marginBottom: 10 }}>
-            <StarFilled />
-            <StarFilled />
-            <StarFilled />
-            <StarFilled />
-            <StarFilled />
-          </span>
-          <ReviewForm />
-        </Col>
-      </>
-    );
-  };
+  // const ReviewFormComponent = () => {
+  //   return (
+  //     <>
+  //       <Col className="main-frame-review-form" xs={24}>
+  //         <SubHeading size={260} strong>
+  //           {t('detail-house.leave-title')}
+  //         </SubHeading>
+  //         <Paragraph>{t('detail-house.leave-des-1')}</Paragraph>
+  //         <Paragraph>{t('detail-house.leave-des-2')}</Paragraph>
+  //         <ReviewForm house_id={house.id} />
+  //       </Col>
+  //     </>
+  //   );
+  // };
 
   const ReserveFormComponent = () => {
     const [selectedMonths, setSelectedMonths] = useState(1);
@@ -398,7 +390,7 @@ const DetailHouse = () => {
                   <LocationComponent />
                   <Row align="top" className="main-frame-review">
                     <FeedBackCustomer comment={comment} />
-                    <ReviewFormComponent />
+                    {/* <ReviewFormComponent /> */}
                   </Row>
                 </Col>
                 <Col className="side" xs={24} xl={8}>

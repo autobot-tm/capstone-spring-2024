@@ -16,6 +16,7 @@ export const routeNames = {
   ExtraServices: '/extra-services',
   ContactUs: '/contact-us',
   PaymentHistory: 'payment-history',
+  FAQ: '/faqs',
   EditUserInfo: '/edit-user-info',
   ChangePassword: '/change-password',
   Wishlist: '/wishlist',
