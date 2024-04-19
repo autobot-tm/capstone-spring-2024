@@ -47,7 +47,7 @@ const ReservationDetail = () => {
         setEmail(response.renter.email);
         setHouseName(response.house.name);
         setAddress(response.house.address);
-        setPrice(response.house.pricing_policies[0].price_per_month);
+        setPrice(response.price_per_month);
         dispatch(setLoading({ loading: false }));
       });
     }
@@ -96,7 +96,7 @@ const ReservationDetail = () => {
     {
       key: '4',
       title: <b>{t('label.totalMonths')}</b>,
-      content: `${totalMonths} ${t('detail-house.monthS')}`,
+      content: `${totalMonths} ${t('detail-house.months')}`,
     },
     {
       key: '5',
@@ -123,8 +123,8 @@ const ReservationDetail = () => {
     },
     {
       key: '3',
-      title: <b>{t('label.price')}</b>,
-      content: formatCustomCurrency(price),
+      title: <b>{t('label.rentalPricePerMonth')}</b>,
+      content: formatCustomCurrency(price) + ' / month',
     },
   ];
 

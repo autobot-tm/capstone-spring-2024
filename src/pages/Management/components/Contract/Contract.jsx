@@ -43,6 +43,7 @@ const Contract = () => {
               <HouseItemRow
                 id={lease.id}
                 house={lease.reservation.house}
+                price={lease.reservation.price_per_month}
                 status={lease.status}
                 time={lease.created_at}
                 type="contract"

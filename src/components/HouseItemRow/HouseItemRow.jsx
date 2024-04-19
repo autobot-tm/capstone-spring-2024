@@ -16,7 +16,7 @@ import { setLoading } from '../../store/slices/reservationSlice';
 import { setContractLoading } from '../../store/slices/contractSlice';
 import ContractStatus from '../ContractStatus.jsx/ContractStatus';
 
-const HouseItemRow = ({ id, house, status, time, type }) => {
+const HouseItemRow = ({ id, house, status, time, type, price }) => {
   const dispatch = useDispatch();
   return (
     <div
@@ -85,7 +85,7 @@ const HouseItemRow = ({ id, house, status, time, type }) => {
         {type !== 'service' && (
           <div className={styles.priceContainer}>
             <Paragraph size={160} key="price" strong classNames="color-black">
-              {formatCustomCurrency(house?.pricing_policies[0]?.price_per_month)}
+              {formatCustomCurrency(price)}
             </Paragraph>
           </div>
         )}

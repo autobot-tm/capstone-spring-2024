@@ -25,25 +25,23 @@ const HouseReviewModal = () => {
   const isReviews = async () => {
     try {
       const review = await getHouseReview({ house_id: houseID });
-      console.log('review', review)
+      console.log('review', review);
       const isReviewer = review.reviews.find(review => review.reviewer.email === user.email);
-      setIsReview(isReviewer)
+      setIsReview(isReviewer);
       // if (isReviewer) {
       //   console.log(`Comment của bo: ${isReviewer.comment} and ${isReviewer.rating}`);
       // } else {
       //   console.log(`bo chưa comment.`);
       // }
+    } catch (error) {
+      console.log('Error in HouseReviewModal: ', error);
     }
-    catch (error) {
-      console.log('Error in HouseReviewModal: ', error)
-    }
-  }
+  };
   useEffect(() => {
     if (houseID) {
-      isReviews()
+      isReviews();
     }
   }, [houseID, reviewHouseModal]);
-
 
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, message) => {
@@ -85,34 +83,36 @@ const HouseReviewModal = () => {
         nameOfModal={reviewHouseModal}
         action={closeReviewHouseModal}
         footer={[]}
-        title={isReview ? "Your Review" : t('detail-house.leave-title')}>
+        title={isReview ? 'Your Review' : t('detail-house.leave-title')}>
         <div className="house-review-modal">
-          {!isReview ? (<Form name="reviewForm" onFinish={onFinish} layout="vertical" style={{ width: '100%' }}>
-            <Paragraph>{t('detail-house.leave-des-2')}</Paragraph>
-            <Form.Item>
-              <span>
-                <Rate allowHalf allowClear={false} onChange={handleRating} required />
-              </span>
-            </Form.Item>
-            <Form.Item name="comment" rules={[{ required: true, message: 'Please enter your comment!' }]}>
-              <Input.TextArea rows={4} placeholder={t('detail-house.placeholder-comment')} maxLength={200} />
-            </Form.Item>
-            <Form.Item>
-              <div className="btn-container">
-                <BaseButton style={{ width: 'auto' }} key="" onClick={handleBack} block size="large">
-                  {t('button.back')}
-                </BaseButton>
-                <BaseButton type="primary" style={{ width: 'auto' }} htmlType="submit">
-                  <b>{t('detail-house.post-btn')}</b>
-                </BaseButton>
-              </div>
-            </Form.Item>
-          </Form>) :
-            (<>
+          {!isReview ? (
+            <Form name="reviewForm" onFinish={onFinish} layout="vertical" style={{ width: '100%' }}>
+              <Paragraph>{t('detail-house.leave-des-2')}</Paragraph>
+              <Form.Item>
+                <span>
+                  <Rate allowHalf allowClear={false} onChange={handleRating} required />
+                </span>
+              </Form.Item>
+              <Form.Item name="comment" rules={[{ required: true, message: 'Please enter your comment!' }]}>
+                <Input.TextArea rows={4} placeholder={t('detail-house.placeholder-comment')} maxLength={200} />
+              </Form.Item>
+              <Form.Item>
+                <div className="btn-container">
+                  <BaseButton style={{ width: 'auto' }} key="" onClick={handleBack} block size="large">
+                    {t('button.back')}
+                  </BaseButton>
+                  <BaseButton type="primary" style={{ width: 'auto' }} htmlType="submit">
+                    <b>{t('detail-house.post-btn')}</b>
+                  </BaseButton>
+                </div>
+              </Form.Item>
+            </Form>
+          ) : (
+            <>
               <Rate allowHalf disabled value={isReview.rating} /> <br />
               <Paragraph>{isReview.comment}</Paragraph>
             </>
-            )}
+          )}
         </div>
       </CustomModal>
     </>
