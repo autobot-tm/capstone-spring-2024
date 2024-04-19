@@ -23,6 +23,8 @@ const ContactRequestDetail = () => {
   const [status, setStatus] = useState('');
   const [resolutioNote, setResolutionNote] = useState('');
   const [images, setImages] = useState([]);
+  const [resolutionImages, setResolutionImages] = useState([]);
+
   useEffect(() => {
     if (issueId) {
       getIssueByIdService({ issueId })
@@ -31,37 +33,30 @@ const ContactRequestDetail = () => {
           setDescription(response.description);
           setStatus(response.status);
           setResolutionNote(response.resolution_note);
-          // Create an array to hold the promises
-          const promises = response.attachment_urls.map(url => presignedURLForViewingService({ url }));
 
-          // Resolve all promises concurrently
+          const promises = response.attachment_urls.map(url => presignedURLForViewingService({ url }));
           Promise.all(promises).then(responses => {
-            // Use functional update to update the images state
             setImages([...responses]);
+          });
+
+          const resolutionImagePromises = response.resolution_evidence_urls.map(url =>
+            presignedURLForViewingService({ url }),
+          );
+          Promise.all(resolutionImagePromises).then(responses => {
+            setResolutionImages([...responses]);
           });
         })
         .catch(error => {
           console.error('Error fetching issue details:', error);
-          // Handle the error here
         });
+      dispatch(setIssueLoading({ loading: false }));
     }
   }, [loading]);
 
   useEffect(() => {
-    if (images) {
-      dispatch(setIssueLoading({ loading: false }));
-    }
-  }, [images]);
-
-  // const handleDownload = file => {
-  //   const fileUrl = file;
-  //   const link = document.createElement('a');
-  //   link.href = 'https://' + fileUrl;
-
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // };
+    setImages([]);
+    setResolutionImages([]);
+  }, [contactRequestDetailModal]);
 
   const columns = [
     {
@@ -111,6 +106,23 @@ const ContactRequestDetail = () => {
     },
     {
       key: '5',
+      title: <b>{t('label.resolutionImage')}</b>,
+      content: (
+        <Row gutter={[8, 8]}>
+          {resolutionImages.length > 0 ? (
+            resolutionImages.map((image, index) => (
+              <Col xs={24} sm={12} key={index}>
+                <Image src={image} />
+              </Col>
+            ))
+          ) : (
+            <Col>--</Col>
+          )}
+        </Row>
+      ),
+    },
+    {
+      key: '6',
       title: <b>{t('label.resolutionNote')}</b>,
       content: resolutioNote ? resolutioNote : '--',
     },

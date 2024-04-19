@@ -132,6 +132,13 @@ const InvoiceDetail = () => {
         <div className="invoice-container">
           <Row className="title-invoice">
             <Col xs={24} sm={18}>
+              {data.note && (
+                <div style={{ marginBottom: '20px' }}>
+                  <Caption size={140} classNames="d-block">
+                    <b>Note</b> : {data?.note}
+                  </Caption>
+                </div>
+              )}
               <Headline classNames="d-block" strong>
                 {t('invoice').toUpperCase()}
               </Headline>
