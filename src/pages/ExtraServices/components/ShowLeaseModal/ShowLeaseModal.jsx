@@ -1,14 +1,16 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomModal from '../../../../components/Modal/CustomModal';
 import './styles.scss';
 import React from 'react';
-import { closeShowLeaseModal } from '../../../../store/slices/modalSlice';
+import { closeShowLeaseModal, openServiceDetailModal } from '../../../../store/slices/modalSlice';
 import HouseItemRow from '../../../../components/HouseItemRow/HouseItemRow';
 import { useTranslation } from 'react-i18next';
 import { Empty } from 'antd';
+import BaseButton from '../../../../components/Buttons/BaseButtons/BaseButton';
 
 const ShowLeaseModal = () => {
   const { showLeaseModal, leases } = useSelector(state => state.modal);
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   return (
     <CustomModal
@@ -16,7 +18,18 @@ const ShowLeaseModal = () => {
       nameOfModal={showLeaseModal}
       title={t('modal.chooseContract')}
       action={closeShowLeaseModal}
-      footer={null}>
+      footer={
+        <span style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <BaseButton
+            style={{ width: 'auto' }}
+            onClick={() => {
+              dispatch(closeShowLeaseModal());
+              dispatch(openServiceDetailModal({ leases: leases }));
+            }}>
+            {t('button.back')}
+          </BaseButton>
+        </span>
+      }>
       {leases && leases?.length > 0 ? (
         leases.map((lease, index) => (
           <React.Fragment key={index}>

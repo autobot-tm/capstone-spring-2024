@@ -17,6 +17,7 @@ const initialState = {
   extraServiceRequestDetailModal: false,
   reportIssuesModal: false,
   chooseMethodPaymentModal: false,
+  serviceDetailModal: false,
   categoryIssue: undefined,
   extraServiceRequestDetail: '',
   reservationId: undefined,
@@ -100,11 +101,17 @@ const modalSlice = createSlice({
       state.reportIssuesModal = true;
       state.categoryIssue = action.payload.categoryIssue;
     },
-
     openChooseMethodPaymentModal: state => {
       state.chooseMethodPaymentModal = true;
     },
+    openServiceDetailModal: (state, action) => {
+      state.serviceDetailModal = true;
+      state.leases = action?.payload?.leases;
+    },
 
+    closeServiceDetailModal: state => {
+      state.serviceDetailModal = false;
+    },
     closeChooseMethodPaymentModal: state => {
       state.chooseMethodPaymentModal = false;
     },
@@ -195,6 +202,8 @@ export const {
   openExtraServiceRequestDetailModal,
   openChooseMethodPaymentModal,
   openReportIssuesModal,
+  openServiceDetailModal,
+  closeServiceDetailModal,
   closeReportIssuesModal,
   closeChooseMethodPaymentModal,
   openContactRequestDetailModal,

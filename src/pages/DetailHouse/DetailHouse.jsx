@@ -45,7 +45,7 @@ const DetailHouse = () => {
   const { data: reviews } = useSWR(['getHouseReview', house_id], async () => await getHouseReview({ house_id }));
   const [isWishList, setIsWishList] = useState(false);
   const ids = useSelector(state => state.house.ids);
-  console.log('i18n', i18n.language);
+
   useEffect(() => {
     if (access_token) {
       setIsWishList(ids.includes(house_id));
@@ -128,7 +128,7 @@ const DetailHouse = () => {
           </Col>
           <Col xs={24}>
             <Paragraph>
-              {i18n.language === 'en'
+              {i18n.language === 'english' || !house?.description_in_jp?.replace(/<br\s*\/?>/gi, '')
                 ? house?.description?.replace(/<br\s*\/?>/gi, '')
                 : house?.description_in_jp?.replace(/<br\s*\/?>/gi, '')}
             </Paragraph>
