@@ -9,7 +9,7 @@
   "account": "アカウント",
   "about": "会社概要",
   "support": "サポート",
-  "management": "管理",
+  "management": "家の管理",
   "services": "サービス",
   "wishlist": "ウィッシュリスト",
   "userprofile": "ユーザー名",
@@ -47,7 +47,6 @@
   "upload-status": "アップロード",
   "alert-1-file": "アップロードできる画像は1枚のみです！",
   "reportedIssues": "報告された問題",
-
   "modal.login": "サインイン",
   "modal.register": "登録",
   "modal.authenticationCode": "メールをチェックする",
@@ -95,7 +94,7 @@
   "status.PAYMENT_COMPLETE": "支払い完了",
   "status.CANCELED": "キャンセル",
   "status.DEPOSITED": "入金済み",
-  "status.VOIDED": "むこう",
+  "status.REPLACED": "交換された",
   "status.CONTRACT_UPLOADED": "契約書をアップロードしました",
   "status.ACTIVE": "アクティブ",
   "status.EXPIRED": "期限切れ",
@@ -107,6 +106,8 @@
   "status.PENDING": "保留中",
   "status.PAID": "有料",
   "status.COMPLETED": "完成",
+  "status.SUCCESS": "成功",
+  "status.FAILED": "失敗した",
   "category.livingIssue": "生活問題",
   "category.invoiceIssue": "請求書の発行",
   "checkbox.rememberme": "リメンバー・ミー",
@@ -167,6 +168,13 @@
   "label.currentPassword": "現在のパスワード",
   "label.newPassword": "新しいパスワード",
   "label.repeatNewPassword": "新しいパスワードを繰り返します",
+  "label.contractFile": "契約ファイル",
+  "label.appendixFile": "付録ファイル",
+  "label.termination": "終了",
+  "label.resolutionImage": "解像度画像",
+  "label.rentalPricePerMonth": "月額レンタル料金",
+  "label.refundInformation": "払い戻し情報",
+
   "placeholder.email": "Eメール",
   "placeholder.password": "パスワード",
   "placeholder.repeatpassword": "リピートパスワード",
@@ -197,7 +205,6 @@
   "error-phone-number": "電話番号を入力してください！",
   "error-email": "E-mailを入力してください！",
   "error-validate-email": "入力が有効な電子メールではありません！",
-
   "auth.dontHaveAccount": "会員でない？ <register>登録はこちら</register>",
   "auth.haveAccount": "アカウントをお持ちですか？ <signIn>ログイン</signIn>",
   "validationRules.required.email": "Eメールは必須",
@@ -209,7 +216,6 @@
   "validationRules.required.reason": "理由は必須です",
   "validationRules.required.type": "タイプは必須です",
   "validationRules.required.description": "説明が必要d",
-
   "validationRules.invalid.email": "電子メールが無効です",
   "validationRules.min.password": "パスワードは8文字以上",
   "validationRules.notmatch.password": "パスワードは一致しなければならない",
@@ -227,9 +233,9 @@
   "validationRules.required.currentPassword": "現在のパスワードが必要です",
   "validationRules.required.repeatNewPassword": "新しいパスワードを再度入力する必要があります",
   "registration.disclaimer": "お客様の個人情報は,当ウェブサイトでのお客様のご利用をサポートするため,お客様のアカウントへのアクセスを管理するため,および当社のプライバシーポリシーに記載されているその他の目的のために使用されます。",
-  "home.disclaimer": "人気の不動産を厳選",
+  "home.disclaimer": "理想的な家を見つけてください。今すぐ自信を持って賃貸しましょう!",
   "logout.disclaimer": "ログアウトしてもよろしいですか?",
-  "carousel.disclaimer": "手数料無料で物件を購入または賃貸",
+  "carousel.disclaimer": "完璧な家を見つけてください",
   "personal.disclaimer": "個人情報を提供していただくことで、当社からお客様に連絡することが可能になります",
   "password.disclaimer": "パスワードを変更してアカウントを保護する",
   "cancel.confirm": "このリクエストをキャンセルしてもよろしいですか？",
@@ -253,7 +259,6 @@
   "resend": "コードを再送する",
   "in": "in",
   "noresult": "結果が見つかりませんでした",
-
   "amenity.Bedroom": "ベッドルーム",
   "amenity.Bed": "ベッド",
   "amenity.Washing Machine": "洗濯機",
@@ -282,7 +287,6 @@
   "type.RECURRING": "リカーリング",
   "type.ONE_TIME": "ワンタイム",
   "category.UTILITY": "ユーティリティ",
-
   "district.District 1": "第1地区",
   "district.District 12": "第12地区",
   "district.Go Vap District": "ゴーバップ区",
@@ -306,7 +310,6 @@
   "district.Nha Be District": "ニャーベー区",
   "district.Can Gio District": "カンジオ区",
   "link.viewdetail": "詳細を見る",
-
   "footer.links": "リンク",
   "footer.description": "LotusRentsは駐在員と住宅所有者を結びつけ、理想的な家を発見し、賃貸の旅を簡素化するためのユーザーフレンドリーなプラットフォームを提供します。",
   "footer.contact": "お問い合わせ",
@@ -328,7 +331,6 @@
   "api.error.accountSuspended": "あなたのアカウントは停止されました",
   "api.error.waitForServiceConfirmation": "リクエストを確認中です。",
   "api.error.invoiceNotExist": "指定された請求書が存在しない",
-
   "invoice": "インボイス",
   "invoice.issued": "発行",
   "invoice.due": "期日",
@@ -347,8 +349,8 @@
     "title": "追加サービスのお申し込み 一時滞在登録サポートサービスは現在検討中です。",
     "description": "追加サービスのリクエストについて検討中です。すぐにご連絡いたします。"
   },
-
   "detail-house": {
+    "reserved": "この家は予約されています",
     "title-tab": "ディテールハウス",
     "STUDIO": "スタジオ",
     "DUPLEX": "デュプレックス",
@@ -383,9 +385,9 @@
     "map-btn": "地図上に表示",
     "comment-dynamic": "コメント",
     "no-comment": "コメントなし",
-    "leave-title": "返事を残す",
-    "leave-des-1": "メールアドレスは公開されません。は必須項目です",
-    "leave-des-2": "あなたの評価 *",
+    "leave-title": "ハウスのレビューを書いてください",
+    "leave-des-1": "過去にレンタルされた方のみ",
+    "leave-des-2": "あなたの評価",
     "placeholder-comment": "あなたのコメント*",
     "placeholder-name": "あなたの名前*",
     "placeholder-email": "あなたのEメール*",
@@ -420,7 +422,6 @@
     "HOMEOWNER_CONTRACT_EXPIRED": "ホームオーナー契約満了",
     "book": "賃貸"
   },
-
   "RESERVATION": {
     "title-tab": "予約",
     "checkout": "チェックアウト",
@@ -456,7 +457,6 @@
     "agree-btn": "アグリー",
     "cancel-btn": "キャンセル"
   },
-
   "PAYMENT": {
     "back-to-home-btn": "ホームページに戻る",
     "reserve-again-btn": "再度予約",
@@ -466,7 +466,6 @@
     "success": "予約は正常に作成されました。",
     "des-success": "ご予約のお申し込みありがとうございます。通常1～5分で完了いたします。お手数をおかけいたしますが、よろしくお願いいたします。"
   },
-
   "USER-DASHBOARD": {
     "user-dashboard": "ユーザーダッシュボード",
     "my-profile": "マイプロフィール",
@@ -513,7 +512,6 @@
     "expected-move-in-date": "入居予定日",
     "return-to-user-management": "ユーザー管理に戻る"
   },
-
   "EXTRA-SERVICES": {
     "our-services": "サービス",
     "extra-services": "追加サービス",
@@ -536,7 +534,6 @@
     "des-water-be": "信頼性の高い請求書支払いサービスで、お支払いの遅れを防ぎ、途切れることのない水の供給を確保しましょう。",
     "des-residence-be": "お役所仕事ではなく、滞在に集中しましょう。私たちの一時滞在登録サポートサービスは、ベトナムでの合法的なステータスを確保するためのストレスを軽減します。"
   },
-
   "CONTACT-US": {
     "contact-us": "お問い合わせ",
     "main-office": "本社",
@@ -554,7 +551,6 @@
     "error-your-category": "カテゴリーを選択してください！",
     "send-a-message-btn": "メッセージを送る"
   },
-
   "NOT-FOUND": {
     "title": "おっと... ページが見つかりません！",
     "description": "Tお探しのページは存在しません。移動または削除された可能性があります。",

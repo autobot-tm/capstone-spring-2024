@@ -45,6 +45,7 @@ const Reservation = () => {
             <div key={reservation.id}>
               <HouseItemRow
                 id={reservation.id}
+                price={reservation.price_per_month}
                 house={reservation.house}
                 status={reservation.status}
                 time={reservation.created_at}

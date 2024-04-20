@@ -10,17 +10,9 @@ const ServiceStatus = ({ status }) => {
     <div>
       {status === 'UNDER_REVIEW' ? (
         <Caption strong>
-          <Tag color="blue">{t('status.' + status)}</Tag>
-        </Caption>
-      ) : status === 'IN_PROGRESS' ? (
-        <Caption strong>
           <Tag color="orange">{t('status.' + status)}</Tag>
         </Caption>
-      ) : status === 'REJECTED' ? (
-        <Caption strong>
-          <Tag color="gold">{t('status.' + status)}</Tag>
-        </Caption>
-      ) : status === 'CANCELED' ? (
+      ) : status === 'CANCELED' || status === 'REJECTED' ? (
         <Caption strong>
           <Tag color="red">{t('status.' + status)}</Tag>
         </Caption>
@@ -30,7 +22,7 @@ const ServiceStatus = ({ status }) => {
         </Caption>
       ) : status === 'COMPLETED' ? (
         <Caption strong>
-          <Tag color="cyan">{t('status.' + status)}</Tag>
+          <Tag color="green">{t('status.' + status)}</Tag>
         </Caption>
       ) : (
         <Caption strong>

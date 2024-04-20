@@ -33,3 +33,7 @@ export const getReservationById = async reservation_id => {
 export const getPaymentsService = ({ offset, limit }) => {
   return apiCaller.get(ENDPOINTS.payments.base + `?offset=${offset}&limit=${limit}`);
 };
+
+export const getRefundService = ({ leaseId }) => {
+  return apiCaller.get(ENDPOINTS.payments.base + `?type=REFUND&lease_id=${leaseId}`);
+};

@@ -13,6 +13,7 @@ import Management from '../pages/Management/Management';
 import ExtraServices from '../pages/ExtraServices/ExtraServices';
 import ContactUs from '../pages/ContactUs/ContactUs';
 import PaymentHistory from '../pages/PaymentHistory/PaymentHistory';
+import { FAQ } from '../pages/FAQ/FAQ';
 import EditUserInfo from '../pages/UserDashboard/components/EditUserInfo/EditUserInfo';
 import ChangePassword from '../pages/UserDashboard/components/ChangePassword/ChangePassword';
 import Wishlist from '../pages/Wishlist/Wishlist';
@@ -42,6 +43,10 @@ export const routePaths = {
     {
       path: routeNames.ContactUs,
       element: <ContactUs />,
+    },
+    {
+      path: routeNames.FAQ,
+      element: <FAQ />,
     },
   ],
   private: [

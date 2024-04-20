@@ -31,7 +31,7 @@ const HouseItem = ({ house }) => {
         <div key="houseInfo" className={styles.houseInfo}>
           <div className={styles.price}>
             <Paragraph size={160} key="price" strong classNames="color-black">
-              {formatCustomCurrency(house.pricing_policies?.[0]?.price_per_month)}
+              {formatCustomCurrency(house?.pricing_policies?.[house?.pricing_policies?.length - 1]?.price_per_month)}
             </Paragraph>
           </div>
           <div className={styles.detail}>

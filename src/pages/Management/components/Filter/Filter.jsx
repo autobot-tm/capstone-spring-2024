@@ -94,13 +94,14 @@ const Filter = ({ type }) => {
       ),
       key: 'ACTIVE',
     },
+
     {
       label: (
         <Paragraph classNames="color-black" strong>
-          {t('status.EXPIRED')}
+          {t('status.PENDING_CANCELATION_APPROVAL')}
         </Paragraph>
       ),
-      key: 'EXPIRED',
+      key: 'PENDING_CANCELATION_APPROVAL',
     },
     {
       label: (
@@ -113,10 +114,10 @@ const Filter = ({ type }) => {
     {
       label: (
         <Paragraph classNames="color-black" strong>
-          {t('status.PENDING_CANCELATION_APPROVAL')}
+          {t('status.EXPIRED')}
         </Paragraph>
       ),
-      key: 'PENDING_CANCELATION_APPROVAL',
+      key: 'EXPIRED',
     },
   ];
 
@@ -148,10 +149,10 @@ const Filter = ({ type }) => {
     {
       label: (
         <Paragraph classNames="color-black" strong>
-          {t('status.VOIDED')}
+          {t('status.REPLACED')}
         </Paragraph>
       ),
-      key: 'VOIDED',
+      key: 'REPLACED',
     },
     {
       label: (
@@ -179,10 +180,6 @@ const Filter = ({ type }) => {
       ),
       key: 'UNDER_REVIEW',
     },
-    // {
-    //   label: <Paragraph className="color-black"  strong>{t('status.IN_PROGRESS')}</Paragraph>,
-    //   key: 'IN_PROGRESS',
-    // },
     {
       label: (
         <Paragraph classNames="color-black" strong>
@@ -206,6 +203,14 @@ const Filter = ({ type }) => {
         </Paragraph>
       ),
       key: 'CANCELED',
+    },
+    {
+      label: (
+        <Paragraph classNames="color-black" strong>
+          {t('status.COMPLETED')}
+        </Paragraph>
+      ),
+      key: 'COMPLETED',
     },
   ];
 
