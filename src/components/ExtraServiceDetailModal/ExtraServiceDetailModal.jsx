@@ -12,7 +12,7 @@ import ServiceStatus from '../../pages/ExtraServices/components/ServiceStatus/Se
 import { mutate } from 'swr';
 import { getLeaseByIdService } from '../../services/apis/contracts.service';
 import { Caption, Paragraph, SubHeading } from '../Typography';
-import { setExtraServicesLoading } from '../../store/slices/extraServices.slice';
+import { setExtraServicesLoading, setExtraServicesStatus } from '../../store/slices/extraServices.slice';
 import { CaretDownOutlined, DownloadOutlined, LoadingOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import { formatCustomCurrency } from '../../utils/number-seperator';
@@ -53,6 +53,7 @@ const ExtraServiceDetailModal = () => {
       await requestCancelExtraServices(extraServiceRequestDetail?.id);
       openNotificationWithIcon('success', t('notification.cancelRequest'), t('notification.cancelRequestSuccessfully'));
       mutate(`getExtraServiceRequests?page=${1}&status=${'ALL'}`);
+      dispatch(setExtraServicesStatus({ status: 'ALL' }));
       dispatch(closeExtraServiceRequestDetailModal());
     } catch (error) {
       if (error === ERROR_TRANS_KEYS.EXTRA_SERVICE_REQUEST_PROGRESS_NOT_CANCELABLE) {
@@ -137,7 +138,7 @@ const ExtraServiceDetailModal = () => {
     if (status === 'IN_PROGRESS') {
       return true;
     }
-    if (status === 'APPROVED' && progresses && progresses[0]?.status !== 'IN_PROGRESS') {
+    if (status === 'APPROVED' && progresses && progresses?.[progresses?.length - 1]?.status !== 'IN_PROGRESS') {
       return true;
     }
     return false;

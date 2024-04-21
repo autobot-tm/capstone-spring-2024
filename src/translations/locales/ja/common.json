@@ -287,6 +287,8 @@
   "type.RECURRING": "リカーリング",
   "type.ONE_TIME": "ワンタイム",
   "category.UTILITY": "ユーティリティ",
+  "category.CLEANING": "クリーニング",
+  "category.MAINTENANCE": "メンテナンス",
   "district.District 1": "第1地区",
   "district.District 12": "第12地区",
   "district.Go Vap District": "ゴーバップ区",

@@ -294,6 +294,8 @@
   "type.RECURRING": "Recurring",
   "type.ONE_TIME": "One time",
   "category.UTILITY": "UTILITY",
+  "category.CLEANING": "Cleaning",
+  "category.MAINTENANCE": "Maintenance",
   "category.invoiceIssue": "Invoice issue",
   "category.livingIssue": "Living issue",
   "district.District 1": " District 1",

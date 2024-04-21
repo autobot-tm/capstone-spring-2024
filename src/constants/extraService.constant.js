@@ -51,3 +51,8 @@ export const OPTION_OF_MONTH = [
   { label: '30', value: 30 },
   { label: '31', value: 31 },
 ];
+
+export const ELECTRICITY_ID = '6c97d820-c715-4cdb-95b4-75d28d4b9330';
+export const WATER_ID = 'ccd0f4e1-c163-46b5-a926-7989d8664234';
+export const RESIDENCE_ID = '3cda8873-adc6-4c44-bf10-993177baa513';
+export const CLEANING_HOUSE_ID = '96209508-423c-4f80-b944-51c8a78f1a55';
