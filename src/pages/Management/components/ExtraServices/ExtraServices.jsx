@@ -12,6 +12,7 @@ import { getExtraServiceRequests } from '../../../../services/apis/extra-service
 import { setExtraServicesLoading, setExtraServicesPage } from '../../../../store/slices/extraServices.slice';
 import { openExtraServiceRequestDetailModal } from '../../../../store/slices/modalSlice';
 import CardService from '../../../../components/CardService/CardService';
+import SpinLoading from '../../../../components/SpinLoading/SpinLoading';
 
 const ExtraServices = () => {
   const LIMIT = 5;
@@ -46,7 +47,7 @@ const ExtraServices = () => {
   );
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <SpinLoading />;
   }
 
   const handleCardClick = service => {
