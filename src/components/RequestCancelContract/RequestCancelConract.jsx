@@ -8,7 +8,7 @@ import {
   openContractDetailModal,
   openShowLeaseModal,
 } from '../../store/slices/modalSlice';
-import { Alert, Form, Input, Popconfirm, Select, Table, notification } from 'antd';
+import { Alert, Checkbox, Form, Input, Popconfirm, Select, Table, notification } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { requestCancelContractService } from '../../services/apis/contracts.service';
 import { requestCancelExtraServices, requestExtraServices } from '../../services/apis/extra-services.service';
@@ -16,14 +16,16 @@ import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
 import ServiceStatus from '../../pages/ExtraServices/components/ServiceStatus/ServiceStatus';
 import { mutate } from 'swr';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
+import { OPTION_OF_MONTH, OPTION_OF_WEEK, OPTION_OF_WEEK_IN_JP } from '../../constants/extraService.constant';
+import { Paragraph } from '../Typography';
 
 const RequestCancelConract = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { requestCancelContractModal, typeOfRequest, contractId, extraServiceId, leases } = useSelector(
     state => state.modal,
   );
-  const { extraServicesRequests } = useSelector(state => state.extraServices);
+  const { extraServicesRequests, extraServices } = useSelector(state => state.extraServices);
   const [error, setError] = useState(false);
   const [isRequestCancel, setIsRequestCancel] = useState(false);
   const [requestInprogress, setRequestInprogress] = useState('');
@@ -51,16 +53,34 @@ const RequestCancelConract = () => {
     }
   }, [contractId, extraServiceId, extraServicesRequests]);
 
+  const period = extraServices?.schedule?.period;
   const handleFinish = async values => {
-    const { title, reason, type, description } = values;
+    const { title, reason, type, description, days_of_month, days_of_week } = values;
     if (typeOfRequest === 'service') {
       try {
-        const requestData = {
-          lease_id: contractId,
+        let requestData = {
           extra_service_id: extraServiceId,
-          description,
+          lease_id: contractId,
           title,
+          description,
+          type: extraServices.type,
         };
+        if (extraServices.category === 'UTILITY') {
+          requestData.schedule = {
+            period,
+          };
+        } else if (extraServices.category !== 'UTILITY' && period === 'MONTHLY') {
+          requestData.schedule = {
+            period,
+            days_of_month,
+          };
+        } else {
+          requestData.schedule = {
+            period,
+            days_of_week,
+          };
+        }
+        console.log('requestData', requestData);
         await requestExtraServices(requestData);
         dispatch(closeRequestCancelContractModal());
         openNotificationWithIcon('success', t('notification.submittedSuccessfully'));
@@ -256,25 +276,61 @@ const RequestCancelConract = () => {
           ]}>
           <Form onFinish={handleFinish} form={form}>
             {typeOfRequest !== 'service' && (
-              <Form.Item name={'type'} rules={[{ required: true, message: t('validationRules.required.type') }]}>
-                <Select style={{ width: '100%' }} placeholder={t('placeholder.type')} options={options} />
-              </Form.Item>
+              <>
+                <Form.Item name={'type'} rules={[{ required: true, message: t('validationRules.required.type') }]}>
+                  <Select style={{ width: '100%' }} placeholder={t('placeholder.type')} options={options} />
+                </Form.Item>
+                <Form.Item name={'title'} rules={[{ required: true, message: t('validationRules.required.title') }]}>
+                  <Input placeholder={t('placeholder.title')} />
+                </Form.Item>
+                <Form.Item name={'reason'} rules={[{ required: true, message: t('validationRules.required.reason') }]}>
+                  <TextArea rows={4} placeholder={t('placeholder.reason')} maxLength={200} />
+                </Form.Item>
+              </>
             )}
-            <Form.Item name={'title'} rules={[{ required: true, message: t('validationRules.required.title') }]}>
-              <Input placeholder={t('placeholder.title')} />
-            </Form.Item>
-            {typeOfRequest !== 'service' ? (
-              <Form.Item name={'reason'} rules={[{ required: true, message: t('validationRules.required.reason') }]}>
-                <TextArea rows={4} placeholder={t('placeholder.reason')} maxLength={200} />
-              </Form.Item>
-            ) : (
-              <Form.Item
-                name={'description'}
-                rules={[{ required: true, message: t('validationRules.required.description') }]}>
-                <TextArea rows={4} placeholder={t('placeholder.description')} maxLength={200} />
-              </Form.Item>
+            {typeOfRequest === 'service' && (
+              <>
+                <Form.Item name={'title'} rules={[{ required: true, message: t('validationRules.required.title') }]}>
+                  <Input placeholder={t('placeholder.title')} />
+                </Form.Item>
+                <Form.Item
+                  name={'description'}
+                  rules={[{ required: true, message: t('validationRules.required.description') }]}>
+                  <TextArea rows={4} placeholder={t('placeholder.description')} maxLength={200} />
+                </Form.Item>
+                {extraServices?.able_to_change_schedule === true && (
+                  <>
+                    {period === 'WEEKLY' ? (
+                      <>
+                        <Paragraph>{t('hint-week-checkbox')}: </Paragraph>
+                        <Form.Item
+                          name={'days_of_week'}
+                          className="checkbox-container"
+                          initialValue={extraServices?.schedule?.days_of_week}>
+                          {i18n.language === 'en' ? (
+                            <Checkbox.Group options={OPTION_OF_WEEK} />
+                          ) : (
+                            <Checkbox.Group options={OPTION_OF_WEEK_IN_JP} />
+                          )}
+                        </Form.Item>
+                      </>
+                    ) : (
+                      <>
+                        <Paragraph>{t('hint-month-checkbox')}: </Paragraph>
+                        <Form.Item
+                          name={'days_of_month'}
+                          className="checkbox-container"
+                          initialValue={extraServices?.schedule?.days_of_month}>
+                          <Checkbox.Group options={OPTION_OF_MONTH} />
+                        </Form.Item>
+                      </>
+                    )}
+                  </>
+                )}
+              </>
             )}
           </Form>
+
           {error && (
             <Alert
               message={t('api.error.waitForServiceConfirmation')}

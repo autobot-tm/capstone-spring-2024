@@ -4,7 +4,7 @@ const initialState = {
   loading: false,
   status: 'ALL',
   page: 1,
-  extraServices: [],
+  extraServices: {},
   extraServicesRequests: [],
   typeNavigate: '',
 };
@@ -13,6 +13,9 @@ const extraServicesSlice = createSlice({
   name: 'extraServices',
   initialState,
   reducers: {
+    setExtraService: (state, action) => {
+      state.extraServices = action.payload.extraServices;
+    },
     setExtraServicesLoading(state, action) {
       state.loading = action.payload.loading;
     },
@@ -32,6 +35,7 @@ const extraServicesSlice = createSlice({
 });
 
 export const {
+  setExtraService,
   setExtraServicesRequest,
   setExtraServicesLoading,
   setExtraServicesStatus,

@@ -30,6 +30,7 @@ import ExtraServiceDetailModal from './components/ExtraServiceDetailModal/ExtraS
 import ChoosePaymentMethodModal from './components/ChoosePaymentMethod/ChoosePaymentMethodModal';
 import ReportIssuesModal from './components/ReportIssues/ReportIssuesModal';
 import ContactRequestDetail from './pages/Management/components/ContactRequests/components/ContactRequestDetail/ContactRequestDetail';
+import ServiceDetailModal from './pages/ExtraServices/components/ServiceDetail/ServiceDetailModal';
 import HouseReviewModal from './components/HouseReview/HouseReviewModal';
 
 initTranslations();
@@ -77,6 +78,7 @@ root.render(
           <ReportIssuesModal />
           <ChoosePaymentMethodModal />
           <ContactRequestDetail />
+          <ServiceDetailModal />
           <HouseReviewModal />
         </BrowserRouter>
       </ConfigProvider>

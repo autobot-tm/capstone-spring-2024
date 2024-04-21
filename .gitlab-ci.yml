@@ -21,6 +21,12 @@ cache:
     - .yarn/cache
 
 before_script:
+  # Install NVM
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+  - source ~/.nvm/nvm.sh
+  # Install specific Node.js version
+  - nvm install 18.17.1
+  - nvm use 18.17.1
   # Install yarn as outlined in (https://yarnpkg.com/lang/en/docs/install/#alternatives-stable)
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   # Make available in the current terminal

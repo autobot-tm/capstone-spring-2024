@@ -23,6 +23,10 @@
     font-size: 30px;
     padding: 0 14px;
   }
+  & img {
+    max-width: 40px;
+    height: auto;
+  }
 
   .es-iconPrimary {
     background-color: $colors-primary;
@@ -31,8 +35,14 @@
   .es-iconTertiary {
     background-color: $colors-tertiary;
   }
-  .es-iconOthers {
+  .es-iconResidence {
     background-color: #ccc;
+  }
+  .es-iconSecondary {
+    background-color: #ee2852;
+  }
+  .es-iconOthers {
+    background-color: #2f3542;
   }
 
   .name-services {
