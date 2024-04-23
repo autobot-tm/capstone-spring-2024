@@ -50,30 +50,38 @@ const ContractDetail = () => {
 
   useEffect(() => {
     if (leaseId) {
-      getLeaseByIdService({ leaseId }).then(response => {
-        setId(response.id);
-        setStatus(response.status);
-        setStartDate(response.move_in_date);
-        setEndDate(response.expiration_date);
-        setFiles(response.contract_file_urls);
-        setHouseName(response.reservation.house.name);
-        setAddress(response.reservation.house.address);
-        setPrice(response.reservation.price_per_month);
-        setFirstName(response.reservation.renter.first_name);
-        setLastName(response.reservation.renter.last_name);
-        setEmail(response.reservation.renter.email);
-        setRequests(response.cancelation_requests);
-        setHouseID(response.reservation.house.id);
-        setTerminations(response.contract_termination_agreement_file_urls);
-        setAppendix(response.appendix_file_urls);
-      });
+      getLeaseByIdService({ leaseId })
+        .then(response => {
+          setId(response.id);
+          setStatus(response.status);
+          setStartDate(response.move_in_date);
+          setEndDate(response.expiration_date);
+          setFiles(response.contract_file_urls);
+          setHouseName(response.reservation.house.name);
+          setAddress(response.reservation.house.address);
+          setPrice(response.reservation.price_per_month);
+          setFirstName(response.reservation.renter.first_name);
+          setLastName(response.reservation.renter.last_name);
+          setEmail(response.reservation.renter.email);
+          setRequests(response.cancelation_requests);
+          setHouseID(response.reservation.house.id);
+          setTerminations(response.contract_termination_agreement_file_urls);
+          setAppendix(response.appendix_file_urls);
+        })
+        .catch(error => {
+          console.error('Error fetching lease data:', error);
+        });
 
-      getRefundService({ leaseId }).then(response => {
-        setRefundData(response.payments);
-        dispatch(setContractLoading({ loading: false }));
-      });
+      getRefundService({ leaseId })
+        .then(response => {
+          setRefundData(response.payments);
+          dispatch(setContractLoading({ loading: false }));
+        })
+        .catch(error => {
+          console.error('Error fetching refund data:', error);
+        });
     }
-  }, [loading]);
+  }, [leaseId, loading, dispatch]);
 
   useEffect(() => {
     if (!contractDetailModal) {

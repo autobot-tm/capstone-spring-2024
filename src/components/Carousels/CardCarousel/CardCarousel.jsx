@@ -24,23 +24,28 @@ const CardCarousel = ({ images, limit, isHovered, houseId }) => {
       setIsWishList(false);
     }
   }, [ids, houseId]);
-
   const handleAddWishlist = async () => {
-    await updateWishlist({
-      added_house_ids: [houseId],
-      removed_house_ids: [],
-    });
-    dispatch(addToWishlist(houseId)); // Dispatch action to update Redux store
+    try {
+      await updateWishlist({
+        added_house_ids: [houseId],
+        removed_house_ids: [],
+      });
+      dispatch(addToWishlist(houseId));
+    } catch (error) {
+      console.error('Error adding to wishlist:', error);
+    }
   };
-
   const handleRemoveWishlist = async () => {
-    await updateWishlist({
-      added_house_ids: [],
-      removed_house_ids: [houseId],
-    });
-    dispatch(removeFromWishlist(houseId)); // Dispatch action to update Redux store
+    try {
+      await updateWishlist({
+        added_house_ids: [],
+        removed_house_ids: [houseId],
+      });
+      dispatch(removeFromWishlist(houseId));
+    } catch (error) {
+      console.error('Error removing from wishlist:', error);
+    }
   };
-
   return (
     <div className={styles.carouselContainer}>
       <Carousel

@@ -29,29 +29,33 @@ const ReservationDetail = () => {
   const [price, setPrice] = useState('');
   const [showHouse, setShowHouse] = useState(false);
   const [showRenter, setShowRenter] = useState(false);
-
   const dispatch = useDispatch();
   const loading = useSelector(state => state.reservation.loading);
 
   useEffect(() => {
     if (reservationId) {
-      getReservationByIdService({ reservationId }).then(response => {
-        setId(response.id);
-        setStatus(response.status);
-        setMoveInDay(response.expected_move_in_date);
-        setTotalMonths(response.total_months);
-        setReservationFee(response.fee);
-        setRefundPercent(response.refund_percentage);
-        setFirstName(response.renter.first_name);
-        setLastName(response.renter.last_name);
-        setEmail(response.renter.email);
-        setHouseName(response.house.name);
-        setAddress(response.house.address);
-        setPrice(response.price_per_month);
-        dispatch(setLoading({ loading: false }));
-      });
+      getReservationByIdService({ reservationId })
+        .then(response => {
+          setId(response.id);
+          setStatus(response.status);
+          setMoveInDay(response.expected_move_in_date);
+          setTotalMonths(response.total_months);
+          setReservationFee(response.fee);
+          setRefundPercent(response.refund_percentage);
+          setFirstName(response.renter.first_name);
+          setLastName(response.renter.last_name);
+          setEmail(response.renter.email);
+          setHouseName(response.house.name);
+          setAddress(response.house.address);
+          setPrice(response.price_per_month);
+          dispatch(setLoading({ loading: false }));
+        })
+        .catch(error => {
+          console.error('Error fetching reservation data:', error);
+          dispatch(setLoading({ loading: false }));
+        });
     }
-  }, [loading]);
+  }, [reservationId, loading, dispatch]);
 
   useEffect(() => {
     if (!reservationDetailModal) {

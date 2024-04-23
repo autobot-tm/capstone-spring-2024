@@ -85,7 +85,6 @@ const UserNotification = ({ t }) => {
   const { unreadCount, limit, notifications } = useSelector(state => state.notification);
   const [visible, setVisible] = useState(false);
   const [showLoadMore, setShowLoadMore] = useState(false);
-  const [messages, setMessages] = useState([]);
   const [notificationShown, setNotificationShown] = useState(false);
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, description) => {
@@ -125,7 +124,6 @@ const UserNotification = ({ t }) => {
       data.context = JSON.parse(data.context.replace(/'/g, '"'));
       const { title } = data;
       if (data && !notificationShown) {
-        setMessages(title);
         openNotificationWithIcon('info', title);
         setNotificationShown(true);
         setTimeout(() => {
@@ -149,7 +147,6 @@ const UserNotification = ({ t }) => {
       es.close();
     };
   }, [access_token, notificationShown]);
-  console.log(messages);
 
   const handleNotificationClick = async id => {
     try {

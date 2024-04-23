@@ -80,7 +80,6 @@ const RequestCancelConract = () => {
             days_of_week,
           };
         }
-        console.log('requestData', requestData);
         await requestExtraServices(requestData);
         dispatch(closeRequestCancelContractModal());
         openNotificationWithIcon('success', t('notification.submittedSuccessfully'));
@@ -152,6 +151,12 @@ const RequestCancelConract = () => {
     },
   ];
 
+  const days = requestInprogress?.schedule?.days_of_month?.map((day, index) => (index === 0 ? `${day}` : ` - ${day}`));
+  const result = days?.join(' ');
+  const daysOfWeek = requestInprogress?.schedule?.days_of_week?.map((day, index) =>
+    index === 0 ? `${day}` : ` - ${day}`,
+  );
+  const resultOfWeek = daysOfWeek?.join(' ');
   const dataSource = [
     {
       key: '1',
@@ -179,6 +184,20 @@ const RequestCancelConract = () => {
             key: '5',
             title: <b>{t('label.resolutionNote')}</b>,
             content: requestInprogress.resolution_note || '-',
+          },
+        ]
+      : []),
+    ...(requestInprogress?.schedule?.period
+      ? [
+          {
+            key: '6',
+            title: <b>{t('schedule')}</b>,
+            content: requestInprogress?.schedule?.period,
+          },
+          {
+            key: '7',
+            title: <b>{requestInprogress?.schedule?.period === 'WEEKLY' ? t('daysOfWeek') : t('daysOfMonth')}</b>,
+            content: requestInprogress?.schedule?.period === 'WEEKLY' ? resultOfWeek : result,
           },
         ]
       : []),
@@ -304,6 +323,7 @@ const RequestCancelConract = () => {
                       <>
                         <Paragraph>{t('hint-week-checkbox')}: </Paragraph>
                         <Form.Item
+                          rules={[{ required: true, message: t('validationRules.required.days') }]}
                           name={'days_of_week'}
                           className="checkbox-container"
                           initialValue={extraServices?.schedule?.days_of_week}>
@@ -318,6 +338,7 @@ const RequestCancelConract = () => {
                       <>
                         <Paragraph>{t('hint-month-checkbox')}: </Paragraph>
                         <Form.Item
+                          rules={[{ required: true, message: t('validationRules.required.days') }]}
                           name={'days_of_month'}
                           className="checkbox-container"
                           initialValue={extraServices?.schedule?.days_of_month}>

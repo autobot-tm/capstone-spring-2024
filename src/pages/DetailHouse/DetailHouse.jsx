@@ -40,11 +40,18 @@ const DetailHouse = () => {
   const [imgHouse, setImgHouse] = useState([]);
   const [comment, setComment] = useState([]);
   const { access_token } = useSelector(state => state.auth);
-  const { data: house } = useSWR(`getHouseById/${house_id}`, async () => await getHouseById({ house_id }));
-  const { data: reviews } = useSWR(['getHouseReview', house_id], async () => await getHouseReview({ house_id }));
   const [isWishList, setIsWishList] = useState(false);
   const ids = useSelector(state => state.house.ids);
-
+  const {
+    data: house,
+    error: houseError,
+    isLoading: houseLoading,
+  } = useSWR(`getHouseById/${house_id}`, async () => await getHouseById({ house_id }));
+  const {
+    data: reviews,
+    error: reviewError,
+    isLoading: reviewLoading,
+  } = useSWR(['getHouseReview', house_id], async () => await getHouseReview({ house_id }));
   useEffect(() => {
     if (access_token) {
       setIsWishList(ids.includes(house_id));
@@ -89,6 +96,12 @@ const DetailHouse = () => {
       description: t('detail-house.error-date'),
     });
   }
+  if (houseError || reviewError) {
+    return <p>Error loading data. Please try again later.</p>;
+  }
+  if (houseLoading || reviewLoading) {
+    return <SpinLoading />;
+  }
   const TitleHeadingComponent = () => {
     return (
       <>
@@ -115,7 +128,6 @@ const DetailHouse = () => {
       </>
     );
   };
-
   const DescriptionComponent = () => {
     return (
       <>
@@ -136,7 +148,6 @@ const DetailHouse = () => {
       </>
     );
   };
-
   const PropertyFeatureComponent = () => {
     return (
       <>
@@ -167,7 +178,6 @@ const DetailHouse = () => {
       </>
     );
   };
-
   const LocationComponent = () => {
     return (
       <>
@@ -214,7 +224,6 @@ const DetailHouse = () => {
   //     </>
   //   );
   // };
-
   const ReserveFormComponent = () => {
     const [selectedMonths, setSelectedMonths] = useState(1);
     const [selectedDate, setSelectedDate] = useState(null);
@@ -332,7 +341,6 @@ const DetailHouse = () => {
       </>
     );
   };
-
   const RelatedPropertiesComponent = () => {
     return (
       <>
@@ -352,14 +360,12 @@ const DetailHouse = () => {
       </>
     );
   };
-
   const handleBookNowClick = () => {
     const priceSection = document.querySelector('.side-form-estimated-section');
     if (priceSection) {
       priceSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   };
-
   return (
     <Layout>
       {isLoading ? (
@@ -369,7 +375,6 @@ const DetailHouse = () => {
           <Helmet>
             <title>{house?.name}</title>
           </Helmet>
-
           <main>
             <div id="dh-container">
               <ImageLayout images={imgHouse} />
@@ -401,7 +406,7 @@ const DetailHouse = () => {
                         size="large"
                         icon={<HeartTwoTone twoToneColor={['#ffffff', '#ff395c']} style={{ fontSize: '25px' }} />}
                         onClick={() => handleRemoveWishlist()}>
-                        Added to wishlist
+                        {t('detail-house.added-to-wishlist')}
                       </Button>
                     ) : (
                       <Button
@@ -416,7 +421,7 @@ const DetailHouse = () => {
                           }
                         }}>
                         {' '}
-                        Add to wishlist
+                        {t('detail-house.add-to-wishlist')}
                       </Button>
                     )}
                   </Row>

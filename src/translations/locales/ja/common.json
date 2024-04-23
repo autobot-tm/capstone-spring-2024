@@ -214,6 +214,7 @@
   "validationRules.required.authenticationCode": "認証コードが必要",
   "validationRules.required.title": "タイトルは必須です",
   "validationRules.required.reason": "理由は必須です",
+  "validationRules.required.days": "日が必要",
   "validationRules.required.type": "タイプは必須です",
   "validationRules.required.description": "説明が必要d",
   "validationRules.invalid.email": "電子メールが無効です",
@@ -346,6 +347,9 @@
   "hint-month-checkbox": "公演日をお選びください。",
   "description-first-service": "私どものサービスをご覧いただき、ご自宅での生活をご体験ください。",
   "description-second-service": "近代的な設備と献身的なカスタマーサービス。",
+  "schedule": "スケジュール",
+  "daysOfWeek": "曜日",
+  "daysOfMonth": "月中の日数",
 
   "CANCEL_CONTRACT": {
     "title": "追加サービスのお申し込み 一時滞在登録サポートサービスは現在検討中です。",
@@ -403,6 +407,7 @@
     "monthS": "月",
     "select-date": "日付を選択",
     "add-to-wishlist": "ウィッシュリストに追加",
+    "added-to-wishlist": "ウィッシュリストに追加",
     "estimated": "見積もり",
     "rental-period": "レンタル期間",
     "time-to-move-in": "入居までの期間",
