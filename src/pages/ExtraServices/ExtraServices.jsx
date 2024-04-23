@@ -28,17 +28,19 @@ const ExtraServices = () => {
       throw new Error('Failed to fetch extra services');
     }
   });
-
   useEffect(() => {
     if (extraServices) {
       setServices(extraServices);
     }
   }, [extraServices]);
   const fetchExtraServiceRequests = async () => {
-    const response = await getExtraServiceRequests({ renter_email: user.email });
-    return response.extra_service_requests;
+    try {
+      const response = await getExtraServiceRequests({ renter_email: user.email });
+      return response.extra_service_requests;
+    } catch (error) {
+      console.error('An error occurred while fetching extra service requests:', error);
+    }
   };
-
   const { data: extraServiceRequests } = useSWR('/extraServiceRequests', fetchExtraServiceRequests);
   useEffect(() => {
     if (extraServiceRequests) {
@@ -49,7 +51,6 @@ const ExtraServices = () => {
       );
     }
   }, [extraServiceRequests]);
-
   const handleCardClick = service => {
     dispatch(openServiceDetailModal());
     dispatch(setExtraService({ extraServices: service }));

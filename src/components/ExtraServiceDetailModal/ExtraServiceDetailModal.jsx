@@ -87,6 +87,14 @@ const ExtraServiceDetailModal = () => {
       key: 'content',
     },
   ];
+  const days = extraServiceRequestDetail?.schedule?.days_of_month?.map((day, index) =>
+    index === 0 ? `${day}` : ` - ${day}`,
+  );
+  const result = days?.join(' ');
+  const daysOfWeek = extraServiceRequestDetail?.schedule?.days_of_week?.map((day, index) =>
+    index === 0 ? `${day}` : ` - ${day}`,
+  );
+  const resultOfWeek = daysOfWeek?.join(' ');
   const infoRequest = [
     {
       key: '1',
@@ -114,6 +122,22 @@ const ExtraServiceDetailModal = () => {
             key: '5',
             title: <b>{t('label.resolutionNote')}</b>,
             content: extraServiceRequestDetail?.resolution_note || '-',
+          },
+        ]
+      : []),
+    ...(extraServiceRequestDetail?.schedule?.period
+      ? [
+          {
+            key: '6',
+            title: <b>{t('schedule')}</b>,
+            content: extraServiceRequestDetail?.schedule?.period,
+          },
+          {
+            key: '7',
+            title: (
+              <b>{extraServiceRequestDetail?.schedule?.period === 'WEEKLY' ? t('daysOfWeek') : t('daysOfMonth')}</b>
+            ),
+            content: extraServiceRequestDetail?.schedule?.period === 'WEEKLY' ? resultOfWeek : result,
           },
         ]
       : []),

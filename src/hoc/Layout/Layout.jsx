@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import UserNotification from '../../components/UserNotification/UserNotification';
 import { useTranslation } from 'react-i18next';
 import { TranslationSelector } from './components/TranslationSelector';
+import LOGO from '../../assets/images/logo-Dub9QTYA.png';
 const { Header, Content } = AntdLayout;
 export const Layout = ({ children }) => {
   const { access_token } = useSelector(state => state.auth);
@@ -28,7 +29,9 @@ export const Layout = ({ children }) => {
                 }}
               />
               <div onClick={() => navigate('/')}>
-                <h2 style={{ margin: 0 }}>Logo</h2>
+                <div className="logo-container">
+                  <img src={LOGO} style={{ width: 44 }} alt="" />
+                </div>
               </div>
               <div style={{ marginLeft: 'auto', display: 'flex', gap: '4px', alignItems: 'center' }}>
                 <TranslationSelector />

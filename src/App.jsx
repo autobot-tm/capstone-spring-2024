@@ -52,8 +52,12 @@ function App() {
       .then(response => {
         dispatch(setMetaData({ metadata: response }));
       })
-      .then(setLoading(false));
-  }, []);
+      .then(setLoading(false))
+      .catch(error => {
+        console.error('Error while fetching metadata:', error);
+        setLoading(false);
+      });
+  }, [dispatch]);
 
   useEffect(() => {
     if (access_token) {

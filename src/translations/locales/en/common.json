@@ -219,6 +219,7 @@
   "validationRules.required.repeatpassword": "Repeat password is required",
   "validationRules.required.authenticationCode": "Authentication code is required",
   "validationRules.required.title": "Title is required",
+  "validationRules.required.days": "Day is required",
   "validationRules.required.reason": "Reason is required",
   "validationRules.required.type": "Type is required",
   "validationRules.required.description": "Description is required",
@@ -355,6 +356,9 @@
   "hint-month-checkbox": "Please choose the days of the month to perform",
   "description-first-service": "Explore our services and experience life at home.",
   "description-second-service": "With modern amenities and dedicated customer service.",
+  "schedule": "Schedule",
+  "daysOfWeek": "Days of week",
+  "daysOfMonth": "Days of month",
 
   "CANCEL_CONTRACT": {
     "title": "Your request for the extra service: Temporary Residence Registration Support Service is being reviewed.",
@@ -412,6 +416,7 @@
     "monthS": "month(s)",
     "select-date": "Select date",
     "add-to-wishlist": "Add to wishlist",
+    "added-to-wishlist": "Added to wishlist",
     "estimated": "Estimated",
     "rental-period": "Rental period",
     "time-to-move-in": "Time to move in",

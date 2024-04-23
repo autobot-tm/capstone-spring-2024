@@ -33,47 +33,65 @@ const EditUserInfo = () => {
     value: item.country,
   }));
   const handleFinishName = async values => {
-    setUpdateLoading(true);
-    const { firstName, lastName } = values;
-    await updateUserCurrentService({
-      first_name: firstName,
-      last_name: lastName,
-    });
-    setEditName(false);
-    dispatch(userActions.getUserProfile());
-    setUpdateLoading(false);
+    try {
+      setUpdateLoading(true);
+      const { firstName, lastName } = values;
+      await updateUserCurrentService({
+        first_name: firstName,
+        last_name: lastName,
+      });
+      setEditName(false);
+      dispatch(userActions.getUserProfile());
+    } catch (error) {
+      console.error('Error updating user name:', error);
+    } finally {
+      setUpdateLoading(false);
+    }
   };
   const handleFinishPhone = async values => {
-    setUpdateLoading(true);
-    const { phoneNumber } = values;
-    await updateUserCurrentService({
-      phone_number: phoneNumber,
-    });
-    setEditPhone(false);
-    dispatch(userActions.getUserProfile());
-    setUpdateLoading(false);
+    try {
+      setUpdateLoading(true);
+      const { phoneNumber } = values;
+      await updateUserCurrentService({
+        phone_number: phoneNumber,
+      });
+      setEditPhone(false);
+      dispatch(userActions.getUserProfile());
+    } catch (error) {
+      console.error('Error updating phone number:', error);
+    } finally {
+      setUpdateLoading(false);
+    }
   };
   const handleFinishCountry = async values => {
-    setUpdateLoading(true);
-    const { country } = values;
-    await updateUserCurrentService({
-      country: country,
-    });
-    setEditCountry(false);
-    dispatch(userActions.getUserProfile());
-    setUpdateLoading(false);
+    try {
+      setUpdateLoading(true);
+      const { country } = values;
+      await updateUserCurrentService({
+        country,
+      });
+      setEditCountry(false);
+      dispatch(userActions.getUserProfile());
+    } catch (error) {
+      console.error('Error updating country:', error);
+    } finally {
+      setUpdateLoading(false);
+    }
   };
   const handleFinishAvatar = async () => {
-    await updateUserCurrentService({
-      avatar_url: avatar,
-    });
-    setEditAvatar(false);
-    dispatch(userActions.getUserProfile());
+    try {
+      await updateUserCurrentService({
+        avatar_url: avatar,
+      });
+      setEditAvatar(false);
+      dispatch(userActions.getUserProfile());
+    } catch (error) {
+      console.error('Error updating avatar:', error);
+    }
   };
   const handleBack = () => {
     navigate(`/user-dashboard/${user?.id}`);
   };
-
   return (
     <Layout>
       <div className="editUserInfo-container">

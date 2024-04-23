@@ -12,15 +12,11 @@ import { Paragraph } from '../../components/Typography/Paragraph/Paragraph';
 const HouseReviewModal = () => {
   const { t } = useTranslation();
   const { access_token } = useSelector(state => state.auth);
-
   const { user } = useSelector(state => state.user);
   const [isReview, setIsReview] = useState({});
-
   const dispatch = useDispatch();
-  //console.log('run review api');
   const [rating, setRating] = useState(null);
   const { reviewHouseModal, contractId, houseID } = useSelector(state => state.modal);
-  //console.log('House ID Modal: ', houseID);
 
   const isReviews = async () => {
     try {
@@ -28,11 +24,6 @@ const HouseReviewModal = () => {
       console.log('review', review);
       const isReviewer = review.reviews.find(review => review.reviewer.email === user.email);
       setIsReview(isReviewer);
-      // if (isReviewer) {
-      //   console.log(`Comment của bo: ${isReviewer.comment} and ${isReviewer.rating}`);
-      // } else {
-      //   console.log(`bo chưa comment.`);
-      // }
     } catch (error) {
       console.log('Error in HouseReviewModal: ', error);
     }
@@ -42,14 +33,12 @@ const HouseReviewModal = () => {
       isReviews();
     }
   }, [houseID, reviewHouseModal]);
-
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type, message) => {
     api[type]({
       message: message,
     });
   };
-
   const handleRating = value => {
     setRating(value);
   };
@@ -63,13 +52,11 @@ const HouseReviewModal = () => {
         return;
       }
       if (values && rating) {
-        console.log('Received values:', values.comment, rating);
         const comment = values.comment;
         await addHouseReview({ house_id: houseID, rating, comment });
         dispatch(closeReviewHouseModal());
         openNotificationWithIcon('success', t('notification.submittedSuccessfully'));
       }
-      console.log('Add successfully');
     } catch (error) {
       console.error('Error request contact us:', error);
     }
