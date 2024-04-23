@@ -4,6 +4,8 @@ workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "push"
       when: always
+    - if: $CI_PIPELINE_SOURCE == "web"
+      when: always
 # Variables set in the GitLab UI are not passed down to service containers.
 variables:
   ENV: $ENV
