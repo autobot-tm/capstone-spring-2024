@@ -13,7 +13,6 @@ import { getHouseById, getHouseReview, updateWishlist } from '../../services/api
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { formatCustomCurrency } from '../../utils/number-seperator';
-// import { addToWishlist, removeFromWishlist } from '../../store/slices/wishlist.slice';
 import { HousePropertyUnit, PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
 import HouseUtility from './components/HouseUtility/HouseUtility';
 import FeedBackCustomer from './components/FeedBackCustomer/FeedBackCustomer';
@@ -21,8 +20,6 @@ import HouseAmenities from './components/HouseAmenities/HouseAmenities';
 import useSWR from 'swr';
 import Selection from './components/Selection/Selection';
 import DatePickerAnt from './components/DatePickerComponent/DatePickerAnt';
-import ReviewForm from './components/ReviewForm/ReviewForm';
-// import CarouselHeader from '../../components/CarouselHeader/CarouselHeader';
 import SizeImg from '../../assets/images/SizeIcon.svg';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
@@ -33,7 +30,7 @@ import ImageLayout from './components/ImageLayout/ImageLayout';
 import { addToWishlist, removeFromWishlist } from '../../store/slices/houseSlice';
 
 const DetailHouse = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { house_id: house_id } = useParams();
@@ -43,15 +40,18 @@ const DetailHouse = () => {
   const [imgHouse, setImgHouse] = useState([]);
   const [comment, setComment] = useState([]);
   const { access_token } = useSelector(state => state.auth);
-  // const wishlist = useSelector(state => state.wishlist.houses);
-  // const isClickedWishlist = useSelector(state => state.wishlist.clickedStatus[house_id] || false);
-
-  const { data: house } = useSWR(`getHouseById/${house_id}`, async () => await getHouseById({ house_id }));
-
-  const { data: reviews } = useSWR(['getHouseReview', house_id], async () => await getHouseReview({ house_id }));
   const [isWishList, setIsWishList] = useState(false);
   const ids = useSelector(state => state.house.ids);
-
+  const {
+    data: house,
+    error: houseError,
+    isLoading: houseLoading,
+  } = useSWR(`getHouseById/${house_id}`, async () => await getHouseById({ house_id }));
+  const {
+    data: reviews,
+    error: reviewError,
+    isLoading: reviewLoading,
+  } = useSWR(['getHouseReview', house_id], async () => await getHouseReview({ house_id }));
   useEffect(() => {
     if (access_token) {
       setIsWishList(ids.includes(house_id));
@@ -59,23 +59,20 @@ const DetailHouse = () => {
       setIsWishList(false);
     }
   }, [ids, house_id]);
-
   const handleAddWishlist = async () => {
     await updateWishlist({
       added_house_ids: [house_id],
       removed_house_ids: [],
     });
-    dispatch(addToWishlist(house_id)); // Dispatch action to update Redux store
+    dispatch(addToWishlist(house_id));
   };
-
   const handleRemoveWishlist = async () => {
     await updateWishlist({
       added_house_ids: [],
       removed_house_ids: [house_id],
     });
-    dispatch(removeFromWishlist(house_id)); // Dispatch action to update Redux store
+    dispatch(removeFromWishlist(house_id));
   };
-
   useEffect(() => {
     const fetchHouseAmenities = async () => {
       try {
@@ -90,16 +87,20 @@ const DetailHouse = () => {
         console.error('Error fetching house amenities:', error);
       }
     };
-
     fetchHouseAmenities();
   }, [house, reviews]);
-
   function errorDateNotification() {
     return notification.error({
       message: t('detail-house.error'),
       icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
       description: t('detail-house.error-date'),
     });
+  }
+  if (houseError || reviewError) {
+    return <p>Error loading data. Please try again later.</p>;
+  }
+  if (houseLoading || reviewLoading) {
+    return <SpinLoading />;
   }
   const TitleHeadingComponent = () => {
     return (
@@ -127,7 +128,6 @@ const DetailHouse = () => {
       </>
     );
   };
-
   const DescriptionComponent = () => {
     return (
       <>
@@ -138,13 +138,16 @@ const DetailHouse = () => {
             </SubHeading>
           </Col>
           <Col xs={24}>
-            <Paragraph>{house?.description.replace(/<br\s*\/?>/gi, '')}</Paragraph>
+            <Paragraph>
+              {i18n.language === 'english' || !house?.description_in_jp?.replace(/<br\s*\/?>/gi, '')
+                ? house?.description?.replace(/<br\s*\/?>/gi, '')
+                : house?.description_in_jp?.replace(/<br\s*\/?>/gi, '')}
+            </Paragraph>
           </Col>
         </Row>
       </>
     );
   };
-
   const PropertyFeatureComponent = () => {
     return (
       <>
@@ -160,7 +163,7 @@ const DetailHouse = () => {
             {t('detail-house.property-detail-title')}
           </SubHeading>
           <Col className="main-property-features-detail-card" xs={24}>
-            {houseAmenities && houseAmenities.length > 0 && <HouseAmenities amenities={houseAmenities} />}
+            {houseAmenities && houseAmenities?.length > 0 && <HouseAmenities amenities={houseAmenities} />}
           </Col>
         </Row>
 
@@ -169,13 +172,12 @@ const DetailHouse = () => {
             {t('detail-house.property-utility-title')}
           </SubHeading>
           <Col className="main-property-features-utility-card" xs={24}>
-            {houseUtilities && houseUtilities.length > 0 && <HouseUtility utilities={houseUtilities} />}
+            {houseUtilities && houseUtilities?.length > 0 && <HouseUtility utilities={houseUtilities} />}
           </Col>
         </Row>
       </>
     );
   };
-
   const LocationComponent = () => {
     return (
       <>
@@ -190,13 +192,13 @@ const DetailHouse = () => {
               locations={[
                 {
                   position: {
-                    lat: house.latitude,
-                    lng: house.longitude,
+                    lat: house?.latitude,
+                    lng: house?.longitude,
                   },
                   id: house.id,
-                  name: house.name,
-                  price: house.pricing_policies[0].price_per_month,
-                  image: house.image_urls[0],
+                  name: house?.name,
+                  price: house?.pricing_policies?.[0]?.price_per_month,
+                  image: house?.image_urls?.[0],
                 },
               ]}
             />
@@ -208,29 +210,20 @@ const DetailHouse = () => {
       </>
     );
   };
-  //continue
-  const ReviewFormComponent = () => {
-    return (
-      <>
-        <Col className="main-frame-review-form" xs={24}>
-          <SubHeading size={260} strong>
-            {t('detail-house.leave-title')}
-          </SubHeading>
-          <Paragraph>{t('detail-house.leave-des-1')}</Paragraph>
-          <Paragraph>{t('detail-house.leave-des-2')}</Paragraph>
-          <span style={{ marginBottom: 10 }}>
-            <StarFilled />
-            <StarFilled />
-            <StarFilled />
-            <StarFilled />
-            <StarFilled />
-          </span>
-          <ReviewForm />
-        </Col>
-      </>
-    );
-  };
-
+  // const ReviewFormComponent = () => {
+  //   return (
+  //     <>
+  //       <Col className="main-frame-review-form" xs={24}>
+  //         <SubHeading size={260} strong>
+  //           {t('detail-house.leave-title')}
+  //         </SubHeading>
+  //         <Paragraph>{t('detail-house.leave-des-1')}</Paragraph>
+  //         <Paragraph>{t('detail-house.leave-des-2')}</Paragraph>
+  //         <ReviewForm house_id={house.id} />
+  //       </Col>
+  //     </>
+  //   );
+  // };
   const ReserveFormComponent = () => {
     const [selectedMonths, setSelectedMonths] = useState(1);
     const [selectedDate, setSelectedDate] = useState(null);
@@ -244,7 +237,7 @@ const DetailHouse = () => {
         errorDateNotification();
         return;
       }
-      navigate(`/reservation/${house.id}`, {
+      navigate(`/reservation/${house?.id}`, {
         state: { house, selectedDate, selectedMonths, reviews },
       });
     };
@@ -257,12 +250,12 @@ const DetailHouse = () => {
     const renderPrice = () => {
       const selectedMonthsInt = parseInt(selectedMonths);
       const pricePerMonth = house?.pricing_policies?.find(
-        policy => parseInt(policy.total_months) === 1,
+        policy => parseInt(policy?.total_months) === 1,
       )?.price_per_month;
 
       if (PROMOTION_PACKAGE_MONTHS.includes(selectedMonthsInt)) {
         const selectedPrice = house?.pricing_policies?.find(
-          policy => parseInt(policy.total_months) === selectedMonthsInt,
+          policy => parseInt(policy?.total_months) === selectedMonthsInt,
         )?.price_per_month;
         return (
           <Row>
@@ -298,7 +291,7 @@ const DetailHouse = () => {
           <Row className="side-form-price-section">
             <Col xs={6}>
               <SubHeading size={230} strong>
-                {t('detail-house.price')}:
+                {t('detail-house.price')}
               </SubHeading>
             </Col>
             <Col className="price-group" xs={18}>
@@ -329,7 +322,7 @@ const DetailHouse = () => {
               </Form.Item>
             </Col>
             <Col xs={24}>
-              {house.status === 'AVAILABLE' ? (
+              {house?.status === 'AVAILABLE' ? (
                 <BaseButton htmlType="submit" type="primary" style={{ width: '100%', justifyContent: 'center' }}>
                   {t('detail-house.reserve-now-btn')}
                 </BaseButton>
@@ -339,7 +332,7 @@ const DetailHouse = () => {
                   type="primary"
                   disabled
                   style={{ width: '100%', justifyContent: 'center' }}>
-                  {t(`detail-house.${house.status.replace(/_/g, '')}`)}
+                  {t(`detail-house.reserved`)}
                 </BaseButton>
               )}
             </Col>
@@ -348,7 +341,6 @@ const DetailHouse = () => {
       </>
     );
   };
-
   const RelatedPropertiesComponent = () => {
     return (
       <>
@@ -363,19 +355,17 @@ const DetailHouse = () => {
           </Col>
         </Row>
         <Row style={{ justifyContent: 'center' }}>
-          <h3>updating..</h3>
+          <h3>(coming soon)</h3>
         </Row>
       </>
     );
   };
-
   const handleBookNowClick = () => {
     const priceSection = document.querySelector('.side-form-estimated-section');
     if (priceSection) {
       priceSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   };
-
   return (
     <Layout>
       {isLoading ? (
@@ -385,7 +375,6 @@ const DetailHouse = () => {
           <Helmet>
             <title>{house?.name}</title>
           </Helmet>
-
           <main>
             <div id="dh-container">
               <ImageLayout images={imgHouse} />
@@ -406,7 +395,7 @@ const DetailHouse = () => {
                   <LocationComponent />
                   <Row align="top" className="main-frame-review">
                     <FeedBackCustomer comment={comment} />
-                    <ReviewFormComponent />
+                    {/* <ReviewFormComponent /> */}
                   </Row>
                 </Col>
                 <Col className="side" xs={24} xl={8}>
@@ -417,7 +406,7 @@ const DetailHouse = () => {
                         size="large"
                         icon={<HeartTwoTone twoToneColor={['#ffffff', '#ff395c']} style={{ fontSize: '25px' }} />}
                         onClick={() => handleRemoveWishlist()}>
-                        Added to wishlist
+                        {t('detail-house.added-to-wishlist')}
                       </Button>
                     ) : (
                       <Button
@@ -432,7 +421,7 @@ const DetailHouse = () => {
                           }
                         }}>
                         {' '}
-                        Add to wishlist
+                        {t('detail-house.add-to-wishlist')}
                       </Button>
                     )}
                   </Row>

@@ -12,69 +12,85 @@ import UploadAvatar from '../../../../components/UploadFile/UploadAvatar';
 import AVATAR from '../../../../assets/images/avatar.png';
 import { useTranslation } from 'react-i18next';
 import { PHONE_NUMBER } from '../../../../constants/auth.constant';
+import { LeftOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const EditUserInfo = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { actions: userActions } = useUserSlice();
-
   const [editName, setEditName] = useState(false);
   const [editPhone, setEditPhone] = useState(false);
   const [editCountry, setEditCountry] = useState(false);
   const [editAvatar, setEditAvatar] = useState(false);
   const { user, loading } = useSelector(state => state.user);
-  const [avatar, setAvatar] = useState('');
+  const [avatar, setAvatar] = useState(user?.avatar_url);
 
   const dispatch = useDispatch();
   const [updateLoading, setUpdateLoading] = useState(false);
-
   const options = COUNTRY.map(item => ({
     label: item.country,
     value: item.country,
   }));
-
   const handleFinishName = async values => {
-    setUpdateLoading(true);
-    const { firstName, lastName } = values;
-
-    await updateUserCurrentService({
-      first_name: firstName,
-      last_name: lastName,
-    });
-
-    setEditName(false);
-    dispatch(userActions.getUserProfile());
-    setUpdateLoading(false);
+    try {
+      setUpdateLoading(true);
+      const { firstName, lastName } = values;
+      await updateUserCurrentService({
+        first_name: firstName,
+        last_name: lastName,
+      });
+      setEditName(false);
+      dispatch(userActions.getUserProfile());
+    } catch (error) {
+      console.error('Error updating user name:', error);
+    } finally {
+      setUpdateLoading(false);
+    }
   };
   const handleFinishPhone = async values => {
-    setUpdateLoading(true);
-
-    const { phoneNumber } = values;
-    await updateUserCurrentService({
-      phone_number: phoneNumber,
-    });
-    setEditPhone(false);
-    dispatch(userActions.getUserProfile());
-    setUpdateLoading(false);
+    try {
+      setUpdateLoading(true);
+      const { phoneNumber } = values;
+      await updateUserCurrentService({
+        phone_number: phoneNumber,
+      });
+      setEditPhone(false);
+      dispatch(userActions.getUserProfile());
+    } catch (error) {
+      console.error('Error updating phone number:', error);
+    } finally {
+      setUpdateLoading(false);
+    }
   };
-
   const handleFinishCountry = async values => {
-    setUpdateLoading(true);
-
-    const { country } = values;
-    await updateUserCurrentService({
-      country: country,
-    });
-    setEditCountry(false);
-    dispatch(userActions.getUserProfile());
-    setUpdateLoading(false);
+    try {
+      setUpdateLoading(true);
+      const { country } = values;
+      await updateUserCurrentService({
+        country,
+      });
+      setEditCountry(false);
+      dispatch(userActions.getUserProfile());
+    } catch (error) {
+      console.error('Error updating country:', error);
+    } finally {
+      setUpdateLoading(false);
+    }
   };
-
   const handleFinishAvatar = async () => {
-    await updateUserCurrentService({
-      avatar_url: avatar,
-    });
-    setEditAvatar(false);
-    dispatch(userActions.getUserProfile());
+    try {
+      await updateUserCurrentService({
+        avatar_url: avatar,
+      });
+      setEditAvatar(false);
+      dispatch(userActions.getUserProfile());
+    } catch (error) {
+      console.error('Error updating avatar:', error);
+    }
+  };
+  const handleBack = () => {
+    navigate(`/user-dashboard/${user?.id}`);
   };
   return (
     <Layout>
@@ -84,6 +100,7 @@ const EditUserInfo = () => {
         ) : (
           <Row align="center">
             <Col style={{ margin: '60px 0' }} xs={24} sm={16} lg={16}>
+              <LeftOutlined className="icon-left" onClick={handleBack} />
               <SubHeading strong>{t('label.personal')}</SubHeading>
             </Col>
             <Col xs={24} sm={16} lg={16}>
@@ -253,6 +270,7 @@ const EditUserInfo = () => {
                         <Select
                           placeholder={t('placeholder.country')}
                           size="large"
+                          showSearch
                           options={options}
                           disabled={updateLoading}
                         />

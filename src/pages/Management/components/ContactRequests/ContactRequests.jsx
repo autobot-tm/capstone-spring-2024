@@ -18,7 +18,7 @@ const ContactRequests = () => {
   const category = useSelector(state => state.issue.category);
   const LIMIT = 5;
   const dispatch = useDispatch();
-  const { data, isLoading } = useSWR(`getIssuesService/${page}${status}${category}`, async () => {
+  const { data, error, isLoading } = useSWR(`getIssuesService/${page}${status}${category}`, async () => {
     return await getIssuesService({
       offset: LIMIT * (page - 1),
       limit: LIMIT,
@@ -41,6 +41,9 @@ const ContactRequests = () => {
       value: 'INVOICE_ISSUE',
     },
   ];
+  if (error) {
+    return <p>Error fetching issue: {error.message}</p>;
+  }
   return (
     <div className={styles.contactRequestsContainer}>
       <Filter />

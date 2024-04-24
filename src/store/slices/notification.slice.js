@@ -23,9 +23,22 @@ const notificationSlice = createSlice({
     setLimit(state, action) {
       state.limit = action.payload.limit;
     },
+    markNotificationAsRead(state, action) {
+      const { notificationId } = action.payload;
+      state.notifications = state.notifications.map(notification => {
+        if (notification.id === notificationId) {
+          return {
+            ...notification,
+            current_user_has_read: true,
+          };
+        }
+        return notification;
+      });
+    },
   },
 });
 
-export const { setLoading, setNotifications, setUnreadCount, setLimit } = notificationSlice.actions;
+export const { setLoading, setNotifications, setUnreadCount, setLimit, markNotificationAsRead } =
+  notificationSlice.actions;
 
 export default notificationSlice.reducer;

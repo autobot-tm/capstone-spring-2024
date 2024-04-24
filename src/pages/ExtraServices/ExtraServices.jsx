@@ -1,92 +1,59 @@
 import './styles.scss';
 import { Breadcrumb, Col, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { Caption, Headline, Paragraph } from '../../components/Typography';
+import { Caption, Headline } from '../../components/Typography';
 import { useTranslation } from 'react-i18next';
 import { HomeOutlined } from '@ant-design/icons';
 import { Layout } from '../../hoc/Layout/Layout';
 import { getExtraServiceRequests, getExtraServices } from '../../services/apis/extra-services.service';
 import useSWR from 'swr';
 import { useDispatch, useSelector } from 'react-redux';
-import { openLoginModal, openShowLeaseModal } from '../../store/slices/modalSlice';
-import CardRequest from './components/CardRequest/CardRequest';
-import { setExtraServicesRequest } from '../../store/slices/extraServices.slice';
-import { getLeasesService } from '../../services/apis/contracts.service';
+import { openServiceDetailModal } from '../../store/slices/modalSlice';
+import { setExtraService, setExtraServicesRequest } from '../../store/slices/extraServices.slice';
 import { Helmet } from 'react-helmet';
+import ServiceCard from './components/ServiceCard/ServiceCard';
 
 const ExtraServices = () => {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const { access_token } = useSelector(state => state.auth);
+  const { t, i18n } = useTranslation();
   const { user } = useSelector(state => state.user);
-  const [services, setServices] = useState('');
-  const electricity = services[0];
-  const water = services[1];
-  const residence = services[2];
+  const [services, setServices] = useState([]);
 
   const { data: extraServices } = useSWR('/api/extra-services', async () => {
     try {
       const res = await getExtraServices();
-      return res;
+      return res.extra_services;
     } catch (error) {
       console.error('Error fetching extra services:', error);
       throw new Error('Failed to fetch extra services');
     }
   });
-
   useEffect(() => {
     if (extraServices) {
       setServices(extraServices);
     }
   }, [extraServices]);
-
-  const fetchLeases = async () => {
-    const response = await getLeasesService({
-      renter_email: user.email,
-      offset: 0,
-      status: 'ACTIVE',
-      limit: 20,
-    });
-    return response.leases;
-  };
-
   const fetchExtraServiceRequests = async () => {
-    const response = await getExtraServiceRequests({ renter_email: user.email });
-    return response.extra_service_requests;
+    try {
+      const response = await getExtraServiceRequests({ renter_email: user.email });
+      return response.extra_service_requests;
+    } catch (error) {
+      console.error('An error occurred while fetching extra service requests:', error);
+    }
   };
-
-  const { data: leasesData } = useSWR('/leases', fetchLeases);
   const { data: extraServiceRequests } = useSWR('/extraServiceRequests', fetchExtraServiceRequests);
   useEffect(() => {
-    if (leasesData && extraServiceRequests) {
+    if (extraServiceRequests) {
       dispatch(
         setExtraServicesRequest({
           extraServicesRequests: extraServiceRequests,
         }),
       );
     }
-  }, [leasesData, extraServiceRequests]);
-
-  const handleCardClick = type => {
-    if (!access_token) {
-      dispatch(openLoginModal());
-      return;
-    }
-    let extraServiceId = null;
-    switch (type) {
-      case 'electricity':
-        extraServiceId = electricity?.id;
-        break;
-      case 'water':
-        extraServiceId = water?.id;
-        break;
-      case 'residence':
-        extraServiceId = residence?.id;
-        break;
-      default:
-        extraServiceId = null;
-    }
-    dispatch(openShowLeaseModal({ extraServiceId, leases: leasesData }));
+  }, [extraServiceRequests]);
+  const handleCardClick = service => {
+    dispatch(openServiceDetailModal());
+    dispatch(setExtraService({ extraServices: service }));
   };
 
   return (
@@ -117,41 +84,31 @@ const ExtraServices = () => {
         </Row>
       </header>
       <main id="es-container">
-        <Row className="es-wrap" gutter={[0, 30]}>
-          <Col xs={24} style={{ textAlign: 'start' }}>
-            <Paragraph classNames="color-black">{t('EXTRA-SERVICES.services')}</Paragraph>
+        <Row className="es-wrap" gutter={[0, 30]} align="center">
+          <Col xs={24} style={{ textAlign: 'center' }}>
             <Headline strong classNames="d-block">
-              {t('EXTRA-SERVICES.what-we-do-offer')}
+              {t('EXTRA-SERVICES.our').toUpperCase()}{' '}
+              <span style={{ color: '#f8a11e' }}>{t('EXTRA-SERVICES.services').toUpperCase()}</span>
             </Headline>
             <Caption size={140} classNames="d-block" style={{ marginTop: 6 }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+              {t('description-first-service')}
             </Caption>
-            <Caption size={140}>Nec nam aliquam sem et tortor consequat id porta.</Caption>
+            <Caption size={140}> {t('description-second-service')}</Caption>
           </Col>
         </Row>
-        <Row justify="center" gutter={[40, 12]}>
-          <Col xs={24} sm={10} md={12} xl={16} className="des-services">
-            <Paragraph classNames="right-text"> {t('EXTRA-SERVICES.des-electricity-be')}</Paragraph>
-          </Col>
-          <Col xs={24} sm={14} md={12} xl={8}>
-            <CardRequest color="#f8a11e" type="electricity" onClickRequest={handleCardClick} t={t} />
-          </Col>
-        </Row>
-        <Row justify="center" gutter={[40, 12]}>
-          <Col xs={24} sm={14} md={12} xl={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <CardRequest color="#28aae1" type="water" onClickRequest={handleCardClick} t={t} />
-          </Col>
-          <Col xs={24} sm={10} md={12} xl={16} className="des-services" style={{ justifyContent: 'flex-start' }}>
-            <Paragraph> {t('EXTRA-SERVICES.des-water-be')}</Paragraph>
-          </Col>
-        </Row>
-        <Row justify="center" gutter={[40, 12]}>
-          <Col xs={24} sm={10} md={12} xl={16} className="des-services">
-            <Paragraph classNames="right-text"> {t('EXTRA-SERVICES.des-residence-be')}</Paragraph>
-          </Col>
-          <Col xs={24} sm={14} md={12} xl={8}>
-            <CardRequest color="#ccc" type="residence" onClickRequest={handleCardClick} t={t} />
-          </Col>
+        <Row justify="center" gutter={[24, 24]}>
+          {services?.map(service => (
+            <Col key={service?.id} xs={24} sm={12} md={6}>
+              <ServiceCard
+                i18n={i18n}
+                onClickCard={handleCardClick}
+                id={service.id}
+                name={service.name}
+                name_in_jp={service.name_in_jp}
+                service={service}
+              />
+            </Col>
+          ))}
         </Row>
       </main>
     </Layout>

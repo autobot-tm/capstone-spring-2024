@@ -8,57 +8,64 @@ import HouseItem from '../../../../components/HouseItem/HouseItem';
 import HousesMap from '../../../../components/HousesMap/HousesMap';
 import { useDispatch, useSelector } from 'react-redux';
 import Filter from '../Filter/Filter';
-
 import { FrownTwoTone } from '@ant-design/icons';
 import { Paragraph, SubHeading } from '../../../../components/Typography';
 import { useTranslation } from 'react-i18next';
 import MapIcon from '../../../../assets/images/map.png';
 import listIcon from '../../../../assets/images/list.png';
 import { setPage } from '../../../../store/slices/houseSlice';
+import SpinLoading from '../../../../components/SpinLoading/SpinLoading';
 const Houses = () => {
+  const LIMIT = 6;
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [locationArr, setLocationArr] = useState([]);
   const [showMap, setShowMap] = useState(false);
-
-  // const [page, setPage] = useState(1);
-  const LIMIT = 6;
-
-  const name = useSelector(state => state.house.name);
-  const categories = useSelector(state => state.house.categories);
-  const provinces = useSelector(state => state.house.provinces);
-  const districts = useSelector(state => state.house.districts);
-  const wards = useSelector(state => state.house.wards);
-  const minArea = useSelector(state => state.house.minArea);
-  const maxArea = useSelector(state => state.house.maxArea);
-  const minPrice = useSelector(state => state.house.minPrice);
-  const maxPrice = useSelector(state => state.house.maxPrice);
-  const amenities = useSelector(state => state.house.amenities);
-  const utilities = useSelector(state => state.house.utilities);
-  const page = useSelector(state => state.house.page);
-
-  const { data, isLoading } = useSWR(
-    `filterHousesService/${page}${name}${categories}${provinces}${districts}${wards}${minArea}${maxArea}${minPrice}${maxPrice}${amenities}${utilities}`,
-    async () => {
-      return await filterHousesService({
+  const {
+    name,
+    categories,
+    provinces,
+    districts,
+    wards,
+    minArea,
+    maxArea,
+    minPrice,
+    maxPrice,
+    amenities,
+    utilities,
+    page,
+  } = useSelector(state => state.house);
+  const filterParams = {
+    name,
+    categories,
+    provinces,
+    districts,
+    wards,
+    minArea,
+    maxArea,
+    minPrice,
+    maxPrice,
+    amenities,
+    utilities,
+  };
+  const fetchFilteredHouses = async (page, filterParams) => {
+    try {
+      const response = await filterHousesService({
         offset: LIMIT * (page - 1),
         limit: LIMIT,
-        name,
-        categories,
-        provinces,
-        districts,
-        wards,
-        minArea,
-        maxArea,
-        minPrice,
-        maxPrice,
-        amenities,
-        utilities,
+        ...filterParams,
       });
-    },
+      return response;
+    } catch (error) {
+      console.error('Error while fetching filtered houses:', error);
+      throw error;
+    }
+  };
+  const { data, error, isLoading } = useSWR(`filterHousesService/${page}${JSON.stringify(filterParams)}`, () =>
+    fetchFilteredHouses(page, filterParams),
   );
   useEffect(() => {
-    if (data) {
+    if (data && data.houses) {
       const newLocations = data.houses.map(house => ({
         position: {
           lat: house.latitude,
@@ -72,7 +79,12 @@ const Houses = () => {
       setLocationArr(newLocations);
     }
   }, [data]);
-
+  if (isLoading) {
+    return <SpinLoading />;
+  }
+  if (error) {
+    return <div>{t('Failed to fetch filtered houses. Please try again later.')}</div>;
+  }
   return (
     <div className={styles.houseContainer}>
       <div style={{ marginTop: '40px' }}>

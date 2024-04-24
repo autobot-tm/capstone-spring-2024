@@ -11,6 +11,7 @@ import { getReservationIdByHouseIdService } from '../../services/apis/payments.s
 import { useDispatch } from 'react-redux';
 import { setOrderSuccessfully } from '../../store/slices/payment.slice';
 import { getInvoiceByIdService } from '../../services/apis/invoices.service';
+import { MOMOResultCodeStatus } from '../../constants/momo.constant';
 
 const PaymentView = ({ handleUrlChange }) => {
   useEffect(() => {
@@ -37,9 +38,17 @@ export const Payment = () => {
     if (urlState && urlState.url) {
       const url = urlState.url;
       const match = url.match(/vnp_TransactionStatus=([^&]*)/);
+      const matchMomo = url.match(/resultCode=(\d+)/);
       const vnp_TransactionStatus = match ? match[1] : null;
+      const momo_ResultCodeStatus = matchMomo ? matchMomo[1] : null;
       if (vnp_TransactionStatus) {
         if (vnp_TransactionStatus === VNPayTransactionStatus.Success) {
+          setStep('success');
+        } else {
+          setStep('error');
+        }
+      } else {
+        if (momo_ResultCodeStatus === MOMOResultCodeStatus.Success) {
           setStep('success');
         } else {
           setStep('error');
@@ -113,7 +122,6 @@ export const Payment = () => {
             t={t}
             leadingToHomepage={leadingToHomepage}
             leadingToOrderSuccessfulReservation={leadingToOrderSuccessfulReservation}
-            // leadingToOrderSuccessfulInvoice={leadingToOrderSuccessfulInvoice}
           />
         );
       case 'error':

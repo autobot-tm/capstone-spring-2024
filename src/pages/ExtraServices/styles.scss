@@ -27,7 +27,7 @@
 
 #es-container {
   display: grid;
-  row-gap: 60px;
+  row-gap: 30px;
   max-width: 1400px;
   height: auto;
   margin: 0 auto;
@@ -36,7 +36,6 @@
   .es-wrap {
     padding: 24px;
     width: 100%;
-    // background-color: $colors-primary;
     border-radius: 30px;
   }
 

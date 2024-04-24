@@ -67,12 +67,12 @@ const OrderSuccessView = () => {
                   <Paragraph strong> {dataOrderSuccessfully?.id} </Paragraph>
                 </Col>
                 <Col xs={24}>
-                  <Paragraph> Type: </Paragraph>
-                  <Paragraph strong> RESERVATION FEE </Paragraph>
-                </Col>
-                <Col xs={24}>
                   <Paragraph> {t('ORDER.email')}: </Paragraph>
                   <Paragraph strong> {dataOrderSuccessfully?.renter?.email} </Paragraph>
+                </Col>
+                <Col xs={24}>
+                  <Paragraph> {t('label.houseDetail')}: </Paragraph>
+                  <Paragraph strong>{dataOrderSuccessfully?.house?.name}</Paragraph>
                 </Col>
                 <Col xs={24}>
                   <Paragraph> {t('ORDER.reservation-fee')}: </Paragraph>
@@ -86,6 +86,10 @@ const OrderSuccessView = () => {
                   <Paragraph> {t('ORDER.expected-move-in-date')}: </Paragraph>
                   <Paragraph strong>{dataOrderSuccessfully?.expected_move_in_date}</Paragraph>
                 </Col>
+                <Col xs={24}>
+                  <Paragraph> {t('label.rentalPricePerMonth')}: </Paragraph>
+                  <Paragraph strong> {formatCustomCurrency(dataOrderSuccessfully?.price_per_month)} </Paragraph>
+                </Col>
               </>
             ) : (
               <>
@@ -94,8 +98,16 @@ const OrderSuccessView = () => {
                   <Paragraph strong> {dataOrderSuccessfully?.id} </Paragraph>
                 </Col>
                 <Col xs={24}>
+                  <Paragraph> {t('ORDER.email')}: </Paragraph>
+                  <Paragraph strong>{dataOrderSuccessfully?.lease?.reservation?.renter?.email}</Paragraph>
+                </Col>
+                <Col xs={24}>
                   <Paragraph> {t('placeholder.type')}: </Paragraph>
-                  <Paragraph strong> {dataOrderSuccessfully?.type} </Paragraph>
+                  <Paragraph strong> {dataOrderSuccessfully?.type === 'RENTAL_FEE' && t('label.rentalFee')} </Paragraph>
+                </Col>
+                <Col xs={24}>
+                  <Paragraph> {t('label.houseDetail')}: </Paragraph>
+                  <Paragraph strong>{dataOrderSuccessfully?.lease?.reservation?.house?.name}</Paragraph>
                 </Col>
                 <Col xs={24}>
                   <Paragraph>{t('placeholder.description')}: </Paragraph>

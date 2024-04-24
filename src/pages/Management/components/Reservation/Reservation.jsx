@@ -21,7 +21,7 @@ const Reservation = () => {
   const page = useSelector(state => state.reservation.page);
   const dispatch = useDispatch();
 
-  const { data, isLoading } = useSWR(`getReservationsService/${page}${name}${status}`, async () => {
+  const { data, error, isLoading } = useSWR(`getReservationsService/${page}${name}${status}`, async () => {
     return await getReservationsService({
       offset: LIMIT * (page - 1),
       limit: LIMIT,
@@ -29,7 +29,9 @@ const Reservation = () => {
       name: name,
     });
   });
-
+  if (error) {
+    return <div>Error fetching user data: {error.message}</div>;
+  }
   return (
     <div className={styles.reservationContainer}>
       <Filter type="reservation" />
@@ -45,6 +47,7 @@ const Reservation = () => {
             <div key={reservation.id}>
               <HouseItemRow
                 id={reservation.id}
+                price={reservation.price_per_month}
                 house={reservation.house}
                 status={reservation.status}
                 time={reservation.created_at}

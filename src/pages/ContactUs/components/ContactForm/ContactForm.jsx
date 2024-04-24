@@ -18,13 +18,11 @@ const ContactForm = () => {
   const fileUploadRef = useRef();
   const [api, contextHolder] = notification.useNotification();
   const [submitting, setSubmitting] = useState(false);
-
   const openNotificationWithIcon = (type, message) => {
     api[type]({
       message: message,
     });
   };
-
   const onFinish = async values => {
     try {
       setSubmitting(true);
@@ -52,7 +50,6 @@ const ContactForm = () => {
       setSubmitting(false);
     }
   };
-
   const getInitialValues = () => {
     if (access_token) {
       return {
@@ -65,9 +62,6 @@ const ContactForm = () => {
     return {};
   };
 
-  console.log('getInitialValues', getInitialValues());
-
-  console.log('user', user);
   return (
     <>
       {contextHolder}

@@ -12,26 +12,46 @@ import { getExtraServiceRequests } from '../../../../services/apis/extra-service
 import { setExtraServicesLoading, setExtraServicesPage } from '../../../../store/slices/extraServices.slice';
 import { openExtraServiceRequestDetailModal } from '../../../../store/slices/modalSlice';
 import CardService from '../../../../components/CardService/CardService';
+import SpinLoading from '../../../../components/SpinLoading/SpinLoading';
 
 const ExtraServices = () => {
   const LIMIT = 5;
   const { status, page } = useSelector(state => state.extraServices);
   const { user } = useSelector(state => state.user);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
-  const { data, isLoading } = useSWR(`getExtraServiceRequests?page=${page}&status=${status}`, async () => {
-    return await getExtraServiceRequests({
-      renter_email: user?.email,
-      offset: LIMIT * (page - 1),
-      limit: LIMIT,
-      status: status,
-    });
-  });
+  const fetchExtraServiceRequests = async () => {
+    try {
+      const response = await getExtraServiceRequests({
+        renter_email: user?.email,
+        offset: LIMIT * (page - 1),
+        limit: LIMIT,
+        status: status,
+      });
+
+      if (!response) {
+        throw new Error('NO RESPONSE FROM SERVER');
+      }
+
+      return response;
+    } catch (error) {
+      console.error('ERROR TO FETCHING EXTRA SERVICE REQUEST:', error);
+      throw error;
+    }
+  };
+
+  const { data, isLoading } = useSWR(
+    `getExtraServiceRequests?page=${page}&status=${status}`,
+    fetchExtraServiceRequests,
+  );
+
+  if (isLoading) {
+    return <SpinLoading />;
+  }
 
   const handleCardClick = service => {
     dispatch(setExtraServicesLoading({ loading: true }));
-
     dispatch(openExtraServiceRequestDetailModal({ extraServiceRequestDetail: service }));
   };
 
@@ -47,7 +67,13 @@ const ExtraServices = () => {
           ))
         ) : data?.extra_service_requests.length !== 0 ? (
           data?.extra_service_requests?.map(service => (
-            <CardService key={service?.id} data={service} onClickDetail={() => handleCardClick(service)} t={t} />
+            <CardService
+              key={service?.id}
+              data={service}
+              i18n={i18n}
+              onClickDetail={() => handleCardClick(service)}
+              t={t}
+            />
           ))
         ) : (
           <div

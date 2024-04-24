@@ -9,7 +9,7 @@
   "home": "Home",
   "about": "About Us",
   "support": "Support",
-  "management": "Management",
+  "management": "Home Management",
   "wishlist": "Wishlist",
   "userprofile": "username",
   "profile": "Profile",
@@ -23,6 +23,7 @@
   "reportlivingissue": "Report living issues",
   "logout": "Logout",
   "notification": "Notification",
+  "new-notification": "New notification",
   "just-now": "Just now",
   "minute": "minute ago",
   "minutes": "minutes ago",
@@ -39,6 +40,7 @@
   "join-us": "Join us",
   "error": "Oops something went wrong",
   "ok": "Ok",
+  "show": "Show",
   "report": "Report",
   "waitForLatestResponse": "Your request has been sent, please wait for the latest response ",
   "cancel": "Cancel",
@@ -85,17 +87,17 @@
   "button.showAllPhoto": "Show all photo",
   "button.pay": "Pay",
   "button.submitPayment": "Submit Payment",
+  "button.addHomeReview": "Add house review",
   "button.edit": "Edit",
   "button.upload": "Upload",
   "button.save": "Save",
-
   "status.all": "All",
   "status.PAYMENT_PENDING": "Res. pending",
   "status.PAYMENT_CANCELED": "Res. canceled",
   "status.PAYMENT_COMPLETE": "Res. complete",
   "status.CANCELED": "Canceled",
   "status.DEPOSITED": "Deposited",
-  "status.VOIDED": "Voided",
+  "status.REPLACED": "Replaced",
   "status.CONTRACT_UPLOADED": "Contract uploaded",
   "status.ACTIVE": "Active",
   "status.EXPIRED": "Expired",
@@ -107,6 +109,9 @@
   "status.PENDING": "Pending",
   "status.PAID": "Paid",
   "status.COMPLETED": "Completed",
+  "status.SUCCESS": "Success",
+  "status.FAILED": "Failed",
+
   "checkbox.rememberme": "Remember me",
   "forgetpassword": "Forgot your password?",
   "label.searchHouse": "Search Houses",
@@ -170,6 +175,12 @@
   "label.currentPassword": "Current Password",
   "label.newPassword": "New Password",
   "label.repeatNewPassword": "Repeat new password",
+  "label.contractFile": "Contract File",
+  "label.appendixFile": "Appendix Files",
+  "label.termination": "Termination",
+  "label.resolutionImage": "Resoluiton images",
+  "label.rentalPricePerMonth": "Rental price per month",
+  "label.refundInformation": "Refund Information",
   "placeholder.email": "Email",
   "placeholder.password": "Password",
   "placeholder.repeatpassword": "Repeat password",
@@ -200,7 +211,6 @@
   "error-phone-number": "Please enter your phone number!",
   "error-email": "Please enter your E-mail!",
   "error-validate-email": "The input is not valid E-mail!",
-
   "auth.dontHaveAccount": "Not a member? <register>Register here</register>",
   "auth.haveAccount": "Have an account? <signIn>Sign in</signIn>",
   "validationRules.required.email": "Email is required",
@@ -209,6 +219,7 @@
   "validationRules.required.repeatpassword": "Repeat password is required",
   "validationRules.required.authenticationCode": "Authentication code is required",
   "validationRules.required.title": "Title is required",
+  "validationRules.required.days": "Day is required",
   "validationRules.required.reason": "Reason is required",
   "validationRules.required.type": "Type is required",
   "validationRules.required.description": "Description is required",
@@ -230,14 +241,16 @@
   "validationRules.size": "Less than maximum area",
   "validationRules.min": "Minimum number is 1",
   "registration.disclaimer": "Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.",
-  "home.disclaimer": "Our choice of popular real estate",
-  "carousel.disclaimer": "Buy or rent properties with no commission",
+  "home.disclaimer": "Discover Your Ideal Home: Rent with Confidence Today!",
+  "carousel.disclaimer": "Find Your Perfect Home",
   "logout.disclaimer": "Are you sure you want to log out?",
   "cancel.confirm": "Are you sure to cancel this request?",
   "personal.disclaimer": "Providing personal information allows us to contact you",
   "password.disclaimer": "Change your password and secure your account",
   "yes": "Yes",
   "no": "No",
+  "download": "Download",
+  "no-progresses": "There's currently no progress.",
   "submitting": "Submitting..",
   "progresses": "Progresses",
   "assigned-at": "Assigned at",
@@ -279,9 +292,11 @@
   "category.CONDO": "Condo",
   "category.OTHER": "Other",
   "province.Ho Chi Minh City": "Ho Chi Minh City",
-  "type.RECURRING": "RECURRING",
-  "type.ONE_TIME": "ONE TIME",
+  "type.RECURRING": "Recurring",
+  "type.ONE_TIME": "One time",
   "category.UTILITY": "UTILITY",
+  "category.CLEANING": "Cleaning",
+  "category.MAINTENANCE": "Maintenance",
   "category.invoiceIssue": "Invoice issue",
   "category.livingIssue": "Living issue",
   "district.District 1": " District 1",
@@ -308,10 +323,13 @@
   "district.Can Gio District": " Can Gio District",
   "link.viewdetail": "View detail",
   "footer.links": "Links",
-  "footer.description": "A contemporary theme we designed specifically for real estate and property showcase websites, equipped with every option, element and feature your site may need.",
+  "footer.description": "LotusRents connects expatriates with homeowners, providing a user-friendly platform to discover your ideal home and simplify your rental journey.",
   "footer.contact": "Contact Us",
+  "footer.follow-us": "Follow us",
   "notification.submittedSuccessfully": "Submitted successfully",
   "notification.cancelRequestSuccessfully": "Your cancellation request has been sent",
+  "notification.cancelRequest": "Cancel Request",
+  "notification.cancelRequestError": "Your cancellation request has been sent. Please wait for the latest response.",
   "api.error.invalidAccountCredentials": "Email or password is incorrect",
   "api.error.emailAlreadyExists": "Email already exists",
   "api.error.invalidRefreshToken": "Your session has expired. Please sign in again.",
@@ -325,7 +343,6 @@
   "api.error.accountSuspended": "Your account has been suspended.",
   "api.error.waitForServiceConfirmation": "We are in the process of confirming your request.",
   "api.error.invoiceNotExist": "The given invoice doesn’t exist",
-
   "invoice": "Invoice",
   "invoice.issued": "Issued",
   "invoice.due": "Due",
@@ -334,13 +351,21 @@
   "invoice.houseForRent": "House for rent",
   "invoice.tks": "Thank you for the business",
   "invoice.payWithin15": "Please pay within 15 days of receiving this invoice.",
+  "reference-fee": "Reference fee",
+  "hint-week-checkbox": "Please choose the days of the week to perform",
+  "hint-month-checkbox": "Please choose the days of the month to perform",
+  "description-first-service": "Explore our services and experience life at home.",
+  "description-second-service": "With modern amenities and dedicated customer service.",
+  "schedule": "Schedule",
+  "daysOfWeek": "Days of week",
+  "daysOfMonth": "Days of month",
 
   "CANCEL_CONTRACT": {
     "title": "Your request for the extra service: Temporary Residence Registration Support Service is being reviewed.",
     "description": "We are reviewing your extra service request. We will get back to you soon."
   },
-
   "detail-house": {
+    "reserved": "This house has been reserved",
     "title-tab": "Detail House",
     "STUDIO": "STUDIO",
     "DUPLEX": "DUPLEX",
@@ -375,9 +400,9 @@
     "map-btn": "Show on map",
     "comment-dynamic": "Comment(s)",
     "no-comment": "No Comment",
-    "leave-title": "Leave a Reply",
-    "leave-des-1": "Your email address will not be published. Required fields are marked *",
-    "leave-des-2": "Your Rating *",
+    "leave-title": "Please leave a review for the house",
+    "leave-des-1": "This is for previous renters only ",
+    "leave-des-2": "Your Rating",
     "placeholder-comment": "Your Comment*",
     "placeholder-name": "Your Name*",
     "placeholder-email": "Your Email*",
@@ -388,8 +413,10 @@
     "hint-price": "* means monthly packages are offered.",
     "month": "month",
     "months": "months",
+    "monthS": "month(s)",
     "select-date": "Select date",
     "add-to-wishlist": "Add to wishlist",
+    "added-to-wishlist": "Added to wishlist",
     "estimated": "Estimated",
     "rental-period": "Rental period",
     "time-to-move-in": "Time to move in",
@@ -410,7 +437,6 @@
     "HOMEOWNER_CONTRACT_EXPIRED": "HOMEOWNER CONTRACT EXPIRED",
     "book": "Book"
   },
-
   "RESERVATION": {
     "title-tab": "Reservation",
     "checkout": "Checkout",
@@ -446,7 +472,6 @@
     "agree-btn": "Agree",
     "cancel-btn": "Cancel"
   },
-
   "PAYMENT": {
     "back-to-home-btn": "Back to Homepage",
     "reserve-again-btn": "Reserve Again",
@@ -456,7 +481,6 @@
     "success": "Your reservation has been successfully created.",
     "des-success": "Thank you for your reservation request. The process typically takes 1-5 minutes to complete. We appreciate your patience."
   },
-
   "USER-DASHBOARD": {
     "user-dashboard": "User Dashboard",
     "my-profile": "My Profile",
@@ -494,7 +518,6 @@
     "change-password": "Change Password",
     "mobile-phone-error-valid-length": "Phone number must have 10 to 11 digits!"
   },
-
   "ORDER": {
     "thanks": "Thank you. Your order has been received.",
     "order": "Order",
@@ -504,15 +527,17 @@
     "expected-move-in-date": "Expected move-in date",
     "return-to-user-management": "Return to User Management"
   },
-
   "EXTRA-SERVICES": {
-    "our-services": "Our Services",
+    "our-services": "Our Service",
     "extra-services": "Extra Services",
     "electricity-card": "Electricity Bill Payment",
     "water-card": "Water Bill Payment",
     "residence-card": "Temporary Residence Registration",
     "read-more": "Read More",
-    "services": "SERVICES",
+    "apply-btn": "Apply",
+    "our": "our",
+    "service-type": "Service type",
+    "services": "Service",
     "what-we-do-offer": "What we do offer",
     "title-utility": "Pay Renter Utility Bills in Advance",
     "title-residence": "Assist with Temporary Residence Registration  ",
@@ -524,7 +549,6 @@
     "des-water-be": "Avoid late payments and ensure uninterrupted water supply with our reliable bill payment service.",
     "des-residence-be": "Focus on your stay, not the red tape. Our Temporary Residence Registration Support Service takes the stress out of ensuring your legal status in Vietnam."
   },
-
   "CONTACT-US": {
     "contact-us": "Contact Us",
     "main-office": "Main office",
@@ -542,7 +566,6 @@
     "error-your-category": "Please select category!",
     "send-a-message-btn": "Send a Message"
   },
-
   "NOT-FOUND": {
     "title": "Oops... Page Not Found!",
     "description": "The page you are looking for does not exist. It might have been moved or deleted.",

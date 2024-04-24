@@ -1,0 +1,46 @@
+@import '../../../../theme/scss/colors.theme.scss';
+.service-card {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  width: auto;
+  height: 240px;
+
+  &-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .es-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    color: white;
+    &-primary {
+      background-color: $colors-primary;
+    }
+    &-tertiary {
+      background-color: $colors-tertiary;
+    }
+    &-secondary {
+      background-color: #ee2852;
+    }
+    &-residence {
+      background-color: #ccc;
+    }
+    &-other {
+      background-color: #2f3542;
+    }
+
+    & img {
+      max-width: 40px;
+      height: auto;
+    }
+  }
+}

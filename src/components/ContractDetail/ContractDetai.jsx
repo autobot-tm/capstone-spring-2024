@@ -6,6 +6,7 @@ import {
   closeContractDetailModal,
   openReportIssuesModal,
   openRequestCancelContractModal,
+  openReviewHouseModal,
 } from '../../store/slices/modalSlice';
 import styles from './ContractDetail.module.scss';
 import ContractStatus from '../ContractStatus.jsx/ContractStatus';
@@ -18,6 +19,8 @@ import { Caption, Paragraph } from '../Typography';
 import moment from 'moment';
 import CancellationRequestStatus from '../CancellationRequestStatus/CancellationRequestStatus';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
+import { getRefundService } from '../../services/apis/payments.service';
+import PaymentStatus from '../../pages/PaymentHistory/components/PaymentStatus/PaymentStatus';
 
 const ContractDetail = () => {
   const { t } = useTranslation();
@@ -37,36 +40,53 @@ const ContractDetail = () => {
   const [requests, setRequests] = useState([]);
   const dispatch = useDispatch();
   const loading = useSelector(state => state.contract.loading);
-  const [showFile, setShowFile] = useState(false);
   const [showHouse, setShowHouse] = useState(false);
   const [showRenter, setShowRenter] = useState(false);
   const [isShowRequest, setIsShowRequet] = useState('');
+  const [houseID, setHouseID] = useState('');
+  const [terminations, setTerminations] = useState([]);
+  const [appendix, setAppendix] = useState([]);
+  const [refundData, setRefundData] = useState([]);
 
   useEffect(() => {
     if (leaseId) {
-      getLeaseByIdService({ leaseId }).then(response => {
-        setId(response.id);
-        setStatus(response.status);
-        setStartDate(response.move_in_date);
-        setEndDate(response.expiration_date);
-        setFiles(response.contract_file_urls);
-        setHouseName(response.reservation.house.name);
-        setAddress(response.reservation.house.address);
-        setPrice(response.reservation.house.pricing_policies[0].price_per_month);
-        setFirstName(response.reservation.renter.first_name);
-        setLastName(response.reservation.renter.last_name);
-        setEmail(response.reservation.renter.email);
-        setRequests(response.cancelation_requests);
-        dispatch(setContractLoading({ loading: false }));
-      });
+      getLeaseByIdService({ leaseId })
+        .then(response => {
+          setId(response.id);
+          setStatus(response.status);
+          setStartDate(response.move_in_date);
+          setEndDate(response.expiration_date);
+          setFiles(response.contract_file_urls);
+          setHouseName(response.reservation.house.name);
+          setAddress(response.reservation.house.address);
+          setPrice(response.reservation.price_per_month);
+          setFirstName(response.reservation.renter.first_name);
+          setLastName(response.reservation.renter.last_name);
+          setEmail(response.reservation.renter.email);
+          setRequests(response.cancelation_requests);
+          setHouseID(response.reservation.house.id);
+          setTerminations(response.contract_termination_agreement_file_urls);
+          setAppendix(response.appendix_file_urls);
+        })
+        .catch(error => {
+          console.error('Error fetching lease data:', error);
+        });
+
+      getRefundService({ leaseId })
+        .then(response => {
+          setRefundData(response.payments);
+          dispatch(setContractLoading({ loading: false }));
+        })
+        .catch(error => {
+          console.error('Error fetching refund data:', error);
+        });
     }
-  }, [loading]);
+  }, [leaseId, loading, dispatch]);
 
   useEffect(() => {
     if (!contractDetailModal) {
       setShowHouse(false);
       setShowRenter(false);
-      setShowFile(false);
       setIsShowRequet('');
     }
   }, [contractDetailModal]);
@@ -94,6 +114,38 @@ const ContractDetail = () => {
     },
   ];
 
+  const refundColumns = [
+    {
+      title: t('label.status'),
+      dataIndex: 'status',
+      key: 'status',
+      render: status => <PaymentStatus status={status} />,
+    },
+    {
+      title: t('label.content'),
+      dataIndex: 'content',
+      key: 'content',
+    },
+    {
+      title: t('label.amount'),
+      dataIndex: 'amount',
+      key: 'amount',
+      render: amount => formatCustomCurrency(amount),
+    },
+    {
+      title: t('label.date'),
+      dataIndex: 'date',
+      key: 'date',
+      render: date => moment(date).format('H:mm -  DD/MM/YYYY'),
+    },
+  ];
+  const refundDataSource = refundData?.map((item, index) => ({
+    key: index,
+    status: item.status,
+    date: item.created_at,
+    amount: item.amount,
+    content: item.content,
+  }));
   const contractData = [
     {
       key: '1',
@@ -121,41 +173,61 @@ const ContractDetail = () => {
     },
     {
       key: '5',
-      title: <b>{t('label.files')}</b>,
+      title: <b>{t('label.contractFile')}</b>,
       content: (
         <>
-          <Button
-            type="text"
-            onClick={() => {
-              setShowFile(!showFile);
-            }}>
-            {!showFile ? `Show ${files.length} files` : `Hide ${files.length} Files`}
-          </Button>
-
-          {showFile && (
-            <div>
-              {files.map((file, index) => (
-                <div
-                  key={index}
-                  style={{
-                    margin: '10px 0 20px 0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
+          <div>
+            {files.map((file, index) => (
+              <div
+                key={index}
+                style={{
+                  margin: '10px 0 20px 0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}>
+                <div style={{ marginBottom: '5px' }}>{file.slice(73)}</div>
+                <Button
+                  size="small"
+                  icon={<DownloadOutlined />}
+                  onClick={() => {
+                    handleDownload(file);
                   }}>
-                  <div style={{ marginBottom: '5px' }}>{file.slice(73)}</div>
-                  <Button
-                    size="small"
-                    icon={<DownloadOutlined />}
-                    onClick={() => {
-                      handleDownload(file);
-                    }}>
-                    Download
-                  </Button>
-                </div>
-              ))}
-            </div>
-          )}
+                  {t('download')}
+                </Button>
+              </div>
+            ))}
+          </div>
+        </>
+      ),
+    },
+    {
+      key: '6',
+      title: <b>{t('label.appendixFile')}</b>,
+      content: (
+        <>
+          <div>
+            {appendix.map((file, index) => (
+              <div
+                key={index}
+                style={{
+                  margin: '10px 0 20px 0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                }}>
+                <div style={{ marginBottom: '5px' }}>{file.slice(73)}</div>
+                <Button
+                  size="small"
+                  icon={<DownloadOutlined />}
+                  onClick={() => {
+                    handleDownload(file);
+                  }}>
+                  {t('download')}
+                </Button>
+              </div>
+            ))}
+          </div>
         </>
       ),
     },
@@ -174,8 +246,8 @@ const ContractDetail = () => {
     },
     {
       key: '3',
-      title: <b>{t('label.price')}</b>,
-      content: formatCustomCurrency(price),
+      title: <b>{t('label.rentalPricePerMonth')}</b>,
+      content: formatCustomCurrency(price) + ' / month',
     },
   ];
 
@@ -258,7 +330,7 @@ const ContractDetail = () => {
                         dataSource={[
                           {
                             key: '1',
-                            title: <b>{t('label.id')}</b>,
+                            title: <b>ID</b>,
                             content: request.id,
                           },
                           {
@@ -278,6 +350,36 @@ const ContractDetail = () => {
                           },
                           {
                             key: '5',
+                            title: <b>{t('label.termination')}</b>,
+                            content: request.status === 'APPROVED' && (
+                              <>
+                                <div>
+                                  {terminations.map((termination, index) => (
+                                    <div
+                                      key={index}
+                                      style={{
+                                        margin: '10px 0 20px 0',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                      }}>
+                                      <div style={{ marginBottom: '5px' }}>{termination.slice(73)}</div>
+                                      <Button
+                                        size="small"
+                                        icon={<DownloadOutlined />}
+                                        onClick={() => {
+                                          handleDownload(termination);
+                                        }}>
+                                        {t('download')}
+                                      </Button>
+                                    </div>
+                                  ))}
+                                </div>
+                              </>
+                            ),
+                          },
+                          {
+                            key: '6',
                             title: <b>{t('label.resolutionNote')}</b>,
                             content: request.resolution_note,
                           },
@@ -293,16 +395,21 @@ const ContractDetail = () => {
         </>
       ),
     },
+    status === 'CANCELED' && {
+      key: '3',
+      label: t('label.refundInformation'),
+      children: <Table columns={refundColumns} dataSource={refundDataSource} />,
+    },
   ];
 
   return (
     <CustomModal
-      width={650}
+      width={700}
       nameOfModal={contractDetailModal}
       title={t('modal.contract')}
       action={closeContractDetailModal}
       footer={
-        status === 'ACTIVE' && (
+        (status === 'ACTIVE' && (
           <Row style={{ marginTop: 40 }} gutter={[8, 8]} align="center">
             <Col xs={24}>
               <BaseButton
@@ -331,7 +438,25 @@ const ContractDetail = () => {
               </BaseButton>
             </Col>
           </Row>
-        )
+        )) ||
+        ((status === 'EXPIRED' || status === 'CANCELED') && (
+          <Row style={{ marginTop: 40 }} gutter={[8, 8]} align="center">
+            <Col xs={24}>
+              <BaseButton
+                size="large"
+                style={{ backgroundColor: '#f8a01e' }}
+                onClick={() => {
+                  dispatch(openReviewHouseModal({ houseID: houseID }));
+                  console.log('House ID Component: ', houseID);
+                  dispatch(closeContractDetailModal());
+                }}>
+                <Caption size={140} classNames="color-black" strong>
+                  {t('button.addHomeReview')}
+                </Caption>
+              </BaseButton>
+            </Col>
+          </Row>
+        ))
       }>
       {loading ? (
         <div className={styles.loadingContainer}>

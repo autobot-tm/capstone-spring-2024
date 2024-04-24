@@ -8,5 +8,19 @@
       max-width: 100%;
       padding: 0 16px;
     }
+
+    .icon-left {
+      margin-right: 4px;
+      font-size: 12px;
+      padding: 10px;
+      border-radius: 0;
+      transition:
+        background-color 0.3s ease,
+        border-radius 0.3s ease;
+      &:hover {
+        border-radius: 100%;
+        background-color: #ccc;
+      }
+    }
   }
 }

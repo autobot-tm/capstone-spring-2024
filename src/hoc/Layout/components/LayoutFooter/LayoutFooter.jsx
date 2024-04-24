@@ -20,7 +20,7 @@ export const LayoutFooter = () => {
     <Footer className="footer">
       <div className="footer-top">
         <div className="footer-container">
-          <Row gutter={[10, 10]} align="center">
+          <Row gutter={[24, 24]} align="center">
             <Col lg={7} xs={24}>
               <div
                 style={{
@@ -28,7 +28,7 @@ export const LayoutFooter = () => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: '4px',
-                  width: '90%',
+                  padding: '0 20px',
                   textAlign: 'center',
                 }}>
                 <SubHeading strong size="260">
@@ -37,8 +37,7 @@ export const LayoutFooter = () => {
                 <Caption size={140}>{t('footer.description')}</Caption>
               </div>
             </Col>
-
-            <Col lg={4} sm={8} xs={12}>
+            <Col lg={4} sm={8} xs={24}>
               <Paragraph strong classNames="color-black">
                 {t('footer.links')}
               </Paragraph>
@@ -130,7 +129,7 @@ export const LayoutFooter = () => {
           </div>
           <div className="footer-contact-container">
             <Caption size={140} strong classNames="color-black">
-              Follow us:
+              {t('footer.follow-us')}:
             </Caption>
             <Caption size={140} classNames="footer-contact-container-item">
               <a href="">Instagram</a>
