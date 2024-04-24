@@ -81,8 +81,7 @@ const ChoosePaymentMethodModal = () => {
             xs={24}
             sm={7}
             className={`payment-method-card ${selectedMethod === 'MOMO' ? 'selected' : ''}`}
-            // onClick={() => handleCardSelect(PAYMENT_METHOD.MOMO)}
-          >
+            onClick={() => handleCardSelect(PAYMENT_METHOD.MOMO)}>
             <img alt="momo" src={MOMO} />
           </Col>
           <Col
