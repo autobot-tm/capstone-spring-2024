@@ -8,7 +8,7 @@ import { PAYMENT_METHOD } from '../../constants/payment.constant';
 import { Col, Row } from 'antd';
 import { useTranslation } from 'react-i18next';
 import VNPAY1 from '../../assets/images/Logo-VNPAY-QR.webp';
-import ONEPAY from '../../assets/images/onepay.svg';
+// import ONEPAY from '../../assets/images/onepay.svg';
 import MOMO from '../../assets/images/momoLogo.jpeg';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 
@@ -81,18 +81,17 @@ const ChoosePaymentMethodModal = () => {
             xs={24}
             sm={7}
             className={`payment-method-card ${selectedMethod === 'MOMO' ? 'selected' : ''}`}
-            // onClick={() => handleCardSelect(PAYMENT_METHOD.MOMO)}
-          >
+            onClick={() => handleCardSelect(PAYMENT_METHOD.MOMO)}>
             <img alt="momo" src={MOMO} />
           </Col>
-          <Col
+          {/* <Col
             xs={24}
             sm={7}
             className={`payment-method-card ${selectedMethod === 'ONEPAY' ? 'selected' : ''}`}
             // onClick={() => handleCardSelect(PAYMENT_METHOD.ONEPAY)}
           >
             <img alt="onepay" src={ONEPAY} />
-          </Col>
+          </Col> */}
         </Row>
       </CustomModal>
     </>

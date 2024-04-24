@@ -22,7 +22,8 @@ import { PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
 import { PAYMENT_METHOD } from '../../constants/payment.constant';
 import { Helmet } from 'react-helmet';
 import VNPay1 from '../../assets/images/Logo-VNPAY-QR.webp';
-import ONEPay from '../../assets/images/onepay.svg';
+import MOMO from '../../assets/images/momoLogo.jpeg';
+// import ONEPay from '../../assets/images/onepay.svg';
 import Selection from '../DetailHouse/components/Selection/Selection';
 import DatePickerAnt from '../DetailHouse/components/DatePickerComponent/DatePickerAnt';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
@@ -269,12 +270,17 @@ const ReservationPage = () => {
                         <img src={VNPay1} />
                       </span>
                     </Radio>
-                    <Radio disabled value={PAYMENT_METHOD.ONEPAY} className="main-payment-banner">
+                    <Radio value={PAYMENT_METHOD.MOMO} className="main-payment-banner">
                       <span className="main-payment-banner-inner">
-                        <img src={ONEPay} />
-                        <Caption>(Coming soon)</Caption>
+                        <img className="momo" src={MOMO} />
                       </span>
                     </Radio>
+                    {/* <Radio disabled value={PAYMENT_METHOD.ONEPAY} className="main-payment-banner">
+                      <span className="main-payment-banner-inner">
+                        <img src={ONEPay} />
+                      </span>
+                      <Caption>(Coming soon)</Caption>
+                    </Radio> */}
                   </Radio.Group>
                 </Col>
               </Row>
