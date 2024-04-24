@@ -23,7 +23,7 @@ import { PAYMENT_METHOD } from '../../constants/payment.constant';
 import { Helmet } from 'react-helmet';
 import VNPay1 from '../../assets/images/Logo-VNPAY-QR.webp';
 import MOMO from '../../assets/images/momoLogo.jpeg';
-import ONEPay from '../../assets/images/onepay.svg';
+// import ONEPay from '../../assets/images/onepay.svg';
 import Selection from '../DetailHouse/components/Selection/Selection';
 import DatePickerAnt from '../DetailHouse/components/DatePickerComponent/DatePickerAnt';
 import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
@@ -275,12 +275,12 @@ const ReservationPage = () => {
                         <img className="momo" src={MOMO} />
                       </span>
                     </Radio>
-                    <Radio disabled value={PAYMENT_METHOD.ONEPAY} className="main-payment-banner">
+                    {/* <Radio disabled value={PAYMENT_METHOD.ONEPAY} className="main-payment-banner">
                       <span className="main-payment-banner-inner">
                         <img src={ONEPay} />
                       </span>
                       <Caption>(Coming soon)</Caption>
-                    </Radio>
+                    </Radio> */}
                   </Radio.Group>
                 </Col>
               </Row>
