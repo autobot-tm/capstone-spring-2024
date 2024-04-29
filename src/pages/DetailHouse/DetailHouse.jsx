@@ -341,25 +341,25 @@ const DetailHouse = () => {
       </>
     );
   };
-  const RelatedPropertiesComponent = () => {
-    return (
-      <>
-        <Row gutter={[16, 16]}>
-          <Col xs={24}>
-            <SubHeading size={260} strong>
-              {t('detail-house.related-property')}
-            </SubHeading>
-          </Col>
-          <Col xs={24}>
-            <Paragraph>{t('detail-house.related-property-des')}</Paragraph>
-          </Col>
-        </Row>
-        <Row style={{ justifyContent: 'center' }}>
-          <h3>(coming soon)</h3>
-        </Row>
-      </>
-    );
-  };
+  // const RelatedPropertiesComponent = () => {
+  //   return (
+  //     <>
+  //       <Row gutter={[16, 16]}>
+  //         <Col xs={24}>
+  //           <SubHeading size={260} strong>
+  //             {t('detail-house.related-property')}
+  //           </SubHeading>
+  //         </Col>
+  //         <Col xs={24}>
+  //           <Paragraph>{t('detail-house.related-property-des')}</Paragraph>
+  //         </Col>
+  //       </Row>
+  //       <Row style={{ justifyContent: 'center' }}>
+  //         <h3>(coming soon)</h3>
+  //       </Row>
+  //     </>
+  //   );
+  // };
   const handleBookNowClick = () => {
     const priceSection = document.querySelector('.side-form-estimated-section');
     if (priceSection) {
@@ -430,11 +430,11 @@ const DetailHouse = () => {
                       <ReserveFormComponent />
                     </Col>
                   </Row>
-                  <Row className="side-related-house">
+                  {/* <Row className="side-related-house">
                     <Col xs={24}>
                       <RelatedPropertiesComponent />
                     </Col>
-                  </Row>
+                  </Row> */}
                 </Col>
               </Row>
             </div>

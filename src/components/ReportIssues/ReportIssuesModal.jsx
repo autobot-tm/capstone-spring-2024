@@ -145,9 +145,15 @@ const ReportIssuesModal = () => {
               <div className="contact-us-fee-modal">
                 <Form form={form} onFinish={onFinish} layout="vertical" style={{ width: '100%' }}>
                   <Form.Item
-                    rules={[{ required: true, message: t('CONTACT-US.error-your-message') }]}
+                    rules={[
+                      { required: true, message: t('CONTACT-US.error-your-message') },
+                      {
+                        max: 500,
+                        message: t('validationRules.maxLength500'),
+                      },
+                    ]}
                     name="description">
-                    <TextArea rows={4} placeholder={t('CONTACT-US.placeholder-message')} maxLength={200} />
+                    <TextArea rows={4} placeholder={t('CONTACT-US.placeholder-message')} maxLength={500} />
                   </Form.Item>
                   {access_token && (
                     <Form.Item name="attachment_urls">
