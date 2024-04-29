@@ -64,12 +64,29 @@ export const LayoutFooter = () => {
                   <Caption
                     size={140}
                     onClick={() => {
-                      navigate('/support');
+                      navigate('/extra-services');
                     }}>
-                    {t('support')}
+                    {t('services')}
                   </Caption>
                 </li>
-
+                <li>
+                  <Caption
+                    size={140}
+                    onClick={() => {
+                      navigate('/contact-us');
+                    }}>
+                    {t('title-tab-contactUs')}
+                  </Caption>
+                </li>
+                <li>
+                  <Caption
+                    size={140}
+                    onClick={() => {
+                      navigate('/faqs');
+                    }}>
+                    {t('FAQ')}
+                  </Caption>
+                </li>
                 {access_token && (
                   <>
                     <li>
