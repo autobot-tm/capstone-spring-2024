@@ -205,6 +205,7 @@
   "error-phone-number": "電話番号を入力してください！",
   "error-email": "E-mailを入力してください！",
   "error-validate-email": "入力が有効な電子メールではありません！",
+  "error-validate-length-upload-file": "アップロードできるファイルは5つまでです。",
   "auth.dontHaveAccount": "会員でない？ <register>登録はこちら</register>",
   "auth.haveAccount": "アカウントをお持ちですか？ <signIn>ログイン</signIn>",
   "validationRules.required.email": "Eメールは必須",

@@ -108,10 +108,12 @@ const ReservationPage = () => {
     const { id, price_per_month } = getPriceAndIdFromHouse(value);
     setPriceOfMonths(price_per_month);
     setIdPricingPolicy(id);
+    setIsExpire(null);
   };
 
   const handleDateChange = date => {
     setSelectedNewDate(date);
+    setIsExpire(null);
   };
 
   useEffect(() => {
@@ -154,10 +156,9 @@ const ReservationPage = () => {
         gateway_provider: opPayment,
         callback_base_url: urlCallback,
       });
-      setIsExpire(null);
       window.location.href = response_url;
     } catch (error) {
-      if (error.errorTranslationKey === ERROR_TRANS_KEYS.RENTAL_PERIOD_EXCEEDS_LEASE_EXPIRATION) {
+      if (error === ERROR_TRANS_KEYS.RENTAL_PERIOD_EXCEEDS_LEASE_EXPIRATION) {
         setIsExpire(t('api.error.isExpireLease'));
         console.error(
           'The given rental period (expected_move_in_date + pricing policy total months) is over the homeowner lease expiration of the given house',
@@ -175,7 +176,7 @@ const ReservationPage = () => {
       priceSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   };
-
+  console.log('is', isExpire);
   return (
     <Layout>
       {isLoading ? (

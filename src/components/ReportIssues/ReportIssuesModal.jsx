@@ -102,7 +102,7 @@ const ReportIssuesModal = () => {
       openNotificationWithIcon('success', t('notification.submittedSuccessfully'));
       form.resetFields();
     } catch (error) {
-      if (error.errorTranslationKey === ERROR_TRANS_KEYS.ISSUE_BEING_PROCESSED) {
+      if (error === ERROR_TRANS_KEYS.ISSUE_BEING_PROCESSED) {
         console.error('Error request invoice issues because ISSUE BEING PROCESSED:', error);
       } else {
         console.error('Error request invoice issues:', error);

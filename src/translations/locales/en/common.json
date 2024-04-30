@@ -211,6 +211,7 @@
   "error-phone-number": "Please enter your phone number!",
   "error-email": "Please enter your E-mail!",
   "error-validate-email": "The input is not valid E-mail!",
+  "error-validate-length-upload-file": "You can only upload up to 5 files.",
   "auth.dontHaveAccount": "Not a member? <register>Register here</register>",
   "auth.haveAccount": "Have an account? <signIn>Sign in</signIn>",
   "validationRules.required.email": "Email is required",

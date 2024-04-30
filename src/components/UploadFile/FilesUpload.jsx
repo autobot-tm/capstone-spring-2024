@@ -1,5 +1,5 @@
 import React, { useRef, useImperativeHandle, forwardRef, useState } from 'react';
-import { Button, Upload } from 'antd';
+import { Button, Upload, message } from 'antd';
 import { mediaUploadService, getPresignedURLs } from '../../services/media';
 import { useTranslation } from 'react-i18next';
 import { UploadOutlined } from '@ant-design/icons';
@@ -10,7 +10,7 @@ const FileUploader = forwardRef((props, ref) => {
   const [files, setFiles] = useState([]);
   const { t } = useTranslation();
   const { acceptTypes = [AcceptedMediaTypes[MediaCategories.OTHER]], limit } = props;
-  console.log('limit', limit);
+
   const propsData = {
     accept: acceptTypes?.join(', '),
     onRemove: file => {
@@ -20,7 +20,8 @@ const FileUploader = forwardRef((props, ref) => {
     },
     beforeUpload: file => {
       if (files.length >= limit) {
-        return alert(`You can only upload up to ${limit} files.`);
+        message.error(t('error-validate-length-upload-file'));
+        return false;
       }
       setFiles([...files, file]);
       return false;
@@ -28,7 +29,7 @@ const FileUploader = forwardRef((props, ref) => {
     onchange: info => {
       console.error('🚀 ~ FileUploader ~ info:', info);
     },
-    limit: limit,
+    maxCount: limit,
   };
 
   const uploadFiles = async () => {
