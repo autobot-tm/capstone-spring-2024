@@ -31,6 +31,7 @@ import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import { closeReservationPolicyModal, openReservationPolicyModal } from '../../store/slices/modalSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomModal from '../../components/Modal/CustomModal';
+import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
 
 const ReservationPage = () => {
   const { t } = useTranslation();
@@ -49,6 +50,7 @@ const ReservationPage = () => {
   const [isEditingMonths, setIsEditingMonths] = useState(false);
   const [checkTerms, setCheckTerms] = useState(false);
   const [opPayment, setOpPayment] = useState(PAYMENT_METHOD.VNPAY);
+  const [isExpire, setIsExpire] = useState(null);
 
   const handleBack = () => {
     navigate(`/houses/${id}`);
@@ -152,9 +154,18 @@ const ReservationPage = () => {
         gateway_provider: opPayment,
         callback_base_url: urlCallback,
       });
+      setIsExpire(null);
       window.location.href = response_url;
     } catch (error) {
-      console.error('Error reserving house:', error);
+      if (error.errorTranslationKey === ERROR_TRANS_KEYS.RENTAL_PERIOD_EXCEEDS_LEASE_EXPIRATION) {
+        setIsExpire(t('api.error.isExpireLease'));
+        console.error(
+          'The given rental period (expected_move_in_date + pricing policy total months) is over the homeowner lease expiration of the given house',
+          error,
+        );
+      } else {
+        console.error('Error reserving house:', error);
+      }
     }
   };
 
@@ -349,6 +360,7 @@ const ReservationPage = () => {
                   <BaseButton style={{ width: '100%' }} type="primary" onClick={showPopup}>
                     {t('RESERVATION.reservation-btn')}
                   </BaseButton>
+                  {isExpire && <Paragraph style={{ color: 'red' }}>{isExpire}</Paragraph>}
                 </Col>
               </Row>
             </Col>

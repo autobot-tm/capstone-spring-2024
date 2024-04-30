@@ -347,6 +347,7 @@
   "api.error.accountSuspended": "Your account has been suspended.",
   "api.error.waitForServiceConfirmation": "We are in the process of confirming your request.",
   "api.error.invoiceNotExist": "The given invoice doesn’t exist",
+  "api.error.isExpireLease": "The period you want to rent has exceeded the landlord's contract term. Please adjust move-in date or rental period.",
   "invoice": "Invoice",
   "invoice.issued": "Issued",
   "invoice.due": "Due",
@@ -520,7 +521,7 @@
     "update-profile-success": "User profile updated successfully",
     "your-current-password-is-not-correct": "Your current password is not correct!",
     "change-password": "Change Password",
-    "mobile-phone-error-valid-length": "Phone number must have 10 to 11 digits!"
+    "mobile-phone-error-valid-length": "Invalid phone number"
   },
   "ORDER": {
     "thanks": "Thank you. Your order has been received.",

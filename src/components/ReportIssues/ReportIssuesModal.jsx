@@ -16,6 +16,7 @@ import { Paragraph } from '../Typography';
 import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
 import FilesUpload from '../UploadFile/FilesUpload';
 import { LoadingOutlined } from '@ant-design/icons';
+import { AcceptedMediaTypes, MediaCategories } from '../../constants/media.constant';
 
 const ReportIssuesModal = () => {
   const dispatch = useDispatch();
@@ -158,7 +159,11 @@ const ReportIssuesModal = () => {
                   {access_token && (
                     <Form.Item name="attachment_urls">
                       <div className="file-upload-container">
-                        <FilesUpload acceptTypes="image/*" multiple={true} ref={fileUploadRef} />
+                        <FilesUpload
+                          limit={5}
+                          acceptTypes={[AcceptedMediaTypes[MediaCategories.IMAGE]]}
+                          ref={fileUploadRef}
+                        />
                       </div>
                     </Form.Item>
                   )}

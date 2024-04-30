@@ -3,26 +3,32 @@ import { Button, Upload } from 'antd';
 import { mediaUploadService, getPresignedURLs } from '../../services/media';
 import { useTranslation } from 'react-i18next';
 import { UploadOutlined } from '@ant-design/icons';
+import { AcceptedMediaTypes, MediaCategories } from '../../constants/media.constant';
 
-const FileUploader = forwardRef((acceptTypes, ref) => {
+const FileUploader = forwardRef((props, ref) => {
   const inputRef = useRef();
   const [files, setFiles] = useState([]);
   const { t } = useTranslation();
-
-  const props = {
-    accept: acceptTypes,
+  const { acceptTypes = [AcceptedMediaTypes[MediaCategories.OTHER]], limit } = props;
+  console.log('limit', limit);
+  const propsData = {
+    accept: acceptTypes?.join(', '),
     onRemove: file => {
       const { uid } = file;
       const newFileList = files.filter(file => file.uid !== uid);
       setFiles(newFileList);
     },
     beforeUpload: file => {
+      if (files.length >= limit) {
+        return alert(`You can only upload up to ${limit} files.`);
+      }
       setFiles([...files, file]);
       return false;
     },
     onchange: info => {
       console.error('🚀 ~ FileUploader ~ info:', info);
     },
+    limit: limit,
   };
 
   const uploadFiles = async () => {
@@ -44,7 +50,7 @@ const FileUploader = forwardRef((acceptTypes, ref) => {
   }));
 
   return (
-    <Upload {...props} ref={inputRef}>
+    <Upload {...propsData} ref={inputRef}>
       <Button className="custom-upload-button" icon={<UploadOutlined />}>
         {t('select-file')}
       </Button>

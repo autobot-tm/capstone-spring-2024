@@ -9,6 +9,7 @@ import { requestContact } from '../../../../services/apis/contact.service';
 import { useTranslation } from 'react-i18next';
 import FilesUpload from '../../../../components/UploadFile/FilesUpload';
 import { PHONE_NUMBER } from '../../../../constants/auth.constant';
+import { AcceptedMediaTypes, MediaCategories } from '../../../../constants/media.constant';
 
 const ContactForm = () => {
   const { t } = useTranslation();
@@ -171,7 +172,11 @@ const ContactForm = () => {
                 {access_token && (
                   <Col xs={24}>
                     <Form.Item name="attachment_urls">
-                      <FilesUpload acceptTypes="image/*" multiple={true} ref={fileUploadRef} />
+                      <FilesUpload
+                        limit={5}
+                        acceptTypes={[AcceptedMediaTypes[MediaCategories.IMAGE]]}
+                        ref={fileUploadRef}
+                      />
                     </Form.Item>
                   </Col>
                 )}
