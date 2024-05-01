@@ -1,28 +1,35 @@
 import React, { useRef, useImperativeHandle, forwardRef, useState } from 'react';
-import { Button, Upload } from 'antd';
+import { Button, Upload, message } from 'antd';
 import { mediaUploadService, getPresignedURLs } from '../../services/media';
 import { useTranslation } from 'react-i18next';
 import { UploadOutlined } from '@ant-design/icons';
+import { AcceptedMediaTypes, MediaCategories } from '../../constants/media.constant';
 
-const FileUploader = forwardRef((acceptTypes, ref) => {
+const FileUploader = forwardRef((props, ref) => {
   const inputRef = useRef();
   const [files, setFiles] = useState([]);
   const { t } = useTranslation();
+  const { acceptTypes = [AcceptedMediaTypes[MediaCategories.OTHER]], limit } = props;
 
-  const props = {
-    accept: acceptTypes,
+  const propsData = {
+    accept: acceptTypes?.join(', '),
     onRemove: file => {
       const { uid } = file;
       const newFileList = files.filter(file => file.uid !== uid);
       setFiles(newFileList);
     },
     beforeUpload: file => {
+      if (files.length >= limit) {
+        message.error(t('error-validate-length-upload-file'));
+        return false;
+      }
       setFiles([...files, file]);
       return false;
     },
     onchange: info => {
       console.error('🚀 ~ FileUploader ~ info:', info);
     },
+    maxCount: limit,
   };
 
   const uploadFiles = async () => {
@@ -44,7 +51,7 @@ const FileUploader = forwardRef((acceptTypes, ref) => {
   }));
 
   return (
-    <Upload {...props} ref={inputRef}>
+    <Upload {...propsData} ref={inputRef}>
       <Button className="custom-upload-button" icon={<UploadOutlined />}>
         {t('select-file')}
       </Button>

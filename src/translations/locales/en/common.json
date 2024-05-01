@@ -211,6 +211,7 @@
   "error-phone-number": "Please enter your phone number!",
   "error-email": "Please enter your E-mail!",
   "error-validate-email": "The input is not valid E-mail!",
+  "error-validate-length-upload-file": "You can only upload up to 5 files.",
   "auth.dontHaveAccount": "Not a member? <register>Register here</register>",
   "auth.haveAccount": "Have an account? <signIn>Sign in</signIn>",
   "validationRules.required.email": "Email is required",
@@ -240,6 +241,10 @@
   "validationRules.password.contain.special": "Password must contain at least one special character",
   "validationRules.size": "Less than maximum area",
   "validationRules.min": "Minimum number is 1",
+  "validationRules.maxLength50": "Maximum 50 characters",
+  "validationRules.maxLength200": "Maximum 200 characters",
+  "validationRules.maxLength500": "Maximum 500 characters",
+
   "registration.disclaimer": "Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.",
   "home.disclaimer": "Discover Your Ideal Home: Rent with Confidence Today!",
   "carousel.disclaimer": "Find Your Perfect Home",
@@ -343,6 +348,7 @@
   "api.error.accountSuspended": "Your account has been suspended.",
   "api.error.waitForServiceConfirmation": "We are in the process of confirming your request.",
   "api.error.invoiceNotExist": "The given invoice doesn’t exist",
+  "api.error.isExpireLease": "The period you want to rent has exceeded the landlord's contract term. Please adjust move-in date or rental period.",
   "invoice": "Invoice",
   "invoice.issued": "Issued",
   "invoice.due": "Due",
@@ -516,7 +522,7 @@
     "update-profile-success": "User profile updated successfully",
     "your-current-password-is-not-correct": "Your current password is not correct!",
     "change-password": "Change Password",
-    "mobile-phone-error-valid-length": "Phone number must have 10 to 11 digits!"
+    "mobile-phone-error-valid-length": "Invalid phone number"
   },
   "ORDER": {
     "thanks": "Thank you. Your order has been received.",

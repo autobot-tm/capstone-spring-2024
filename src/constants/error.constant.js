@@ -23,6 +23,7 @@ export const ERROR_TRANS_KEYS = {
   INVOICE_NOT_PAYABLE: 'api.error.invoiceNotPayable',
   INVOICE_ITEM_NOT_EXIST: 'api.error.invoiceItemNotExist',
   INVOICE_NOT_ABLE_TO_REPORT_ISSUE: 'api.error.invoiceNotAbleToReportIssue',
+  RENTAL_PERIOD_EXCEEDS_LEASE_EXPIRATION: 'api.error.rentalPeriodExceedsLeaseExpiration',
 };
 export const ERROR_MAPPER = {
   40000: [
@@ -60,6 +61,12 @@ export const ERROR_MAPPER = {
   10104: [{ statusCode: 401, translationKey: ERROR_TRANS_KEYS.INVALID_JWT_TOKEN }],
   10004: [{ statusCode: 400, translationKey: ERROR_TRANS_KEYS.INVALID_OTP_CODE }],
   10011: [{ statusCode: 400, translationKey: ERROR_TRANS_KEYS.ACCOUNT_SUSPENDED }],
+  20117: [
+    {
+      statusCode: 400,
+      translationKey: ERROR_TRANS_KEYS.RENTAL_PERIOD_EXCEEDS_LEASE_EXPIRATION,
+    },
+  ],
   30110: [
     {
       statusCode: 400,

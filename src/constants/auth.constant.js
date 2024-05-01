@@ -9,5 +9,5 @@ export const PASSWORD_REGEX = {
 };
 
 export const PHONE_NUMBER = {
-  VALID_LENGTH: /^\d{10,11}$/,
+  VALID_LENGTH: /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/,
 };

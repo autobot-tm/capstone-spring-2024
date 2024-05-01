@@ -9,6 +9,7 @@ import { requestContact } from '../../../../services/apis/contact.service';
 import { useTranslation } from 'react-i18next';
 import FilesUpload from '../../../../components/UploadFile/FilesUpload';
 import { PHONE_NUMBER } from '../../../../constants/auth.constant';
+import { AcceptedMediaTypes, MediaCategories } from '../../../../constants/media.constant';
 
 const ContactForm = () => {
   const { t } = useTranslation();
@@ -74,7 +75,15 @@ const ContactForm = () => {
             <Form form={form} onFinish={onFinish} layout="vertical" initialValues={getInitialValues()}>
               <Row align="center" gutter={[10, 10]}>
                 <Col xs={12}>
-                  <Form.Item rules={[{ required: true, message: t('error-first-name') }]} name="sender_first_name">
+                  <Form.Item
+                    rules={[
+                      { required: true, message: t('error-first-name') },
+                      {
+                        max: 50,
+                        message: t('validationRules.maxLength50'),
+                      },
+                    ]}
+                    name="sender_first_name">
                     <Input
                       size="large"
                       defaultValue={user?.first_name}
@@ -83,7 +92,15 @@ const ContactForm = () => {
                   </Form.Item>
                 </Col>
                 <Col xs={12}>
-                  <Form.Item rules={[{ required: true, message: t('error-last-name') }]} name="sender_last_name">
+                  <Form.Item
+                    rules={[
+                      { required: true, message: t('error-last-name') },
+                      {
+                        max: 50,
+                        message: t('validationRules.maxLength50'),
+                      },
+                    ]}
+                    name="sender_last_name">
                     <Input
                       size="large"
                       defaultValue={user?.last_name}
@@ -141,15 +158,25 @@ const ContactForm = () => {
                 </Col>
                 <Col xs={24}>
                   <Form.Item
-                    rules={[{ required: true, message: t('CONTACT-US.error-your-message') }]}
+                    rules={[
+                      { required: true, message: t('CONTACT-US.error-your-message') },
+                      {
+                        max: 500,
+                        message: t('validationRules.maxLength500'),
+                      },
+                    ]}
                     name="description">
-                    <TextArea size="large" rows={4} placeholder={t('CONTACT-US.placeholder-message')} maxLength={200} />
+                    <TextArea size="large" rows={4} placeholder={t('CONTACT-US.placeholder-message')} maxLength={500} />
                   </Form.Item>
                 </Col>
                 {access_token && (
                   <Col xs={24}>
                     <Form.Item name="attachment_urls">
-                      <FilesUpload acceptTypes="image/*" multiple={true} ref={fileUploadRef} />
+                      <FilesUpload
+                        limit={5}
+                        acceptTypes={[AcceptedMediaTypes[MediaCategories.IMAGE]]}
+                        ref={fileUploadRef}
+                      />
                     </Form.Item>
                   </Col>
                 )}

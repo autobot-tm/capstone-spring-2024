@@ -299,23 +299,53 @@ const RequestCancelConract = () => {
                 <Form.Item name={'type'} rules={[{ required: true, message: t('validationRules.required.type') }]}>
                   <Select style={{ width: '100%' }} placeholder={t('placeholder.type')} options={options} />
                 </Form.Item>
-                <Form.Item name={'title'} rules={[{ required: true, message: t('validationRules.required.title') }]}>
+                <Form.Item
+                  name={'title'}
+                  rules={[
+                    { required: true, message: t('validationRules.required.title') },
+                    {
+                      max: 200,
+                      message: t('validationRules.maxLength200'),
+                    },
+                  ]}>
                   <Input placeholder={t('placeholder.title')} />
                 </Form.Item>
-                <Form.Item name={'reason'} rules={[{ required: true, message: t('validationRules.required.reason') }]}>
-                  <TextArea rows={4} placeholder={t('placeholder.reason')} maxLength={200} />
+                <Form.Item
+                  name={'reason'}
+                  rules={[
+                    { required: true, message: t('validationRules.required.reason') },
+                    {
+                      max: 500,
+                      message: t('validationRules.maxLength500'),
+                    },
+                  ]}>
+                  <TextArea rows={4} placeholder={t('placeholder.reason')} maxLength={500} />
                 </Form.Item>
               </>
             )}
             {typeOfRequest === 'service' && (
               <>
-                <Form.Item name={'title'} rules={[{ required: true, message: t('validationRules.required.title') }]}>
+                <Form.Item
+                  name={'title'}
+                  rules={[
+                    { required: true, message: t('validationRules.required.title') },
+                    {
+                      max: 200,
+                      message: t('validationRules.maxLength200'),
+                    },
+                  ]}>
                   <Input placeholder={t('placeholder.title')} />
                 </Form.Item>
                 <Form.Item
                   name={'description'}
-                  rules={[{ required: true, message: t('validationRules.required.description') }]}>
-                  <TextArea rows={4} placeholder={t('placeholder.description')} maxLength={200} />
+                  rules={[
+                    { required: true, message: t('validationRules.required.description') },
+                    {
+                      max: 500,
+                      message: t('validationRules.maxLength500'),
+                    },
+                  ]}>
+                  <TextArea rows={4} placeholder={t('placeholder.description')} maxLength={500} />
                 </Form.Item>
                 {extraServices?.able_to_change_schedule === true && (
                   <>

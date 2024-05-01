@@ -205,6 +205,7 @@
   "error-phone-number": "電話番号を入力してください！",
   "error-email": "E-mailを入力してください！",
   "error-validate-email": "入力が有効な電子メールではありません！",
+  "error-validate-length-upload-file": "アップロードできるファイルは5つまでです。",
   "auth.dontHaveAccount": "会員でない？ <register>登録はこちら</register>",
   "auth.haveAccount": "アカウントをお持ちですか？ <signIn>ログイン</signIn>",
   "validationRules.required.email": "Eメールは必須",
@@ -233,6 +234,9 @@
   "validationRules.required.country": "国は必須です",
   "validationRules.required.currentPassword": "現在のパスワードが必要です",
   "validationRules.required.repeatNewPassword": "新しいパスワードを再度入力する必要があります",
+  "validationRules.maxLength50": "最大50文字",
+  "validationRules.maxLength200": "最大200文字",
+  "validationRules.maxLength500": "最大500文字",
   "registration.disclaimer": "お客様の個人情報は,当ウェブサイトでのお客様のご利用をサポートするため,お客様のアカウントへのアクセスを管理するため,および当社のプライバシーポリシーに記載されているその他の目的のために使用されます。",
   "home.disclaimer": "理想的な家を見つけてください。今すぐ自信を持って賃貸しましょう!",
   "logout.disclaimer": "ログアウトしてもよろしいですか?",
@@ -334,6 +338,7 @@
   "api.error.accountSuspended": "あなたのアカウントは停止されました",
   "api.error.waitForServiceConfirmation": "リクエストを確認中です。",
   "api.error.invoiceNotExist": "指定された請求書が存在しない",
+  "api.error.isExpireLease": "貸主の契約期間を超えています。入居日またはレンタル期間を調整してください。",
   "invoice": "インボイス",
   "invoice.issued": "発行",
   "invoice.due": "期日",
@@ -508,7 +513,7 @@
     "update-profile-success": "ユーザープロファイルが正常に更新されました",
     "your-current-password-is-not-correct": "現在のパスワードが正しくありません！",
     "change-password": "パスワードの変更",
-    "mobile-phone-error-valid-length": "電話番号は10～11桁であること！"
+    "mobile-phone-error-valid-length": "無効な電話番号！"
   },
   "ORDER": {
     "thanks": "ありがとうございます。ご注文を承りました。",
