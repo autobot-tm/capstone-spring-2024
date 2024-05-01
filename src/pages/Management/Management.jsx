@@ -50,6 +50,9 @@ const Management = () => {
         case 'EXTRA_SERVICE_REQUEST':
           setMenuItem('service');
           break;
+        case 'LEASE_CREATION':
+          setMenuItem('contract');
+          break;
         default:
           break;
       }

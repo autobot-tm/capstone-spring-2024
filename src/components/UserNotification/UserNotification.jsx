@@ -159,6 +159,15 @@ const UserNotification = ({ t }) => {
         const { lease_id, cancelation_request_id, extra_service_request_id, issue_id, invoice_id } = context;
 
         switch (ACTION_TYPE) {
+          case 'LEASE_CREATION':
+            dispatch(
+              openContractDetailModal({
+                actionType: ACTION_TYPE,
+                contractId: lease_id,
+              }),
+            );
+            dispatch(setContractLoading({ loading: true }));
+            break;
           case 'LEASE_CANCELATION_REQUEST':
             dispatch(
               openContractDetailModal({
