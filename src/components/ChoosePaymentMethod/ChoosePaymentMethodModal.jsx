@@ -47,7 +47,7 @@ const ChoosePaymentMethodModal = () => {
   return (
     <>
       <CustomModal
-        width={700}
+        width={600}
         nameOfModal={chooseMethodPaymentModal}
         title={t('modal.choose-payment-method')}
         action={closeChooseMethodPaymentModal}
@@ -72,14 +72,14 @@ const ChoosePaymentMethodModal = () => {
         <Row className="payment-method-modal-container" gutter={[24, 16]}>
           <Col
             xs={24}
-            sm={7}
+            sm={8}
             className={`payment-method-card ${selectedMethod === 'VNPAY' ? 'selected' : ''}`}
             onClick={() => handleCardSelect(PAYMENT_METHOD.VNPAY)}>
             <img alt="vnpay" src={VNPAY1} />
           </Col>
           <Col
             xs={24}
-            sm={7}
+            sm={8}
             className={`payment-method-card ${selectedMethod === 'MOMO' ? 'selected' : ''}`}
             onClick={() => handleCardSelect(PAYMENT_METHOD.MOMO)}>
             <img alt="momo" src={MOMO} />

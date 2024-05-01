@@ -31,6 +31,7 @@ import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import { closeReservationPolicyModal, openReservationPolicyModal } from '../../store/slices/modalSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomModal from '../../components/Modal/CustomModal';
+import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
 
 const ReservationPage = () => {
   const { t } = useTranslation();
@@ -49,6 +50,7 @@ const ReservationPage = () => {
   const [isEditingMonths, setIsEditingMonths] = useState(false);
   const [checkTerms, setCheckTerms] = useState(false);
   const [opPayment, setOpPayment] = useState(PAYMENT_METHOD.VNPAY);
+  const [isExpire, setIsExpire] = useState(null);
 
   const handleBack = () => {
     navigate(`/houses/${id}`);
@@ -106,10 +108,12 @@ const ReservationPage = () => {
     const { id, price_per_month } = getPriceAndIdFromHouse(value);
     setPriceOfMonths(price_per_month);
     setIdPricingPolicy(id);
+    setIsExpire(null);
   };
 
   const handleDateChange = date => {
     setSelectedNewDate(date);
+    setIsExpire(null);
   };
 
   useEffect(() => {
@@ -154,7 +158,15 @@ const ReservationPage = () => {
       });
       window.location.href = response_url;
     } catch (error) {
-      console.error('Error reserving house:', error);
+      if (error === ERROR_TRANS_KEYS.RENTAL_PERIOD_EXCEEDS_LEASE_EXPIRATION) {
+        setIsExpire(t('api.error.isExpireLease'));
+        console.error(
+          'The given rental period (expected_move_in_date + pricing policy total months) is over the homeowner lease expiration of the given house',
+          error,
+        );
+      } else {
+        console.error('Error reserving house:', error);
+      }
     }
   };
 
@@ -164,7 +176,7 @@ const ReservationPage = () => {
       priceSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   };
-
+  console.log('is', isExpire);
   return (
     <Layout>
       {isLoading ? (
@@ -349,6 +361,7 @@ const ReservationPage = () => {
                   <BaseButton style={{ width: '100%' }} type="primary" onClick={showPopup}>
                     {t('RESERVATION.reservation-btn')}
                   </BaseButton>
+                  {isExpire && <Paragraph style={{ color: 'red' }}>{isExpire}</Paragraph>}
                 </Col>
               </Row>
             </Col>
