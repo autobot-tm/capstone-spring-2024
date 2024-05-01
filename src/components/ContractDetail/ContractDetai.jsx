@@ -201,37 +201,32 @@ const ContractDetail = () => {
         </>
       ),
     },
-    {
+  ];
+  if (appendix?.length > 0) {
+    contractData.push({
       key: '6',
       title: <b>{t('label.appendixFile')}</b>,
       content: (
-        <>
-          <div>
-            {appendix.map((file, index) => (
-              <div
-                key={index}
-                style={{
-                  margin: '10px 0 20px 0',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                }}>
-                <div style={{ marginBottom: '5px' }}>{file.slice(73)}</div>
-                <Button
-                  size="small"
-                  icon={<DownloadOutlined />}
-                  onClick={() => {
-                    handleDownload(file);
-                  }}>
-                  {t('download')}
-                </Button>
-              </div>
-            ))}
-          </div>
-        </>
+        <div>
+          {appendix.map((file, index) => (
+            <div
+              key={index}
+              style={{
+                margin: '10px 0 20px 0',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+              }}>
+              <div style={{ marginBottom: '5px' }}>{file.slice(73)}</div>
+              <Button size="small" icon={<DownloadOutlined />} onClick={() => handleDownload(file)}>
+                {t('download')}
+              </Button>
+            </div>
+          ))}
+        </div>
       ),
-    },
-  ];
+    });
+  }
 
   const houseData = [
     {
