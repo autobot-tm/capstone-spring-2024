@@ -1,173 +1,411 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './style.scss';
 import { useTranslation } from 'react-i18next';
 import { Headline } from '../../components/Typography/Headline/Headline';
-import { FieldTimeOutlined, HomeOutlined, LeftOutlined, StarFilled } from '@ant-design/icons';
-import { Breadcrumb, Button, Col, Row } from 'antd';
+import {
+  ExclamationCircleOutlined,
+  FieldTimeOutlined,
+  HomeOutlined,
+  LeftOutlined,
+  StarFilled,
+} from '@ant-design/icons';
+import { Avatar, Breadcrumb, Button, Checkbox, Col, Radio, Row, notification } from 'antd';
 import { SubHeading } from '../../components/Typography/SubHeading/SubHeading';
 import { Paragraph } from '../../components/Typography/Paragraph/Paragraph';
 import { Caption } from '../../components/Typography/Caption/Caption';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Layout } from '../../hoc/Layout/Layout';
-import VNPay2 from '../../assets/images/vnpay-qr-23-06-2020-2.jpg';
+import { formatCustomCurrency } from '../../utils/number-seperator';
+import { requestReserveHouse } from '../../services/apis/payments.service';
+import { PROMOTION_PACKAGE_MONTHS } from '../../constants/house.constant';
+import { PAYMENT_METHOD } from '../../constants/payment.constant';
+import { Helmet } from 'react-helmet';
 import VNPay1 from '../../assets/images/Logo-VNPAY-QR.webp';
+import MOMO from '../../assets/images/momoLogo.jpeg';
+// import ONEPay from '../../assets/images/onepay.svg';
+import Selection from '../DetailHouse/components/Selection/Selection';
+import DatePickerAnt from '../DetailHouse/components/DatePickerComponent/DatePickerAnt';
+import BaseButton from '../../components/Buttons/BaseButtons/BaseButton';
+import SpinLoading from '../../components/SpinLoading/SpinLoading';
+import { closeReservationPolicyModal, openReservationPolicyModal } from '../../store/slices/modalSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import CustomModal from '../../components/Modal/CustomModal';
+import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
+
 const ReservationPage = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { house_id: id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
+  const reservationPolicyModal = useSelector(state => state.modal.reservationPolicyModal);
+  const { house, reviews, selectedDate, selectedMonths } = location.state || {};
+  const [selectedNewDate, setSelectedNewDate] = useState(selectedDate || null);
+  const [selectedNewMonths, setSelectedNewMonths] = useState(selectedMonths || 1);
+  const [priceOfMonths, setPriceOfMonths] = useState(null);
+  const [idPricingPolicy, setIdPricingPolicy] = useState(null);
+  const [isEditingDate, setIsEditingDate] = useState(false);
+  const [isEditingMonths, setIsEditingMonths] = useState(false);
+  const [checkTerms, setCheckTerms] = useState(false);
+  const [opPayment, setOpPayment] = useState(PAYMENT_METHOD.VNPAY);
+  const [isExpire, setIsExpire] = useState(null);
+
   const handleBack = () => {
-    navigate('/detail-house');
+    navigate(`/houses/${id}`);
   };
+  const showPopup = () => {
+    dispatch(openReservationPolicyModal());
+  };
+
+  const hidePopup = () => {
+    dispatch(closeReservationPolicyModal());
+  };
+
+  const handleCheckedTerms = e => {
+    const isChecked = e.target.checked;
+    setCheckTerms(isChecked);
+  };
+
+  const handleAgree = () => {
+    if (checkTerms) {
+      hidePopup();
+      handlePayments();
+    }
+  };
+
+  const getPriceAndIdFromHouse = months => {
+    if (house && months) {
+      const selectedMonthsInt = parseInt(months);
+      if (PROMOTION_PACKAGE_MONTHS.includes(selectedMonthsInt)) {
+        const selectedPolicy = house?.pricing_policies.find(
+          policy => parseInt(policy.total_months) === selectedMonthsInt,
+        );
+        if (selectedPolicy) {
+          const { id, price_per_month } = selectedPolicy;
+          return { id, price_per_month };
+        } else {
+          console.log('No pricing policy for:', months);
+          return { id: null, price_per_month: null };
+        }
+      } else {
+        const selectedPolicy = house?.pricing_policies.find(policy => parseInt(policy.total_months) === 1);
+        if (selectedPolicy) {
+          const { id, price_per_month } = selectedPolicy;
+          return { id, price_per_month };
+        } else {
+          console.log('No pricing policy for 1 month');
+          return { id: null, price_per_month: null };
+        }
+      }
+    }
+    return { id: null, price_per_month: null };
+  };
+
+  const handleMonthChange = value => {
+    setSelectedNewMonths(value);
+    const { id, price_per_month } = getPriceAndIdFromHouse(value);
+    setPriceOfMonths(price_per_month);
+    setIdPricingPolicy(id);
+    setIsExpire(null);
+  };
+
+  const handleDateChange = date => {
+    setSelectedNewDate(date);
+    setIsExpire(null);
+  };
+
+  useEffect(() => {
+    const { id, price_per_month } = getPriceAndIdFromHouse(selectedNewMonths);
+    setPriceOfMonths(price_per_month);
+    setIdPricingPolicy(id);
+    setIsLoading(false);
+  }, [selectedNewMonths, idPricingPolicy, selectedNewDate]);
+
+  const handleOptionPayment = e => {
+    setOpPayment(e.target.value);
+  };
+
+  function errorPaymentNotification() {
+    return notification.error({
+      message: t('RESERVATION.error'),
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      description: t('RESERVATION.error-option-payment'),
+    });
+  }
+
+  function errorDateNotification() {
+    return notification.error({
+      message: t('RESERVATION.error'),
+      icon: <ExclamationCircleOutlined style={{ color: 'red' }} />,
+      description: t('RESERVATION.error-date'),
+    });
+  }
+
+  const handlePayments = async () => {
+    if (!opPayment) return errorPaymentNotification();
+    if (!selectedNewDate) return errorDateNotification();
+    try {
+      const urlCallback = window.location.origin + `/payments/${id}?typeOfPayment=reservation`;
+      const response_url = await requestReserveHouse({
+        house_id: id,
+        pricing_policy_id: idPricingPolicy,
+        total_months: selectedNewMonths,
+        expected_move_in_date: selectedNewDate,
+        gateway_provider: opPayment,
+        callback_base_url: urlCallback,
+      });
+      window.location.href = response_url;
+    } catch (error) {
+      if (error === ERROR_TRANS_KEYS.RENTAL_PERIOD_EXCEEDS_LEASE_EXPIRATION) {
+        setIsExpire(t('api.error.isExpireLease'));
+        console.error(
+          'The given rental period (expected_move_in_date + pricing policy total months) is over the homeowner lease expiration of the given house',
+          error,
+        );
+      } else {
+        console.error('Error reserving house:', error);
+      }
+    }
+  };
+
+  const handleBookNowClick = () => {
+    const priceSection = document.querySelector('.reservation-btn');
+    if (priceSection) {
+      priceSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  };
+  console.log('is', isExpire);
   return (
     <Layout>
-      <header id="header-checkout">
-        <Headline size={450}>Checkout</Headline>
-        <Breadcrumb
-          items={[
-            {
-              href: '/',
-              title: <HomeOutlined />,
-            },
-            {
-              title: 'Checkout',
-            },
-          ]}
-        />
-      </header>
-      <Row id="reservation-container">
-        <Col className="main" xs={24} lg={16}>
-          <Headline>
-            <LeftOutlined className="icon-left" onClick={handleBack} />
-            {t('reservation.reservation-required')}
-          </Headline>
-          <Row className="main-estimated section">
-            <Col xs={24}>
-              <SubHeading size={230} strong>
-                {t('reservation.reservation-required')}
-              </SubHeading>
+      {isLoading ? (
+        <SpinLoading />
+      ) : (
+        <>
+          <header id="header-checkout">
+            <Helmet>
+              <title>{t('RESERVATION.title-tab')}</title>
+            </Helmet>
+            <Row className="header-row" align="middle">
+              <Col xs={24} sm={12}>
+                <Headline size={450} strong>
+                  {t('RESERVATION.checkout')}
+                </Headline>
+              </Col>
+              <Col xs={24} sm={12} className="breadcrumb">
+                <Breadcrumb
+                  items={[
+                    {
+                      href: '/',
+                      title: <HomeOutlined style={{ color: 'black' }} />,
+                    },
+                    {
+                      title: `${t('RESERVATION.checkout')}`,
+                    },
+                  ]}
+                />
+              </Col>
+            </Row>
+          </header>
+          <Row id="reservation-container" justify="center">
+            <BaseButton
+              shape="circle"
+              type="primary"
+              size="large"
+              className="book-now-btn"
+              onClick={handleBookNowClick}>
+              {t('RESERVATION.reserve-btn')}
+            </BaseButton>
+            <Col className="reservation-title" xs={24}>
+              <LeftOutlined className="icon-left" onClick={handleBack} />
+              <Headline strong>{t('RESERVATION.reservation-required')}</Headline>
             </Col>
-            <Col style={{ paddingLeft: 25 }} xs={12}>
-              <Paragraph>• {t('reservation.rental-period')}:</Paragraph>
-            </Col>
-            <Col xs={12} style={{ textAlign: 'right' }}>
-              {/* <Selection /> */}
-            </Col>
-            <Col style={{ paddingLeft: 25 }} xs={12}>
-              <Paragraph>• {t('reservation.time-to-move-in')}:</Paragraph>
-            </Col>
-            <Col xs={12} style={{ textAlign: 'right' }}>
-              {/* <DatePickerAnt /> */}
-            </Col>
-          </Row>
-          <Row className="main-payment section">
-            <Col xs={24}>
-              {' '}
-              <SubHeading size={230} strong>
-                {t('reservation.payment')}Payment
-              </SubHeading>
-            </Col>
-            <Col className="banner-payment" xs={24}>
-              <img src={VNPay1} className="img-vnpay-1" alt="" />
-              <img src={VNPay2} className="img-vnpay-2" alt="" />
-            </Col>
-          </Row>
-          <Row className="section">
-            <SubHeading size={230} strong>
-              {t('reservation.cancellation-policy')}
-            </SubHeading>
-            <Paragraph>{t('reservation.des-policy')}</Paragraph>
-          </Row>
-          <Row className="section">
-            <SubHeading size={230} strong>
-              {t('reservation.general-standards')}
-            </SubHeading>
-            <Paragraph>
-              All guests are urged to adhere to the following simple rules to ensure the best
-              experience:
-              <ul>
-                <li>Comply with house rules</li>
-                <li>Use supplies and equipment carefully and responsibly.</li>
-                <li>
-                  Report any problems or damage immediately so the homeowner can promptly resolve
-                  them.
-                </li>
-                <li>
-                  Understand and comply with all house policies and regulations, including
-                  cancellation and refund regulations.
-                </li>
-                <li>
-                  Remember that you are staying in someone else s home, so show respect and be a
-                  good guest.
-                </li>
-              </ul>
-            </Paragraph>
-          </Row>
-          <Row className="section">
-            <Col xs={3}>
-              {' '}
-              <FieldTimeOutlined className="field-time-icon" />
-            </Col>
-            <Col xs={21}>
-              <Paragraph style={{ color: 'black' }} strong>
-                {t('reservation.description-field-time')}
-              </Paragraph>
-            </Col>
-          </Row>
-          <Row className="main-reservation-required">
-            <Caption size={120}>
-              {/* {t('detail-house.estimated')} */}nibh praesent tristique magna sit amet purus
-              gravida quis blandit turpis cursus in hac habitasse platea dictumst quisque sagittis
-              purus sit amet volutpat consequat mauris nunc congue nisi vitae suscipit tellus mauris
-              a diam maecenas sed enim ut sem viverra aliquet eget sit amet tellus cras adipiscing
-              enim eu turpis
-            </Caption>
-            <Button className="reservation-btn">
-              <b> {t('reservation.reservation-btn')} </b>
-            </Button>
-          </Row>
-        </Col>
-        <Col className="side" xs={24} lg={8}>
-          <div className="fee-table">
-            <div className="fee-table-section-1">
-              <img
-                src="https://img.freepik.com/free-photo/blue-house-with-blue-roof-sky-background_1340-25953.jpg"
-                className="img-fee"
-                alt=""
-              />
-              <div className="fee-table-section-1-description">
-                <Caption size={120}>Apartment</Caption>
-                <SubHeading size={230} strong>
-                  $500 /{t('reservation.month')}
+            <Col className="main" xs={24} xl={14}>
+              <Row className="main-estimated section">
+                <Col style={{ marginBottom: 20 }} xs={24}>
+                  <SubHeading size={260} strong>
+                    {t('RESERVATION.your-intentions')}
+                  </SubHeading>
+                </Col>
+                <Col style={{ paddingLeft: 10 }} xs={24} sm={14}>
+                  <Paragraph classNames="color-black" strong>
+                    {t('RESERVATION.rental-period')}
+                  </Paragraph>
+                </Col>
+                <Col xs={16} sm={7} style={{ textAlign: 'right' }}>
+                  {isEditingMonths ? (
+                    <Selection defaultValue={selectedMonths} onChange={handleMonthChange} />
+                  ) : (
+                    <>
+                      <span>
+                        {selectedNewMonths} {t('RESERVATION.month')}
+                      </span>
+                      <Button className="edit-date" type="link" onClick={() => setIsEditingMonths(!isEditingMonths)}>
+                        {t('RESERVATION.edit')}
+                      </Button>
+                    </>
+                  )}
+                </Col>
+                <Col style={{ paddingLeft: 10 }} xs={24} sm={14}>
+                  <Paragraph classNames="color-black" strong>
+                    {t('RESERVATION.time-to-move-in')}
+                  </Paragraph>
+                </Col>
+                <Col xs={16} sm={7} style={{ textAlign: 'right' }}>
+                  {isEditingDate ? (
+                    <DatePickerAnt propValue={selectedDate} onDateChange={handleDateChange} />
+                  ) : (
+                    <>
+                      <span>{selectedNewDate}</span>
+                      <Button className="edit-date" type="link" onClick={() => setIsEditingDate(!isEditingDate)}>
+                        {t('RESERVATION.edit')}
+                      </Button>
+                    </>
+                  )}
+                </Col>
+              </Row>
+              <Row className="main-payment section">
+                <Col xs={24}>
+                  <SubHeading size={230} strong>
+                    {t('RESERVATION.payment')}
+                  </SubHeading>
+                </Col>
+                <Col xs={24}>
+                  <Radio.Group
+                    onChange={handleOptionPayment}
+                    value={opPayment}
+                    size="large"
+                    className="banner-container">
+                    <Radio value={PAYMENT_METHOD.VNPAY} className="main-payment-banner">
+                      <span className="main-payment-banner-inner">
+                        <img src={VNPay1} />
+                      </span>
+                    </Radio>
+                    <Radio value={PAYMENT_METHOD.MOMO} className="main-payment-banner">
+                      <span className="main-payment-banner-inner">
+                        <img className="momo" src={MOMO} />
+                      </span>
+                    </Radio>
+                    {/* <Radio disabled value={PAYMENT_METHOD.ONEPAY} className="main-payment-banner">
+                      <span className="main-payment-banner-inner">
+                        <img src={ONEPay} />
+                      </span>
+                      <Caption>(Coming soon)</Caption>
+                    </Radio> */}
+                  </Radio.Group>
+                </Col>
+              </Row>
+              <Row className="section">
+                <SubHeading size={230} classNames="block" strong>
+                  {t('RESERVATION.reservation-cancellation-policy')}
                 </SubHeading>
-                <Caption size={120}>
-                  <StarFilled />
-                  &nbsp;4.99
-                </Caption>
+                <Paragraph>
+                  &nbsp;&nbsp;{t('RESERVATION.reservation-des-1')}:
+                  <ul>
+                    <li>{t('RESERVATION.reservation-des-2')}</li>
+                    <li>{t('RESERVATION.reservation-des-3')}</li>
+                  </ul>
+                </Paragraph>
+              </Row>
+              <Row style={{ padding: '20px 0', gap: 20 }}>
+                <Col xs={3} style={{ display: 'flex', justifyContent: 'center' }}>
+                  <FieldTimeOutlined className="field-time-icon" />
+                </Col>
+                <Col xs={20}>
+                  <Caption size={120}>{t('RESERVATION.conclude-cancellation-policy')}</Caption>
+                </Col>
+              </Row>
+            </Col>
+            <Col className="side" xs={23} xl={8}>
+              <div className="fee-table">
+                <div className="fee-table-section-1">
+                  <Avatar src={house?.image_urls?.[0]} className="img-fee" alt={house?.name} />
+                  <div className="fee-table-section-1-description">
+                    <Caption size={120}> {t(`detail-house.${house?.category.replace(/\s/g, '')}`)}</Caption>
+                    <Row align="middle">
+                      <SubHeading size={260} classNames="number-price" strong>
+                        {formatCustomCurrency(priceOfMonths)}
+                      </SubHeading>
+                      <Caption size={140}>&nbsp;/{t('RESERVATION.month')}</Caption>
+                    </Row>
+                    <Caption size={120}>
+                      <StarFilled style={{ color: '#f8a11e' }} />
+                      &nbsp;
+                      {reviews?.average_rating > 0 ? `${reviews?.average_rating}` : 'No rating'}
+                    </Caption>
+                  </div>
+                </div>
+                <div className="fee-table-section-2">
+                  <SubHeading size={230} strong>
+                    {t('RESERVATION.total-fee')}
+                  </SubHeading>
+                  <Paragraph classNames="fee-table-section-2-description">
+                    <span>{t('RESERVATION.reservation-fee')}:</span>
+                    <span>{formatCustomCurrency(house?.reservation_fee)}</span>
+                  </Paragraph>
+                  <Paragraph classNames="fee-table-section-2-description">
+                    <span>{t('RESERVATION.exception-fee')}:</span>
+                    <span>0</span>
+                  </Paragraph>
+                </div>
+                <div className="fee-table-section-3">
+                  <Paragraph classNames="fee-table-section-3-description">
+                    <b>{t('RESERVATION.total')} (VND):</b>
+                    <b>{formatCustomCurrency(house?.reservation_fee)}</b>
+                  </Paragraph>
+                </div>
               </div>
+              <Row>
+                <Col className="reservation-btn" xs={24}>
+                  <BaseButton style={{ width: '100%' }} type="primary" onClick={showPopup}>
+                    {t('RESERVATION.reservation-btn')}
+                  </BaseButton>
+                  {isExpire && <Paragraph style={{ color: 'red' }}>{isExpire}</Paragraph>}
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <CustomModal
+            width={560}
+            nameOfModal={reservationPolicyModal}
+            centered
+            action={closeReservationPolicyModal}
+            footer={null}
+            title={t('RESERVATION.title-terms')}>
+            <Caption size={140} classNames="d-block">
+              {/* {t('Your terms and conditions text here...')} */}
+              {t('RESERVATION.terms-reservation')}:
+              <ul>
+                <li> {t('RESERVATION.terms-reservation-1')}</li>
+                <li> {t('RESERVATION.terms-reservation-2')}</li>
+                <li> {t('RESERVATION.terms-reservation-3')}</li>
+              </ul>
+              {t('RESERVATION.terms-reservation-4')}
+            </Caption>
+            <Checkbox onClick={handleCheckedTerms} style={{ padding: '20px 0' }}>
+              <Caption size={140} classNames="d-block">
+                {t('RESERVATION.accept-checked')}
+              </Caption>
+            </Checkbox>
+            <div className="btn-container-terms">
+              <BaseButton
+                style={{ width: 'auto' }}
+                size="medium"
+                key="submit"
+                type="primary"
+                htmlType="submit"
+                onClick={handleAgree}>
+                {t('button.continue')}
+              </BaseButton>
+              ,
+              <BaseButton size="medium" style={{ width: 'auto' }} key="" onClick={hidePopup}>
+                {t('RESERVATION.cancel-btn')}
+              </BaseButton>
             </div>
-            <div className="fee-table-section-2">
-              <SubHeading size={230} strong>
-                {t('reservation.reservation-fee')}
-              </SubHeading>
-              <Paragraph classNames="fee-table-section-2-description">
-                <span>
-                  {t('reservation.the-deposit')} x 2 ({t('reservation.month')}):
-                </span>
-                <span>$1.000</span>
-              </Paragraph>
-              <Paragraph classNames="fee-table-section-2-description">
-                <span>{t('reservation.exception-fee')}:</span>
-                <span>0</span>
-              </Paragraph>
-            </div>
-            <div className="fee-table-section-3">
-              <Paragraph classNames="fee-table-section-3-description">
-                <b>{t('reservation.total')} (USD):</b>
-                <b>$1.000</b>
-              </Paragraph>
-            </div>
-          </div>
-        </Col>
-      </Row>
+          </CustomModal>
+        </>
+      )}
     </Layout>
   );
 };

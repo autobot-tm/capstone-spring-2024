@@ -5,6 +5,9 @@ export const HousePropertyName = {
 };
 
 export const HousePropertyUnit = {
+  METER_CUBIC: 'm³',
   METER_SQUARE: 'm²',
   METER: 'm',
 };
+
+export const PROMOTION_PACKAGE_MONTHS = [3, 6, 12];

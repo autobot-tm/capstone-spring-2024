@@ -1,24 +1,29 @@
 import { Carousel } from 'antd';
 import React from 'react';
 import styles from './HomeCarousel.module.scss';
-import { t } from 'i18next';
 import { Headline } from '../../../../components/Typography';
 import SearchBar from '../SearchBar/SearchBar';
-const HomeCarousel = ({ images, limit }) => {
+import { useTranslation } from 'react-i18next';
+
+const HomeCarousel = ({ data }) => {
+  const { t } = useTranslation();
+
   return (
     <div className={styles.carouselContainer}>
-      <Carousel autoplay>
-        {images.slice(0, limit).map((image, index) => {
+      <Carousel autoplay effect="fade">
+        {data?.houses?.map((item, index) => {
           return (
             <div key={index} className={styles.imagesContainer}>
-              <img className={styles.homeImage} src={image} />
+              <img className={styles.homeImage} src={item?.image_urls?.[0]} />
             </div>
           );
         })}
       </Carousel>
       <div className={styles.typographyContainer}>
         <div>
-          <Headline size={600}>{t('carousel.disclaimer')}</Headline>
+          <Headline size={450} classNames="headline-white">
+            {t('carousel.disclaimer')}
+          </Headline>
         </div>
       </div>
       <div className={styles.searchBarContainer}>

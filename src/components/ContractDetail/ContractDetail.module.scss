@@ -1,0 +1,19 @@
+.loadingContainer {
+  height: 494px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.itemCancellationContract {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  cursor: pointer;
+}
+.btnContainerContract {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  width: 94%;
+}

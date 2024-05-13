@@ -5,21 +5,41 @@
   height: 230px;
   object-fit: cover;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 75px 140px;
+  justify-content: center;
+  padding: 0 20px;
+  .breadcrumb {
+    display: flex;
+    justify-content: end;
+  }
+  .header-row {
+    width: 1400px;
+  }
 }
 
 #reservation-container {
   max-width: 1400px;
   margin: auto;
   padding: 50px 0;
-  .main {
-    padding: 0 140px;
+  .reservation-title {
+    display: flex;
+    margin-bottom: 30px;
+    gap: 6px;
     .icon-left {
-      font-style: 24px;
-      margin-right: 10px;
+      font-size: 18px;
+      padding: 16px;
+      border-radius: 0;
+      transition:
+        background-color 0.3s ease,
+        border-radius 0.3s ease;
+      &:hover {
+        border-radius: 100%;
+        background-color: #ccc;
+      }
     }
+  }
+  .main {
+    padding: 0 20px;
     .field-time-icon {
       font-size: 44px;
     }
@@ -29,41 +49,67 @@
       padding: 20px 0;
     }
     &-estimated {
-      margin-top: 30px;
-    }
-    &-payment {
-      .banner-payment {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 10px 0;
-        padding: 0 10px;
-        height: 100px;
-        background-color: $colors-bg-secondary;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-        .img-vnpay-1,
-        .img-vnpay-2 {
-          height: 60px;
+      .edit-date {
+        color: #000;
+        &:hover {
+          color: $colors-primary;
         }
       }
     }
-    &-cancellation-policy {
+    &-payment {
+      .banner-container {
+        display: flex;
+        gap: 10px;
+        @media screen and (max-width: 540px) {
+          display: block;
+        }
+      }
+      &-banner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px;
+        width: 100%;
+        min-width: 240;
+        margin: 20px 0;
+        height: 120px;
+        background-color: $colors-bg-secondary;
+        //refactor
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        &-inner {
+          display: flex;
+          text-align: center;
+          justify-content: space-between;
+          width: 100%;
+          padding: 0 10px;
+          @media screen and (max-width: 686px) {
+            display: block;
+          }
+        }
+        img {
+          height: 40px;
+        }
+        img.momo {
+          height: 60px;
+          border-radius: 4px;
+        }
+      }
     }
     &-reservation-required {
       padding: 20px 0;
-      .reservation-btn {
-        background-color: $colors-primary;
-        height: 40px;
-        margin-top: 30px;
-      }
     }
   }
   .side {
+    padding: 30px 0;
+    position: sticky;
+    top: 0;
+    height: 40vh;
+    z-index: 900;
     .fee-table {
       border: 0.8px solid #ccc;
       border-radius: 6px;
       padding: 30px;
+      margin-top: 20px;
 
       &-section-1 {
         display: flex;
@@ -72,9 +118,14 @@
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+          .number-price {
+            color: $colors-primary;
+          }
         }
         .img-fee {
-          height: 95px;
+          height: 90px;
+          width: 140px;
+          object-fit: cover;
           border-radius: 5px;
         }
       }
@@ -98,5 +149,17 @@
         }
       }
     }
+    .reservation-btn {
+      margin-top: 20px;
+    }
+  }
+}
+.btn-container-terms {
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (max-width: 992px) {
+  #reservation-container {
+    padding: 50px 10px;
   }
 }

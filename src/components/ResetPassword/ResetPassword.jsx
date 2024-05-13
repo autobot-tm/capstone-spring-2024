@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import CustomModal from '../Modal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  closeResetPasswordModal,
-  openLoginModal,
-  openRegisterModal,
-} from '../../store/slices/modalSlice';
+import { closeResetPasswordModal, openLoginModal, openRegisterModal } from '../../store/slices/modalSlice';
 import { Form, Input } from 'antd';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import styles from './ResetPassword.module.scss';
@@ -168,9 +164,7 @@ const ResetPassword = () => {
               }}
             />
             {debounceTime > 0 && (
-              <Paragraph
-                strong
-                classNames={`${styles.actionText} ${debounceTime && styles.actionTextDisabled}`}>
+              <Paragraph strong classNames={`${styles.actionText} ${debounceTime && styles.actionTextDisabled}`}>
                 {debounceTime}s
               </Paragraph>
             )}

@@ -88,3 +88,9 @@ export const signInWithGoogleService = async ({ id_token }) => {
 export const getPresignedURL = async input => {
   return apiCaller.post(ENDPOINTS.auth.presignedURL, input);
 };
+
+export const presignedURLForViewingService = async ({ url }) => {
+  return apiCaller.post(ENDPOINTS.auth.getPresignedURL, {
+    cdn_url: url,
+  });
+};

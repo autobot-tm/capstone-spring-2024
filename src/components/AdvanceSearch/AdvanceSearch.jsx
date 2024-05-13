@@ -2,26 +2,13 @@ import React, { useEffect, useState } from 'react';
 import CustomModal from '../Modal/CustomModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeAdvanceSearchModal } from '../../store/slices/modalSlice';
-import {
-  Button,
-  Checkbox,
-  Col,
-  Divider,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select,
-  Slider,
-  Space,
-} from 'antd';
-import { Caption } from '../Typography';
-import { getMetaData } from '../../services/apis/houses.service';
+import { Button, Checkbox, Col, Divider, Form, Input, InputNumber, Row, Select, Slider, Space } from 'antd';
+import { Caption, Paragraph } from '../Typography';
 import { formatCustomCurrency } from '../../utils/number-seperator';
-import styles from './AdvanceSearch.module.scss';
 import { t } from 'i18next';
 import { setFilter } from '../../store/slices/houseSlice';
 import { useNavigate } from 'react-router-dom';
+import styles from './AdvanceSearch.module.scss';
 const AdvanceSearch = () => {
   const navigate = useNavigate();
   const advanceSearchModal = useSelector(state => state.modal.advanceSearchModal);
@@ -41,6 +28,8 @@ const AdvanceSearch = () => {
   const [districtId, setDistrictId] = useState(0);
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+
+  const metadata = useSelector(state => state.house.metadata);
 
   const handleSliderChange = newValue => {
     setSliderValue(newValue);
@@ -63,17 +52,7 @@ const AdvanceSearch = () => {
   };
   const handleFinish = values => {
     setLoading(true);
-    const {
-      name,
-      categories,
-      provinces,
-      districts,
-      wards,
-      minArea,
-      maxArea,
-      amenities,
-      utilities,
-    } = values;
+    const { name, categories, provinces, districts, wards, minArea, maxArea, amenities, utilities } = values;
     const minPrice = sliderValue[0];
     const maxPrice = sliderValue[1];
     dispatch(
@@ -87,8 +66,8 @@ const AdvanceSearch = () => {
         maxArea,
         minPrice,
         maxPrice,
-        amenities,
-        utilities,
+        amenities: amenities?.map(str => ({ id: str })),
+        utilities: utilities?.map(str => ({ id: str })),
       }),
     );
     setLoading(false);
@@ -97,18 +76,18 @@ const AdvanceSearch = () => {
   };
 
   useEffect(() => {
-    getMetaData().then(response => {
-      setCategories(response.categories);
-      setProvinces(response.location.provinces);
-      setDistricts(response.location.districts);
-      setWards(response.location.wards);
-      setSliderValue([response.min_price, response.max_price]);
-      setMinPrice(response.min_price);
-      setMaxPrice(response.max_price);
-      setAmenities(response.amenities);
-      setUtilities(response.utilities);
-    });
-  }, []);
+    if (metadata) {
+      setCategories(metadata.categories);
+      setProvinces(metadata.location.provinces);
+      setDistricts(metadata.location.districts);
+      setWards(metadata.location.wards);
+      setSliderValue([metadata.min_price, metadata.max_price]);
+      setMinPrice(metadata.min_price);
+      setMaxPrice(metadata.max_price);
+      setAmenities(metadata.amenities);
+      setUtilities(metadata.utilities);
+    }
+  }, [metadata]);
 
   useEffect(() => {
     if (!advanceSearchModal) {
@@ -139,11 +118,24 @@ const AdvanceSearch = () => {
         </Button>,
       ]}>
       <Form layout="vertical" onFinish={handleFinish} form={form}>
-        <Form.Item label={t('label.searchHouse')} name="name">
-          <Input placeholder={t('placeholder.searchHouse')} disabled={loading} />
+        <Form.Item
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.searchHouse')}
+            </Paragraph>
+          }
+          name="name">
+          <Input size="large" placeholder={t('placeholder.searchHouse')} disabled={loading} />
         </Form.Item>
-        <Form.Item label={t('label.propertyDetails')} name="categories">
+        <Form.Item
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.propertyDetails')}
+            </Paragraph>
+          }
+          name="categories">
           <Select
+            size="large"
             mode="multiple"
             allowClear
             style={{
@@ -156,11 +148,17 @@ const AdvanceSearch = () => {
             disabled={loading}
           />
         </Form.Item>
-        <Form.Item label={t('label.location')}>
-          <div className={styles.propertyContainer}>
-            <div>
+        <Form.Item
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.location')}
+            </Paragraph>
+          }>
+          <Row gutter={[8, 0]}>
+            <Col sm={8} xs={24}>
               <Form.Item name="provinces">
                 <Select
+                  size="large"
                   placeholder={t('placeholder.provinces')}
                   onChange={handleChangeProvince}
                   options={provinces.map(province => {
@@ -172,14 +170,15 @@ const AdvanceSearch = () => {
                   disabled={loading}
                 />
               </Form.Item>
-            </div>
-            <div>
+            </Col>
+            <Col sm={8} xs={24}>
               <Form.Item name="districts">
                 <Select
+                  size="large"
                   placeholder={t('placeholder.districts')}
                   onChange={handleChangeDistrict}
                   options={districts
-                    .filter(district => district.province.id === provinceId)
+                    .filter(district => district.province_id === provinceId)
                     .map(district => ({
                       value: district.id,
                       label: t('district.' + district.name),
@@ -187,13 +186,14 @@ const AdvanceSearch = () => {
                   disabled={loading}
                 />
               </Form.Item>
-            </div>
-            <div>
+            </Col>
+            <Col sm={8} xs={24}>
               <Form.Item name="wards">
                 <Select
+                  size="large"
                   placeholder={t('placeholder.wards')}
                   options={wards
-                    .filter(ward => ward.district.id === districtId)
+                    .filter(ward => ward.district_id === districtId)
                     .map(ward => ({
                       value: ward.id,
                       label: ward.name,
@@ -201,10 +201,15 @@ const AdvanceSearch = () => {
                   disabled={loading}
                 />
               </Form.Item>
-            </div>
-          </div>
+            </Col>
+          </Row>
         </Form.Item>
-        <Form.Item label={t('label.propertySize')}>
+        <Form.Item
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.propertySize')}
+            </Paragraph>
+          }>
           <Space>
             <Form.Item
               name="minArea"
@@ -219,15 +224,30 @@ const AdvanceSearch = () => {
                     return Promise.resolve();
                   },
                 }),
+                {
+                  type: 'number',
+                  min: 1,
+                  message: t('validationRules.min'),
+                },
               ]}>
               <InputNumber
+                size="large"
                 placeholder={t('placeholder.minimumSize')}
                 style={{ width: '100%' }}
                 disabled={loading}
               />
             </Form.Item>
-            <Form.Item name="maxArea">
+            <Form.Item
+              name="maxArea"
+              rules={[
+                {
+                  type: 'number',
+                  min: 1,
+                  message: t('validationRules.min'),
+                },
+              ]}>
               <InputNumber
+                size="large"
                 placeholder={t('placeholder.maximumSize')}
                 style={{ width: '100%' }}
                 disabled={loading}
@@ -236,13 +256,16 @@ const AdvanceSearch = () => {
           </Space>
         </Form.Item>
 
-        <Form.Item label={t('label.priceRange')}>
-          <Space>
+        <Form.Item>
+          <div className={styles.priceRangeLabelContainer}>
+            <Paragraph strong classNames="color-black">
+              {t('label.priceRange')}
+            </Paragraph>
             <Caption size={140}>
               From <b>{formatCustomCurrency(sliderValue[0])}</b> to
               <b> {formatCustomCurrency(sliderValue[1])}</b>
             </Caption>
-          </Space>
+          </div>
           <Slider
             min={minPrice}
             max={maxPrice}
@@ -255,13 +278,19 @@ const AdvanceSearch = () => {
           />
         </Form.Item>
 
-        <Form.Item label={t('label.amenities')} name="amenities">
+        <Form.Item
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.amenities')}
+            </Paragraph>
+          }
+          name="amenities">
           <Checkbox.Group>
             <Row>
               {amenities.map(amenity => {
                 return (
                   <Col sm={8} xs={12} key={amenity.id}>
-                    <Checkbox value={{ id: amenity.id }} disabled={loading}>
+                    <Checkbox value={amenity.id} disabled={loading}>
                       {t('amenity.' + amenity.name)}
                     </Checkbox>
                   </Col>
@@ -270,13 +299,19 @@ const AdvanceSearch = () => {
             </Row>
           </Checkbox.Group>
         </Form.Item>
-        <Form.Item label={t('label.Utilities')} name="utilities">
+        <Form.Item
+          label={
+            <Paragraph strong classNames="color-black">
+              {t('label.Utilities')}
+            </Paragraph>
+          }
+          name="utilities">
           <Checkbox.Group>
             <Row>
               {utilities.map(utility => {
                 return (
                   <Col sm={8} xs={12} key={utility.id}>
-                    <Checkbox value={{ id: utility.id }} disabled={loading}>
+                    <Checkbox value={utility.id} disabled={loading}>
                       {t('utility.' + utility.name)}
                     </Checkbox>
                   </Col>

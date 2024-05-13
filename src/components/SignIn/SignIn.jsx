@@ -1,28 +1,25 @@
-import React, { useEffect } from 'react';
-import { Alert, Checkbox, Form, Input } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Alert, Form, Input } from 'antd';
 import styles from './SignIn.module.scss';
 import BaseButton from '../Buttons/BaseButtons/BaseButton';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  closeLoginModal,
-  openRegisterModal,
-  openRequestResetPasswordModal,
-} from '../../store/slices/modalSlice';
+import { closeLoginModal, openRegisterModal, openRequestResetPasswordModal } from '../../store/slices/modalSlice';
 import CustomModal from '../Modal/CustomModal';
 import { useAuthSlice } from '../../store/slices';
-import { t } from 'i18next';
 import GoogleSignInButton from '../GoogleSignInButton/GoogleSignInButton';
 import { AUTH_ACTIONS } from '../../store/constants/action-name.constant';
 import { Paragraph } from '../Typography';
-import { Trans } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { ERROR_TRANS_KEYS } from '../../constants/error.constant';
+
 const SignIn = () => {
   const loginModal = useSelector(state => state.modal.loginModal);
   const dispatch = useDispatch();
-
+  const { t } = useTranslation();
   const { actions: authActions } = useAuthSlice();
   const { actionSucceeded, loading, errorTranslationKey } = useSelector(state => state.auth);
   const [form] = Form.useForm();
+  const [errorHolder, setErrorHolder] = useState('');
 
   const handleFinish = values => {
     const { email, password } = values;
@@ -30,10 +27,7 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (
-      actionSucceeded === AUTH_ACTIONS.SIGN_IN ||
-      actionSucceeded === AUTH_ACTIONS.SIGN_IN_WITH_GOOGLE
-    ) {
+    if (actionSucceeded === AUTH_ACTIONS.SIGN_IN || actionSucceeded === AUTH_ACTIONS.SIGN_IN_WITH_GOOGLE) {
       dispatch(closeLoginModal());
       dispatch(authActions.clearActionSucceeded());
       dispatch(closeLoginModal());
@@ -43,18 +37,27 @@ const SignIn = () => {
   useEffect(() => {
     if (!loginModal) {
       form.resetFields();
+      setErrorHolder('');
       dispatch(authActions.clearError());
     }
   }, [form, loginModal]);
 
+  useEffect(() => {
+    if (
+      errorTranslationKey === ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS ||
+      errorTranslationKey === ERROR_TRANS_KEYS.ACCOUNT_SUSPENDED
+    ) {
+      setErrorHolder(errorTranslationKey);
+      dispatch(authActions.clearError());
+    } else if (errorTranslationKey === 'api.error.unauthorized') {
+      setErrorHolder(errorTranslationKey);
+      dispatch(authActions.clearError());
+    }
+  }, [errorTranslationKey]);
+
   return (
     <div>
-      <CustomModal
-        width={400}
-        nameOfModal={loginModal}
-        title={t('modal.login')}
-        action={closeLoginModal}
-        footer={null}>
+      <CustomModal width={440} nameOfModal={loginModal} title={t('modal.login')} action={closeLoginModal} footer={null}>
         <Form onFinish={handleFinish} form={form}>
           <Form.Item
             name={'email'}
@@ -62,7 +65,7 @@ const SignIn = () => {
               { required: true, message: t('validationRules.required.email') },
               { type: 'email', message: t('validationRules.invalid.email') },
             ]}>
-            <Input placeholder="Email" disabled={loading} />
+            <Input placeholder={t('placeholder.email')} size="large" disabled={loading} />
           </Form.Item>
           <Form.Item
             name={'password'}
@@ -70,23 +73,12 @@ const SignIn = () => {
               { required: true, message: t('validationRules.required.password') },
               { min: 8, message: t('validationRules.min.password') },
             ]}>
-            <Input.Password placeholder={t('placeholder.password')} disabled={loading} />
+            <Input.Password placeholder={t('placeholder.password')} size="large" disabled={loading} />
           </Form.Item>
-          <div className={styles.supportSignInContainer}>
-            <Form.Item name="remember" noStyle>
-              <Checkbox>{t('checkbox.rememberme')}</Checkbox>
-            </Form.Item>
-            <span
-              onClick={() => {
-                dispatch(closeLoginModal());
-                dispatch(openRequestResetPasswordModal());
-              }}>
-              {t('forgetpassword')}
-            </span>
-          </div>
-          {errorTranslationKey === ERROR_TRANS_KEYS.INVALID_ACCOUNT_CREDENTIALS && (
+
+          {errorHolder && (
             <Form.Item>
-              <Alert message={t(errorTranslationKey)} type="error" />
+              <Alert message={t(errorHolder)} type="error" />
             </Form.Item>
           )}
 
@@ -96,6 +88,15 @@ const SignIn = () => {
             </BaseButton>
           </Form.Item>
           <Form.Item>
+            <div className={styles.supportSignInContainer}>
+              <span
+                onClick={() => {
+                  dispatch(closeLoginModal());
+                  dispatch(openRequestResetPasswordModal());
+                }}>
+                {t('forgetpassword')}
+              </span>
+            </div>
             <div className={styles.askMemberContainer}>
               <Paragraph>
                 <Trans
@@ -116,10 +117,12 @@ const SignIn = () => {
               </Paragraph>
             </div>
           </Form.Item>
+          <Form.Item>
+            <div className={styles.loginByGoogleContainer}>
+              <GoogleSignInButton />
+            </div>
+          </Form.Item>
         </Form>
-        <div className={styles.loginByGoogleContainer}>
-          <GoogleSignInButton />
-        </div>
       </CustomModal>
     </div>
   );

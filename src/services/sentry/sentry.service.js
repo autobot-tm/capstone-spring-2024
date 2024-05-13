@@ -1,12 +1,7 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
 import { APP_CONFIG } from '../../config';
-import {
-  useLocation,
-  useNavigationType,
-  createRoutesFromChildren,
-  matchRoutes,
-} from 'react-router-dom';
+import { useLocation, useNavigationType, createRoutesFromChildren, matchRoutes } from 'react-router-dom';
 export const configureSentry = () => {
   console.log('configuring sentry');
   Sentry.init({

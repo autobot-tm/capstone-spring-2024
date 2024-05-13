@@ -1,8 +1,9 @@
-import axios, { HttpStatusCode } from 'axios';
+import axios from 'axios';
 import { APP_CONFIG } from '../config/app.config';
 import { refreshToken } from '../store/slices';
 import { REQUEST_TIME_OUT } from '../constants/api.constant';
 import { apiErrorMapper } from '../services/helper/api-error-mapper.helper';
+import { ERROR_TRANS_KEYS } from '../constants/error.constant';
 
 export const apiCaller = axios.create({
   baseURL: APP_CONFIG.BACKEND_URL,
@@ -31,18 +32,25 @@ export const configureApiCaller = store => {
         return Promise.reject(errorTranslationKey);
       }
 
-      if (statusCode === HttpStatusCode.Forbidden) {
+      if (errorTranslationKey === ERROR_TRANS_KEYS.INVALID_JWT_TOKEN) {
         originalRequest._retry = true;
-
-        const dispatch = store.dispatch;
-        const payload = await dispatch(refreshToken()).unwrap();
-        const { access_token: newAccessToken } = payload;
-        apiCaller.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
-
-        if (originalRequest.headers) {
-          originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+        const { isRefreshing } = store.getState().auth;
+        if (isRefreshing) {
+          await new Promise(resolve => setTimeout(resolve, 1500));
         }
-        return apiCaller(originalRequest);
+        try {
+          const dispatch = store.dispatch;
+          const payload = await dispatch(refreshToken()).unwrap();
+          const { access_token: newAccessToken } = payload;
+          apiCaller.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+
+          if (originalRequest.headers && originalRequest.headers.Authorization) {
+            originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+          }
+          return apiCaller(originalRequest);
+        } catch (refreshError) {
+          return Promise.reject(refreshError);
+        }
       }
       return Promise.reject(errorTranslationKey);
     },

@@ -1,8 +1,5 @@
 .message {
-  color: #555555;
-  margin-top: 25px;
-  margin-bottom: 15px;
-  font-weight: 300;
+  padding: 20px 0 !important;
 }
 
 .askLoginContainer {
@@ -10,9 +7,8 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
-  
 }
-.actionText{
+.actionText {
   cursor: pointer;
   display: inline-block;
 }

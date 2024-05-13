@@ -8,6 +8,14 @@
     padding: 0;
   }
   .menuItem {
+    margin: 0;
     font-size: 20px;
+  }
+
+  .ant-menu-item .logo-container {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-top: 12px;
   }
 }

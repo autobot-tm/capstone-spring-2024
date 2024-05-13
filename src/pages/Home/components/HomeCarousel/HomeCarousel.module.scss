@@ -6,6 +6,9 @@
       height: 60vh;
       width: 100%;
       object-fit: cover;
+      @media screen and (max-width: 769px) {
+        height: 45vh;
+      }
     }
   }
 
@@ -33,5 +36,11 @@
 @media screen and (max-width: 992px) {
   .carouselContainer .typographyContainer div {
     display: none;
+  }
+}
+@media screen and (max-width: 1401px) {
+  .carouselContainer .typographyContainer div {
+    max-width: 100%;
+    margin: 0 16px;
   }
 }

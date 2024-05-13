@@ -1,23 +1,64 @@
-@import "../../../../theme/scss/colors.theme.scss";
+@import '../../../../theme/scss/colors.theme.scss';
 
-.footer{
-    padding: 0;
-    &-container{
-        max-width: 1024px;
-        margin: 0 auto;
-        padding: 0 24px;
+.footer {
+  padding: 0;
+  background: $colors-bg-secondary;
+  &-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    @media screen and (max-width: 1401px) {
+      max-width: 100%;
+      padding: 0 16px;
     }
-    &-top{
-        background-color: $colors-secondary;
-        color: $colors-white;
+
+    .link {
+      display: grid;
+      row-gap: 6px;
+      & > li :hover {
+        color: $colors-primary;
+      }
     }
-    &-bottom{
-        background-color: $colors-secondary;
-        color: $colors-white;
+  }
+  &-top {
+    padding-top: 100px;
+    padding-bottom: 100px;
+    color: $colors-black;
+    ul {
+      list-style: none;
+      padding-left: 0;
+      li {
+        cursor: pointer;
+      }
     }
-    &-bottom-container{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+  }
+  &-bottom {
+    background: $colors-bg-secondary;
+    color: $colors-black;
+  }
+  &-bottom-container {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @media screen and (max-width: 769px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
+  }
+  &-contact-container {
+    display: flex;
+    gap: 10px;
+    &-item {
+      display: flex;
+      gap: 20px;
+
+      a {
+        color: black;
+        &:hover {
+          color: $colors-primary;
+        }
+      }
+    }
+  }
 }

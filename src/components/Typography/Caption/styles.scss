@@ -3,7 +3,6 @@
 .caption {
   color: $colors-text;
   font-weight: 300;
-  display: block;
   margin: 0;
   padding: 0;
   &-110 {
@@ -18,4 +17,8 @@
 
 .color-black {
   color: black;
+}
+
+.color-white {
+  color: white;
 }

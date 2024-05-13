@@ -1,6 +1,6 @@
 .supportSignInContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   a {
     color: black;
   }
@@ -20,10 +20,6 @@
 .loginByGoogleContainer {
   display: flex;
   justify-content: center;
-  img {
-    width: 30px;
-    height: 30px;
-  }
 }
 
 .actionText {

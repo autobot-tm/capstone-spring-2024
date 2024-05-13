@@ -1,5 +1,5 @@
 import { HousePropertyName } from '../../constants/house.constant';
-import bedroomIcon from '../../assets/images/bedroom.svg';
+import bedroomIcon from '../../assets/images/bed.png';
 import bathroomIcon from '../../assets/images/bathroom.svg';
 export const housePropertiesIconMapper = propertyName => {
   switch (propertyName) {

@@ -18,12 +18,27 @@ import ResetPassword from './components/ResetPassword/ResetPassword';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { APP_CONFIG } from './config';
 import AdvanceSearch from './components/AdvanceSearch/AdvanceSearch';
+import ConfirmLogout from './components/ConfirmLogout/ConfirmLogout';
+import ReservationDetail from './components/ReservationDetail/ReservationDetail';
+import ContractDetail from './components/ContractDetail/ContractDetai';
+import RequestCancelConract from './components/RequestCancelContract/RequestCancelConract';
+import ShowAllImage from './components/ShowAllImage/ShowAllImage';
+import ShowLeaseModal from './pages/ExtraServices/components/ShowLeaseModal/ShowLeaseModal';
+import InvoiceDetail from './components/InvoiceDetail/InvoiceDetail';
+import ExtraServiceDetailModal from './components/ExtraServiceDetailModal/ExtraServiceDetailModal';
+
+import ChoosePaymentMethodModal from './components/ChoosePaymentMethod/ChoosePaymentMethodModal';
+import ReportIssuesModal from './components/ReportIssues/ReportIssuesModal';
+import ContactRequestDetail from './pages/Management/components/ContactRequests/components/ContactRequestDetail/ContactRequestDetail';
+import ServiceDetailModal from './pages/ExtraServices/components/ServiceDetail/ServiceDetailModal';
+import HouseReviewModal from './components/HouseReview/HouseReviewModal';
 
 initTranslations();
 configureApiCaller(store);
 
 configureSentry();
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <Provider store={store}>
     <GoogleOAuthProvider clientId={APP_CONFIG.GOOGLE_CLIENT_ID}>
@@ -52,6 +67,19 @@ root.render(
           <AuthenticationCode />
           <ResetPassword />
           <AdvanceSearch />
+          <ConfirmLogout />
+          <ReservationDetail />
+          <ContractDetail />
+          <RequestCancelConract />
+          <ShowAllImage />
+          <ShowLeaseModal />
+          <InvoiceDetail />
+          <ExtraServiceDetailModal />
+          <ReportIssuesModal />
+          <ChoosePaymentMethodModal />
+          <ContactRequestDetail />
+          <ServiceDetailModal />
+          <HouseReviewModal />
         </BrowserRouter>
       </ConfigProvider>
     </GoogleOAuthProvider>
